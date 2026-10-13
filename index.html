@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>AT&T Wireless 2.0 • Rerate & Commission Playbook</title>
+<style>
+  @page { size: letter landscape; margin: 0.2in; }
+  * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  body {
+    margin: 0;
+    padding: 10px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #0F172A;
+    background: #0B1120;
+    font-size: 8.5px;
+  }
+  .app-container {
+    max-width: 1320px;
+    margin: 0 auto;
+    background: #0F172A;
+    border: 1.5px solid #0057B8;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5);
+    overflow: hidden;
+  }
+  .header {
+    background: #0057B8;
+    color: #FFF;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .header h1 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .header p { margin: 2px 0 0 0; font-size: 8.5px; color: #E0F2FE; }
+  .header-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  /* SPEED LEGEND BAR */
+  .speed-legend {
+    background: #091326;
+    border-bottom: 1px solid #334155;
+    padding: 7px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    color: #E2E8F0;
+    font-size: 9px;
+    font-weight: 700;
+  }
+  .legend-items {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .legend-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #1E293B;
+    border: 1px solid #475569;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-size: 8.5px;
+  }
+  .legend-pill b { color: #38BDF8; }
+  .legend-pill.rocket { border-color: #F43F5E; background: #2A121E; }
+  .legend-pill.rocket b { color: #FDA4AF; }
+
+  /* CALCULATOR PANEL */
+  .scanner-panel {
+    background: #1E293B;
+    border-bottom: 2px solid #334155;
+    padding: 12px 14px;
+  }
+  .controls-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 10px;
+    align-items: end;
+  }
+  .addons-bar {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #334155;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+    gap: 10px;
+    align-items: end;
+  }
+  .control-group { display: flex; flex-direction: column; gap: 4px; }
+  .control-group label { font-size: 8px; font-weight: 800; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.5px; }
+  .control-group input, .control-group select {
+    padding: 8px 10px;
+    border: 1px solid #475569;
+    border-radius: 5px;
+    background: #0F172A;
+    color: #FFF;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .control-group input:focus, .control-group select:focus {
+    outline: none;
+    border-color: #38BDF8;
+  }
+  .btn {
+    background: #0057B8;
+    color: #FFF;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 14px;
+    font-size: 10px;
+    font-weight: 800;
+    cursor: pointer;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .btn-calc { background: #16A34A; width: 100%; height: 42px; font-size: 12px; margin-top: 12px; letter-spacing: 0.5px; font-weight: 900; }
+  .btn-calc:hover { background: #15803D; }
+  .btn-print { background: #334155; }
+  .btn-pres { background: #0284C7; border: 1px solid #38BDF8; }
+  .btn-pres.active { background: #F59E0B; color: #0F172A; border-color: #FDE68A; }
+
+  /* ANALYSIS RESULTS */
+  .analysis-card {
+    margin-top: 12px;
+    background: #0F172A;
+    border: 2px solid #38BDF8;
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: none;
+  }
+  .analysis-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .analysis-card h3 { margin: 0; font-size: 12px; font-weight: 900; color: #38BDF8; text-transform: uppercase; }
+  .pivot-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+  .badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 8.5px;
+    font-weight: 800;
+    background: #1E293B;
+    border: 1px solid #38BDF8;
+    color: #E0F2FE;
+  }
+  .badge-gold { border-color: #FBBF24; color: #FDE68A; background: #272011; }
+  .badge-fn { border-color: #EF4444; color: #FCA5A5; background: #2A1215; }
+  .badge-green { border-color: #4ADE80; color: #BBF7D0; background: #064E3B; }
+  
+  .recommendations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+  }
+  .rec-box {
+    background: #1E293B;
+    border: 1px solid #475569;
+    border-radius: 6px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .rec-box.featured {
+    border: 1.5px solid #FBBF24;
+    box-shadow: 0 0 12px rgba(251, 191, 36, 0.15);
+  }
+  .tier-tag {
+    font-size: 8px;
+    font-weight: 900;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: #0F172A;
+    color: #CBD5E1;
+    border: 1px solid #334155;
+    align-self: flex-start;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+  .rec-title { font-size: 11.5px; font-weight: 900; color: #38BDF8; text-transform: uppercase; }
+  .rec-price { font-size: 19px; font-weight: 900; color: #FFF; margin: 4px 0 2px 0; }
+  .rec-subprice { font-size: 8.5px; color: #94A3B8; margin-bottom: 4px; font-weight: 600; }
+  .rec-savings { font-size: 11.5px; font-weight: 900; margin-bottom: 4px; }
+  .tier-perks { font-size: 8px; color: #E2E8F0; background: #0F172A; padding: 4px 7px; border-radius: 4px; margin-bottom: 6px; font-weight: 600; }
+  
+  /* PLAYBOOK OPPORTUNITY LIST */
+  .playbook-box {
+    margin-top: 4px;
+    padding-top: 8px;
+    border-top: 1px solid #334155;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .playbook-header {
+    font-size: 8.5px;
+    font-weight: 900;
+    color: #FBBF24;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-bottom: 2px;
+  }
+  .opp-pill {
+    background: #0F172A;
+    border-left: 3px solid #38BDF8;
+    padding: 5px 8px;
+    border-radius: 3px;
+    font-size: 8.5px;
+    color: #E2E8F0;
+    line-height: 1.35;
+  }
+  .opp-pill.free { border-left-color: #4ADE80; background: #091E1A; }
+  .opp-pill.stretch { border-left-color: #FBBF24; background: #1F1B10; }
+  .opp-pill.voice { border-left-color: #C084FC; background: #1E132A; }
+  .opp-tag {
+    display: inline-block;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-size: 7.5px;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-right: 4px;
+  }
+  .tag-free { background: #16A34A; color: #FFF; }
+  .tag-stretch { background: #D97706; color: #FFF; }
+  .tag-voice { background: #9333EA; color: #FFF; }
+
+  .cust-summary {
+    margin-top: 6px;
+    padding-top: 8px;
+    border-top: 1px solid #334155;
+    font-size: 9px;
+    color: #CBD5E1;
+    line-height: 1.4;
+  }
+
+  /* PRESENTATION MODE OVERRIDES */
+  body.presentation-mode .rep-only { display: none !important; }
+  body.presentation-mode .cust-only { display: block !important; }
+  body.presentation-mode span.cust-only { display: inline !important; }
+  .cust-only { display: none; }
+
+  /* MASTER MATRIX TABLE */
+  table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  th {
+    background: #0F172A;
+    color: #94A3B8;
+    font-size: 7.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 6px 2px;
+    border-bottom: 1.5px solid #334155;
+    border-right: 1px solid #334155;
+    text-align: center;
+  }
+  th.first { width: 24%; text-align: left; padding-left: 8px; }
+  th.col { width: 12.6%; }
+  th:last-child { border-right: none; }
+  .sec-row td {
+    background: #1E293B;
+    font-size: 8px;
+    font-weight: 900;
+    color: #38BDF8;
+    padding: 4px 8px;
+    text-transform: uppercase;
+    border-top: 1px solid #334155;
+    border-bottom: 1px solid #334155;
+    text-align: left;
+  }
+  tr.data-row { border-bottom: 1px solid #334155; }
+  tr.alt { background: #0B1120; }
+  tr.fan { background: #1A1811; }
+  td { padding: 4px 2px; border-right: 1px solid #334155; text-align: center; vertical-align: middle; font-size: 8px; color: #E2E8F0; }
+  td.label { text-align: left; font-weight: 800; color: #FFF; padding-left: 8px; }
+  td.fan-label { color: #FBBF24; }
+  td:last-child { border-right: none; }
+  .tot { font-weight: 800; color: #38BDF8; }
+  .tot-fan { font-weight: 800; color: #FBBF24; }
+  .tot-app { font-weight: 800; color: #4ADE80; }
+
+  .footer {
+    display: flex;
+    background: #1E293B;
+    border-top: 1.5px solid #334155;
+    padding: 8px 12px;
+    font-size: 8px;
+    line-height: 1.4;
+    color: #94A3B8;
+  }
+  .footer-col { width: 50%; }
+  .footer-col:first-child { padding-right: 12px; border-right: 1px solid #334155; }
+  .footer-col:last-child { padding-left: 12px; }
+  .footer-col b.title { display: block; font-size: 8.5px; margin-bottom: 3px; font-weight: 900; }
+  .c-blue { color: #38BDF8; }
+  .c-green { color: #4ADE80; }
+
+  @media print {
+    body { padding: 0; background: #FFF; color: #0F172A; }
+    .scanner-panel, .analysis-card, .header-actions { display: none !important; }
+    .app-container { border: 1.5px solid #0057B8; box-shadow: none; background: #FFF; }
+    .speed-legend { background: #F8FAFC; color: #0F172A; border-color: #CBD5E1; }
+    .legend-pill { background: #FFF; color: #0F172A; border-color: #CBD5E1; }
+    .legend-pill b { color: #0057B8; }
+    th { background: #F0F7FD; color: #003366; border-color: #CBD5E1; }
+    .sec-row td { background: #E2E8F0; color: #003366; border-color: #CBD5E1; }
+    tr.data-row { border-color: #E2E8F0; }
+    tr.alt { background: #F8FAFC; }
+    tr.fan { background: #FFFDF5; }
+    td { border-color: #E2E8F0; color: #0F172A; }
+    td.label { color: #0F172A; }
+    td.fan-label { color: #B45309; }
+    .tot { color: #0057B8; }
+    .tot-fan { color: #B45309; }
+    .tot-app { color: #15803D; }
+    .footer { background: #F8FAFC; color: #334155; border-color: #CBD5E1; }
+    .footer-col:first-child { border-color: #CBD5E1; }
+    .c-blue { color: #0057B8; }
+    .c-green { color: #15803D; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app-container">
+  <div class="header">
+    <div>
+      <h1>
+        <span class="rep-only">AT&amp;T Wireless 2.0 • Rerate &amp; Commission Playbook</span>
+        <span class="cust-only">AT&amp;T Wireless 2.0 • Custom Plan &amp; Speed Comparison</span>
+      </h1>
+      <p>
+        <span class="rep-only">🐢 VALUE • 🐇 EXTRA • 🐆 PREMIUM • 🚀 ELITE/TURBO • AUTO-SURFACES WATCHES, TABLETS, VOICE ADDS &amp; ACCESSORIES</span>
+        <span class="cust-only">COMPARE NETWORK TIERS, MULTI-LINE DISCOUNTS &amp; CONNECTED DEVICE BUNDLES</span>
+      </p>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-pres" id="pres-btn">👁️ Customer View: OFF</button>
+      <button class="btn btn-print" onclick="window.print()">🖨️ Print Matrix</button>
+    </div>
+  </div>
+
+  <!-- TIER SPEED ICON LEGEND -->
+  <div class="speed-legend">
+    <div class="legend-items">
+      <span class="legend-pill">🐢 <b>Value Plus 2.0:</b> Base 5G • Deprioritized • No Hotspot</span>
+      <span class="legend-pill">🐇 <b>Extra 2.0:</b> 75GB Priority Data • 30GB Hotspot</span>
+      <span class="legend-pill">🐆 <b>Premium 2.0:</b> Unlimited Priority (QCI-8) • 60GB Hotspot • 4K UHD</span>
+      <span class="legend-pill rocket">🚀 <b>Elite / Turbo / FirstNet:</b> Hyper-Priority (QCI-7 / Band 14) • Max Performance</span>
+    </div>
+  </div>
+
+  <!-- CALCULATOR & ADD-ON CONTROLS -->
+  <div class="scanner-panel">
+    <div class="controls-grid">
+      <div class="control-group">
+        <label>Current Plan Bill ($)</label>
+        <input type="number" id="curr-total" placeholder="e.g. 180.00" step="0.01">
+      </div>
+
+      <div class="control-group">
+        <label>Current Voice Lines</label>
+        <select id="curr-lines">
+          <option value="1">1 Line Account</option>
+          <option value="2">2 Lines Account</option>
+          <option value="3">3 Lines Account</option>
+          <option value="4" selected>4 Lines Account</option>
+          <option value="5">5 Lines Account</option>
+          <option value="6">6 Lines Account</option>
+          <option value="7">7 Lines Account</option>
+          <option value="8">8 Lines Account</option>
+          <option value="9">9 Lines Account</option>
+          <option value="10">10 Lines Account (Max)</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label>Discount Profile</label>
+        <select id="curr-discount">
+          <option value="fan">Signature / Employer / Union (FAN)</option>
+          <option value="apprec">Appreciation (Mil/Vet/Teach/RN: 10/15/20%)</option>
+          <option value="firstnet">🚀 FirstNet &amp; Family (10/15/20% + Band 14/13)</option>
+          <option value="fiber">AT&amp;T Fiber Convergence (20% Off)</option>
+          <option value="senior55">AT&amp;T 55+ Senior Plan (1–2 Lines)</option>
+          <option value="none">Standard Consumer (No FAN)</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label>Target AutoPay</label>
+        <select id="curr-autopay">
+          <option value="debit">Checking / Debit ($10/line off)</option>
+          <option value="credit">Credit Card ($5/line off)</option>
+          <option value="none">No AutoPay</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- INTERACTIVE BUNDLE BUILDER BAR -->
+    <div class="addons-bar">
+      <div class="control-group">
+        <label>Next Up Anytime ($10/L)</label>
+        <select id="addon-nua">
+          <option value="0">0 Lines (+$0/mo)</option>
+          <option value="all">All Lines ($10/line)</option>
+          <option value="1">1 Line (+$10/mo)</option>
+          <option value="2">2 Lines (+$20/mo)</option>
+          <option value="3">3 Lines (+$30/mo)</option>
+          <option value="4">4 Lines (+$40/mo)</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label>Protect Advantage</label>
+        <select id="addon-pa">
+          <option value="0">None (+$0/mo)</option>
+          <option value="multi">Protect Advantage 4+ ($50/mo)</option>
+          <option value="1">1 Device (+$17/mo)</option>
+          <option value="2">2 Devices (+$34/mo)</option>
+          <option value="3">3 Devices (+$50 Multi)</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label>Add Watch / Tablet Line</label>
+        <select id="addon-data">
+          <option value="0">No Connected Lines (+$0)</option>
+          <option value="5.49">1st Watch Promo 50% Off (+$5.49/mo)</option>
+          <option value="10.00">1st Tablet Promo 50% Off (+$10.00/mo)</option>
+          <option value="10.99">Standard Watch Line (+$10.99/mo)</option>
+          <option value="20.00">Standard Tablet Line (+$20.00/mo)</option>
+          <option value="15.49">Watch + Tablet Promo Bundle (+$15.49/mo)</option>
+          <option value="30.99">Watch + Tablet Standard (+$30.99/mo)</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label>12-Mo Accessory Installment</label>
+        <select id="addon-acc">
+          <option value="0">None ($0/mo)</option>
+          <option value="6.25">$75 Min Bundle (+$6.25/mo)</option>
+          <option value="8.33">$100 Bundle (+$8.33/mo)</option>
+          <option value="10.00">$120 Bundle (+$10.00/mo)</option>
+          <option value="12.50">$150 Bundle (+$12.50/mo)</option>
+          <option value="16.67">$200 Bundle (+$16.67/mo)</option>
+          <option value="20.83">$250 Audio/MagSafe Pack (+$20.83/mo)</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label>🚀 Elite / Turbo Speed Boost</label>
+        <select id="addon-turbo">
+          <option value="0">Standard Speed (+$0/mo)</option>
+          <option value="1">🚀 1 Line Turbo QCI-7 (+$7/mo)</option>
+          <option value="2">🚀 2 Lines Turbo QCI-7 (+$14/mo)</option>
+          <option value="all">🚀 All Lines Turbo QCI-7 ($7/L)</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="btn btn-calc" id="calc-btn">⚡ Compare All Tiers (🐢 / 🐇 / 🐆 / 🚀) &amp; Generate Commission Playbook</button>
+
+    <!-- CALCULATION RESULTS -->
+    <div class="analysis-card" id="analysis-box">
+      <div class="analysis-header-row">
+        <h3>
+          <span class="rep-only">🎯 Tier-by-Tier Rerate &amp; Commission Playbook (🐢 Value &rarr; 🐇 Extra &rarr; 🐆 Prem &rarr; 🚀 Rocket)</span>
+          <span class="cust-only">Personalized AT&amp;T Plan &amp; Speed Options</span>
+        </h3>
+        <div class="pivot-badges" id="pivot-badges"></div>
+      </div>
+      <div class="recommendations-grid" id="recommendations-container"></div>
+    </div>
+  </div>
+
+  <!-- MASTER 6-SCENARIO GRID WITH SPEED ICONS -->
+  <table>
+    <thead>
+      <tr>
+        <th class="first">PLAN COMBINATION (🐢 / 🐇 / 🐆)</th>
+        <th class="col">NO AUTOPAY</th>
+        <th class="col">NO AP + SIG</th>
+        <th class="col" style="color:#4ADE80;">NO AP + APPREC</th>
+        <th class="col">AUTOPAY</th>
+        <th class="col">AP + SIG (FAN)</th>
+        <th class="col" style="color:#4ADE80;">AP + APPREC</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- 1-LINE -->
+      <tr class="sec-row"><td colspan="7">1-Line Accounts (Base: 🐆 Prem $100 | 🐇 Extra $80 | 🐢 Val $60 • AP: 🐆 Prem $90 | 🐇 Extra $70 | 🐢 Val $50)</td></tr>
+      <tr class="data-row">
+        <td class="label">🐢 1x Value Plus 2.0</td>
+        <td>($60.00)</td><td>($60.00)</td><td class="tot-app">($54.00)</td>
+        <td class="tot">($50.00)</td><td class="tot">($50.00)</td><td class="tot-app">($45.00)</td>
+      </tr>
+      <tr class="data-row alt">
+        <td class="label">🐇 1x Extra 2.0</td>
+        <td>($80.00)</td><td>($80.00)</td><td class="tot-app">($68.00)</td>
+        <td class="tot">($70.00)</td><td class="tot">($70.00)</td><td class="tot-app">($59.50)</td>
+      </tr>
+      <tr class="data-row">
+        <td class="label">🐆 1x Premium 2.0</td>
+        <td>($100.00)</td><td class="tot-fan">($90.00)</td><td class="tot-app">($80.00)</td>
+        <td class="tot">($90.00)</td><td class="tot-fan">($80.00)</td><td class="tot-app">($72.00)</td>
+      </tr>
+
+      <!-- 2-LINE -->
+      <tr class="sec-row"><td colspan="7">2-Line Accounts (Base: 🐆 Prem $90 | 🐇 Extra $70 | 🐢 Val $55 • AP: 🐆 Prem $80 | 🐇 Extra $60 | 🐢 Val $45)</td></tr>
+      <tr class="data-row">
+        <td class="label">🐢 2x Value Plus 2.0</td>
+        <td>($110.00)</td><td>($110.00)</td><td class="tot-app">($99.00)</td>
+        <td class="tot">($90.00)</td><td class="tot">($90.00)</td><td class="tot-app">($81.00)</td>
+      </tr>
+      <tr class="data-row alt">
+        <td class="label">🐇 1x Extra + 🐢 1x Value</td>
+        <td>($125.00)</td><td>($125.00)</td><td class="tot-app">($109.00)</td>
+        <td class="tot">($105.00)</td><td class="tot">($105.00)</td><td class="tot-app">($91.50)</td>
+      </tr>
+      <tr class="data-row">
+        <td class="label">🐇 2x Extra 2.0</td>
+        <td>($140.00)</td><td>($140.00)</td><td class="tot-app">($119.00)</td>
+        <td class="tot">($120.00)</td><td class="tot">($120.00)</td><td class="tot-app">($102.00)</td>
+      </tr>
+      <tr class="data-row fan">
+        <td class="label fan-label">🐆 1x Premium + 🐢 1x Value</td>
+        <td>($145.00)</td><td class="tot-fan">($135.00)</td><td class="tot-app">($121.50)</td>
+        <td class="tot">($125.00)</td><td class="tot-fan">($115.00)</td><td class="tot-app">($104.50)</td>
+      </tr>
+      <tr class="data-row">
+        <td class="label">🐆 1x Premium + 🐇 1
