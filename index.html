@@ -64,7 +64,7 @@
   }
   .legend-items {
     display: flex;
-    gap: 14px;
+    gap: 12px;
     flex-wrap: wrap;
     align-items: center;
   }
@@ -132,9 +132,10 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
+    -webkit-appearance: none;
   }
-  .btn-calc { background: #16A34A; width: 100%; height: 42px; font-size: 12px; margin-top: 12px; letter-spacing: 0.5px; font-weight: 900; }
-  .btn-calc:hover { background: #15803D; }
+  .btn-calc { background: #16A34A; width: 100%; height: 44px; font-size: 12px; margin-top: 12px; letter-spacing: 0.5px; font-weight: 900; }
+  .btn-calc:active { background: #15803D; transform: scale(0.99); }
   .btn-print { background: #334155; }
   .btn-pres { background: #0284C7; border: 1px solid #38BDF8; }
   .btn-pres.active { background: #F59E0B; color: #0F172A; border-color: #FDE68A; }
@@ -183,7 +184,6 @@
     padding: 12px;
     display: flex;
     flex-direction: column;
-    position: relative;
   }
   .rec-box.featured {
     border: 1.5px solid #FBBF24;
@@ -349,27 +349,27 @@
   <div class="header">
     <div>
       <h1>
-        <span class="rep-only">AT&amp;T Wireless 2.0 • Rerate &amp; Commission Playbook</span>
-        <span class="cust-only">AT&amp;T Wireless 2.0 • Custom Plan &amp; Speed Comparison</span>
+        <span class="rep-only">AT&T Wireless 2.0 • Rerate & Commission Playbook</span>
+        <span class="cust-only">AT&T Wireless 2.0 • Custom Plan & Speed Comparison</span>
       </h1>
       <p>
-        <span class="rep-only">🐢 VALUE • 🐇 EXTRA • 🐆 PREMIUM • 🚀 ELITE/TURBO • AUTO-SURFACES WATCHES, TABLETS, VOICE ADDS &amp; ACCESSORIES</span>
-        <span class="cust-only">COMPARE NETWORK TIERS, MULTI-LINE DISCOUNTS &amp; CONNECTED DEVICE BUNDLES</span>
+        <span class="rep-only">🐢 VALUE • 🐇 EXTRA • 🐆 PREMIUM • 🚀 ELITE/TURBO • AUTO-SURFACES WATCHES, TABLETS, VOICE ADDS & ACCESSORIES</span>
+        <span class="cust-only">COMPARE NETWORK TIERS, MULTI-LINE DISCOUNTS & CONNECTED DEVICE BUNDLES</span>
       </p>
     </div>
     <div class="header-actions">
-      <button class="btn btn-pres" id="pres-btn">👁️ Customer View: OFF</button>
-      <button class="btn btn-print" onclick="window.print()">🖨️ Print Matrix</button>
+      <button type="button" class="btn btn-pres" id="pres-btn" onclick="window.togglePresMode()">👁️ Customer View: OFF</button>
+      <button type="button" class="btn btn-print" onclick="window.print()">🖨️ Print Matrix</button>
     </div>
   </div>
 
   <!-- TIER SPEED ICON LEGEND -->
   <div class="speed-legend">
     <div class="legend-items">
-      <span class="legend-pill">🐢 <b>Value Plus 2.0:</b> Base 5G • Deprioritized • No Hotspot</span>
+      <span class="legend-pill">🐢 <b>Value Plus 2.0:</b> Standard 5G • Unlimited Talk & Text</span>
       <span class="legend-pill">🐇 <b>Extra 2.0:</b> 75GB Priority Data • 30GB Hotspot</span>
-      <span class="legend-pill">🐆 <b>Premium 2.0:</b> Unlimited Priority (QCI-8) • 60GB Hotspot • 4K UHD</span>
-      <span class="legend-pill rocket">🚀 <b>Elite / Turbo / FirstNet:</b> Hyper-Priority (QCI-7 / Band 14) • Max Performance</span>
+      <span class="legend-pill">🐆 <b>Premium 2.0:</b> Unlimited Priority Data • 60GB Hotspot • 4K UHD</span>
+      <span class="legend-pill rocket">🚀 <b>Elite / Turbo / FirstNet:</b> Hyper-Priority Data • Maximum Network Performance</span>
     </div>
   </div>
 
@@ -378,12 +378,12 @@
     <div class="controls-grid">
       <div class="control-group">
         <label>Current Plan Bill ($)</label>
-        <input type="number" id="curr-total" placeholder="e.g. 180.00" step="0.01">
+        <input type="number" id="curr-total" value="180.00" placeholder="e.g. 180.00" step="0.01" oninput="window.runCalc()">
       </div>
 
       <div class="control-group">
         <label>Current Voice Lines</label>
-        <select id="curr-lines">
+        <select id="curr-lines" onchange="window.runCalc()">
           <option value="1">1 Line Account</option>
           <option value="2">2 Lines Account</option>
           <option value="3">3 Lines Account</option>
@@ -399,19 +399,19 @@
 
       <div class="control-group">
         <label>Discount Profile</label>
-        <select id="curr-discount">
+        <select id="curr-discount" onchange="window.runCalc()">
           <option value="fan">Signature / Employer / Union (FAN)</option>
           <option value="apprec">Appreciation (Mil/Vet/Teach/RN: 10/15/20%)</option>
-          <option value="firstnet">🚀 FirstNet &amp; Family (10/15/20% + Band 14/13)</option>
-          <option value="fiber">AT&amp;T Fiber Convergence (20% Off)</option>
-          <option value="senior55">AT&amp;T 55+ Senior Plan (1–2 Lines)</option>
+          <option value="firstnet">🚀 FirstNet & Family (10/15/20% + Band 14/13)</option>
+          <option value="fiber">AT&T Fiber Convergence (20% Off)</option>
+          <option value="senior55">AT&T 55+ Senior Plan (1–2 Lines)</option>
           <option value="none">Standard Consumer (No FAN)</option>
         </select>
       </div>
 
       <div class="control-group">
         <label>Target AutoPay</label>
-        <select id="curr-autopay">
+        <select id="curr-autopay" onchange="window.runCalc()">
           <option value="debit">Checking / Debit ($10/line off)</option>
           <option value="credit">Credit Card ($5/line off)</option>
           <option value="none">No AutoPay</option>
@@ -423,7 +423,7 @@
     <div class="addons-bar">
       <div class="control-group">
         <label>Next Up Anytime ($10/L)</label>
-        <select id="addon-nua">
+        <select id="addon-nua" onchange="window.runCalc()">
           <option value="0">0 Lines (+$0/mo)</option>
           <option value="all">All Lines ($10/line)</option>
           <option value="1">1 Line (+$10/mo)</option>
@@ -435,7 +435,7 @@
 
       <div class="control-group">
         <label>Protect Advantage</label>
-        <select id="addon-pa">
+        <select id="addon-pa" onchange="window.runCalc()">
           <option value="0">None (+$0/mo)</option>
           <option value="multi">Protect Advantage 4+ ($50/mo)</option>
           <option value="1">1 Device (+$17/mo)</option>
@@ -446,7 +446,7 @@
 
       <div class="control-group">
         <label>Add Watch / Tablet Line</label>
-        <select id="addon-data">
+        <select id="addon-data" onchange="window.runCalc()">
           <option value="0">No Connected Lines (+$0)</option>
           <option value="5.49">1st Watch Promo 50% Off (+$5.49/mo)</option>
           <option value="10.00">1st Tablet Promo 50% Off (+$10.00/mo)</option>
@@ -459,7 +459,7 @@
 
       <div class="control-group">
         <label>12-Mo Accessory Installment</label>
-        <select id="addon-acc">
+        <select id="addon-acc" onchange="window.runCalc()">
           <option value="0">None ($0/mo)</option>
           <option value="6.25">$75 Min Bundle (+$6.25/mo)</option>
           <option value="8.33">$100 Bundle (+$8.33/mo)</option>
@@ -472,23 +472,26 @@
 
       <div class="control-group">
         <label>🚀 Elite / Turbo Speed Boost</label>
-        <select id="addon-turbo">
+        <select id="addon-turbo" onchange="window.runCalc()">
           <option value="0">Standard Speed (+$0/mo)</option>
-          <option value="1">🚀 1 Line Turbo QCI-7 (+$7/mo)</option>
-          <option value="2">🚀 2 Lines Turbo QCI-7 (+$14/mo)</option>
-          <option value="all">🚀 All Lines Turbo QCI-7 ($7/L)</option>
+          <option value="1">🚀 1 Line Turbo (+$7/mo)</option>
+          <option value="2">🚀 2 Lines Turbo (+$14/mo)</option>
+          <option value="all">🚀 All Lines Turbo ($7/L)</option>
         </select>
       </div>
     </div>
 
-    <button class="btn btn-calc" id="calc-btn">⚡ Compare All Tiers (🐢 / 🐇 / 🐆 / 🚀) &amp; Generate Commission Playbook</button>
+    <button type="button" class="btn btn-calc" id="calc-btn" onclick="window.runCalc()">
+      <span class="rep-only">⚡ Compare All Tiers (🐢 / 🐇 / 🐆 / 🚀) & Generate Commission Playbook</span>
+      <span class="cust-only">⚡ Update Personalized Plan Comparison</span>
+    </button>
 
     <!-- CALCULATION RESULTS -->
     <div class="analysis-card" id="analysis-box">
       <div class="analysis-header-row">
         <h3>
-          <span class="rep-only">🎯 Tier-by-Tier Rerate &amp; Commission Playbook (🐢 Value &rarr; 🐇 Extra &rarr; 🐆 Prem &rarr; 🚀 Rocket)</span>
-          <span class="cust-only">Personalized AT&amp;T Plan &amp; Speed Options</span>
+          <span class="rep-only">🎯 Tier-by-Tier Rerate & Commission Playbook (🐢 Value -> 🐇 Extra -> 🐆 Prem -> 🚀 Rocket)</span>
+          <span class="cust-only">Personalized AT&T Plan & Speed Options</span>
         </h3>
         <div class="pivot-badges" id="pivot-badges"></div>
       </div>
@@ -551,4 +554,609 @@
         <td class="tot">($125.00)</td><td class="tot-fan">($115.00)</td><td class="tot-app">($104.50)</td>
       </tr>
       <tr class="data-row">
-        <td class="label">🐆 1x Premium + 🐇 1
+        <td class="label">🐆 1x Premium + 🐇 1x Extra</td>
+        <td>($160.00)</td><td class="tot-fan">($150.00)</td><td class="tot-app">($131.50)</td>
+        <td class="tot">($140.00)</td><td class="tot-fan">($130.00)</td><td class="tot-app">($115.00)</td>
+      </tr>
+      <tr class="data-row alt">
+        <td class="label">🐆 2x Premium 2.0</td>
+        <td>($180.00)</td><td class="tot-fan">($160.00)</td><td class="tot-app">($144.00)</td>
+        <td class="tot">($160.00)</td><td class="tot-fan">($140.00)</td><td class="tot-app">($128.00)</td>
+      </tr>
+
+      <!-- 3-LINE -->
+      <tr class="sec-row"><td colspan="7">3-Line Accounts (Base: 🐆 Prem $75 | 🐇 Extra $60 | 🐢 Val $45 • AP: 🐆 Prem $65 | 🐇 Extra $50 | 🐢 Val $35 • Sig 🐆: $50 AP)</td></tr>
+      <tr class="data-row">
+        <td class="label">🐢 3x Value Plus 2.0</td>
+        <td>($135.00)</td><td>($135.00)</td><td class="tot-app">($121.50)</td>
+        <td class="tot">($105.00)</td><td class="tot">($105.00)</td><td class="tot-app">($94.50)</td>
+      </tr>
+      <tr class="data-row alt">
+        <td class="label">🐇 1x Extra + 🐢 2x Value</td>
+        <td>($150.00)</td><td>($150.00)</td><td class="tot-app">($132.00)</td>
+        <td class="tot">($120.00)</td><td class="tot">($120.00)</td><td class="tot-app">($105.50)</td>
+      </tr>
+      <tr class="data-row">
+        <td class="label">🐇 2x Extra + 🐢 1x Value</td>
+        <td>($165.00)</td><td>($165.00)</td><td class="tot-app">($142.50)</td>
+        <td class="tot">($135.00)</td><td class="tot">($135.00)</td><td class="tot-app">($116.50)</td>
+      </tr>
+      <tr class="data-row alt">
+        <td class="label">🐇 3x Extra 2.0</td>
+        <td>($180.00)</td><td>($180.00)</td><td class="tot-app">($153.00)</td>
+        <td class="tot">($150.00)</td><td class="tot">($150.00)</td><td class="tot-app">($127.50)</td>
+      </tr>
+      <tr class="data-row fan">
+        <td class="label fan-label">🐆 1x Premium + 🐢 2x Value</td>
+        <td>($165.00)</td><td class="tot-fan">($150.00)</td><td class="tot-app">($141.00)</td>
+        <td class="tot">($135.00)</td><td class="tot-fan">($120.00)</td><td class="tot-app">($115.00)</td>
+      </tr>
+      <tr class="data-row">
+        <td class="label">🐆 1x Prem + 🐇 1x Ext + 🐢 1x Val</td>
+        <td>($180.00)</td><td class="tot-fan">($165.00)</td><td class="tot-app">($151.50)</td>
+        <td class="tot">($150.00)</td><td class="tot-fan">($135.00)</td><td class="tot-app">($126.00)</td>
+      </tr>
+      <tr class="data-row alt">
+        <td class="label">🐆 1x Premium + 🐇 2x Extra</td>
+        <td>($195.00)</td><td class="tot-fan">($180.00)</td><td class="tot-app">($162.00)</td>
+        <td class="tot">($165.00)</td><td class="tot-fan">($150.00)</td><td class="tot-app">($137.00)</td>
+      </tr>
+      <tr class="data-row fan">
+        <td class="label fan-label">🐆 2x Premium + 🐢 1x Value</td>
+        <td>($195.00)</td><td class="tot-fan">($165.00)</td><td class="tot-app">($160.50)</td>
+        <td class="tot">($165.00)</td><td class="tot-fan">($135.00)</td><td class="tot-app">($135.50)</td>
+      </tr>
+      <tr class="data-row">
+        <td class="label">🐆 2x Premium + 🐇 1x Extra</td>
+        <td>($210.00)</td><td class="tot-fan">($180.00)</td><td class="tot-app">($171.00)</td>
+        <td class="tot">($180.00)</td><td class="tot-fan">($150.00)</td><td class="tot-app">($146.50)</td>
+      </tr>
+      <tr class="data-row alt">
+        <td class="label">🐆 3x Premium 2.0</td>
+        <td>($225.00)</td><td class="tot-fan">($180.00)</td><td class="tot-app">($180.00)</td>
+        <td class="tot">($195.00)</td><td class="tot-fan">($150.00)</td><td class="tot-app">($156.00)</td>
+      </tr>
+
+      <!-- 4-LINE -->
+      <tr class="sec-row"><td colspan="7">4-Line Accounts (Base: 🐆 Prem $60 | 🐇 Extra $50 | 🐢 Val $40 • AP: 🐆 Prem $50 | 🐇 Extra $40 | 🐢 Val $30)</td></tr>
+      <tr class="data-row">
+        <td class="label">🐢 4x Value Plus 2.0</td>
+        <td>($160.00)</td><td>($160.00)</td><td class="tot-app">($144.00)</td>
+        <td class="tot">($120.00)</td><td class="tot">($120.00)</td><td class="tot-app">($108.00)</td>
+      </tr>
+      <tr class="data-row alt">
+        <td class="label">🐇 1x Extra + 🐢 3x Value</td>
+        <td>($170.00)</td><td>($170.00)</td><td class="tot-app">($150.50)</td>
+        <td class="tot">($130.00)</td><td class="tot">($130.00)</td><td class="tot-app">($115.00)</td>
+      </tr>
+      <tr class="data-row">
+        <td class="label">🐇 2x Extra + 🐢 2x Value</td>
+        <td>($180.00)</td><td>($180.00)</td><td class="tot-app">($157.00)</td>
+        <td class="tot">($140.00)</td><td class="tot">($140.00)</td><td class="tot-app">($122.00)</td>
+      </tr>
+      <tr class="data-row alt">
+        <td class="label">🐇 3x Extra + 🐢 1x Value</td>
+        <td>($190.00)</td><td>($190.00)</td><td class="tot-app">($163.50)</td>
+        <td class="tot">($150.00)</td><td class="tot">($150.00)</td><td class="tot-app">($129.00)</td>
+      </tr>
+      <tr class="data-row">
+        <td class="label">🐇 4x Extra 2.0</td>
+        <td>($200.00)</td><td>($200.00)</td><td class="tot-app">($170.00)</td>
+        <td class="tot">($160.00)</td><td class="tot">($160.00)</td><td class="tot-app">($136.00)</td>
+      </tr>
+      <tr class="data-row fan">
+        <td class="label fan-label">🐆 1x Premium + 🐢 3x Value</td>
+        <td>($180.00)</td><td class="tot-fan">($170.00)</td><td class="tot-app">($156.00)</td>
+        <td class="tot">($140.00)</td><td class="tot-fan">($130.00)</td><td class="tot-app">($121.00)</td>
+      </tr>
+      <tr class="data-row">
+        <td class="label">🐆 1x Prem + 🐇 1x Ext + 🐢 2x Val</td>
+        <td>($190.00)</td><td class="tot-fan">($180.00)</td><td class="tot-app">($162.50)</td>
+        <td class="tot">($150.00)</td><td class="tot-fan">($140.00)</td><td class="tot-app">($128.00)</td>
+      </tr>
+      <tr class="data-row alt">
+        <td class="label">🐆 1x Prem + 🐇 2x Ext + 🐢 1x Val</td>
+        <td>($200.00)</td><td class="tot-fan">($190.00)</td><td class="tot-app">($169.00)</td>
+        <td class="tot">($160.00)</td><td class="tot-fan">($150.00)</td><td class="tot-app">($135.00)</td>
+      </tr>
+      <tr class="data-row">
+        <td class="label">🐆 1x Premium + 🐇 3x Extra</td>
+        <td>($210.00)</td><td class="tot-fan">($200.00)</td><td class="tot-app">($175.50)</td>
+        <td class="tot">($170.00)</td><td class="tot-fan">($160.00)</td><td class="tot-app">($142.00)</td>
+      </tr>
+      <tr class="data-row fan">
+        <td class="label fan-label">🐆 2x Premium + 🐢 2x Value</td>
+        <td>($200.00)</td><td class="tot-fan">($180.00)</td><td class="tot-app">($168.00)</td>
+        <td class="tot">($160.00)</td><td class="tot-fan">($140.00)</td><td class="tot-app">($134.00)</td>
+      </tr>
+      <tr class="data-row">
+        <td class="label">🐆 2x Prem + 🐇 1x Ext + 🐢 1x Val</td>
+        <td>($210.00)</td><td class="tot-fan">($190.00)</td><td class="tot-app">($174.50)</td>
+        <td class="tot">($170.00)</td><td class="tot-fan">($150.00)</td><td class="tot-app">($141.00)</td>
+      </tr>
+      <tr class="data-row alt">
+        <td class="label">🐆 2x Premium + 🐇 2x Extra</td>
+        <td>($220.00)</td><td class="tot-fan">($200.00)</td><td class="tot-app">($181.00)</td>
+        <td class="tot">($180.00)</td><td class="tot-fan">($160.00)</td><td class="tot-app">($148.00)</td>
+      </tr>
+      <tr class="data-row fan">
+        <td class="label fan-label">🐆 3x Premium + 🐢 1x Value</td>
+        <td>($220.00)</td><td class="tot-fan">($190.00)</td><td class="tot-app">($180.00)</td>
+        <td class="tot">($180.00)</td><td class="tot-fan">($150.00)</td><td class="tot-app">($147.00)</td>
+      </tr>
+      <tr class="data-row">
+        <td class="label">🐆 3x Premium + 🐇 1x Extra</td>
+        <td>($230.00)</td><td class="tot-fan">($200.00)</td><td class="tot-app">($186.50)</td>
+        <td class="tot">($190.00)</td><td class="tot-fan">($160.00)</td><td class="tot-app">($154.00)</td>
+      </tr>
+      <tr class="data-row alt">
+        <td class="label">🐆 4x Premium 2.0</td>
+        <td>($240.00)</td><td class="tot-fan">($200.00)</td><td class="tot-app">($192.00)</td>
+        <td class="tot">($200.00)</td><td class="tot-fan">($160.00)</td><td class="tot-app">($160.00)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="footer">
+    <div class="footer-col">
+      <b class="title c-blue">SPEED TIERS, AUTOPAY & SIGNATURE RULES</b>
+      • <strong>🐢 Value Plus:</strong> Base 5G • <strong>🐇 Extra:</strong> 75GB Priority + 30GB Hotspot • <strong>🐆 Premium:</strong> Unl. Priority + 60GB Hotspot.<br>
+      • <strong>🚀 Rocket Tier:</strong> Legacy Elite, FirstNet (Band 14/13 Priority), or AT&T Turbo (+$7/L).<br>
+      • <strong>Signature (FAN):</strong> Drops 🐆 Premium to the exact price of 🐇 Extra ($10/L off on 1–5L, $5/L off on 6–10L).
+    </div>
+    <div class="footer-col">
+      <b class="title c-green">APPRECIATION (10/15/20%), FIRSTNET & DISCOUNTS</b>
+      • <strong>Appreciation & FirstNet Family:</strong> <strong>10% off 🐢 Value, 15% off 🐇 Extra, 20% off 🐆 Premium</strong>.<br>
+      <span class="rep-only">• <strong>Accessory Installments:</strong> $75.00 min ($6.25/mo over 12 mos) • <strong>Watch/Tablet Promo:</strong> 50% off 1st connected line ($5.49 / $10).<br>
+      • <strong>Rerate Strategy:</strong> Use 🐢 Value / Mix cards to maximize monthly savings -> convert headroom into Watches, Tablets, NUA & Accessories!</span>
+      <span class="cust-only">• <strong>Connected Devices:</strong> Eligible for 50% off first watch ($5.49) or tablet ($10) line.<br>
+      • <strong>AutoPay:</strong> Saves $10/line with Checking/Debit or $5/line with Credit Card.</span>
+    </div>
+  </div>
+</div>
+
+<script>
+// Dual-Text Rate Lookup Engine: Separate Rep Strategy Labels vs. Clean Customer Presentation Labels
+var rateDB = {
+  1: [
+    {
+      repTag: "🐢 Turtle Tier • Max Headroom",
+      custTag: "🐢 Standard 5G • Most Economical",
+      name: "🐢 1x Value Plus 2.0",
+      repPerks: "🐢 Standard 5G • No Hotspot • Max Bill Drop for Add-Ons",
+      custPerks: "🐢 Unlimited Talk, Text & Standard 5G Data",
+      fan: 50.00, apprec: 45.00, noApApprec: 54.00, fiber: 40.00, base: 50.00, noAp: 60.00
+    },
+    {
+      repTag: "🐇 Rabbit Tier • Mid-Speed",
+      custTag: "🐇 High-Speed Priority & Hotspot",
+      name: "🐇 1x Extra 2.0",
+      repPerks: "🐇 75GB Priority Data • 30GB Hotspot • HD Streaming",
+      custPerks: "🐇 75GB Priority 5G Data • 30GB Mobile Hotspot",
+      fan: 70.00, apprec: 59.50, noApApprec: 68.00, fiber: 56.00, base: 70.00, noAp: 80.00
+    },
+    {
+      repTag: "🐆 Cheetah Tier • Top Priority",
+      custTag: "🐆 Best Performance • Unlimited Priority",
+      name: "🐆 1x Premium 2.0",
+      repPerks: "🐆 Unlimited Priority Data • 60GB Hotspot • 4K UHD",
+      custPerks: "🐆 Unlimited Priority 5G Data • 60GB Hotspot • 4K UHD Streaming",
+      fan: 80.00, apprec: 72.00, noApApprec: 80.00, fiber: 72.00, base: 90.00, noAp: 100.00,
+      featured: true
+    }
+  ],
+  2: [
+    {
+      repTag: "🐢 All-Turtle • Max Bill Drop",
+      custTag: "🐢 Standard 5G • Most Economical",
+      name: "🐢 2x Value Plus 2.0",
+      repPerks: "🐢 2 Lines Base 5G • Frees Up Max Room for Watch/Tablet/Acc",
+      custPerks: "🐢 2 Lines with Unlimited Talk, Text & Standard 5G Data",
+      fan: 90.00, apprec: 81.00, noApApprec: 99.00, fiber: 72.00, base: 90.00, noAp: 110.00
+    },
+    {
+      repTag: "🐆 + 🐢 Smart Mix • Rep Favorite",
+      custTag: "🐆 + 🐢 Most Popular 2-Line Mix",
+      name: "🐆 1x Prem + 🐢 1x Value",
+      repPerks: "🐆 Primary gets Unl. Priority + 60GB Hotspot • 🐢 2nd Line Base 5G",
+      custPerks: "🐆 1 Line Unlimited Priority + 60GB Hotspot • 🐢 1 Line Standard 5G",
+      fan: 115.00, apprec: 104.50, noApApprec: 121.50, fiber: 100.00, base: 125.00, noAp: 145.00,
+      featured: true
+    },
+    {
+      repTag: "🐇 All-Rabbit • Balanced Priority",
+      custTag: "🐇 High-Speed Priority on Both Lines",
+      name: "🐇 2x Extra 2.0",
+      repPerks: "🐇 75GB Priority & 30GB Hotspot on Both Lines",
+      custPerks: "🐇 75GB Priority Data & 30GB Hotspot on Both Lines",
+      fan: 120.00, apprec: 102.00, noApApprec: 119.00, fiber: 96.00, base: 120.00, noAp: 140.00
+    },
+    {
+      repTag: "🐆 All-Cheetah • Max Performance",
+      custTag: "🐆 Maximum Priority on Both Lines",
+      name: "🐆 2x Premium 2.0",
+      repPerks: "🐆 Unlimited Priority + 60GB Hotspot + 4K UHD on Both Lines",
+      custPerks: "🐆 Unlimited Priority Data + 60GB Hotspot + 4K UHD on Both Lines",
+      fan: 140.00, apprec: 128.00, noApApprec: 144.00, fiber: 128.00, base: 160.00, noAp: 180.00
+    }
+  ],
+  3: [
+    {
+      repTag: "🐢 All-Turtle • Max Bill Drop",
+      custTag: "🐢 Standard 5G • Most Economical",
+      name: "🐢 3x Value Plus 2.0",
+      repPerks: "🐢 3 Lines Base 5G • Max Savings to Attach NUA/Insurance/Tablets",
+      custPerks: "🐢 3 Lines with Unlimited Talk, Text & Standard 5G Data",
+      fan: 105.00, apprec: 94.50, noApApprec: 121.50, fiber: 84.00, base: 105.00, noAp: 135.00
+    },
+    {
+      repTag: "🐆 + 🐢 Smart Mix • Best Value",
+      custTag: "🐆 + 🐢 Most Popular Family Mix",
+      name: "🐆 1x Prem + 🐢 2x Value",
+      repPerks: "🐆 Primary gets Unl. Priority • 🐢 2 Secondary Lines on Base 5G",
+      custPerks: "🐆 1 Line Unlimited Priority + 60GB Hotspot • 🐢 2 Lines Standard 5G",
+      fan: 120.00, apprec: 115.00, noApApprec: 141.00, fiber: 108.00, base: 135.00, noAp: 165.00,
+      featured: true
+    },
+    {
+      repTag: "🐆 2x + 🐢 1x • Couple + Kid Mix",
+      custTag: "🐆 2x + 🐢 1x • Balanced Family Mix",
+      name: "🐆 2x Prem + 🐢 1x Value",
+      repPerks: "🐆 2 Parents on Unl. Priority • 🐢 1 Line on Base 5G",
+      custPerks: "🐆 2 Lines Unlimited Priority + 60GB Hotspot • 🐢 1 Line Standard 5G",
+      fan: 135.00, apprec: 135.50, noApApprec: 160.50, fiber: 132.00, base: 165.00, noAp: 195.00
+    },
+    {
+      repTag: "🐇 / 🐆 All-Priority (Same w/ FAN!)",
+      custTag: "🐆 All-Lines Maximum Priority",
+      name: "🐆 3x Premium (or 🐇 3x Extra)",
+      repPerks: "🐆 With Signature FAN, 3x Premium ($150) costs the EXACT same as 🐇 3x Extra!",
+      custPerks: "🐆 Unlimited Priority Data & 60GB Hotspot on All 3 Lines",
+      fan: 150.00, apprec: 156.00, noApApprec: 180.00, fiber: 156.00, base: 195.00, noAp: 225.00
+    }
+  ],
+  4: [
+    {
+      repTag: "🐢 All-Turtle • Max Headroom Slam",
+      custTag: "🐢 Standard 5G • Most Economical",
+      name: "🐢 4x Value Plus 2.0",
+      repPerks: "🐢 $30/line w/ AP • Huge Bill Drop to Fund Multi-PA ($50) & Data Lines",
+      custPerks: "🐢 $30/line w/ AutoPay • Unlimited Talk, Text & Standard 5G Data",
+      fan: 120.00, apprec: 108.00, noApApprec: 144.00, fiber: 96.00, base: 120.00, noAp: 160.00
+    },
+    {
+      repTag: "🐆 + 🐢 Smart Mix • Rep Go-To",
+      custTag: "🐆 + 🐢 Most Popular Family Mix",
+      name: "🐆 1x Prem + 🐢 3x Value",
+      repPerks: "🐆 Primary gets Unl. Priority • 🐢 3 Lines on Value ($130 w/ Sig!)",
+      custPerks: "🐆 1 Line Unlimited Priority + 60GB Hotspot • 🐢 3 Lines Standard 5G",
+      fan: 130.00, apprec: 121.00, noApApprec: 156.00, fiber: 112.00, base: 140.00, noAp: 180.00,
+      featured: true
+    },
+    {
+      repTag: "🐆 2x + 🐢 2x • Balanced Family",
+      custTag: "🐆 2x + 🐢 2x • Balanced Family",
+      name: "🐆 2x Prem + 🐢 2x Value",
+      repPerks: "🐆 2 Lines Unl. Priority + 60GB Hotspot • 🐢 2 Lines Base 5G",
+      custPerks: "🐆 2 Lines Unlimited Priority + 60GB Hotspot • 🐢 2 Lines Standard 5G",
+      fan: 140.00, apprec: 134.00, noApApprec: 168.00, fiber: 128.00, base: 160.00, noAp: 200.00
+    },
+    {
+      repTag: "🐆 / 🐇 All-Cheetah (Matches 🐇 Extra w/ FAN)",
+      custTag: "🐆 All-Lines Maximum Priority",
+      name: "🐆 4x Premium (or 🐇 4x Extra)",
+      repPerks: "🐆 Unlimited Priority on All 4 Lines ($160 w/ Sig or Apprec!)",
+      custPerks: "🐆 Unlimited Priority Data & 60GB Hotspot on All 4 Lines",
+      fan: 160.00, apprec: 160.00, noApApprec: 192.00, fiber: 160.00, base: 200.00, noAp: 240.00
+    }
+  ]
+};
+
+for (var n = 5; n <= 10; n++) {
+  var valAp = 30.99, valBase = 40.99;
+  var extAp = 35.00, extBase = 45.00;
+  var premAp = 40.00, premBase = 50.00;
+  var fanPremAp = (n === 5) ? 30.00 : 35.00;
+
+  var allValBase = Number((n * valAp).toFixed(2));
+  var allValApprec = Number((n * valAp * 0.90).toFixed(2));
+  var allValNoApApprec = Number((n * valBase * 0.90).toFixed(2));
+  var allValFiber = Number((allValBase * 0.80).toFixed(2));
+  var allValNoAp = Number((n * valBase).toFixed(2));
+
+  var budgetBase = Number((premAp + (n - 1) * valAp).toFixed(2));
+  var budgetFan = Number((fanPremAp + (n - 1) * valAp).toFixed(2));
+  var budgetApprec = Number(((premAp * 0.80) + ((n - 1) * valAp * 0.90)).toFixed(2));
+  var budgetNoApApprec = Number(((premBase * 0.80) + ((n - 1) * valBase * 0.90)).toFixed(2));
+  var budgetFiber = Number((budgetBase * 0.80).toFixed(2));
+  var budgetNoAp = Number((premBase + (n - 1) * valBase).toFixed(2));
+
+  var allExtBase = Number((n * extAp).toFixed(2));
+  var allExtApprec = Number((n * extAp * 0.85).toFixed(2));
+  var allExtNoApApprec = Number((n * extBase * 0.85).toFixed(2));
+  var allExtFiber = Number((allExtBase * 0.80).toFixed(2));
+  var allExtNoAp = Number((n * extBase).toFixed(2));
+
+  var allPremBase = Number((n * premAp).toFixed(2));
+  var allPremFan = Number((n * fanPremAp).toFixed(2));
+  var allPremApprec = Number((n * (premAp * 0.80)).toFixed(2));
+  var allPremNoApApprec = Number((n * (premBase * 0.80)).toFixed(2));
+  var allPremFiber = Number((allPremBase * 0.80).toFixed(2));
+  var allPremNoAp = Number((n * premBase).toFixed(2));
+
+  rateDB[n] = [
+    {
+      repTag: "🐢 All-Turtle • Max Bill Drop",
+      custTag: "🐢 Standard 5G • Most Economical",
+      name: "🐢 " + n + "x Value Plus",
+      repPerks: "🐢 " + n + " Lines Base 5G • Frees Up Max Margin for Multi-PA & Connected Lines",
+      custPerks: "🐢 " + n + " Lines with Unlimited Talk, Text & Standard 5G Data",
+      fan: allValBase, apprec: allValApprec, noApApprec: allValNoApApprec, fiber: allValFiber, base: allValBase, noAp: allValNoAp
+    },
+    {
+      repTag: "🐆 + 🐢 Smart Mix • Rep Go-To",
+      custTag: "🐆 + 🐢 Most Popular Family Mix",
+      name: "🐆 1x Prem + 🐢 " + (n - 1) + "x Value",
+      repPerks: "🐆 Primary on Unl. Priority • 🐢 " + (n - 1) + " Lines on Base 5G",
+      custPerks: "🐆 1 Line Unlimited Priority + 60GB Hotspot • 🐢 " + (n - 1) + " Lines Standard 5G",
+      fan: budgetFan, apprec: budgetApprec, noApApprec: budgetNoApApprec, fiber: budgetFiber, base: budgetBase, noAp: budgetNoAp,
+      featured: true
+    },
+    {
+      repTag: "🐇 All-Rabbit • 75GB Priority",
+      custTag: "🐇 High-Speed Priority on All Lines",
+      name: "🐇 " + n + "x Extra 2.0",
+      repPerks: "🐇 75GB Priority Data + 30GB Hotspot on All " + n + " Lines",
+      custPerks: "🐇 75GB Priority Data + 30GB Hotspot on All " + n + " Lines",
+      fan: allExtBase, apprec: allExtApprec, noApApprec: allExtNoApApprec, fiber: allExtFiber, base: allExtBase, noAp: allExtNoAp
+    },
+    {
+      repTag: "🐆 All-Cheetah • Unlimited Priority",
+      custTag: "🐆 Maximum Priority on All Lines",
+      name: "🐆 " + n + "x Premium 2.0",
+      repPerks: "🐆 Unlimited Priority + 60GB Hotspot on All " + n + " Lines",
+      custPerks: "🐆 Unlimited Priority Data + 60GB Hotspot on All " + n + " Lines",
+      fan: allPremFan, apprec: allPremApprec, noApApprec: allPremNoApApprec, fiber: allPremFiber, base: allPremBase, noAp: allPremNoAp
+    }
+  ];
+}
+
+window.togglePresMode = function() {
+  document.body.classList.toggle('presentation-mode');
+  var isPres = document.body.classList.contains('presentation-mode');
+  var presBtn = document.getElementById('pres-btn');
+  if (presBtn) {
+    presBtn.classList.toggle('active', isPres);
+    presBtn.innerHTML = isPres ? '👁️ Customer View: ON' : '👁️ Customer View: OFF';
+  }
+};
+
+function getAddonCosts(lines) {
+  var nuaVal = document.getElementById('addon-nua').value;
+  var paVal = document.getElementById('addon-pa').value;
+  var dataVal = parseFloat(document.getElementById('addon-data').value) || 0;
+  var accVal = parseFloat(document.getElementById('addon-acc').value) || 0;
+  var turboVal = document.getElementById('addon-turbo').value;
+
+  var nuaCost = 0;
+  if (nuaVal === 'all') {
+    nuaCost = lines * 10;
+  } else {
+    nuaCost = Math.min(parseInt(nuaVal, 10) || 0, lines) * 10;
+  }
+
+  var paCost = 0;
+  if (paVal === 'multi') {
+    paCost = 50;
+  } else {
+    paCost = (parseInt(paVal, 10) || 0) * 17;
+  }
+
+  var turboCost = 0;
+  if (turboVal === 'all') {
+    turboCost = lines * 7;
+  } else {
+    turboCost = Math.min(parseInt(turboVal, 10) || 0, lines) * 7;
+  }
+
+  var totalAddons = Number((nuaCost + paCost + dataVal + accVal + turboCost).toFixed(2));
+  return { nuaCost: nuaCost, paCost: paCost, dataVal: dataVal, accVal: accVal, turboCost: turboCost, totalAddons: totalAddons };
+}
+
+function buildCommissionPlaybook(delta, lines, discount, planName, basePlanPrice) {
+  var pills = [];
+
+  if (lines === 1) {
+    var twoLineMixPrice = (discount === 'apprec' || discount === 'firstnet') ? 104.50 : (discount === 'fiber' ? 100.00 : (discount === 'fan' ? 115.00 : 125.00));
+    var twoLineValPrice = (discount === 'apprec' || discount === 'firstnet') ? 81.00 : (discount === 'fiber' ? 72.00 : 90.00);
+    var addMixNet = Number((twoLineMixPrice - basePlanPrice).toFixed(2));
+    var addValNet = Number((twoLineValPrice - basePlanPrice).toFixed(2));
+
+    if (addValNet <= 0) {
+      pills.push('<div class="opp-pill voice"><span class="opp-tag tag-voice">FREE 2ND VOICE LINE</span><strong>1L to 2L Arbitrage:</strong> 🐢 2x Value Plus ($' + twoLineValPrice.toFixed(2) + ') is <strong>$' + Math.abs(addValNet).toFixed(2) + '/mo CHEAPER</strong> than this 1-line plan, or do 🐆 1x Prem + 🐢 1x Val for +$' + addMixNet.toFixed(2) + '/mo!</div>');
+    } else {
+      pills.push('<div class="opp-pill voice"><span class="opp-tag tag-voice">ADD 2ND VOICE LINE</span><strong>1L to 2L Step-Down:</strong> Add a 2nd phone line for only <strong>+$' + addValNet.toFixed(2) + '/mo</strong> (🐢 2x Value @ $' + twoLineValPrice.toFixed(2) + ') or <strong>+$' + addMixNet.toFixed(2) + '/mo</strong> (🐆 1x Prem + 🐢 1x Val @ $' + twoLineMixPrice.toFixed(2) + ')!</div>');
+    }
+    pills.push('<div class="opp-pill voice"><span class="opp-tag tag-voice">55+ 2-LINE PIVOT</span><strong>If 55+ Eligible:</strong> 2 Lines on AT&T 55+ is <strong>$70/mo w/ AP</strong> — adds a 2nd line for less than 1 standard Premium line!</div>');
+  } else if (lines === 2) {
+    var threeLineMixPrice = (discount === 'apprec' || discount === 'firstnet') ? 115.00 : (discount === 'fiber' ? 108.00 : (discount === 'fan' ? 120.00 : 135.00));
+    var netFor3rd = Number((threeLineMixPrice - basePlanPrice).toFixed(2));
+
+    if (netFor3rd <= 0) {
+      pills.push('<div class="opp-pill voice"><span class="opp-tag tag-voice">FREE 3RD VOICE LINE</span><strong>2L to 3L Arbitrage:</strong> 3-Line 🐆 1x Prem + 🐢 2x Val ($' + threeLineMixPrice.toFixed(2) + ') is <strong>$' + Math.abs(netFor3rd).toFixed(2) + '/mo LESS</strong> than this 2-line setup — pitch a FREE 3rd phone line!</div>');
+    } else {
+      pills.push('<div class="opp-pill voice"><span class="opp-tag tag-voice">ADD 3RD VOICE LINE</span><strong>+$' + netFor3rd.toFixed(2) + ' Third Line Pitch:</strong> Moving to 3-Line (🐆 1x Prem + 🐢 2x Val @ $' + threeLineMixPrice.toFixed(2) + ') adds a <strong>3rd smartphone line for only +$' + netFor3rd.toFixed(2) + '/mo net!</strong></div>');
+    }
+  } else if (lines === 3) {
+    var fourLineMixPrice = (discount === 'apprec' || discount === 'firstnet') ? 121.00 : (discount === 'fiber' ? 112.00 : (discount === 'fan' ? 130.00 : 140.00));
+    var netFor4th = Number((fourLineMixPrice - basePlanPrice).toFixed(2));
+
+    if (netFor4th <= 0) {
+      pills.push('<div class="opp-pill voice"><span class="opp-tag tag-voice">FREE 4TH VOICE LINE</span><strong>3L to 4L Arbitrage:</strong> 4-Line 🐆 1x Prem + 🐢 3x Val ($' + fourLineMixPrice.toFixed(2) + ') is <strong>$' + Math.abs(netFor4th).toFixed(2) + '/mo LESS</strong> than this 3-line setup — pitch a FREE 4th phone line!</div>');
+    } else {
+      pills.push('<div class="opp-pill voice"><span class="opp-tag tag-voice">ADD 4TH VOICE LINE</span><strong>+$' + netFor4th.toFixed(2) + ' Fourth Line Pitch:</strong> Moving to 4-Line (🐆 1x Prem + 🐢 3x Val @ $' + fourLineMixPrice.toFixed(2) + ') adds a <strong>4th smartphone line for only +$' + netFor4th.toFixed(2) + '/mo net!</strong></div>');
+    }
+  }
+
+  if (delta >= 5.49) {
+    if (delta >= 6.25) {
+      var maxRetailAcc = Math.floor(delta * 12);
+      var cappedAcc = Math.min(maxRetailAcc, 350);
+      var monthlyAcc = (cappedAcc / 12).toFixed(2);
+      pills.push('<div class="opp-pill free"><span class="opp-tag tag-free">$0 NET ACCESSORY</span><strong>$' + cappedAcc + ' Accessory Bundle (12-Mo):</strong> Finance up to <strong>$' + cappedAcc + '</strong> in cases/chargers/audio ($' + monthlyAcc + '/mo) & bill still drops or breaks even!</div>');
+    }
+
+    if (delta >= 30.99) {
+      pills.push('<div class="opp-pill free"><span class="opp-tag tag-free">$0 NET DATA X2</span><strong>Watch + Tablet Slam:</strong> Covers a <strong>Watch ($10.99) + Tablet ($20)</strong> standard OR <strong>Promo Bundle ($15.49) + NUA ($10)</strong> with $' + (delta - 25.49).toFixed(2) + '/mo left over!</div>');
+    } else if (delta >= 20.00) {
+      pills.push('<div class="opp-pill free"><span class="opp-tag tag-free">$0 NET DATA</span><strong>Watch + Tablet Promo ($15.49/mo)</strong> OR <strong>Standard Tablet ($20/mo)</strong> OR <strong>2x Next Up Anytime ($20/mo)</strong> for $0 net bill increase!</div>');
+    } else if (delta >= 15.49) {
+      pills.push('<div class="opp-pill free"><span class="opp-tag tag-free">$0 NET BUNDLE</span><strong>Watch + Tablet Promo ($15.49/mo):</strong> Add BOTH a promo Watch ($5.49) & promo Tablet ($10) and still save <strong>$' + (delta - 15.49).toFixed(2) + '/mo</strong>!</div>');
+    } else if (delta >= 10.00) {
+      pills.push('<div class="opp-pill free"><span class="opp-tag tag-free">$0 NET ATTACH</span><strong>Tablet ($10 Promo) OR Watch ($10.99) OR 1x NUA ($10):</strong> Drop in a tablet, watch, or 🚀 Turbo ($7) for $0 increase!</div>');
+    } else {
+      pills.push('<div class="opp-pill free"><span class="opp-tag tag-free">$0 NET WATCH</span><strong>Promo Watch Line ($5.49/mo):</strong> Covers 50%-off Watch line completely inside the plan savings!</div>');
+    }
+
+    if (delta >= 17.00) {
+      var nuaCount = Math.min(Math.floor(delta / 10), lines);
+      pills.push('<div class="opp-pill free"><span class="opp-tag tag-free">PROTECT / NUA</span><strong>Insurance or ' + nuaCount + 'x NUA:</strong> Covers <strong>Protect Advantage ($17)</strong> or <strong>' + nuaCount + 'x Next Up Anytime ($' + (nuaCount * 10) + '/mo)</strong> at $0 net increase.</div>');
+    }
+  } else if (delta >= 0) {
+    var watchNet = (5.49 - delta).toFixed(2);
+    var accNet = (6.25 - delta).toFixed(2);
+    var tabNet = (10.00 - delta).toFixed(2);
+    pills.push('<div class="opp-pill stretch"><span class="opp-tag tag-stretch">LOW-COST UPSELL</span><strong>Stretch Plays:</strong> Add a <strong>Promo Watch for +$' + watchNet + '/mo net</strong>, a <strong>$75 Accessory Bundle for +$' + accNet + '/mo net</strong>, or a <strong>Promo Tablet for +$' + tabNet + '/mo net</strong>!</div>');
+  } else {
+    pills.push('<div class="opp-pill stretch"><span class="opp-tag tag-stretch">SOLO / BUNDLE PIVOT</span><strong>Offset Step-Up:</strong> Compare against the 🐢 Value or 🐆+🐢 Mix card to free up headroom, or attach Debit AutoPay (-$10/L) & FAN!</div>');
+  }
+
+  return pills.join('');
+}
+
+window.runCalc = function() {
+  var totalInput = parseFloat(document.getElementById('curr-total').value);
+  var lines = parseInt(document.getElementById('curr-lines').value, 10);
+  var discount = document.getElementById('curr-discount').value;
+  var apMethod = document.getElementById('curr-autopay').value;
+  var analysisBox = document.getElementById('analysis-box');
+  var recContainer = document.getElementById('recommendations-container');
+  var badgeContainer = document.getElementById('pivot-badges');
+
+  if (isNaN(totalInput) || totalInput <= 0) {
+    analysisBox.style.display = 'none';
+    return;
+  }
+
+  recContainer.innerHTML = '';
+  badgeContainer.innerHTML = '';
+  analysisBox.style.display = 'block';
+
+  if (discount === 'firstnet') {
+    badgeContainer.innerHTML += '<span class="badge badge-fn">🚀 FirstNet Active: Priority Spectrum & Family Discount</span>';
+  }
+  if (lines === 1 || lines === 2) {
+    var s55Price = (lines === 1) ? 40 : 70;
+    badgeContainer.innerHTML += '<span class="badge badge-gold rep-only">💡 55+ Senior Pivot: $' + s55Price + '/mo (' + lines + 'L w/ AP)</span>';
+  }
+  badgeContainer.innerHTML += '<span class="badge badge-green rep-only">🛍️ Acc. Installment: $75 Min ($6.25/mo x 12)</span>';
+
+  var addons = getAddonCosts(lines);
+  var ccPenalty = (apMethod === 'credit') ? (lines * 5.00) : 0;
+
+  var baseList = rateDB[lines] || [];
+  var planOptions = baseList.slice();
+
+  if (discount === 'senior55' && (lines === 1 || lines === 2)) {
+    var s55Ap = (lines === 1) ? 40.00 : 70.00;
+    var s55NoAp = s55Ap + (lines * 10.00);
+    planOptions.unshift({
+      repTag: "🐢/🐇 55+ Senior Special",
+      custTag: "🐢/🐇 55+ Exclusive Senior Plan",
+      name: "🐢 " + lines + "x AT&T 55+ Plan",
+      repPerks: "55+ Exclusive Rate • Unlimited Talk/Text/Data",
+      custPerks: "55+ Exclusive Rate • Unlimited Talk, Text & 5G Data",
+      fan: s55Ap, apprec: s55Ap, noApApprec: s55NoAp, fiber: s55Ap, base: s55Ap, noAp: s55NoAp,
+      featured: true
+    });
+  }
+
+  for (var i = 0; i < planOptions.length; i++) {
+    var plan = planOptions[i];
+    var basePlanPrice = 0;
+    var isApprecOrFN = (discount === 'apprec' || discount === 'firstnet');
+
+    if (apMethod === 'none') {
+      if (isApprecOrFN) {
+        basePlanPrice = plan.noApApprec;
+      } else if (discount === 'fiber') {
+        basePlanPrice = Number((plan.noAp * 0.80).toFixed(2));
+      } else {
+        basePlanPrice = plan.noAp;
+      }
+    } else if (discount === 'fan') {
+      basePlanPrice = plan.fan + ccPenalty;
+    } else if (isApprecOrFN) {
+      basePlanPrice = plan.apprec + ccPenalty;
+    } else if (discount === 'fiber') {
+      basePlanPrice = plan.fiber + ccPenalty;
+    } else {
+      basePlanPrice = plan.base + ccPenalty;
+    }
+
+    var finalOutTheDoor = Number((basePlanPrice + addons.totalAddons).toFixed(2));
+    var delta = Number((totalInput - finalOutTheDoor).toFixed(2));
+    var isSavings = delta >= 0;
+
+    var parts = [];
+    if (addons.nuaCost > 0) parts.push('Next Up Anytime $' + addons.nuaCost);
+    if (addons.paCost > 0) parts.push('Protection $' + addons.paCost);
+    if (addons.dataVal > 0) parts.push('Connected Line $' + addons.dataVal.toFixed(2));
+    if (addons.accVal > 0) parts.push('Accessories $' + addons.accVal.toFixed(2));
+    if (addons.turboCost > 0) parts.push('🚀 Turbo $' + addons.turboCost);
+
+    var addonSubtext = (addons.totalAddons > 0)
+      ? 'Plan: $' + basePlanPrice.toFixed(2) + ' + Selected Options: $' + addons.totalAddons.toFixed(2) + ' (' + parts.join(' / ') + ')'
+      : 'Base Wireless Plan Rate';
+
+    var displayTitle = (addons.turboCost > 0 || discount === 'firstnet')
+      ? plan.name + ' + 🚀'
+      : plan.name;
+
+    var playbookHTML = buildCommissionPlaybook(delta, lines, discount, plan.name, basePlanPrice);
+
+    var box = document.createElement('div');
+    box.className = 'rec-box' + (plan.featured ? ' featured' : '');
+    box.innerHTML =
+      '<div class="tier-tag">' +
+        '<span class="rep-only">' + (plan.repTag || 'Wireless 2.0 Option') + '</span>' +
+        '<span class="cust-only">' + (plan.custTag || 'Wireless 2.0 Option') + '</span>' +
+      '</div>' +
+      '<div class="rec-title">' + displayTitle + '</div>' +
+      '<div class="rec-price">$' + finalOutTheDoor.toFixed(2) + '/mo</div>' +
+      '<div class="rec-subprice">' + addonSubtext + '</div>' +
+      '<div class="rec-savings" style="color:' + (isSavings ? '#4ADE80' : '#F87171') + '">' +
+        (isSavings ? '✅ Saves $' + delta.toFixed(2) + '/mo vs Current Bill' : '⚠️ +$' + Math.abs(delta).toFixed(2) + '/mo vs Current Bill') +
+      '</div>' +
+      '<div class="tier-perks">' +
+        '<span class="rep-only">' + (plan.repPerks || '') + '</span>' +
+        '<span class="cust-only">' + (plan.custPerks || '') + '</span>' +
+      '</div>' +
+      '<div class="playbook-box rep-only">' +
+        '<div class="playbook-header">💰 Commission & Attach Opportunities (Remaining Gap):</div>' +
+        playbookHTML +
+      '</div>' +
+      '<div class="cust-summary cust-only">' +
+        'Includes AT&T 5G network access, active discount profile, and all selected device upgrades, protection, connected lines, and accessories.' +
+      '</div>';
+    recContainer.appendChild(box);
+  }
+};
+
+window.onload = function() {
+  window.runCalc();
+};
+</script>
+
+</body>
+</html>
