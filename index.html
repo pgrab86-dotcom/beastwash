@@ -35,8 +35,14 @@
       line-height: 1.45;
     }
 
-    /* Hide any Netlify injected badges */
-    a[href*="netlify"], .netlify-identity-button, iframe[title*="Netlify"] {
+    button, a, select, .fiber-card, .qual-tab {
+      touch-action: manipulation;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    /* Hide any Netlify injected badges except our legitimate availability links */
+    .netlify-identity-button, iframe[title*="Netlify"] {
       display: none !important;
     }
 
@@ -81,15 +87,14 @@
       background: var(--card-bg);
       border: 1px solid var(--att-blue);
       color: var(--text-main);
-      padding: 9px 14px;
+      padding: 10px 16px;
       border-radius: 999px;
-      font-size: 0.82rem;
+      font-size: 0.84rem;
       font-weight: 700;
       cursor: pointer;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 8px;
-      transition: all 0.2s ease;
     }
 
     .mode-btn.active {
@@ -119,9 +124,6 @@
       font-size: 0.88rem;
       font-weight: 800;
       color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
 
     .prequal-badge {
@@ -136,11 +138,11 @@
 
     .prequal-controls {
       display: grid;
-      grid-template-columns: 1.5fr auto auto;
-      gap: 10px;
+      grid-template-columns: 1.4fr auto auto auto;
+      gap: 8px;
     }
 
-    @media (max-width: 720px) {
+    @media (max-width: 780px) {
       .prequal-controls {
         grid-template-columns: 1fr;
       }
@@ -151,7 +153,7 @@
       background: #0b111e;
       color: #fff;
       border: 1px solid var(--card-border);
-      padding: 10px 12px;
+      padding: 11px 12px;
       border-radius: 9px;
       font-size: 0.92rem;
       font-weight: 600;
@@ -162,37 +164,40 @@
       border-color: var(--att-blue);
     }
 
-    .btn-check {
+    /* Real <a> links styled as buttons so iOS Safari/PWA never blocks them */
+    .btn-link {
       background: var(--att-blue);
-      color: #000;
+      color: #000 !important;
+      text-decoration: none !important;
       border: none;
-      padding: 10px 14px;
+      padding: 11px 14px;
       border-radius: 9px;
       font-size: 0.84rem;
       font-weight: 800;
       cursor: pointer;
       white-space: nowrap;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
+      text-align: center;
     }
 
-    .btn-check.secondary {
+    .btn-link.secondary {
       background: #0b111e;
-      color: var(--text-main);
+      color: var(--text-main) !important;
       border: 1px solid var(--card-border);
     }
 
-    .btn-check:active {
-      transform: scale(0.98);
+    .btn-link:active {
+      opacity: 0.8;
     }
 
     .copy-toast {
-      font-size: 0.76rem;
+      font-size: 0.78rem;
       color: #34d399;
       font-weight: 700;
-      margin-top: 6px;
+      margin-top: 8px;
       display: none;
     }
 
@@ -227,7 +232,7 @@
       background: #0b111e;
       color: var(--text-main);
       border: 1px solid var(--card-border);
-      padding: 8px 10px;
+      padding: 9px 10px;
       border-radius: 8px;
       font-size: 0.9rem;
       font-weight: 600;
@@ -289,6 +294,7 @@
     .tier-info {
       display: flex;
       flex-direction: column;
+      padding-right: 8px;
     }
 
     .tier-name {
@@ -308,15 +314,18 @@
     }
 
     .btn-step {
-      width: 34px;
-      height: 34px;
+      width: 38px;
+      height: 38px;
       border-radius: 8px;
-      border: 1px solid var(--card-border);
+      border: 1px solid var(--att-blue);
       background: var(--card-bg);
       color: #fff;
-      font-size: 1.15rem;
-      font-weight: 700;
+      font-size: 1.25rem;
+      font-weight: 800;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .btn-step:active {
@@ -325,10 +334,10 @@
     }
 
     .step-val {
-      min-width: 24px;
+      min-width: 26px;
       text-align: center;
       font-weight: 800;
-      font-size: 1.05rem;
+      font-size: 1.1rem;
     }
 
     /* Interactive Fiber / AIA Speed Buttons */
@@ -343,23 +352,23 @@
       background: #0b111e;
       border: 1px solid var(--card-border);
       color: var(--text-muted);
-      padding: 8px 10px;
+      padding: 10px;
       border-radius: 8px;
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       font-weight: 800;
       cursor: pointer;
       text-align: center;
     }
 
     .qual-tab.active {
-      background: rgba(0, 168, 224, 0.16);
+      background: rgba(0, 168, 224, 0.18);
       border-color: var(--att-blue);
       color: #fff;
     }
 
     .fiber-cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(115px, 1fr));
       gap: 8px;
       margin-bottom: 12px;
     }
@@ -368,10 +377,9 @@
       background: #0b111e;
       border: 2px solid var(--card-border);
       border-radius: 10px;
-      padding: 10px 8px;
+      padding: 10px 6px;
       text-align: center;
       cursor: pointer;
-      transition: all 0.15s ease;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -379,8 +387,11 @@
 
     .fiber-card.active {
       border-color: var(--att-blue);
-      background: rgba(0, 168, 224, 0.12);
-      box-shadow: 0 0 0 1px var(--att-blue);
+      background: rgba(0, 168, 224, 0.15);
+    }
+
+    .fiber-card * {
+      pointer-events: none;
     }
 
     .fiber-speed {
@@ -411,7 +422,7 @@
     }
 
     .net-impact-tag.free {
-      background: rgba(16, 185, 129, 0.2);
+      background: rgba(16, 185, 129, 0.22);
       color: #34d399;
     }
 
@@ -489,10 +500,6 @@
     }
 
     /* Rep Pitch Callouts (Hidden in Customer Mode) */
-    .rep-only {
-      transition: opacity 0.2s ease;
-    }
-
     body.customer-mode .rep-only {
       display: none !important;
     }
@@ -586,16 +593,16 @@
         <h1>AT&T <span>Wireless 2.0 & Fiber</span> Quote Builder</h1>
         <p class="rep-only">Zero-OPUS Pre-Qual • 1–10 Lines Mixed-Tier Engine • 35% Close Rate Pitch Mode</p>
       </div>
-      <button id="customerModeBtn" class="mode-btn" onclick="toggleCustomerMode()">
+      <button type="button" id="customerModeBtn" class="mode-btn">
         👁️ Customer View: <span id="modeStatus">OFF</span>
       </button>
     </div>
 
-    <!-- STEP 0: Stealth Address Pre-Qual Bar (Does NOT touch OPUS close rate) -->
+    <!-- STEP 0: Stealth Address Pre-Qual Bar (Real <a> links so iOS never blocks them) -->
     <div class="prequal-bar rep-only">
       <div class="prequal-header">
         <div class="prequal-title">
-          <span>🏠 Step 1: Stealth Address Pre-Check (Before Opening OPUS Lead)</span>
+          🏠 Step 1: Stealth Address Pre-Check (Before Opening OPUS Lead)
         </div>
         <span class="prequal-badge">🛡️ Protects Close Rate Denominator</span>
       </div>
@@ -604,17 +611,32 @@
           type="text"
           id="custAddress"
           class="address-input"
-          placeholder="Type customer street address & zip (auto-copies on tap)..."
+          placeholder="Type customer street address & zip..."
         />
-        <button class="btn-check" onclick="checkAvailability('att')">
-          🔍 Copy & Check AT&T.com
+        <button type="button" id="copyAddrBtn" class="btn-link secondary">
+          📋 Copy Address
         </button>
-        <button class="btn-check secondary" onclick="checkAvailability('fcc')">
-          🗺️ Copy & Check FCC Map
-        </button>
+        <a
+          href="https://www.att.com/internet/availability/"
+          target="_blank"
+          rel="noopener noreferrer"
+          id="attLinkBtn"
+          class="btn-link"
+        >
+          🔍 Open AT&T Check
+        </a>
+        <a
+          href="https://broadbandmap.fcc.gov/home"
+          target="_blank"
+          rel="noopener noreferrer"
+          id="fccLinkBtn"
+          class="btn-link secondary"
+        >
+          🗺️ Open FCC Map
+        </a>
       </div>
       <div id="copyToast" class="copy-toast">
-        ✅ Address copied to clipboard! Paste into the availability window.
+        ✅ Address copied to clipboard! Paste into the availability page.
       </div>
     </div>
 
@@ -622,13 +644,13 @@
     <div class="grid-top">
       <div class="control-box">
         <label>Current Wireless Bill ($)</label>
-        <input type="number" id="currentBill" placeholder="e.g. 220" value="220" oninput="recalc()" />
+        <input type="number" id="currentBill" placeholder="e.g. 220" value="220" />
       </div>
 
       <div class="control-box">
         <label>Current ISP Bill (Spectrum/Xfinity)</label>
-        <select id="currentIspBill" onchange="recalc()">
-          <option value="0">$0 / Not Bundling ISP Compare</option>
+        <select id="currentIspBill">
+          <option value="0">$0 / Not Comparing ISP</option>
           <option value="65">$65/mo Current Internet</option>
           <option value="80">$80/mo Current Internet</option>
           <option value="95">$95/mo Current Internet</option>
@@ -638,7 +660,7 @@
 
       <div class="control-box">
         <label>Discount Program (FAN)</label>
-        <select id="discountType" onchange="recalc()">
+        <select id="discountType">
           <option value="sig">Signature (Corporate / Union FAN)</option>
           <option value="apprec">Appreciation (Mil/Teach/FN/Health)</option>
           <option value="none">Standard Consumer (No FAN)</option>
@@ -647,7 +669,7 @@
 
       <div class="control-box">
         <label>AutoPay & Paperless Method</label>
-        <select id="autopayType" onchange="recalc()">
+        <select id="autopayType">
           <option value="bank">Bank Account / Points Plus ($10/L)</option>
           <option value="debit">Debit Card ($10/L Wireless • $5 Fiber)</option>
           <option value="credit">Credit Card ($5/L Wireless • $0 Fiber)</option>
@@ -672,9 +694,9 @@
             <span class="tier-sub">Uncapped priority data • 60GB Hotspot • Unlocks 50% Watch/Tab slot</span>
           </div>
           <div class="stepper">
-            <button class="btn-step" onclick="adjustTier('prem', -1)">−</button>
+            <button type="button" class="btn-step" data-tier="prem" data-delta="-1">−</button>
             <span class="step-val" id="premCount">2</span>
-            <button class="btn-step" onclick="adjustTier('prem', 1)">+</button>
+            <button type="button" class="btn-step" data-tier="prem" data-delta="1">+</button>
           </div>
         </div>
 
@@ -685,9 +707,9 @@
             <span class="tier-sub">75GB priority data • 30GB Hotspot</span>
           </div>
           <div class="stepper">
-            <button class="btn-step" onclick="adjustTier('extra', -1)">−</button>
+            <button type="button" class="btn-step" data-tier="extra" data-delta="-1">−</button>
             <span class="step-val" id="extraCount">0</span>
-            <button class="btn-step" onclick="adjustTier('extra', 1)">+</button>
+            <button type="button" class="btn-step" data-tier="extra" data-delta="1">+</button>
           </div>
         </div>
 
@@ -698,25 +720,29 @@
             <span class="tier-sub">Unlimited standard data • Great for additional family lines</span>
           </div>
           <div class="stepper">
-            <button class="btn-step" onclick="adjustTier('val', -1)">−</button>
+            <button type="button" class="btn-step" data-tier="val" data-delta="-1">−</button>
             <span class="step-val" id="valCount">2</span>
-            <button class="btn-step" onclick="adjustTier('val', 1)">+</button>
+            <button type="button" class="btn-step" data-tier="val" data-delta="1">+</button>
           </div>
         </div>
 
         <!-- ONE-TAP INTERNET QUALIFICATION & SPEED CARDS -->
         <div class="panel-title" style="margin-top: 16px;">
-          <span>2. Home Internet Bundle (Tap What Qualified)</span>
-          <span class="badge" id="fiberStatusBadge">20% Converged Discount Active</span>
+          <span>2. Home Internet Bundle (Tap Speed to Add)</span>
+          <span class="badge">20% Converged Discount Active</span>
         </div>
 
         <div class="qual-tabs rep-only">
-          <button class="qual-tab active" id="tabFiber" onclick="setQualMode('fiber')">🟢 Fiber Qualified (300/500/1G/5G)</button>
-          <button class="qual-tab" id="tabAia" onclick="setQualMode('aia')">📡 Internet Air (AIA) Only</button>
+          <button type="button" class="qual-tab active" id="tabFiber" data-qual="fiber">
+            🟢 Fiber Qualified (300 / 500 / 1G / 5G)
+          </button>
+          <button type="button" class="qual-tab" id="tabAia" data-qual="aia">
+            📡 Internet Air (AIA) Only
+          </button>
         </div>
 
         <div class="fiber-cards" id="fiberCardsContainer">
-          <!-- Populated dynamically with live Net Bill Impact badges -->
+          <!-- Populated dynamically -->
         </div>
 
         <!-- Connected & Protection -->
@@ -728,7 +754,7 @@
         <div class="addons-grid">
           <div class="control-box">
             <label>⌚ Smartwatches ($10.99 / $5.50)</label>
-            <select id="watchCount" onchange="recalc()">
+            <select id="watchCount">
               <option value="0">0 Watches</option>
               <option value="1">1 Watch</option>
               <option value="2">2 Watches</option>
@@ -739,22 +765,11 @@
 
           <div class="control-box">
             <label>📱 Tablets ($20.99 / $10.50)</label>
-            <select id="tabletCount" onchange="recalc()">
+            <select id="tabletCount">
               <option value="0">0 Tablets</option>
               <option value="1">1 Tablet</option>
               <option value="2">2 Tablets</option>
               <option value="3">3 Tablets</option>
               <option value="4">4 Tablets</option>
             </select>
-          </div>
-
-          <div class="control-box">
-            <label>🔄 Next Up Anytime ($10/line)</label>
-            <select id="nuaCount" onchange="recalc()">
-              <option value="0">0 Lines</option>
-              <option value="1">1 Line (+$10)</option>
-              <option value="2">2 Lines (+$20)</option>
-              <option value="3">3 Lines (+$30)</option>
-              <option value="4">4 Lines (+$40)</option>
-              <option value="5">5 Lines (+$50)</option>
-            </select>
+       
