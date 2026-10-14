@@ -2,96 +2,63 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <title>AT&T Wireless 2.0 & Fiber Builder</title>
 <style>
-  :root {
-    --blue: #00a8e0;
-    --bg: #0b111e;
-    --card: #151f32;
-    --border: #263552;
-    --text: #f8fafc;
-    --muted: #94a3b8;
-    --green: #10b981;
-    --warn: #f59e0b;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
-  body { background: var(--bg); color: var(--text); padding: 12px; line-height: 1.4; }
-  .wrap { max-width: 1100px; margin: 0 auto; }
-
-  .hdr { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding-bottom: 12px; margin-bottom: 14px; border-bottom: 1px solid var(--border); }
-  .hdr h1 { font-size: 1.25rem; font-weight: 800; color: #fff; }
-  .hdr h1 span { color: var(--blue); }
-  .hdr p { font-size: 0.72rem; color: var(--muted); font-weight: 700; text-transform: uppercase; margin-top: 2px; }
-
-  .btn-mode { background: var(--card); border: 2px solid var(--blue); color: #fff; padding: 10px 16px; border-radius: 99px; font-size: 0.85rem; font-weight: 800; cursor: pointer; }
-  .btn-mode.on { background: var(--blue); color: #000; }
-
-  .prequal { background: #111c2d; border: 1px solid var(--blue); border-radius: 12px; padding: 12px; margin-bottom: 14px; }
-  .prequal-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; font-size: 0.82rem; font-weight: 800; }
-  .pill-safe { font-size: 0.68rem; background: rgba(16,185,129,0.2); border: 1px solid var(--green); color: #34d399; padding: 2px 8px; border-radius: 99px; }
-  .prequal-row { display: grid; grid-template-columns: 1.5fr auto auto auto; gap: 8px; }
-  @media (max-width: 760px) { .prequal-row { grid-template-columns: 1fr 1fr; } .addr-in { grid-column: 1 / -1; } }
-
-  .addr-in, select, input[type="number"] { width: 100%; background: var(--bg); color: #fff; border: 1px solid var(--border); padding: 10px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; }
-  .act-btn { background: var(--blue); color: #000 !important; text-decoration: none !important; border: none; padding: 10px 12px; border-radius: 8px; font-size: 0.82rem; font-weight: 800; cursor: pointer; text-align: center; display: inline-flex; align-items: center; justify-content: center; }
-  .act-btn.sec { background: var(--bg); color: #fff !important; border: 1px solid var(--border); }
-  .toast { font-size: 0.76rem; color: #34d399; font-weight: 700; margin-top: 6px; display: none; }
-
-  .top-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; margin-bottom: 14px; }
-  .cbox { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; }
-  .cbox label { display: block; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
-
-  .main-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 14px; margin-bottom: 18px; }
-  @media (max-width: 860px) { .main-grid { grid-template-columns: 1fr; } }
-  .panel { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px; }
-  .ptitle { font-size: 0.9rem; font-weight: 800; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-  .badge { font-size: 0.7rem; background: rgba(0,168,224,0.18); color: var(--blue); padding: 3px 8px; border-radius: 99px; font-weight: 700; }
-
-  .trow { display: flex; justify-content: space-between; align-items: center; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; margin-bottom: 8px; }
-  .tname { font-weight: 700; font-size: 0.9rem; display: block; }
-  .tsub { font-size: 0.72rem; color: var(--muted); }
-  .stepper { display: flex; align-items: center; gap: 8px; }
-  .sbtn { width: 42px; height: 42px; border-radius: 8px; border: 2px solid var(--blue); background: var(--card); color: #fff; font-size: 1.35rem; font-weight: 900; cursor: pointer; }
-  .sbtn:active { background: var(--blue); color: #000; }
-  .sval { min-width: 28px; text-align: center; font-weight: 900; font-size: 1.15rem; }
-
-  .qtabs { display: flex; gap: 8px; margin-bottom: 10px; }
-  .qtab { flex: 1; background: var(--bg); border: 1px solid var(--border); color: var(--muted); padding: 10px; border-radius: 8px; font-size: 0.78rem; font-weight: 800; cursor: pointer; }
-  .qtab.active { background: rgba(0,168,224,0.2); border-color: var(--blue); color: #fff; }
-
-  .fcards { display: grid; grid-template-columns: repeat(auto-fit, minmax(105px, 1fr)); gap: 8px; margin-bottom: 12px; }
-  .fcard { background: var(--bg); border: 2px solid var(--border); border-radius: 10px; padding: 10px 6px; text-align: center; cursor: pointer; color: #fff; width: 100%; }
-  .fcard.active { border-color: var(--blue); background: rgba(0,168,224,0.18); }
-  .fspeed { font-size: 0.82rem; font-weight: 800; display: block; }
-  .fprice { font-size: 1.2rem; font-weight: 900; color: var(--blue); margin: 2px 0; display: block; }
-  .fnet { font-size: 0.66rem; font-weight: 800; padding: 3px 4px; border-radius: 5px; margin-top: 4px; display: inline-block; }
-  .fnet.free { background: rgba(16,185,129,0.22); color: #34d399; }
-  .fnet.low { background: rgba(56,189,248,0.15); color: #38bdf8; }
-
-  .addons { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 8px; }
-
-  .hero { background: linear-gradient(135deg, #003e85, #0077b6); border-radius: 12px; padding: 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-  .hero-lbl { font-size: 0.72rem; text-transform: uppercase; font-weight: 700; color: rgba(255,255,255,0.85); }
-  .hero-price { font-size: 2rem; font-weight: 900; color: #fff; }
-  .save-pill { background: rgba(16,185,129,0.22); border: 1px solid var(--green); color: #34d399; padding: 6px 10px; border-radius: 8px; text-align: right; font-weight: 800; font-size: 0.82rem; }
-
-  .blist { list-style: none; margin-bottom: 12px; }
-  .blist li { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed var(--border); font-size: 0.85rem; }
-
-  .pitch { background: rgba(16,185,129,0.12); border-left: 4px solid var(--green); padding: 9px 11px; border-radius: 8px; margin-top: 8px; font-size: 0.79rem; }
-  .pitch.warn { background: rgba(245,158,11,0.14); border-left-color: var(--warn); }
-  .pitch strong { display: block; margin-bottom: 2px; color: #fff; }
-
-  body.cust-mode .rep-only { display: none !important; }
-
-  .twrap { overflow-x: auto; background: var(--card); border: 1px solid var(--border); border-radius: 12px; margin-top: 14px; }
-  table { width: 100%; border-collapse: collapse; font-size: 0.8rem; min-width: 640px; }
-  th { background: #0f172a; color: var(--blue); text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--border); }
-  td { padding: 7px 10px; border-bottom: 1px solid rgba(38,53,82,0.5); }
-  .ghdr td { background: rgba(0,168,224,0.14); color: #fff; font-weight: 800; }
+:root{--b:#00a8e0;--bg:#0b111e;--c:#151f32;--bd:#263552;--t:#f8fafc;--m:#94a3b8;--g:#10b981;--w:#f59e0b}
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--t);padding:12px;line-height:1.4}
+.wrap{max-width:1100px;margin:0 auto}
+.hdr{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;padding-bottom:12px;margin-bottom:14px;border-bottom:1px solid var(--bd)}
+.hdr h1{font-size:1.25rem;font-weight:800;color:#fff}.hdr h1 span{color:var(--b)}
+.hdr p{font-size:.72rem;color:var(--m);font-weight:700;text-transform:uppercase;margin-top:2px}
+.btn-mode{background:var(--c);border:2px solid var(--b);color:#fff;padding:10px 16px;border-radius:99px;font-size:.85rem;font-weight:800;cursor:pointer}
+.btn-mode.on{background:var(--b);color:#000}
+.prequal{background:#111c2d;border:1px solid var(--b);border-radius:12px;padding:12px;margin-bottom:14px}
+.prequal-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:8px;font-size:.82rem;font-weight:800}
+.pill-safe{font-size:.68rem;background:rgba(16,185,129,.2);border:1px solid var(--g);color:#34d399;padding:2px 8px;border-radius:99px}
+.prequal-row{display:grid;grid-template-columns:1.5fr auto auto auto;gap:8px}
+@media(max-width:760px){.prequal-row{grid-template-columns:1fr 1fr}.addr-in{grid-column:1/-1}}
+.addr-in,select,input[type=number]{width:100%;background:var(--bg);color:#fff;border:1px solid var(--bd);padding:10px;border-radius:8px;font-size:.9rem;font-weight:600}
+.act-btn{background:var(--b);color:#000!important;text-decoration:none!important;border:none;padding:10px 12px;border-radius:8px;font-size:.82rem;font-weight:800;cursor:pointer;text-align:center;display:inline-flex;align-items:center;justify-content:center}
+.act-btn.sec{background:var(--bg);color:#fff!important;border:1px solid var(--bd)}
+.toast{font-size:.76rem;color:#34d399;font-weight:700;margin-top:6px;display:none}
+.top-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-bottom:14px}
+.cbox{background:var(--c);border:1px solid var(--bd);border-radius:10px;padding:10px 12px}
+.cbox label{display:block;font-size:.68rem;font-weight:700;text-transform:uppercase;color:var(--m);margin-bottom:5px}
+.main-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:14px;margin-bottom:18px}
+@media(max-width:860px){.main-grid{grid-template-columns:1fr}}
+.panel{background:var(--c);border:1px solid var(--bd);border-radius:12px;padding:14px}
+.ptitle{font-size:.9rem;font-weight:800;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.badge{font-size:.7rem;background:rgba(0,168,224,.18);color:var(--b);padding:3px 8px;border-radius:99px;font-weight:700}
+.trow{display:flex;justify-content:space-between;align-items:center;background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:8px 10px;margin-bottom:8px}
+.tname{font-weight:700;font-size:.9rem;display:block}.tsub{font-size:.72rem;color:var(--m)}
+.stepper{display:flex;align-items:center;gap:8px}
+.sbtn{width:42px;height:42px;border-radius:8px;border:2px solid var(--b);background:var(--c);color:#fff;font-size:1.35rem;font-weight:900;cursor:pointer}
+.sval{min-width:28px;text-align:center;font-weight:900;font-size:1.15rem}
+.qtabs{display:flex;gap:8px;margin-bottom:10px}
+.qtab{flex:1;background:var(--bg);border:1px solid var(--bd);color:var(--m);padding:10px;border-radius:8px;font-size:.78rem;font-weight:800;cursor:pointer}
+.qtab.active{background:rgba(0,168,224,.2);border-color:var(--b);color:#fff}
+.fcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:8px;margin-bottom:12px}
+.fcard{background:var(--bg);border:2px solid var(--bd);border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;color:#fff;width:100%}
+.fcard.active{border-color:var(--b);background:rgba(0,168,224,.18)}
+.fspeed{font-size:.82rem;font-weight:800;display:block}.fprice{font-size:1.2rem;font-weight:900;color:var(--b);margin:2px 0;display:block}
+.fnet{font-size:.66rem;font-weight:800;padding:3px 4px;border-radius:5px;margin-top:4px;display:inline-block}
+.fnet.free{background:rgba(16,185,129,.22);color:#34d399}.fnet.low{background:rgba(56,189,248,.15);color:#38bdf8}
+.addons{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px}
+.hero{background:linear-gradient(135deg,#003e85,#0077b6);border-radius:12px;padding:14px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.hero-lbl{font-size:.72rem;text-transform:uppercase;font-weight:700;color:rgba(255,255,255,.85)}.hero-price{font-size:2rem;font-weight:900;color:#fff}
+.save-pill{background:rgba(16,185,129,.22);border:1px solid var(--g);color:#34d399;padding:6px 10px;border-radius:8px;text-align:right;font-weight:800;font-size:.82rem}
+.blist{list-style:none;margin-bottom:12px}.blist li{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--bd);font-size:.85rem}
+.pitch{background:rgba(16,185,129,.12);border-left:4px solid var(--g);padding:9px 11px;border-radius:8px;margin-top:8px;font-size:.79rem}
+.pitch.warn{background:rgba(245,158,11,.14);border-left-color:var(--w)}.pitch strong{display:block;margin-bottom:2px;color:#fff}
+body.cust-mode .rep-only{display:none!important}
+.twrap{overflow-x:auto;background:var(--c);border:1px solid var(--bd);border-radius:12px;margin-top:14px}
+table{width:100%;border-collapse:collapse;font-size:.8rem;min-width:640px}
+th{background:#0f172a;color:var(--b);text-align:left;padding:9px 10px;border-bottom:1px solid var(--bd)}
+td{padding:7px 10px;border-bottom:1px solid rgba(38,53,82,.5)}.ghdr td{background:rgba(0,168,224,.14);color:#fff;font-weight:800}
 </style>
 </head>
 <body>
@@ -99,14 +66,11 @@
   <div class="hdr">
     <div>
       <h1>AT&T <span>Wireless 2.0 & Fiber</span> Builder</h1>
-      <p class="rep-only"><span id="jsStatus" style="color:#34d399;">● Engine Ready</span> • 1–10 Lines • 35% Close Rate Pitch Mode</p>
+      <p class="rep-only"><span style="color:#34d399;">● Engine Ready</span> • 1–10 Lines • 35% Close Rate Pitch Mode</p>
     </div>
-    <button type="button" id="custBtn" class="btn-mode" onclick="window.toggleCust()">
-      👁️ Customer View: <span id="custTxt">OFF</span>
-    </button>
+    <button type="button" id="custBtn" class="btn-mode" onclick="toggleCust()">👁️ Customer View: <span id="custTxt">OFF</span></button>
   </div>
 
-  <!-- Stealth Address Pre-Qual Bar -->
   <div class="prequal rep-only">
     <div class="prequal-top">
       <span>🏠 Step 1: Stealth Address Pre-Check (Before Opening OPUS Lead)</span>
@@ -114,403 +78,182 @@
     </div>
     <div class="prequal-row">
       <input type="text" id="addrIn" class="addr-in" placeholder="Enter street address & zip...">
-      <button type="button" class="act-btn sec" onclick="window.copyAddr()">📋 Copy Address</button>
-      <a href="https://www.att.com/internet/availability/" target="_blank" rel="noopener" class="act-btn" onclick="window.copyAddr()">🔍 AT&T Check</a>
-      <a href="https://broadbandmap.fcc.gov/home" target="_blank" rel="noopener" class="act-btn sec" onclick="window.copyAddr()">🗺️ FCC Map</a>
+      <button type="button" class="act-btn sec" onclick="copyAddr()">📋 Copy</button>
+      <a href="https://www.att.com/internet/availability/" target="_blank" rel="noopener" class="act-btn" onclick="copyAddr()">🔍 AT&T Check</a>
+      <a href="https://broadbandmap.fcc.gov/home" target="_blank" rel="noopener" class="act-btn sec" onclick="copyAddr()">🗺️ FCC Map</a>
     </div>
     <div id="toast" class="toast">✅ Address copied! Paste into availability tab.</div>
   </div>
 
-  <!-- Top Controls -->
   <div class="top-grid">
-    <div class="cbox">
-      <label>Current Wireless Bill ($)</label>
-      <input type="number" id="curBill" value="220" oninput="window.recalc()" onchange="window.recalc()">
-    </div>
-    <div class="cbox">
-      <label>Current Home Internet ($)</label>
-      <select id="curIsp" onchange="window.recalc()">
-        <option value="0">$0 / Not Comparing ISP</option>
-        <option value="65">$65/mo (Spectrum/Xfinity)</option>
-        <option value="80">$80/mo (Spectrum/Xfinity)</option>
-        <option value="95">$95/mo (Spectrum/Xfinity)</option>
-        <option value="110">$110/mo (Spectrum/Xfinity)</option>
+    <div class="cbox"><label>Current Wireless Bill ($)</label><input type="number" id="curBill" value="220" oninput="recalc()"></div>
+    <div class="cbox"><label>Current Home Internet ($)</label>
+      <select id="curIsp" onchange="recalc()">
+        <option value="0">$0 / Not Comparing</option><option value="65">$65/mo ISP</option><option value="80">$80/mo ISP</option><option value="95">$95/mo ISP</option><option value="110">$110/mo ISP</option>
       </select>
     </div>
-    <div class="cbox">
-      <label>Discount Program (FAN)</label>
-      <select id="discType" onchange="window.recalc()">
-        <option value="sig">Signature (Corporate / FAN)</option>
-        <option value="apprec">Appreciation (Mil/Teach/FN/RN)</option>
-        <option value="none">Standard Consumer (No FAN)</option>
+    <div class="cbox"><label>Discount Program (FAN)</label>
+      <select id="discType" onchange="recalc()">
+        <option value="sig">Signature (Corporate/FAN)</option><option value="apprec">Appreciation (Mil/Teach/FN/RN)</option><option value="none">Standard (No FAN)</option>
       </select>
     </div>
-    <div class="cbox">
-      <label>AutoPay Method</label>
-      <select id="apType" onchange="window.recalc()">
-        <option value="bank">Bank Account ($10/L + $10 Fiber)</option>
-        <option value="debit">Debit Card ($10/L + $5 Fiber)</option>
-        <option value="credit">Credit Card ($5/L + $0 Fiber)</option>
-        <option value="none">No AutoPay ($0 off)</option>
+    <div class="cbox"><label>AutoPay Method</label>
+      <select id="apType" onchange="recalc()">
+        <option value="bank">Bank ($10/L + $10 Fiber)</option><option value="debit">Debit ($10/L + $5 Fiber)</option><option value="credit">Credit ($5/L + $0 Fiber)</option><option value="none">No AutoPay</option>
       </select>
     </div>
   </div>
 
-  <!-- Main Builder -->
   <div class="main-grid">
     <div class="panel">
-      <div class="ptitle">
-        <span>1. Voice Line Mix (1–10 Lines)</span>
-        <span class="badge" id="linesBadge">4 Voice Lines</span>
-      </div>
-
+      <div class="ptitle"><span>1. Voice Line Mix (1–10 Lines)</span><span class="badge" id="linesBadge">4 Voice Lines</span></div>
       <div class="trow">
-        <div>
-          <span class="tname">🐆 Unlimited Premium 2.0</span>
-          <span class="tsub">Uncapped data • 60GB Hotspot • 50% Watch/Tab slot</span>
-        </div>
-        <div class="stepper">
-          <button type="button" class="sbtn" onclick="window.stepTier('prem', -1)">−</button>
-          <span class="sval" id="valPrem">2</span>
-          <button type="button" class="sbtn" onclick="window.stepTier('prem', 1)">+</button>
-        </div>
+        <div><span class="tname">🐆 Unlimited Premium 2.0</span><span class="tsub">Uncapped • 60GB Hotspot • 50% Watch/Tab slot</span></div>
+        <div class="stepper"><button type="button" class="sbtn" onclick="stepTier('prem',-1)">−</button><span class="sval" id="valPrem">2</span><button type="button" class="sbtn" onclick="stepTier('prem',1)">+</button></div>
       </div>
-
       <div class="trow">
-        <div>
-          <span class="tname">🐇 Unlimited Extra 2.0</span>
-          <span class="tsub">75GB priority data • 30GB Hotspot</span>
-        </div>
-        <div class="stepper">
-          <button type="button" class="sbtn" onclick="window.stepTier('extra', -1)">−</button>
-          <span class="sval" id="valExtra">0</span>
-          <button type="button" class="sbtn" onclick="window.stepTier('extra', 1)">+</button>
-        </div>
+        <div><span class="tname">🐇 Unlimited Extra 2.0</span><span class="tsub">75GB priority data • 30GB Hotspot</span></div>
+        <div class="stepper"><button type="button" class="sbtn" onclick="stepTier('extra',-1)">−</button><span class="sval" id="valExtra">0</span><button type="button" class="sbtn" onclick="stepTier('extra',1)">+</button></div>
       </div>
-
       <div class="trow">
-        <div>
-          <span class="tname">🐢 Value Plus 2.0</span>
-          <span class="tsub">Unlimited standard data • Great for family lines</span>
-        </div>
-        <div class="stepper">
-          <button type="button" class="sbtn" onclick="window.stepTier('val', -1)">−</button>
-          <span class="sval" id="valVal">2</span>
-          <button type="button" class="sbtn" onclick="window.stepTier('val', 1)">+</button>
-        </div>
+        <div><span class="tname">🐢 Value Plus 2.0</span><span class="tsub">Unlimited standard data • Great for family lines</span></div>
+        <div class="stepper"><button type="button" class="sbtn" onclick="stepTier('val',-1)">−</button><span class="sval" id="valVal">2</span><button type="button" class="sbtn" onclick="stepTier('val',1)">+</button></div>
       </div>
 
-      <!-- Fiber / AIA Buttons -->
-      <div class="ptitle" style="margin-top:14px;">
-        <span>2. Home Internet Bundle (Tap Speed)</span>
-        <span class="badge">20% Bundle Discount</span>
-      </div>
-
+      <div class="ptitle" style="margin-top:14px;"><span>2. Home Internet Bundle (Tap Speed)</span><span class="badge">20% Bundle Off</span></div>
       <div class="qtabs rep-only">
-        <button type="button" class="qtab active" id="qFiber" onclick="window.setQual('fiber')">🟢 Fiber (300 / 500 / 1G / 5G)</button>
-        <button type="button" class="qtab" id="qAia" onclick="window.setQual('aia')">📡 Internet Air (AIA)</button>
+        <button type="button" class="qtab active" id="qFiber" onclick="setQual('fiber')">🟢 Fiber (300/500/1G/5G)</button>
+        <button type="button" class="qtab" id="qAia" onclick="setQual('aia')">📡 Internet Air (AIA)</button>
       </div>
-
       <div class="fcards" id="fiberBox"></div>
 
-      <!-- Addons -->
-      <div class="ptitle" style="margin-top:12px;">
-        <span>3. Watches, Tablets, Next Up & Insurance</span>
-        <span class="badge" id="slotBadge">2x 50%-Off Slots</span>
-      </div>
-
+      <div class="ptitle" style="margin-top:12px;"><span>3. Watches, Tablets, Next Up & Insurance</span><span class="badge" id="slotBadge">2x 50%-Off Slots</span></div>
       <div class="addons">
-        <div class="cbox">
-          <label>⌚ Watches ($10.99 / $5.50)</label>
-          <select id="wCount" onchange="window.recalc()">
-            <option value="0">0 Watches</option>
-            <option value="1">1 Watch</option>
-            <option value="2">2 Watches</option>
-            <option value="3">3 Watches</option>
-            <option value="4">4 Watches</option>
-          </select>
-        </div>
-        <div class="cbox">
-          <label>📱 Tablets ($20.99 / $10.50)</label>
-          <select id="tCount" onchange="window.recalc()">
-            <option value="0">0 Tablets</option>
-            <option value="1">1 Tablet</option>
-            <option value="2">2 Tablets</option>
-            <option value="3">3 Tablets</option>
-            <option value="4">4 Tablets</option>
-          </select>
-        </div>
-        <div class="cbox">
-          <label>🔄 Next Up Anytime ($10)</label>
-          <select id="nuaCount" onchange="window.recalc()">
-            <option value="0">0 Lines</option>
-            <option value="1">1 Line (+$10)</option>
-            <option value="2">2 Lines (+$20)</option>
-            <option value="3">3 Lines (+$30)</option>
-            <option value="4">4 Lines (+$40)</option>
-            <option value="5">5 Lines (+$50)</option>
-          </select>
-        </div>
-        <div class="cbox">
-          <label>🛡️ Protect Advantage</label>
-          <select id="insCost" onchange="window.recalc()">
-            <option value="0">None ($0)</option>
-            <option value="17">1 Device ($17)</option>
-            <option value="34">2 Devices ($34)</option>
-            <option value="50">4-Pack ($50)</option>
-          </select>
-        </div>
+        <div class="cbox"><label>⌚ Watches ($10.99/$5.50)</label><select id="wCount" onchange="recalc()"><option value="0">0</option><option value="1">1 Watch</option><option value="2">2 Watches</option><option value="3">3 Watches</option><option value="4">4 Watches</option></select></div>
+        <div class="cbox"><label>📱 Tablets ($20.99/$10.50)</label><select id="tCount" onchange="recalc()"><option value="0">0</option><option value="1">1 Tablet</option><option value="2">2 Tablets</option><option value="3">3 Tablets</option><option value="4">4 Tablets</option></select></div>
+        <div class="cbox"><label>🔄 Next Up ($10/L)</label><select id="nuaCount" onchange="recalc()"><option value="0">0</option><option value="1">1 (+$10)</option><option value="2">2 (+$20)</option><option value="3">3 (+$30)</option><option value="4">4 (+$40)</option><option value="5">5 (+$50)</option></select></div>
+        <div class="cbox"><label>🛡️ Protection</label><select id="insCost" onchange="recalc()"><option value="0">$0</option><option value="17">1 ($17)</option><option value="34">2 ($34)</option><option value="50">4-Pack ($50)</option></select></div>
       </div>
     </div>
 
-    <!-- Live Quote Output -->
     <div class="panel">
-      <div class="ptitle">
-        <span>Estimated Monthly Quote</span>
-        <span class="badge" id="discPill">Bank AP • Signature</span>
-      </div>
-
+      <div class="ptitle"><span>Estimated Monthly Quote</span><span class="badge" id="discPill">Bank AP</span></div>
       <div class="hero">
-        <div>
-          <div class="hero-lbl" id="heroLbl">Wireless Monthly Estimate</div>
-          <div class="hero-price" id="grandOut">$140.00</div>
-        </div>
-        <div class="save-pill" id="saveOut">Saves $80.00/mo</div>
+        <div><div class="hero-lbl" id="heroLbl">Wireless Estimate</div><div class="hero-price" id="grandOut">$140.00</div></div>
+        <div class="save-pill" id="saveOut">Saves $80/mo</div>
       </div>
-
       <ul class="blist" id="bList"></ul>
       <div class="rep-only" id="pitchBox"></div>
     </div>
   </div>
 
-  <!-- Matrix Table -->
   <div class="twrap">
     <table>
-      <thead>
-        <tr>
-          <th>PLAN COMBINATION</th>
-          <th>NO AP</th>
-          <th>NO AP + SIG</th>
-          <th>NO AP + APPREC</th>
-          <th>AUTOPAY</th>
-          <th>AP + SIG</th>
-          <th>AP + APPREC</th>
-        </tr>
-      </thead>
+      <thead><tr><th>COMBO</th><th>NO AP</th><th>NO AP+SIG</th><th>NO AP+APP</th><th>AUTOPAY</th><th>AP+SIG</th><th>AP+APPREC</th></tr></thead>
       <tbody id="mBody"></tbody>
     </table>
   </div>
 </div>
-
 <script>
-  window.RATES = {
-    1: { prem: 90, extra: 70, val: 50 },
-    2: { prem: 80, extra: 60, val: 45 },
-    3: { prem: 65, extra: 50, val: 35 },
-    4: { prem: 50, extra: 40, val: 30 },
-    5: { prem: 45, extra: 35, val: 30 },
-    6: { prem: 40, extra: 35, val: 30 },
-    7: { prem: 40, extra: 35, val: 30 },
-    8: { prem: 40, extra: 35, val: 30 },
-    9: { prem: 40, extra: 35, val: 30 },
-    10:{ prem: 40, extra: 35, val: 30 }
-  };
+var RATES={1:[90,70,50],2:[80,60,45],3:[65,50,35],4:[50,40,30],5:[45,35,30],6:[40,35,30],7:[40,35,30],8:[40,35,30],9:[40,35,30],10:[40,35,30]};
+var NETS={none:{l:"No Internet",s:"Wireless Only",ap:0,b:0},"300":{l:"300 Mbps",s:"Fiber 300",ap:50,b:35},"500":{l:"500 Mbps",s:"Fiber 500",ap:60,b:45},"1000":{l:"1 GIG",s:"Fiber 1000",ap:70,b:50},"5000":{l:"5 GIG",s:"Fiber 5000",ap:110,b:85},aia:{l:"Internet Air",s:"5G Home",ap:60,b:47}};
+var st={prem:2,extra:0,val:2,qual:'fiber',net:'none'};
 
-  window.NET_TIERS = {
-    none: { label: "No Internet", sub: "Wireless Only", ap: 0, bun: 0 },
-    "300": { label: "300 Mbps", sub: "Fiber 300", ap: 50, bun: 35 },
-    "500": { label: "500 Mbps", sub: "Fiber 500", ap: 60, bun: 45 },
-    "1000": { label: "1 GIG", sub: "Fiber 1000", ap: 70, bun: 50 },
-    "5000": { label: "5 GIG", sub: "Fiber 5000", ap: 110, bun: 85 },
-    aia: { label: "Internet Air", sub: "5G Home", ap: 60, bun: 47 }
-  };
+function toggleCust(){
+  var on=document.body.classList.toggle('cust-mode');
+  document.getElementById('custBtn').classList.toggle('on',on);
+  document.getElementById('custTxt').textContent=on?'ON':'OFF';
+}
+function copyAddr(){
+  var v=document.getElementById('addrIn').value;
+  if(v&&navigator.clipboard)navigator.clipboard.writeText(v);
+  var t=document.getElementById('toast');t.style.display='block';
+  setTimeout(function(){t.style.display='none';},3000);
+}
+function stepTier(k,d){
+  var tot=st.prem+st.extra+st.val,nx=st[k]+d;
+  if(nx<0||tot+d>10||tot+d<1)return;
+  st[k]=nx;recalc();
+}
+function setQual(m){
+  st.qual=m;
+  document.getElementById('qFiber').classList.toggle('active',m==='fiber');
+  document.getElementById('qAia').classList.toggle('active',m==='aia');
+  if(m==='aia'&&st.net!=='none')st.net='aia';
+  if(m==='fiber'&&st.net==='aia')st.net='300';
+  recalc();
+}
+function pickNet(k){st.net=k;recalc();}
+function calcVoice(p,e,v,ap,d){
+  var tot=p+e+v;if(!tot)return 0;
+  var r=RATES[Math.min(tot,10)],pen=ap==='none'?10:(ap==='credit'?5:0);
+  var pr=r[0]+pen,er=r[1]+pen,vr=r[2]+pen;
+  if(d==='sig')pr-=(tot<=5?(r[0]-r[1]):5);
+  else if(d==='apprec'){pr*=.8;er*=.85;vr*=.9;}
+  return p*pr+e*er+v*vr;
+}
+function calcNet(k,ap){
+  if(k==='none')return{c:0,sv:0};
+  var t=NETS[k],pen=ap==='bank'?0:(ap==='debit'?5:10);
+  return{c:t.b+pen,sv:t.ap-t.b};
+}
+function recalc(){
+  var tot=st.prem+st.extra+st.val,disc=document.getElementById('discType').value,ap=document.getElementById('apType').value;
+  var curB=parseFloat(document.getElementById('curBill').value)||0,curI=parseFloat(document.getElementById('curIsp').value)||0;
+  var w=+document.getElementById('wCount').value,t=+document.getElementById('tCount').value,nua=+document.getElementById('nuaCount').value,ins=+document.getElementById('insCost').value;
+  document.getElementById('valPrem').textContent=st.prem;document.getElementById('valExtra').textContent=st.extra;document.getElementById('valVal').textContent=st.val;
+  document.getElementById('linesBadge').textContent=tot+' Voice Line'+(tot>1?'s':'');
+  document.getElementById('slotBadge').textContent=st.prem+'x 50%-Off Slots';
 
-  window.st = { prem: 2, extra: 0, val: 2, qual: 'fiber', net: 'none' };
+  var vCost=calcVoice(st.prem,st.extra,st.val,ap,disc),sl=st.prem,tC=0,wC=0;
+  for(var i=0;i<t;i++){if(sl>0){tC+=10.5;sl--;}else tC+=20.99;}
+  for(var j=0;j<w;j++){if(sl>0){wC+=5.5;sl--;}else wC+=10.99;}
+  var wOnly=vCost+tC+wC+nua*10+ins;
 
-  window.toggleCust = function() {
-    var b = document.body;
-    b.classList.toggle('cust-mode');
-    var on = b.classList.contains('cust-mode');
-    document.getElementById('custBtn').classList.toggle('on', on);
-    document.getElementById('custTxt').textContent = on ? 'ON' : 'OFF';
-  };
+  var ks=st.qual==='fiber'?['none','300','500','1000','5000']:['none','aia'],fh='';
+  for(var x=0;x<ks.length;x++){
+    var k=ks[x],inf=NETS[k],no=calcNet(k,ap),df=(wOnly+no.c)-curB;
+    var tg=k==='none'?'<span class="fnet low">Wireless Only</span>':(df<=0?'<span class="fnet free">NET: -$'+Math.abs(df).toFixed(0)+'/mo FREE!</span>':'<span class="fnet low">Net +$'+df.toFixed(0)+' vs Old</span>');
+    fh+='<button type="button" class="fcard '+(st.net===k?'active':'')+'" onclick="pickNet(\''+k+'\')"><span class="fspeed">'+inf.l+'</span><span class="fprice">'+(k==='none'?'$0':'$'+no.c)+'</span><span style="font-size:.68rem;color:#94a3b8;display:block">'+inf.s+'</span>'+tg+'</button>';
+  }
+  document.getElementById('fiberBox').innerHTML=fh;
 
-  window.copyAddr = function() {
-    var el = document.getElementById('addrIn');
-    if (el && el.value) {
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(el.value);
-      }
-      var t = document.getElementById('toast');
-      t.style.display = 'block';
-      setTimeout(function() { t.style.display = 'none'; }, 3500);
+  var sn=calcNet(st.net,ap),grand=wOnly+sn.c,saved=(curB+(st.net!=='none'?curI:0))-grand;
+  document.getElementById('grandOut').textContent='$'+grand.toFixed(2);
+  var sb=document.getElementById('saveOut');
+  sb.style.color=saved>=0?'#34d399':'#fbbf24';
+  sb.innerHTML=saved>=0?'Saves $'+saved.toFixed(2)+'/mo<br><small>($'+(saved*12).toFixed(0)+'/yr)</small>':'+$'+Math.abs(saved).toFixed(2)+'/mo Net';
+
+  var bl='<li><span>Voice ('+st.prem+'P/'+st.extra+'E/'+st.val+'V)</span><strong>$'+vCost.toFixed(2)+'</strong></li>';
+  if(w||t)bl+='<li><span>Watches/Tablets</span><strong>$'+(wC+tC).toFixed(2)+'</strong></li>';
+  if(nua)bl+='<li><span>Next Up ('+nua+'x)</span><strong>$'+(nua*10).toFixed(2)+'</strong></li>';
+  if(ins)bl+='<li><span>Protection</span><strong>$'+ins.toFixed(2)+'</strong></li>';
+  if(st.net!=='none')bl+='<li><span>'+NETS[st.net].s+'</span><strong>$'+sn.c.toFixed(2)+' <small style="color:#34d399">(-$'+sn.sv+' Bundled)</small></strong></li>';
+  document.getElementById('bList').innerHTML=bl;
+
+  var ph='',ws=curB-wOnly;
+  if(st.net==='none'&&ws>0){
+    var n3=calcNet('300',ap).c-ws,n1=calcNet('1000',ap).c-ws;
+    ph+='<div class="pitch"><strong>🎯 35% Close Rate Pitch (Saved $'+ws.toFixed(0)+'/mo on Wireless!):</strong>Tap <b>300 Mbps</b> to bundle Fiber for <b>'+(n3<=0?'$'+Math.abs(n3).toFixed(0)+'/mo LESS than old bill':'+$'+n3.toFixed(0)+'/mo net')+'</b>, or <b>1 GIG for +$'+n1.toFixed(0)+'/mo net</b>!</div>';
+  }
+  if(tot===3){
+    var f4=calcVoice(st.prem,st.extra,st.val+1,ap,disc)-vCost;
+    if(f4<=5)ph+='<div class="pitch"><strong>💡 4th Line Pitch:</strong>4th Value line is '+(f4<=0?'FREE ($0 change)!':'+$'+f4.toFixed(2)+'/mo!')+'</div>';
+  }
+  document.getElementById('pitchBox').innerHTML=ph;
+}
+function buildTable(){
+  var h='';
+  for(var L=1;L<=4;L++){
+    h+='<tr class="ghdr"><td colspan="7">'+L+'-Line Combinations</td></tr>';
+    for(var p=0;p<=L;p++)for(var e=0;e<=L-p;e++){
+      var v=L-p-e,lb=[];if(p)lb.push(p+'P');if(e)lb.push(e+'E');if(v)lb.push(v+'V');
+      h+='<tr><td><b>'+lb.join(' + ')+'</b></td><td>$'+calcVoice(p,e,v,'none','none').toFixed(2)+'</td><td>$'+calcVoice(p,e,v,'none','sig').toFixed(2)+'</td><td>$'+calcVoice(p,e,v,'none','apprec').toFixed(2)+'</td><td>$'+calcVoice(p,e,v,'bank','none').toFixed(2)+'</td><td style="color:#38bdf8;font-weight:700">$'+calcVoice(p,e,v,'bank','sig').toFixed(2)+'</td><td style="color:#34d399;font-weight:700">$'+calcVoice(p,e,v,'bank','apprec').toFixed(2)+'</td></tr>';
     }
-  };
-
-  window.stepTier = function(tier, delta) {
-    var tot = window.st.prem + window.st.extra + window.st.val;
-    var nxt = window.st[tier] + delta;
-    if (nxt < 0 || tot + delta > 10 || tot + delta < 1) return;
-    window.st[tier] = nxt;
-    window.recalc();
-  };
-
-  window.setQual = function(mode) {
-    window.st.qual = mode;
-    document.getElementById('qFiber').classList.toggle('active', mode === 'fiber');
-    document.getElementById('qAia').classList.toggle('active', mode === 'aia');
-    if (mode === 'aia' && window.st.net !== 'none') window.st.net = 'aia';
-    if (mode === 'fiber' && window.st.net === 'aia') window.st.net = '300';
-    window.recalc();
-  };
-
-  window.pickNet = function(k) {
-    window.st.net = k;
-    window.recalc();
-  };
-
-  window.calcVoice = function(p, e, v, ap, disc) {
-    var tot = p + e + v;
-    if (tot === 0) return 0;
-    var r = window.RATES[Math.min(tot, 10)];
-    var pen = ap === 'none' ? 10 : (ap === 'credit' ? 5 : 0);
-    var pr = r.prem + pen, er = r.extra + pen, vr = r.val + pen;
-    if (disc === 'sig') {
-      pr -= (tot <= 5 ? (r.prem - r.extra) : 5);
-    } else if (disc === 'apprec') {
-      pr *= 0.80; er *= 0.85; vr *= 0.90;
-    }
-    return (p * pr) + (e * er) + (v * vr);
-  };
-
-  window.calcNet = function(k, ap) {
-    if (k === 'none') return { cost: 0, save: 0 };
-    var t = window.NET_TIERS[k];
-    var pen = ap === 'bank' ? 0 : (ap === 'debit' ? 5 : 10);
-    return { cost: t.bun + pen, save: t.ap - t.bun };
-  };
-
-  window.recalc = function() {
-    var st = window.st;
-    var tot = st.prem + st.extra + st.val;
-    var disc = document.getElementById('discType').value;
-    var ap = document.getElementById('apType').value;
-    var curBill = parseFloat(document.getElementById('curBill').value) || 0;
-    var curIsp = parseFloat(document.getElementById('curIsp').value) || 0;
-    var w = parseInt(document.getElementById('wCount').value, 10) || 0;
-    var t = parseInt(document.getElementById('tCount').value, 10) || 0;
-    var nua = parseInt(document.getElementById('nuaCount').value, 10) || 0;
-    var ins = parseFloat(document.getElementById('insCost').value) || 0;
-
-    document.getElementById('valPrem').textContent = st.prem;
-    document.getElementById('valExtra').textContent = st.extra;
-    document.getElementById('valVal').textContent = st.val;
-    document.getElementById('linesBadge').textContent = tot + (tot === 1 ? ' Voice Line' : ' Voice Lines');
-    document.getElementById('slotBadge').textContent = st.prem + 'x 50%-Off Slots';
-
-    var vCost = window.calcVoice(st.prem, st.extra, st.val, ap, disc);
-    var slots = st.prem, tCost = 0, wCost = 0;
-    for (var i = 0; i < t; i++) { if (slots > 0) { tCost += 10.50; slots--; } else tCost += 20.99; }
-    for (var j = 0; j < w; j++) { if (slots > 0) { wCost += 5.50; slots--; } else wCost += 10.99; }
-
-    var wOnly = vCost + tCost + wCost + (nua * 10) + ins;
-
-    // Render Fiber buttons
-    var keys = st.qual ==='fib
-    var keys = st.qual === 'fiber' ? ['none', '300', '500', '1000', '5000'] : ['none', 'aia'];
-    var fHtml = '';
-    for (var idx = 0; idx < keys.length; idx++) {
-      var k = keys[idx];
-      var info = window.NET_TIERS[k];
-      var nObj = window.calcNet(k, ap);
-      var act = st.net === k ? 'active' : '';
-      var tag = '';
-      if (k === 'none') {
-        tag = '<span class="fnet low">Wireless Only</span>';
-      } else {
-        var netDiff = (wOnly + nObj.cost) - curBill;
-        if (netDiff <= 0) tag = '<span class="fnet free">NET: -$' + Math.abs(netDiff).toFixed(0) + '/mo (FREE!)</span>';
-        else tag = '<span class="fnet low">Net +$' + netDiff.toFixed(0) + ' vs Old Bill</span>';
-      }
-      fHtml += '<button type="button" class="fcard ' + act + '" onclick="window.pickNet(\'' + k + '\')">' +
-        '<span class="fspeed">' + info.label + '</span>' +
-        '<span class="fprice">' + (k === 'none' ? '$0' : '$' + nObj.cost) + '</span>' +
-        '<span style="font-size:0.68rem;color:#94a3b8;display:block;">' + info.sub + '</span>' +
-        tag + '</button>';
-    }
-    document.getElementById('fiberBox').innerHTML = fHtml;
-
-    var selNet = window.calcNet(st.net, ap);
-    var grand = wOnly + selNet.cost;
-    var oldSpend = curBill + (st.net !== 'none' ? curIsp : 0);
-    var saved = oldSpend - grand;
-
-    document.getElementById('grandOut').textContent = '$' + grand.toFixed(2);
-    document.getElementById('heroLbl').textContent = st.net === 'none' ? 'Wireless Monthly Estimate' : 'Combined Wireless + Internet';
-
-    var sBox = document.getElementById('saveOut');
-    if (saved >= 0) {
-      sBox.style.color = '#34d399';
-      sBox.innerHTML = 'Saves $' + saved.toFixed(2) + '/mo<br><small>($' + (saved * 12).toFixed(0) + '/yr)</small>';
-    } else {
-      sBox.style.color = '#fbbf24';
-      sBox.innerHTML = '+$' + Math.abs(saved).toFixed(2) + '/mo Net';
-    }
-
-    var bItems = '<li><span>Voice (' + st.prem + 'P / ' + st.extra + 'E / ' + st.val + 'V)</span><strong>$' + vCost.toFixed(2) + '</strong></li>';
-    if (w > 0 || t > 0) bItems += '<li><span>Watches/Tablets</span><strong>$' + (wCost + tCost).toFixed(2) + '</strong></li>';
-    if (nua > 0) bItems += '<li><span>Next Up Anytime (' + nua + 'x)</span><strong>$' + (nua * 10).toFixed(2) + '</strong></li>';
-    if (ins > 0) bItems += '<li><span>Protect Advantage</span><strong>$' + ins.toFixed(2) + '</strong></li>';
-    if (st.net !== 'none') {
-      bItems += '<li><span>' + window.NET_TIERS[st.net].sub + '</span><strong>$' + selNet.cost.toFixed(2) + ' <small style="color:#34d399">(-$' + selNet.save + ' Bundled)</small></strong></li>';
-    }
-    document.getElementById('bList').innerHTML = bItems;
-
-    var pHtml = '';
-    var wSaved = curBill - wOnly;
-    if (st.net === 'none' && wSaved > 0) {
-      var p300 = window.calcNet('300', ap).cost - wSaved;
-      var p1000 = window.calcNet('1000', ap).cost - wSaved;
-      pHtml += '<div class="pitch"><strong>🎯 35% Close Rate Pitch (Saved $' + wSaved.toFixed(0) + '/mo on Wireless!):</strong>' +
-        'Tap <b>300 Mbps</b> above to bundle Fiber for <b>' + (p300 <= 0 ? '$' + Math.abs(p300).toFixed(0) + '/mo LESS than old bill' : '+$' + p300.toFixed(0) + '/mo net') +
-        '</b>, or <b>1 GIG for +$' + p1000.toFixed(0) + '/mo net</b>!</div>';
-    }
-    if (tot === 3) {
-      var f4 = window.calcVoice(st.prem, st.extra, st.val + 1, ap, disc) - vCost;
-      if (f4 <= 5) pHtml += '<div class="pitch"><strong>💡 4th Line Pitch:</strong>Adding a 4th Value line is ' + (f4 <= 0 ? 'FREE ($0 change)!' : '+$' + f4.toFixed(2) + '/mo!') + '</div>';
-    }
-    if (ap === 'debit' && st.net !== 'none') {
-      pHtml += '<div class="pitch warn"><strong>🏦 Fiber Bank AutoPay Tip:</strong>Routing/Checking saves another $5/mo on Fiber vs Debit Card!</div>';
-    }
-    document.getElementById('pitchBox').innerHTML = pHtml;
-  };
-
-  window.buildTable = function() {
-    var h = '';
-    for (var L = 1; L <= 4; L++) {
-      h += '<tr class="ghdr"><td colspan="7">' + L + '-Line Combinations</td></tr>';
-      for (var p = 0; p <= L; p++) {
-        for (var e = 0; e <= L - p; e++) {
-          var v = L - p - e;
-          var lbl = [];
-          if (p) lbl.push(p + 'P');
-          if (e) lbl.push(e + 'E');
-          if (v) lbl.push(v + 'V');
-          h += '<tr><td><b>' + lbl.join(' + ') + '</b></td>' +
-            '<td>$' + window.calcVoice(p,e,v,'none','none').toFixed(2) + '</td>' +
-            '<td>$' + window.calcVoice(p,e,v,'none','sig').toFixed(2) + '</td>' +
-            '<td>$' + window.calcVoice(p,e,v,'none','apprec').toFixed(2) + '</td>' +
-            '<td>$' + window.calcVoice(p,e,v,'bank','none').toFixed(2) + '</td>' +
-            '<td style="color:#38bdf8;font-weight:700;">$' + window.calcVoice(p,e,v,'bank','sig').toFixed(2) + '</td>' +
-            '<td style="color:#34d399;font-weight:700;">$' + window.calcVoice(p,e,v,'bank','apprec').toFixed(2) + '</td></tr>';
-        }
-      }
-    }
-    document.getElementById('mBody').innerHTML = h;
-  };
-
-  window.buildTable();
-  window.recalc();
+  }
+  document.getElementById('mBody').innerHTML=h;
+}
+buildTable();recalc();
 </script>
 </body>
 </html>
