@@ -258,11 +258,48 @@ body.cust-mode .rep-only{display:none!important}
 </div>
 
 <script>
-var RATES={1:[90,70,50],2:[80,60,45],3:[65,50,35],4:[50,40,30],5:[45,35,30],6:[40,35,30],7:[40,35,30],8:[40,35,30],9:[40,35,30],10:[40,35,30]};
-var NETS={none:{l:"None",ap:0,b:0},"300":{l:"Fiber 300",ap:50,b:35},"500":{l:"Fiber 500",ap:60,b:45},"1000":{l:"1 GIG Fiber",ap:70,b:50},"5000":{l:"5 GIG Fiber",ap:110,b:85},aia:{l:"Internet Air",ap:60,b:48}};
-var PA_OPTS=[{k:0,l:"No PA",c:0},{k:16,l:"PA1 ($16)",c:16},{k:19,l:"PA1 ($19)",c:19},{k:25,l:"PA1 ($25)",c:25},{k:50,l:"PA4 ($50)",c:50}];
+var RATES={
+  1:{prem:90,extra:70,val:50},
+  2:{prem:80,extra:60,val:45},
+  3:{prem:65,extra:50,val:35},
+  4:{prem:50,extra:40,val:30},
+  5:{prem:45,extra:35,val:30},
+  6:{prem:40,extra:35,val:30},
+  7:{prem:40,extra:35,val:30},
+  8:{prem:40,extra:35,val:30},
+  9:{prem:40,extra:35,val:30},
+  10:{prem:40,extra:35,val:30}
+};
 
-var st={prem:2,extra:0,val:2,fn:false,net:'none',pa:0,upg:false,nua:0,tradeCount:1,trades:[{p:true,l:true,d:false,tier:'230'}]};
+var NETS={
+  none:{l:"None",ap:0,b:0},
+  "300":{l:"Fiber 300",ap:50,b:35},
+  "500":{l:"Fiber 500",ap:60,b:45},
+  "1000":{l:"1 GIG Fiber",ap:70,b:50},
+  "5000":{l:"5 GIG Fiber",ap:110,b:85},
+  aia:{l:"Internet Air",ap:60,b:48}
+};
+
+var PA_OPTS=[
+  {k:0,l:"No PA",c:0},
+  {k:16,l:"PA1 ($16)",c:16},
+  {k:19,l:"PA1 ($19)",c:19},
+  {k:25,l:"PA1 ($25)",c:25},
+  {k:50,l:"PA4 ($50)",c:50}
+];
+
+var st={
+  prem:2,
+  extra:0,
+  val:2,
+  fn:false,
+  net:'none',
+  pa:0,
+  upg:false,
+  nua:0,
+  tradeCount:1,
+  trades:[{p:true,l:true,d:false,tier:'230'}]
+};
 
 function toggleCust(){
   var on=document.body.classList.toggle('cust-mode');
@@ -363,9 +400,10 @@ function pickPa(c){st.pa=c;recalc();}
 
 function calcVoice(p,e,v,ap,d){
   var tot=p+e+v;if(!tot)return 0;
-  var r=RATES[Math.min(tot,10)],pen=ap==='none'?10:(ap==='credit'?5:0);
-  var pr=r[0]+pen,er=r[1]+pen,vr=r[2]+pen;
-  if(d==='sig')pr-=(tot<=5?(r[0]-r[1]):5);
+  var r=RATES[Math.min(tot,10)];
+  var pen=ap==='none'?10:(ap==='credit'?5:0);
+  var pr=r.prem+pen,er=r.extra+pen,vr=r.val+pen;
+  if(d==='sig')pr-=(tot<=5?(r.prem-r.extra):5);
   else if(d==='apprec'){pr*=.8;er*=.85;vr*=.9;}
   return p*pr+e*er+v*vr;
 }
@@ -505,6 +543,4 @@ function recalc(){
 
     if(eligible && !tr.d){
       tHtml+='<div class="tier-pills">'+
-        '<button type="button" class="tpill '+(tr.tier==='230'?'active':'')+'" onclick="setTradeTier('+idx+',\'230\')">$230+ Value<br>Up to $1200</button>'+
-        '<button type="button" class="tpill '+(tr.tier==='130'?'active':'')+'" onclick="setTradeTier('+idx+',\'130\')">$130-$229<br>Up to $930</button>'+
-        '<button type="button" class="tpill '+(tr.tier==='35'?'active':'')+'"
+        '<button type="button" class="tpill '+(tr.tier==='230'?'active':'')+'" onclick="setTradeTier('+idx+',\'230\')">$2
