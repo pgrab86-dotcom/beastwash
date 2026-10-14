@@ -1,775 +1,516 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>AT&T Wireless 2.0 & Fiber • Quick-Rerate & Pre-Qual Builder</title>
-  <style>
-    :root {
-      --att-blue: #00a8e0;
-      --att-dark: #0057b8;
-      --bg-dark: #0b111e;
-      --card-bg: #151f32;
-      --card-border: #263552;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --success: #10b981;
-      --warning: #f59e0b;
-      --danger: #ef4444;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      padding: 14px;
-      line-height: 1.45;
-    }
-
-    button, a, select, .fiber-card, .qual-tab {
-      touch-action: manipulation;
-      user-select: none;
-      -webkit-user-select: none;
-    }
-
-    /* Hide any Netlify injected badges except our legitimate availability links */
-    .netlify-identity-button, iframe[title*="Netlify"] {
-      display: none !important;
-    }
-
-    .container {
-      max-width: 1140px;
-      margin: 0 auto;
-    }
-
-    /* Header & Presentation Toggle */
-    .header {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      padding-bottom: 14px;
-      margin-bottom: 16px;
-      border-bottom: 1px solid var(--card-border);
-    }
-
-    .header h1 {
-      font-size: 1.35rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      color: #fff;
-    }
-
-    .header h1 span {
-      color: var(--att-blue);
-    }
-
-    .header p {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      margin-top: 2px;
-    }
-
-    .mode-btn {
-      background: var(--card-bg);
-      border: 1px solid var(--att-blue);
-      color: var(--text-main);
-      padding: 10px 16px;
-      border-radius: 999px;
-      font-size: 0.84rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .mode-btn.active {
-      background: var(--att-blue);
-      color: #000;
-    }
-
-    /* Stealth Pre-Qual Bar (Rep Only) */
-    .prequal-bar {
-      background: linear-gradient(135deg, #111c2d 0%, #17263f 100%);
-      border: 1px solid var(--att-blue);
-      border-radius: 14px;
-      padding: 14px 16px;
-      margin-bottom: 16px;
-    }
-
-    .prequal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .prequal-title {
-      font-size: 0.88rem;
-      font-weight: 800;
-      color: #fff;
-    }
-
-    .prequal-badge {
-      font-size: 0.7rem;
-      background: rgba(16, 185, 129, 0.18);
-      border: 1px solid var(--success);
-      color: #34d399;
-      padding: 2px 8px;
-      border-radius: 99px;
-      font-weight: 700;
-    }
-
-    .prequal-controls {
-      display: grid;
-      grid-template-columns: 1.4fr auto auto auto;
-      gap: 8px;
-    }
-
-    @media (max-width: 780px) {
-      .prequal-controls {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .address-input {
-      width: 100%;
-      background: #0b111e;
-      color: #fff;
-      border: 1px solid var(--card-border);
-      padding: 11px 12px;
-      border-radius: 9px;
-      font-size: 0.92rem;
-      font-weight: 600;
-      outline: none;
-    }
-
-    .address-input:focus {
-      border-color: var(--att-blue);
-    }
-
-    /* Real <a> links styled as buttons so iOS Safari/PWA never blocks them */
-    .btn-link {
-      background: var(--att-blue);
-      color: #000 !important;
-      text-decoration: none !important;
-      border: none;
-      padding: 11px 14px;
-      border-radius: 9px;
-      font-size: 0.84rem;
-      font-weight: 800;
-      cursor: pointer;
-      white-space: nowrap;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      text-align: center;
-    }
-
-    .btn-link.secondary {
-      background: #0b111e;
-      color: var(--text-main) !important;
-      border: 1px solid var(--card-border);
-    }
-
-    .btn-link:active {
-      opacity: 0.8;
-    }
-
-    .copy-toast {
-      font-size: 0.78rem;
-      color: #34d399;
-      font-weight: 700;
-      margin-top: 8px;
-      display: none;
-    }
-
-    /* Top Controls Grid */
-    .grid-top {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-
-    .control-box {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 11px 13px;
-    }
-
-    .control-box label {
-      display: block;
-      font-size: 0.71rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-      letter-spacing: 0.04em;
-    }
-
-    .control-box select,
-    .control-box input {
-      width: 100%;
-      background: #0b111e;
-      color: var(--text-main);
-      border: 1px solid var(--card-border);
-      padding: 9px 10px;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      outline: none;
-    }
-
-    /* Main Builder + Summary Layout */
-    .main-grid {
-      display: grid;
-      grid-template-columns: 1.38fr 1fr;
-      gap: 16px;
-      margin-bottom: 20px;
-    }
-
-    @media (max-width: 880px) {
-      .main-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .panel {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 15px;
-    }
-
-    .panel-title {
-      font-size: 0.92rem;
-      font-weight: 800;
-      margin-bottom: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: #fff;
-    }
-
-    .panel-title span.badge {
-      font-size: 0.72rem;
-      background: rgba(0, 168, 224, 0.15);
-      color: var(--att-blue);
-      padding: 3px 9px;
-      border-radius: 99px;
-      font-weight: 700;
-    }
-
-    /* Tier Steppers */
-    .tier-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #0b111e;
-      border: 1px solid var(--card-border);
-      border-radius: 10px;
-      padding: 9px 12px;
-      margin-bottom: 8px;
-    }
-
-    .tier-info {
-      display: flex;
-      flex-direction: column;
-      padding-right: 8px;
-    }
-
-    .tier-name {
-      font-weight: 700;
-      font-size: 0.92rem;
-    }
-
-    .tier-sub {
-      font-size: 0.74rem;
-      color: var(--text-muted);
-    }
-
-    .stepper {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .btn-step {
-      width: 38px;
-      height: 38px;
-      border-radius: 8px;
-      border: 1px solid var(--att-blue);
-      background: var(--card-bg);
-      color: #fff;
-      font-size: 1.25rem;
-      font-weight: 800;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .btn-step:active {
-      background: var(--att-blue);
-      color: #000;
-    }
-
-    .step-val {
-      min-width: 26px;
-      text-align: center;
-      font-weight: 800;
-      font-size: 1.1rem;
-    }
-
-    /* Interactive Fiber / AIA Speed Buttons */
-    .qual-tabs {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .qual-tab {
-      flex: 1;
-      background: #0b111e;
-      border: 1px solid var(--card-border);
-      color: var(--text-muted);
-      padding: 10px;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      font-weight: 800;
-      cursor: pointer;
-      text-align: center;
-    }
-
-    .qual-tab.active {
-      background: rgba(0, 168, 224, 0.18);
-      border-color: var(--att-blue);
-      color: #fff;
-    }
-
-    .fiber-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(115px, 1fr));
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-
-    .fiber-card {
-      background: #0b111e;
-      border: 2px solid var(--card-border);
-      border-radius: 10px;
-      padding: 10px 6px;
-      text-align: center;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .fiber-card.active {
-      border-color: var(--att-blue);
-      background: rgba(0, 168, 224, 0.15);
-    }
-
-    .fiber-card * {
-      pointer-events: none;
-    }
-
-    .fiber-speed {
-      font-size: 0.84rem;
-      font-weight: 800;
-      color: #fff;
-    }
-
-    .fiber-price {
-      font-size: 1.25rem;
-      font-weight: 900;
-      color: var(--att-blue);
-      margin: 3px 0;
-    }
-
-    .fiber-price span {
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: var(--text-muted);
-    }
-
-    .net-impact-tag {
-      font-size: 0.68rem;
-      font-weight: 800;
-      padding: 3px 5px;
-      border-radius: 6px;
-      margin-top: 4px;
-    }
-
-    .net-impact-tag.free {
-      background: rgba(16, 185, 129, 0.22);
-      color: #34d399;
-    }
-
-    .net-impact-tag.low {
-      background: rgba(56, 189, 248, 0.15);
-      color: #38bdf8;
-    }
-
-    /* Add-on Grid */
-    .addons-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    /* Quote Card */
-    .quote-summary {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .price-hero {
-      background: linear-gradient(135deg, #003e85 0%, #0077b6 100%);
-      border-radius: 12px;
-      padding: 15px;
-      margin-bottom: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .price-hero .label {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      font-weight: 700;
-      color: rgba(255, 255, 255, 0.85);
-    }
-
-    .price-hero .big-price {
-      font-size: 2.1rem;
-      font-weight: 900;
-      color: #fff;
-      line-height: 1.1;
-    }
-
-    .savings-pill {
-      background: rgba(16, 185, 129, 0.22);
-      border: 1px solid var(--success);
-      color: #34d399;
-      padding: 7px 11px;
-      border-radius: 10px;
-      text-align: right;
-      font-weight: 800;
-      font-size: 0.86rem;
-    }
-
-    .breakdown-list {
-      list-style: none;
-      margin-bottom: 12px;
-    }
-
-    .breakdown-list li {
-      display: flex;
-      justify-content: space-between;
-      padding: 6px 0;
-      border-bottom: 1px dashed var(--card-border);
-      font-size: 0.86rem;
-    }
-
-    .breakdown-list li strong {
-      color: #fff;
-    }
-
-    /* Rep Pitch Callouts (Hidden in Customer Mode) */
-    body.customer-mode .rep-only {
-      display: none !important;
-    }
-
-    .pitch-box {
-      background: rgba(16, 185, 129, 0.11);
-      border-left: 4px solid var(--success);
-      padding: 9px 11px;
-      border-radius: 8px;
-      margin-top: 8px;
-      font-size: 0.8rem;
-    }
-
-    .pitch-box.warn {
-      background: rgba(245, 158, 11, 0.12);
-      border-left-color: var(--warning);
-    }
-
-    .pitch-box strong {
-      display: block;
-      margin-bottom: 2px;
-      color: #fff;
-    }
-
-    /* Reference Matrix Table */
-    .table-wrapper {
-      overflow-x: auto;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      margin-top: 16px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.81rem;
-      min-width: 680px;
-    }
-
-    th {
-      background: #0f172a;
-      color: var(--att-blue);
-      text-align: left;
-      padding: 10px 12px;
-      font-weight: 800;
-      border-bottom: 1px solid var(--card-border);
-    }
-
-    td {
-      padding: 8px 12px;
-      border-bottom: 1px solid rgba(38, 53, 82, 0.5);
-    }
-
-    .group-header td {
-      background: rgba(0, 168, 224, 0.12);
-      color: #fff;
-      font-weight: 800;
-      padding: 8px 12px;
-    }
-
-    .rules-footer {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 14px;
-      margin-top: 16px;
-    }
-
-    .rule-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 12px 14px;
-      font-size: 0.79rem;
-      color: var(--text-muted);
-    }
-
-    .rule-card b {
-      color: var(--att-blue);
-      display: block;
-      margin-bottom: 6px;
-      font-size: 0.82rem;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>AT&T Wireless 2.0 & Fiber Builder</title>
+<style>
+  :root {
+    --blue: #00a8e0;
+    --bg: #0b111e;
+    --card: #151f32;
+    --border: #263552;
+    --text: #f8fafc;
+    --muted: #94a3b8;
+    --green: #10b981;
+    --warn: #f59e0b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
+  body { background: var(--bg); color: var(--text); padding: 12px; line-height: 1.4; }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+
+  .hdr { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding-bottom: 12px; margin-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .hdr h1 { font-size: 1.25rem; font-weight: 800; color: #fff; }
+  .hdr h1 span { color: var(--blue); }
+  .hdr p { font-size: 0.72rem; color: var(--muted); font-weight: 700; text-transform: uppercase; margin-top: 2px; }
+
+  .btn-mode { background: var(--card); border: 2px solid var(--blue); color: #fff; padding: 10px 16px; border-radius: 99px; font-size: 0.85rem; font-weight: 800; cursor: pointer; }
+  .btn-mode.on { background: var(--blue); color: #000; }
+
+  .prequal { background: #111c2d; border: 1px solid var(--blue); border-radius: 12px; padding: 12px; margin-bottom: 14px; }
+  .prequal-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; font-size: 0.82rem; font-weight: 800; }
+  .pill-safe { font-size: 0.68rem; background: rgba(16,185,129,0.2); border: 1px solid var(--green); color: #34d399; padding: 2px 8px; border-radius: 99px; }
+  .prequal-row { display: grid; grid-template-columns: 1.5fr auto auto auto; gap: 8px; }
+  @media (max-width: 760px) { .prequal-row { grid-template-columns: 1fr 1fr; } .addr-in { grid-column: 1 / -1; } }
+
+  .addr-in, select, input[type="number"] { width: 100%; background: var(--bg); color: #fff; border: 1px solid var(--border); padding: 10px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; }
+  .act-btn { background: var(--blue); color: #000 !important; text-decoration: none !important; border: none; padding: 10px 12px; border-radius: 8px; font-size: 0.82rem; font-weight: 800; cursor: pointer; text-align: center; display: inline-flex; align-items: center; justify-content: center; }
+  .act-btn.sec { background: var(--bg); color: #fff !important; border: 1px solid var(--border); }
+  .toast { font-size: 0.76rem; color: #34d399; font-weight: 700; margin-top: 6px; display: none; }
+
+  .top-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; margin-bottom: 14px; }
+  .cbox { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; }
+  .cbox label { display: block; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
+
+  .main-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 14px; margin-bottom: 18px; }
+  @media (max-width: 860px) { .main-grid { grid-template-columns: 1fr; } }
+  .panel { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px; }
+  .ptitle { font-size: 0.9rem; font-weight: 800; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+  .badge { font-size: 0.7rem; background: rgba(0,168,224,0.18); color: var(--blue); padding: 3px 8px; border-radius: 99px; font-weight: 700; }
+
+  .trow { display: flex; justify-content: space-between; align-items: center; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; margin-bottom: 8px; }
+  .tname { font-weight: 700; font-size: 0.9rem; display: block; }
+  .tsub { font-size: 0.72rem; color: var(--muted); }
+  .stepper { display: flex; align-items: center; gap: 8px; }
+  .sbtn { width: 42px; height: 42px; border-radius: 8px; border: 2px solid var(--blue); background: var(--card); color: #fff; font-size: 1.35rem; font-weight: 900; cursor: pointer; }
+  .sbtn:active { background: var(--blue); color: #000; }
+  .sval { min-width: 28px; text-align: center; font-weight: 900; font-size: 1.15rem; }
+
+  .qtabs { display: flex; gap: 8px; margin-bottom: 10px; }
+  .qtab { flex: 1; background: var(--bg); border: 1px solid var(--border); color: var(--muted); padding: 10px; border-radius: 8px; font-size: 0.78rem; font-weight: 800; cursor: pointer; }
+  .qtab.active { background: rgba(0,168,224,0.2); border-color: var(--blue); color: #fff; }
+
+  .fcards { display: grid; grid-template-columns: repeat(auto-fit, minmax(105px, 1fr)); gap: 8px; margin-bottom: 12px; }
+  .fcard { background: var(--bg); border: 2px solid var(--border); border-radius: 10px; padding: 10px 6px; text-align: center; cursor: pointer; color: #fff; width: 100%; }
+  .fcard.active { border-color: var(--blue); background: rgba(0,168,224,0.18); }
+  .fspeed { font-size: 0.82rem; font-weight: 800; display: block; }
+  .fprice { font-size: 1.2rem; font-weight: 900; color: var(--blue); margin: 2px 0; display: block; }
+  .fnet { font-size: 0.66rem; font-weight: 800; padding: 3px 4px; border-radius: 5px; margin-top: 4px; display: inline-block; }
+  .fnet.free { background: rgba(16,185,129,0.22); color: #34d399; }
+  .fnet.low { background: rgba(56,189,248,0.15); color: #38bdf8; }
+
+  .addons { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 8px; }
+
+  .hero { background: linear-gradient(135deg, #003e85, #0077b6); border-radius: 12px; padding: 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .hero-lbl { font-size: 0.72rem; text-transform: uppercase; font-weight: 700; color: rgba(255,255,255,0.85); }
+  .hero-price { font-size: 2rem; font-weight: 900; color: #fff; }
+  .save-pill { background: rgba(16,185,129,0.22); border: 1px solid var(--green); color: #34d399; padding: 6px 10px; border-radius: 8px; text-align: right; font-weight: 800; font-size: 0.82rem; }
+
+  .blist { list-style: none; margin-bottom: 12px; }
+  .blist li { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed var(--border); font-size: 0.85rem; }
+
+  .pitch { background: rgba(16,185,129,0.12); border-left: 4px solid var(--green); padding: 9px 11px; border-radius: 8px; margin-top: 8px; font-size: 0.79rem; }
+  .pitch.warn { background: rgba(245,158,11,0.14); border-left-color: var(--warn); }
+  .pitch strong { display: block; margin-bottom: 2px; color: #fff; }
+
+  body.cust-mode .rep-only { display: none !important; }
+
+  .twrap { overflow-x: auto; background: var(--card); border: 1px solid var(--border); border-radius: 12px; margin-top: 14px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.8rem; min-width: 640px; }
+  th { background: #0f172a; color: var(--blue); text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--border); }
+  td { padding: 7px 10px; border-bottom: 1px solid rgba(38,53,82,0.5); }
+  .ghdr td { background: rgba(0,168,224,0.14); color: #fff; font-weight: 800; }
+</style>
 </head>
 <body>
-  <div class="container">
-    <!-- Top Header -->
-    <div class="header">
-      <div>
-        <h1>AT&T <span>Wireless 2.0 & Fiber</span> Quote Builder</h1>
-        <p class="rep-only">Zero-OPUS Pre-Qual • 1–10 Lines Mixed-Tier Engine • 35% Close Rate Pitch Mode</p>
+<div class="wrap">
+  <div class="hdr">
+    <div>
+      <h1>AT&T <span>Wireless 2.0 & Fiber</span> Builder</h1>
+      <p class="rep-only"><span id="jsStatus" style="color:#34d399;">● Engine Ready</span> • 1–10 Lines • 35% Close Rate Pitch Mode</p>
+    </div>
+    <button type="button" id="custBtn" class="btn-mode" onclick="window.toggleCust()">
+      👁️ Customer View: <span id="custTxt">OFF</span>
+    </button>
+  </div>
+
+  <!-- Stealth Address Pre-Qual Bar -->
+  <div class="prequal rep-only">
+    <div class="prequal-top">
+      <span>🏠 Step 1: Stealth Address Pre-Check (Before Opening OPUS Lead)</span>
+      <span class="pill-safe">🛡️ Protects Close Rate Denominator</span>
+    </div>
+    <div class="prequal-row">
+      <input type="text" id="addrIn" class="addr-in" placeholder="Enter street address & zip...">
+      <button type="button" class="act-btn sec" onclick="window.copyAddr()">📋 Copy Address</button>
+      <a href="https://www.att.com/internet/availability/" target="_blank" rel="noopener" class="act-btn" onclick="window.copyAddr()">🔍 AT&T Check</a>
+      <a href="https://broadbandmap.fcc.gov/home" target="_blank" rel="noopener" class="act-btn sec" onclick="window.copyAddr()">🗺️ FCC Map</a>
+    </div>
+    <div id="toast" class="toast">✅ Address copied! Paste into availability tab.</div>
+  </div>
+
+  <!-- Top Controls -->
+  <div class="top-grid">
+    <div class="cbox">
+      <label>Current Wireless Bill ($)</label>
+      <input type="number" id="curBill" value="220" oninput="window.recalc()" onchange="window.recalc()">
+    </div>
+    <div class="cbox">
+      <label>Current Home Internet ($)</label>
+      <select id="curIsp" onchange="window.recalc()">
+        <option value="0">$0 / Not Comparing ISP</option>
+        <option value="65">$65/mo (Spectrum/Xfinity)</option>
+        <option value="80">$80/mo (Spectrum/Xfinity)</option>
+        <option value="95">$95/mo (Spectrum/Xfinity)</option>
+        <option value="110">$110/mo (Spectrum/Xfinity)</option>
+      </select>
+    </div>
+    <div class="cbox">
+      <label>Discount Program (FAN)</label>
+      <select id="discType" onchange="window.recalc()">
+        <option value="sig">Signature (Corporate / FAN)</option>
+        <option value="apprec">Appreciation (Mil/Teach/FN/RN)</option>
+        <option value="none">Standard Consumer (No FAN)</option>
+      </select>
+    </div>
+    <div class="cbox">
+      <label>AutoPay Method</label>
+      <select id="apType" onchange="window.recalc()">
+        <option value="bank">Bank Account ($10/L + $10 Fiber)</option>
+        <option value="debit">Debit Card ($10/L + $5 Fiber)</option>
+        <option value="credit">Credit Card ($5/L + $0 Fiber)</option>
+        <option value="none">No AutoPay ($0 off)</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Main Builder -->
+  <div class="main-grid">
+    <div class="panel">
+      <div class="ptitle">
+        <span>1. Voice Line Mix (1–10 Lines)</span>
+        <span class="badge" id="linesBadge">4 Voice Lines</span>
       </div>
-      <button type="button" id="customerModeBtn" class="mode-btn">
-        👁️ Customer View: <span id="modeStatus">OFF</span>
-      </button>
+
+      <div class="trow">
+        <div>
+          <span class="tname">🐆 Unlimited Premium 2.0</span>
+          <span class="tsub">Uncapped data • 60GB Hotspot • 50% Watch/Tab slot</span>
+        </div>
+        <div class="stepper">
+          <button type="button" class="sbtn" onclick="window.stepTier('prem', -1)">−</button>
+          <span class="sval" id="valPrem">2</span>
+          <button type="button" class="sbtn" onclick="window.stepTier('prem', 1)">+</button>
+        </div>
+      </div>
+
+      <div class="trow">
+        <div>
+          <span class="tname">🐇 Unlimited Extra 2.0</span>
+          <span class="tsub">75GB priority data • 30GB Hotspot</span>
+        </div>
+        <div class="stepper">
+          <button type="button" class="sbtn" onclick="window.stepTier('extra', -1)">−</button>
+          <span class="sval" id="valExtra">0</span>
+          <button type="button" class="sbtn" onclick="window.stepTier('extra', 1)">+</button>
+        </div>
+      </div>
+
+      <div class="trow">
+        <div>
+          <span class="tname">🐢 Value Plus 2.0</span>
+          <span class="tsub">Unlimited standard data • Great for family lines</span>
+        </div>
+        <div class="stepper">
+          <button type="button" class="sbtn" onclick="window.stepTier('val', -1)">−</button>
+          <span class="sval" id="valVal">2</span>
+          <button type="button" class="sbtn" onclick="window.stepTier('val', 1)">+</button>
+        </div>
+      </div>
+
+      <!-- Fiber / AIA Buttons -->
+      <div class="ptitle" style="margin-top:14px;">
+        <span>2. Home Internet Bundle (Tap Speed)</span>
+        <span class="badge">20% Bundle Discount</span>
+      </div>
+
+      <div class="qtabs rep-only">
+        <button type="button" class="qtab active" id="qFiber" onclick="window.setQual('fiber')">🟢 Fiber (300 / 500 / 1G / 5G)</button>
+        <button type="button" class="qtab" id="qAia" onclick="window.setQual('aia')">📡 Internet Air (AIA)</button>
+      </div>
+
+      <div class="fcards" id="fiberBox"></div>
+
+      <!-- Addons -->
+      <div class="ptitle" style="margin-top:12px;">
+        <span>3. Watches, Tablets, Next Up & Insurance</span>
+        <span class="badge" id="slotBadge">2x 50%-Off Slots</span>
+      </div>
+
+      <div class="addons">
+        <div class="cbox">
+          <label>⌚ Watches ($10.99 / $5.50)</label>
+          <select id="wCount" onchange="window.recalc()">
+            <option value="0">0 Watches</option>
+            <option value="1">1 Watch</option>
+            <option value="2">2 Watches</option>
+            <option value="3">3 Watches</option>
+            <option value="4">4 Watches</option>
+          </select>
+        </div>
+        <div class="cbox">
+          <label>📱 Tablets ($20.99 / $10.50)</label>
+          <select id="tCount" onchange="window.recalc()">
+            <option value="0">0 Tablets</option>
+            <option value="1">1 Tablet</option>
+            <option value="2">2 Tablets</option>
+            <option value="3">3 Tablets</option>
+            <option value="4">4 Tablets</option>
+          </select>
+        </div>
+        <div class="cbox">
+          <label>🔄 Next Up Anytime ($10)</label>
+          <select id="nuaCount" onchange="window.recalc()">
+            <option value="0">0 Lines</option>
+            <option value="1">1 Line (+$10)</option>
+            <option value="2">2 Lines (+$20)</option>
+            <option value="3">3 Lines (+$30)</option>
+            <option value="4">4 Lines (+$40)</option>
+            <option value="5">5 Lines (+$50)</option>
+          </select>
+        </div>
+        <div class="cbox">
+          <label>🛡️ Protect Advantage</label>
+          <select id="insCost" onchange="window.recalc()">
+            <option value="0">None ($0)</option>
+            <option value="17">1 Device ($17)</option>
+            <option value="34">2 Devices ($34)</option>
+            <option value="50">4-Pack ($50)</option>
+          </select>
+        </div>
+      </div>
     </div>
 
-    <!-- STEP 0: Stealth Address Pre-Qual Bar (Real <a> links so iOS never blocks them) -->
-    <div class="prequal-bar rep-only">
-      <div class="prequal-header">
-        <div class="prequal-title">
-          🏠 Step 1: Stealth Address Pre-Check (Before Opening OPUS Lead)
+    <!-- Live Quote Output -->
+    <div class="panel">
+      <div class="ptitle">
+        <span>Estimated Monthly Quote</span>
+        <span class="badge" id="discPill">Bank AP • Signature</span>
+      </div>
+
+      <div class="hero">
+        <div>
+          <div class="hero-lbl" id="heroLbl">Wireless Monthly Estimate</div>
+          <div class="hero-price" id="grandOut">$140.00</div>
         </div>
-        <span class="prequal-badge">🛡️ Protects Close Rate Denominator</span>
+        <div class="save-pill" id="saveOut">Saves $80.00/mo</div>
       </div>
-      <div class="prequal-controls">
-        <input
-          type="text"
-          id="custAddress"
-          class="address-input"
-          placeholder="Type customer street address & zip..."
-        />
-        <button type="button" id="copyAddrBtn" class="btn-link secondary">
-          📋 Copy Address
-        </button>
-        <a
-          href="https://www.att.com/internet/availability/"
-          target="_blank"
-          rel="noopener noreferrer"
-          id="attLinkBtn"
-          class="btn-link"
-        >
-          🔍 Open AT&T Check
-        </a>
-        <a
-          href="https://broadbandmap.fcc.gov/home"
-          target="_blank"
-          rel="noopener noreferrer"
-          id="fccLinkBtn"
-          class="btn-link secondary"
-        >
-          🗺️ Open FCC Map
-        </a>
-      </div>
-      <div id="copyToast" class="copy-toast">
-        ✅ Address copied to clipboard! Paste into the availability page.
-      </div>
+
+      <ul class="blist" id="bList"></ul>
+      <div class="rep-only" id="pitchBox"></div>
     </div>
+  </div>
 
-    <!-- Primary Account Inputs -->
-    <div class="grid-top">
-      <div class="control-box">
-        <label>Current Wireless Bill ($)</label>
-        <input type="number" id="currentBill" placeholder="e.g. 220" value="220" />
-      </div>
+  <!-- Matrix Table -->
+  <div class="twrap">
+    <table>
+      <thead>
+        <tr>
+          <th>PLAN COMBINATION</th>
+          <th>NO AP</th>
+          <th>NO AP + SIG</th>
+          <th>NO AP + APPREC</th>
+          <th>AUTOPAY</th>
+          <th>AP + SIG</th>
+          <th>AP + APPREC</th>
+        </tr>
+      </thead>
+      <tbody id="mBody"></tbody>
+    </table>
+  </div>
+</div>
 
-      <div class="control-box">
-        <label>Current ISP Bill (Spectrum/Xfinity)</label>
-        <select id="currentIspBill">
-          <option value="0">$0 / Not Comparing ISP</option>
-          <option value="65">$65/mo Current Internet</option>
-          <option value="80">$80/mo Current Internet</option>
-          <option value="95">$95/mo Current Internet</option>
-          <option value="110">$110/mo Current Internet</option>
-        </select>
-      </div>
+<script>
+  window.RATES = {
+    1: { prem: 90, extra: 70, val: 50 },
+    2: { prem: 80, extra: 60, val: 45 },
+    3: { prem: 65, extra: 50, val: 35 },
+    4: { prem: 50, extra: 40, val: 30 },
+    5: { prem: 45, extra: 35, val: 30 },
+    6: { prem: 40, extra: 35, val: 30 },
+    7: { prem: 40, extra: 35, val: 30 },
+    8: { prem: 40, extra: 35, val: 30 },
+    9: { prem: 40, extra: 35, val: 30 },
+    10:{ prem: 40, extra: 35, val: 30 }
+  };
 
-      <div class="control-box">
-        <label>Discount Program (FAN)</label>
-        <select id="discountType">
-          <option value="sig">Signature (Corporate / Union FAN)</option>
-          <option value="apprec">Appreciation (Mil/Teach/FN/Health)</option>
-          <option value="none">Standard Consumer (No FAN)</option>
-        </select>
-      </div>
+  window.NET_TIERS = {
+    none: { label: "No Internet", sub: "Wireless Only", ap: 0, bun: 0 },
+    "300": { label: "300 Mbps", sub: "Fiber 300", ap: 50, bun: 35 },
+    "500": { label: "500 Mbps", sub: "Fiber 500", ap: 60, bun: 45 },
+    "1000": { label: "1 GIG", sub: "Fiber 1000", ap: 70, bun: 50 },
+    "5000": { label: "5 GIG", sub: "Fiber 5000", ap: 110, bun: 85 },
+    aia: { label: "Internet Air", sub: "5G Home", ap: 60, bun: 47 }
+  };
 
-      <div class="control-box">
-        <label>AutoPay & Paperless Method</label>
-        <select id="autopayType">
-          <option value="bank">Bank Account / Points Plus ($10/L)</option>
-          <option value="debit">Debit Card ($10/L Wireless • $5 Fiber)</option>
-          <option value="credit">Credit Card ($5/L Wireless • $0 Fiber)</option>
-          <option value="none">No AutoPay ($0 off)</option>
-        </select>
-      </div>
-    </div>
+  window.st = { prem: 2, extra: 0, val: 2, qual: 'fiber', net: 'none' };
 
-    <!-- Main Interactive Section -->
-    <div class="main-grid">
-      <!-- Left: Plan Mix, One-Tap Fiber Buttons & Add-Ons -->
-      <div class="panel">
-        <div class="panel-title">
-          <span>1. Voice Line Mix (1–10 Lines)</span>
-          <span class="badge" id="totalLinesBadge">4 Voice Lines</span>
-        </div>
+  window.toggleCust = function() {
+    var b = document.body;
+    b.classList.toggle('cust-mode');
+    var on = b.classList.contains('cust-mode');
+    document.getElementById('custBtn').classList.toggle('on', on);
+    document.getElementById('custTxt').textContent = on ? 'ON' : 'OFF';
+  };
 
-        <!-- Premium 2.0 -->
-        <div class="tier-row">
-          <div class="tier-info">
-            <span class="tier-name">🐆 Unlimited Premium 2.0</span>
-            <span class="tier-sub">Uncapped priority data • 60GB Hotspot • Unlocks 50% Watch/Tab slot</span>
-          </div>
-          <div class="stepper">
-            <button type="button" class="btn-step" data-tier="prem" data-delta="-1">−</button>
-            <span class="step-val" id="premCount">2</span>
-            <button type="button" class="btn-step" data-tier="prem" data-delta="1">+</button>
-          </div>
-        </div>
+  window.copyAddr = function() {
+    var el = document.getElementById('addrIn');
+    if (el && el.value) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(el.value);
+      }
+      var t = document.getElementById('toast');
+      t.style.display = 'block';
+      setTimeout(function() { t.style.display = 'none'; }, 3500);
+    }
+  };
 
-        <!-- Extra 2.0 -->
-        <div class="tier-row">
-          <div class="tier-info">
-            <span class="tier-name">🐇 Unlimited Extra 2.0</span>
-            <span class="tier-sub">75GB priority data • 30GB Hotspot</span>
-          </div>
-          <div class="stepper">
-            <button type="button" class="btn-step" data-tier="extra" data-delta="-1">−</button>
-            <span class="step-val" id="extraCount">0</span>
-            <button type="button" class="btn-step" data-tier="extra" data-delta="1">+</button>
-          </div>
-        </div>
+  window.stepTier = function(tier, delta) {
+    var tot = window.st.prem + window.st.extra + window.st.val;
+    var nxt = window.st[tier] + delta;
+    if (nxt < 0 || tot + delta > 10 || tot + delta < 1) return;
+    window.st[tier] = nxt;
+    window.recalc();
+  };
 
-        <!-- Value Plus 2.0 -->
-        <div class="tier-row">
-          <div class="tier-info">
-            <span class="tier-name">🐢 Value Plus 2.0</span>
-            <span class="tier-sub">Unlimited standard data • Great for additional family lines</span>
-          </div>
-          <div class="stepper">
-            <button type="button" class="btn-step" data-tier="val" data-delta="-1">−</button>
-            <span class="step-val" id="valCount">2</span>
-            <button type="button" class="btn-step" data-tier="val" data-delta="1">+</button>
-          </div>
-        </div>
+  window.setQual = function(mode) {
+    window.st.qual = mode;
+    document.getElementById('qFiber').classList.toggle('active', mode === 'fiber');
+    document.getElementById('qAia').classList.toggle('active', mode === 'aia');
+    if (mode === 'aia' && window.st.net !== 'none') window.st.net = 'aia';
+    if (mode === 'fiber' && window.st.net === 'aia') window.st.net = '300';
+    window.recalc();
+  };
 
-        <!-- ONE-TAP INTERNET QUALIFICATION & SPEED CARDS -->
-        <div class="panel-title" style="margin-top: 16px;">
-          <span>2. Home Internet Bundle (Tap Speed to Add)</span>
-          <span class="badge">20% Converged Discount Active</span>
-        </div>
+  window.pickNet = function(k) {
+    window.st.net = k;
+    window.recalc();
+  };
 
-        <div class="qual-tabs rep-only">
-          <button type="button" class="qual-tab active" id="tabFiber" data-qual="fiber">
-            🟢 Fiber Qualified (300 / 500 / 1G / 5G)
-          </button>
-          <button type="button" class="qual-tab" id="tabAia" data-qual="aia">
-            📡 Internet Air (AIA) Only
-          </button>
-        </div>
+  window.calcVoice = function(p, e, v, ap, disc) {
+    var tot = p + e + v;
+    if (tot === 0) return 0;
+    var r = window.RATES[Math.min(tot, 10)];
+    var pen = ap === 'none' ? 10 : (ap === 'credit' ? 5 : 0);
+    var pr = r.prem + pen, er = r.extra + pen, vr = r.val + pen;
+    if (disc === 'sig') {
+      pr -= (tot <= 5 ? (r.prem - r.extra) : 5);
+    } else if (disc === 'apprec') {
+      pr *= 0.80; er *= 0.85; vr *= 0.90;
+    }
+    return (p * pr) + (e * er) + (v * vr);
+  };
 
-        <div class="fiber-cards" id="fiberCardsContainer">
-          <!-- Populated dynamically -->
-        </div>
+  window.calcNet = function(k, ap) {
+    if (k === 'none') return { cost: 0, save: 0 };
+    var t = window.NET_TIERS[k];
+    var pen = ap === 'bank' ? 0 : (ap === 'debit' ? 5 : 10);
+    return { cost: t.bun + pen, save: t.ap - t.bun };
+  };
 
-        <!-- Connected & Protection -->
-        <div class="panel-title" style="margin-top: 14px;">
-          <span>3. Connected Devices, Next Up & Protection</span>
-          <span class="badge" id="halfOffBadge">2x 50%-Off Slots Unlocked</span>
-        </div>
+  window.recalc = function() {
+    var st = window.st;
+    var tot = st.prem + st.extra + st.val;
+    var disc = document.getElementById('discType').value;
+    var ap = document.getElementById('apType').value;
+    var curBill = parseFloat(document.getElementById('curBill').value) || 0;
+    var curIsp = parseFloat(document.getElementById('curIsp').value) || 0;
+    var w = parseInt(document.getElementById('wCount').value, 10) || 0;
+    var t = parseInt(document.getElementById('tCount').value, 10) || 0;
+    var nua = parseInt(document.getElementById('nuaCount').value, 10) || 0;
+    var ins = parseFloat(document.getElementById('insCost').value) || 0;
 
-        <div class="addons-grid">
-          <div class="control-box">
-            <label>⌚ Smartwatches ($10.99 / $5.50)</label>
-            <select id="watchCount">
-              <option value="0">0 Watches</option>
-              <option value="1">1 Watch</option>
-              <option value="2">2 Watches</option>
-              <option value="3">3 Watches</option>
-              <option value="4">4 Watches</option>
-            </select>
-          </div>
+    document.getElementById('valPrem').textContent = st.prem;
+    document.getElementById('valExtra').textContent = st.extra;
+    document.getElementById('valVal').textContent = st.val;
+    document.getElementById('linesBadge').textContent = tot + (tot === 1 ? ' Voice Line' : ' Voice Lines');
+    document.getElementById('slotBadge').textContent = st.prem + 'x 50%-Off Slots';
 
-          <div class="control-box">
-            <label>📱 Tablets ($20.99 / $10.50)</label>
-            <select id="tabletCount">
-              <option value="0">0 Tablets</option>
-              <option value="1">1 Tablet</option>
-              <option value="2">2 Tablets</option>
-              <option value="3">3 Tablets</option>
-              <option value="4">4 Tablets</option>
-            </select>
-       
+    var vCost = window.calcVoice(st.prem, st.extra, st.val, ap, disc);
+    var slots = st.prem, tCost = 0, wCost = 0;
+    for (var i = 0; i < t; i++) { if (slots > 0) { tCost += 10.50; slots--; } else tCost += 20.99; }
+    for (var j = 0; j < w; j++) { if (slots > 0) { wCost += 5.50; slots--; } else wCost += 10.99; }
+
+    var wOnly = vCost + tCost + wCost + (nua * 10) + ins;
+
+    // Render Fiber buttons
+    var keys = st.qual ==='fib
+    var keys = st.qual === 'fiber' ? ['none', '300', '500', '1000', '5000'] : ['none', 'aia'];
+    var fHtml = '';
+    for (var idx = 0; idx < keys.length; idx++) {
+      var k = keys[idx];
+      var info = window.NET_TIERS[k];
+      var nObj = window.calcNet(k, ap);
+      var act = st.net === k ? 'active' : '';
+      var tag = '';
+      if (k === 'none') {
+        tag = '<span class="fnet low">Wireless Only</span>';
+      } else {
+        var netDiff = (wOnly + nObj.cost) - curBill;
+        if (netDiff <= 0) tag = '<span class="fnet free">NET: -$' + Math.abs(netDiff).toFixed(0) + '/mo (FREE!)</span>';
+        else tag = '<span class="fnet low">Net +$' + netDiff.toFixed(0) + ' vs Old Bill</span>';
+      }
+      fHtml += '<button type="button" class="fcard ' + act + '" onclick="window.pickNet(\'' + k + '\')">' +
+        '<span class="fspeed">' + info.label + '</span>' +
+        '<span class="fprice">' + (k === 'none' ? '$0' : '$' + nObj.cost) + '</span>' +
+        '<span style="font-size:0.68rem;color:#94a3b8;display:block;">' + info.sub + '</span>' +
+        tag + '</button>';
+    }
+    document.getElementById('fiberBox').innerHTML = fHtml;
+
+    var selNet = window.calcNet(st.net, ap);
+    var grand = wOnly + selNet.cost;
+    var oldSpend = curBill + (st.net !== 'none' ? curIsp : 0);
+    var saved = oldSpend - grand;
+
+    document.getElementById('grandOut').textContent = '$' + grand.toFixed(2);
+    document.getElementById('heroLbl').textContent = st.net === 'none' ? 'Wireless Monthly Estimate' : 'Combined Wireless + Internet';
+
+    var sBox = document.getElementById('saveOut');
+    if (saved >= 0) {
+      sBox.style.color = '#34d399';
+      sBox.innerHTML = 'Saves $' + saved.toFixed(2) + '/mo<br><small>($' + (saved * 12).toFixed(0) + '/yr)</small>';
+    } else {
+      sBox.style.color = '#fbbf24';
+      sBox.innerHTML = '+$' + Math.abs(saved).toFixed(2) + '/mo Net';
+    }
+
+    var bItems = '<li><span>Voice (' + st.prem + 'P / ' + st.extra + 'E / ' + st.val + 'V)</span><strong>$' + vCost.toFixed(2) + '</strong></li>';
+    if (w > 0 || t > 0) bItems += '<li><span>Watches/Tablets</span><strong>$' + (wCost + tCost).toFixed(2) + '</strong></li>';
+    if (nua > 0) bItems += '<li><span>Next Up Anytime (' + nua + 'x)</span><strong>$' + (nua * 10).toFixed(2) + '</strong></li>';
+    if (ins > 0) bItems += '<li><span>Protect Advantage</span><strong>$' + ins.toFixed(2) + '</strong></li>';
+    if (st.net !== 'none') {
+      bItems += '<li><span>' + window.NET_TIERS[st.net].sub + '</span><strong>$' + selNet.cost.toFixed(2) + ' <small style="color:#34d399">(-$' + selNet.save + ' Bundled)</small></strong></li>';
+    }
+    document.getElementById('bList').innerHTML = bItems;
+
+    var pHtml = '';
+    var wSaved = curBill - wOnly;
+    if (st.net === 'none' && wSaved > 0) {
+      var p300 = window.calcNet('300', ap).cost - wSaved;
+      var p1000 = window.calcNet('1000', ap).cost - wSaved;
+      pHtml += '<div class="pitch"><strong>🎯 35% Close Rate Pitch (Saved $' + wSaved.toFixed(0) + '/mo on Wireless!):</strong>' +
+        'Tap <b>300 Mbps</b> above to bundle Fiber for <b>' + (p300 <= 0 ? '$' + Math.abs(p300).toFixed(0) + '/mo LESS than old bill' : '+$' + p300.toFixed(0) + '/mo net') +
+        '</b>, or <b>1 GIG for +$' + p1000.toFixed(0) + '/mo net</b>!</div>';
+    }
+    if (tot === 3) {
+      var f4 = window.calcVoice(st.prem, st.extra, st.val + 1, ap, disc) - vCost;
+      if (f4 <= 5) pHtml += '<div class="pitch"><strong>💡 4th Line Pitch:</strong>Adding a 4th Value line is ' + (f4 <= 0 ? 'FREE ($0 change)!' : '+$' + f4.toFixed(2) + '/mo!') + '</div>';
+    }
+    if (ap === 'debit' && st.net !== 'none') {
+      pHtml += '<div class="pitch warn"><strong>🏦 Fiber Bank AutoPay Tip:</strong>Routing/Checking saves another $5/mo on Fiber vs Debit Card!</div>';
+    }
+    document.getElementById('pitchBox').innerHTML = pHtml;
+  };
+
+  window.buildTable = function() {
+    var h = '';
+    for (var L = 1; L <= 4; L++) {
+      h += '<tr class="ghdr"><td colspan="7">' + L + '-Line Combinations</td></tr>';
+      for (var p = 0; p <= L; p++) {
+        for (var e = 0; e <= L - p; e++) {
+          var v = L - p - e;
+          var lbl = [];
+          if (p) lbl.push(p + 'P');
+          if (e) lbl.push(e + 'E');
+          if (v) lbl.push(v + 'V');
+          h += '<tr><td><b>' + lbl.join(' + ') + '</b></td>' +
+            '<td>$' + window.calcVoice(p,e,v,'none','none').toFixed(2) + '</td>' +
+            '<td>$' + window.calcVoice(p,e,v,'none','sig').toFixed(2) + '</td>' +
+            '<td>$' + window.calcVoice(p,e,v,'none','apprec').toFixed(2) + '</td>' +
+            '<td>$' + window.calcVoice(p,e,v,'bank','none').toFixed(2) + '</td>' +
+            '<td style="color:#38bdf8;font-weight:700;">$' + window.calcVoice(p,e,v,'bank','sig').toFixed(2) + '</td>' +
+            '<td style="color:#34d399;font-weight:700;">$' + window.calcVoice(p,e,v,'bank','apprec').toFixed(2) + '</td></tr>';
+        }
+      }
+    }
+    document.getElementById('mBody').innerHTML = h;
+  };
+
+  window.buildTable();
+  window.recalc();
+</script>
+</body>
+</html>
