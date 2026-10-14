@@ -5,79 +5,92 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<title>AT&T Wireless 2.0 & Fiber Builder</title>
+<title>AT&T Wireless 2.0 & Solutions Hub</title>
 <style>
-:root{--b:#00a8e0;--bg:#0b111e;--c:#151f32;--bd:#263552;--t:#f8fafc;--m:#94a3b8;--g:#10b981;--w:#f59e0b}
+:root{--b:#00a8e0;--bg:#0b111e;--c:#151f32;--bd:#263552;--t:#f8fafc;--m:#94a3b8;--g:#10b981;--w:#f59e0b;--r:#ef4444}
 *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
 body{background:var(--bg);color:var(--t);padding:12px;line-height:1.4}
-.wrap{max-width:1100px;margin:0 auto}
+.wrap{max-width:1120px;margin:0 auto}
 .hdr{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;padding-bottom:12px;margin-bottom:14px;border-bottom:1px solid var(--bd)}
 .hdr h1{font-size:1.25rem;font-weight:800;color:#fff}.hdr h1 span{color:var(--b)}
 .hdr p{font-size:.72rem;color:var(--m);font-weight:700;text-transform:uppercase;margin-top:2px}
-.btn-mode{background:var(--c);border:2px solid var(--b);color:#fff;padding:10px 16px;border-radius:99px;font-size:.85rem;font-weight:800;cursor:pointer}
+.btn-mode{background:var(--c);border:2px solid var(--b);color:#fff;padding:8px 14px;border-radius:99px;font-size:.8rem;font-weight:800;cursor:pointer}
 .btn-mode.on{background:var(--b);color:#000}
 .prequal{background:#111c2d;border:1px solid var(--b);border-radius:12px;padding:12px;margin-bottom:14px}
 .prequal-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:8px;font-size:.82rem;font-weight:800}
 .pill-safe{font-size:.68rem;background:rgba(16,185,129,.2);border:1px solid var(--g);color:#34d399;padding:2px 8px;border-radius:99px}
 .prequal-row{display:grid;grid-template-columns:1.5fr auto auto auto;gap:8px}
 @media(max-width:760px){.prequal-row{grid-template-columns:1fr 1fr}.addr-in{grid-column:1/-1}}
-.addr-in,select,input[type=number]{width:100%;background:var(--bg);color:#fff;border:1px solid var(--bd);padding:10px;border-radius:8px;font-size:.9rem;font-weight:600}
-.act-btn{background:var(--b);color:#000!important;text-decoration:none!important;border:none;padding:10px 12px;border-radius:8px;font-size:.82rem;font-weight:800;cursor:pointer;text-align:center;display:inline-flex;align-items:center;justify-content:center}
+.addr-in,select,input[type=number]{width:100%;background:var(--bg);color:#fff;border:1px solid var(--bd);padding:9px;border-radius:8px;font-size:.9rem;font-weight:600}
+.act-btn{background:var(--b);color:#000!important;text-decoration:none!important;border:none;padding:9px 12px;border-radius:8px;font-size:.8rem;font-weight:800;cursor:pointer;text-align:center;display:inline-flex;align-items:center;justify-content:center}
 .act-btn.sec{background:var(--bg);color:#fff!important;border:1px solid var(--bd)}
 .toast{font-size:.76rem;color:#34d399;font-weight:700;margin-top:6px;display:none}
 .top-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-bottom:14px}
 .cbox{background:var(--c);border:1px solid var(--bd);border-radius:10px;padding:10px 12px}
 .cbox label{display:block;font-size:.68rem;font-weight:700;text-transform:uppercase;color:var(--m);margin-bottom:5px}
-.main-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:14px;margin-bottom:18px}
-@media(max-width:860px){.main-grid{grid-template-columns:1fr}}
+.fn-box{background:rgba(0,168,224,.08);border:1px solid var(--b);border-radius:10px;padding:10px 12px;margin-bottom:12px;display:none}
+.fn-box b{color:var(--b);font-size:.82rem}
+.fn-box ul{list-style:none;margin-top:5px;font-size:.74rem;color:var(--m)}
+.fn-box li{margin-bottom:2px}
+.main-grid{display:grid;grid-template-columns:1.1fr 1.25fr;gap:14px;margin-bottom:18px}
+@media(max-width:880px){.main-grid{grid-template-columns:1fr}}
 .panel{background:var(--c);border:1px solid var(--bd);border-radius:12px;padding:14px}
-.ptitle{font-size:.9rem;font-weight:800;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.ptitle{font-size:.92rem;font-weight:800;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
 .badge{font-size:.7rem;background:rgba(0,168,224,.18);color:var(--b);padding:3px 8px;border-radius:99px;font-weight:700}
 .trow{display:flex;justify-content:space-between;align-items:center;background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:8px 10px;margin-bottom:8px}
 .tname{font-weight:700;font-size:.9rem;display:block}.tsub{font-size:.72rem;color:var(--m)}
 .stepper{display:flex;align-items:center;gap:8px}
-.sbtn{width:42px;height:42px;border-radius:8px;border:2px solid var(--b);background:var(--c);color:#fff;font-size:1.35rem;font-weight:900;cursor:pointer}
-.sval{min-width:28px;text-align:center;font-weight:900;font-size:1.15rem}
-.qtabs{display:flex;gap:8px;margin-bottom:10px}
-.qtab{flex:1;background:var(--bg);border:1px solid var(--bd);color:var(--m);padding:10px;border-radius:8px;font-size:.78rem;font-weight:800;cursor:pointer}
-.qtab.active{background:rgba(0,168,224,.2);border-color:var(--b);color:#fff}
-.fcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:8px;margin-bottom:12px}
-.fcard{background:var(--bg);border:2px solid var(--bd);border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;color:#fff;width:100%}
-.fcard.active{border-color:var(--b);background:rgba(0,168,224,.18)}
-.fspeed{font-size:.82rem;font-weight:800;display:block}.fprice{font-size:1.2rem;font-weight:900;color:var(--b);margin:2px 0;display:block}
-.fnet{font-size:.66rem;font-weight:800;padding:3px 4px;border-radius:5px;margin-top:4px;display:inline-block}
-.fnet.free{background:rgba(16,185,129,.22);color:#34d399}.fnet.low{background:rgba(56,189,248,.15);color:#38bdf8}
-.addons{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px}
+.sbtn{width:38px;height:38px;border-radius:8px;border:2px solid var(--b);background:var(--c);color:#fff;font-size:1.25rem;font-weight:900;cursor:pointer}
+.sval{min-width:24px;text-align:center;font-weight:900;font-size:1.1rem}
+.upg-bar{background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:10px 12px;margin-top:10px}
+.upg-toggle{display:flex;justify-content:space-between;align-items:center}
+.trade-card{background:#111a2c;border:1px solid var(--bd);border-radius:8px;padding:10px;margin-top:8px}
+.q-row{display:flex;justify-content:space-between;align-items:center;font-size:.76rem;padding:4px 0}
+.btn-yn{background:var(--c);border:1px solid var(--bd);color:var(--t);padding:4px 8px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer}
+.btn-yn.active-y{background:var(--g);color:#000;border-color:var(--g)}
+.btn-yn.active-n{background:var(--r);color:#fff;border-color:var(--r)}
+.tier-pills{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:6px}
+.tpill{background:var(--bg);border:1px solid var(--bd);color:var(--m);padding:6px 2px;border-radius:6px;font-size:.68rem;font-weight:800;text-align:center;cursor:pointer}
+.tpill.active{border-color:var(--b);color:#fff;background:rgba(0,168,224,.18)}
 .hero{background:linear-gradient(135deg,#003e85,#0077b6);border-radius:12px;padding:14px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:8px}
-.hero-lbl{font-size:.72rem;text-transform:uppercase;font-weight:700;color:rgba(255,255,255,.85)}.hero-price{font-size:2rem;font-weight:900;color:#fff}
-.save-pill{background:rgba(16,185,129,.22);border:1px solid var(--g);color:#34d399;padding:6px 10px;border-radius:8px;text-align:right;font-weight:800;font-size:.82rem}
-.blist{list-style:none;margin-bottom:12px}.blist li{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--bd);font-size:.85rem}
-.pitch{background:rgba(16,185,129,.12);border-left:4px solid var(--g);padding:9px 11px;border-radius:8px;margin-top:8px;font-size:.79rem}
-.pitch.warn{background:rgba(245,158,11,.14);border-left-color:var(--w)}.pitch strong{display:block;margin-bottom:2px;color:#fff}
+.hero-lbl{font-size:.72rem;text-transform:uppercase;font-weight:700;color:rgba(255,255,255,.85)}.hero-price{font-size:1.95rem;font-weight:900;color:#fff}
+.save-pill{background:rgba(16,185,129,.22);border:1px solid var(--g);color:#34d399;padding:6px 10px;border-radius:8px;text-align:right;font-weight:800;font-size:.8rem}
+.s-hub{background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:12px;margin-bottom:12px}
+.s-hub h4{font-size:.76rem;text-transform:uppercase;color:var(--b);letter-spacing:.04em;margin-bottom:8px}
+.s-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dashed var(--bd);font-size:.84rem}
+.s-row.tot{border-bottom:none;padding-top:8px;font-size:.92rem;font-weight:800}
+.next-sec{margin-top:12px;border-top:1px solid var(--bd);padding-top:12px}
+.next-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:.8rem;font-weight:800;color:#fff}
+.chip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:6px;margin-bottom:10px}
+.chip{background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:8px 4px;text-align:center;cursor:pointer;color:#fff;font-size:.76rem;font-weight:700}
+.chip.active{border:2px solid var(--b);background:rgba(0,168,224,.18)}
+.chip b{display:block;font-size:.92rem;color:var(--b);margin:2px 0}
+.chip small{display:block;font-size:.65rem;color:#34d399;font-weight:800}
+.drawer-btn{width:100%;background:var(--c);border:1px solid var(--bd);color:var(--b);padding:10px;border-radius:10px;font-size:.82rem;font-weight:800;cursor:pointer;margin-top:14px;text-align:center}
+.drawer-content{display:none;background:var(--c);border:1px solid var(--bd);border-radius:12px;padding:12px;margin-top:8px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.78rem;min-width:640px}
+th{background:#0f172a;color:var(--b);text-align:left;padding:8px;border-bottom:1px solid var(--bd)}
+td{padding:6px 8px;border-bottom:1px solid rgba(38,53,82,.5)}.ghdr td{background:rgba(0,168,224,.14);color:#fff;font-weight:800}
 body.cust-mode .rep-only{display:none!important}
-.twrap{overflow-x:auto;background:var(--c);border:1px solid var(--bd);border-radius:12px;margin-top:14px}
-table{width:100%;border-collapse:collapse;font-size:.8rem;min-width:640px}
-th{background:#0f172a;color:var(--b);text-align:left;padding:9px 10px;border-bottom:1px solid var(--bd)}
-td{padding:7px 10px;border-bottom:1px solid rgba(38,53,82,.5)}.ghdr td{background:rgba(0,168,224,.14);color:#fff;font-weight:800}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="hdr">
     <div>
-      <h1>AT&T <span>Wireless 2.0 & Fiber</span> Builder</h1>
-      <p class="rep-only"><span style="color:#34d399;">● Engine Ready</span> • 1–10 Lines • 35% Close Rate Pitch Mode</p>
+      <h1>AT&T <span>Wireless 2.0 & Solutions Hub</span></h1>
+      <p class="rep-only"><span style="color:#34d399;">● Engine Ready</span> • Dual-Bucket Savings & Trade Advisor</p>
     </div>
     <button type="button" id="custBtn" class="btn-mode" onclick="toggleCust()">👁️ Customer View: <span id="custTxt">OFF</span></button>
   </div>
 
   <div class="prequal rep-only">
     <div class="prequal-top">
-      <span>🏠 Step 1: Stealth Address Pre-Check (Before Opening OPUS Lead)</span>
+      <span>🏠 Stealth Address Pre-Check (Zero OPUS Footprint)</span>
       <span class="pill-safe">🛡️ Protects Close Rate Denominator</span>
     </div>
     <div class="prequal-row">
-      <input type="text" id="addrIn" class="addr-in" placeholder="Enter street address & zip...">
+      <input type="text" id="addrIn" class="addr-in" placeholder="Enter customer street address & zip...">
       <button type="button" class="act-btn sec" onclick="copyAddr()">📋 Copy</button>
       <a href="https://www.att.com/internet/availability/" target="_blank" rel="noopener" class="act-btn" onclick="copyAddr()">🔍 AT&T Check</a>
       <a href="https://broadbandmap.fcc.gov/home" target="_blank" rel="noopener" class="act-btn sec" onclick="copyAddr()">🗺️ FCC Map</a>
@@ -87,82 +100,179 @@ td{padding:7px 10px;border-bottom:1px solid rgba(38,53,82,.5)}.ghdr td{backgroun
 
   <div class="top-grid">
     <div class="cbox"><label>Current Wireless Bill ($)</label><input type="number" id="curBill" value="220" oninput="recalc()"></div>
-    <div class="cbox"><label>Current Home Internet ($)</label>
-      <select id="curIsp" onchange="recalc()">
-        <option value="0">$0 / Not Comparing</option><option value="65">$65/mo ISP</option><option value="80">$80/mo ISP</option><option value="95">$95/mo ISP</option><option value="110">$110/mo ISP</option>
-      </select>
-    </div>
+    <div class="cbox"><label>Current Internet Bill (Spectrum/Xfinity)</label><input type="number" id="curIsp" value="80" placeholder="e.g. 80" oninput="recalc()"></div>
     <div class="cbox"><label>Discount Program (FAN)</label>
       <select id="discType" onchange="recalc()">
-        <option value="sig">Signature (Corporate/FAN)</option><option value="apprec">Appreciation (Mil/Teach/FN/RN)</option><option value="none">Standard (No FAN)</option>
+        <option value="sig">Signature (Corporate/Union FAN)</option>
+        <option value="apprec">Appreciation (Mil/Teach/FN/Health)</option>
+        <option value="none">Standard Consumer (No FAN)</option>
       </select>
     </div>
     <div class="cbox"><label>AutoPay Method</label>
       <select id="apType" onchange="recalc()">
-        <option value="bank">Bank ($10/L + $10 Fiber)</option><option value="debit">Debit ($10/L + $5 Fiber)</option><option value="credit">Credit ($5/L + $0 Fiber)</option><option value="none">No AutoPay</option>
+        <option value="bank">Bank Account ($10/L + $10 Fiber)</option>
+        <option value="debit">Debit Card ($10/L + $5 Fiber)</option>
+        <option value="credit">Credit Card ($5/L + $0 Fiber)</option>
+        <option value="none">No AutoPay ($0 off)</option>
       </select>
     </div>
   </div>
 
   <div class="main-grid">
     <div class="panel">
-      <div class="ptitle"><span>1. Voice Line Mix (1–10 Lines)</span><span class="badge" id="linesBadge">4 Voice Lines</span></div>
+      <div class="ptitle">
+        <span>1. Voice Line Configuration</span>
+        <span class="badge" id="linesBadge">4 Voice Lines</span>
+      </div>
+
+      <div class="trow" style="background:#112036;border-color:var(--b);margin-bottom:10px;">
+        <div>
+          <span class="tname" style="color:var(--b);">🚨 FirstNet Primary Subscriber</span>
+          <span class="tsub">Band 14 priority • Uncapped tethering ($47.99/mo)</span>
+        </div>
+        <button type="button" id="fnBtn" class="btn-mode" style="padding:6px 12px;font-size:.76rem;" onclick="toggleFn()">OFF</button>
+      </div>
+
+      <div class="fn-box" id="fnExplainer">
+        <b>🛡️ FirstNet Priority Network Active:</b>
+        <ul>
+          <li>• <strong>Band 14 Dedicated Lane:</strong> Physically separate spectrum reserved for public safety.</li>
+          <li>• <strong>Always-On Preemption:</strong> Never slowed down during disasters, emergencies, or stadium events.</li>
+          <li>• <strong>Family Lines Discount:</strong> Family receives 20% Premium / 15% Extra / 10% Value appreciation rates.</li>
+        </ul>
+      </div>
+
       <div class="trow">
-        <div><span class="tname">🐆 Unlimited Premium 2.0</span><span class="tsub">Uncapped • 60GB Hotspot • 50% Watch/Tab slot</span></div>
+        <div><span class="tname">🐆 Unlimited Premium 2.0</span><span class="tsub">Uncapped • 60GB Hotspot • $1,200 Trade Promo</span></div>
         <div class="stepper"><button type="button" class="sbtn" onclick="stepTier('prem',-1)">−</button><span class="sval" id="valPrem">2</span><button type="button" class="sbtn" onclick="stepTier('prem',1)">+</button></div>
       </div>
       <div class="trow">
-        <div><span class="tname">🐇 Unlimited Extra 2.0</span><span class="tsub">75GB priority data • 30GB Hotspot</span></div>
+        <div><span class="tname">🐇 Unlimited Extra 2.0</span><span class="tsub">75GB priority • 30GB Hotspot • $930 Trade Promo</span></div>
         <div class="stepper"><button type="button" class="sbtn" onclick="stepTier('extra',-1)">−</button><span class="sval" id="valExtra">0</span><button type="button" class="sbtn" onclick="stepTier('extra',1)">+</button></div>
       </div>
       <div class="trow">
-        <div><span class="tname">🐢 Value Plus 2.0</span><span class="tsub">Unlimited standard data • Great for family lines</span></div>
+        <div><span class="tname">🐢 Value Plus 2.0</span><span class="tsub">Standard data • $500 Trade Promo</span></div>
         <div class="stepper"><button type="button" class="sbtn" onclick="stepTier('val',-1)">−</button><span class="sval" id="valVal">2</span><button type="button" class="sbtn" onclick="stepTier('val',1)">+</button></div>
       </div>
 
-      <div class="ptitle" style="margin-top:14px;"><span>2. Home Internet Bundle (Tap Speed)</span><span class="badge">20% Bundle Off</span></div>
-      <div class="qtabs rep-only">
-        <button type="button" class="qtab active" id="qFiber" onclick="setQual('fiber')">🟢 Fiber (300/500/1G/5G)</button>
-        <button type="button" class="qtab" id="qAia" onclick="setQual('aia')">📡 Internet Air (AIA)</button>
-      </div>
-      <div class="fcards" id="fiberBox"></div>
+      <div class="upg-bar">
+        <div class="upg-toggle">
+          <div><span class="tname" style="font-size:.84rem;">📱 Hardware Upgrade & Trade-In</span><span class="tsub">3 Intake Questions & Value Tiering</span></div>
+          <button type="button" id="upgBtn" class="btn-mode" style="padding:6px 12px;font-size:.76rem;" onclick="toggleUpg()">NO</button>
+        </div>
 
-      <div class="ptitle" style="margin-top:12px;"><span>3. Watches, Tablets, Next Up & Insurance</span><span class="badge" id="slotBadge">2x 50%-Off Slots</span></div>
-      <div class="addons">
-        <div class="cbox"><label>⌚ Watches ($10.99/$5.50)</label><select id="wCount" onchange="recalc()"><option value="0">0</option><option value="1">1 Watch</option><option value="2">2 Watches</option><option value="3">3 Watches</option><option value="4">4 Watches</option></select></div>
-        <div class="cbox"><label>📱 Tablets ($20.99/$10.50)</label><select id="tCount" onchange="recalc()"><option value="0">0</option><option value="1">1 Tablet</option><option value="2">2 Tablets</option><option value="3">3 Tablets</option><option value="4">4 Tablets</option></select></div>
-        <div class="cbox"><label>🔄 Next Up ($10/L)</label><select id="nuaCount" onchange="recalc()"><option value="0">0</option><option value="1">1 (+$10)</option><option value="2">2 (+$20)</option><option value="3">3 (+$30)</option><option value="4">4 (+$40)</option><option value="5">5 (+$50)</option></select></div>
-        <div class="cbox"><label>🛡️ Protection</label><select id="insCost" onchange="recalc()"><option value="0">$0</option><option value="17">1 ($17)</option><option value="34">2 ($34)</option><option value="50">4-Pack ($50)</option></select></div>
+        <div id="upgPanel" style="display:none;margin-top:10px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+            <span style="font-size:.74rem;color:var(--m);font-weight:700;">UPGRADING LINES</span>
+            <div class="stepper"><button type="button" class="sbtn" style="width:28px;height:28px;font-size:1rem;" onclick="stepTradeCount(-1)">−</button><span class="sval" id="tradeCountVal" style="font-size:.95rem;">1</span><button type="button" class="sbtn" style="width:28px;height:28px;font-size:1rem;" onclick="stepTradeCount(1)">+</button></div>
+          </div>
+
+          <div class="trow" style="margin-bottom:8px;">
+            <div><span class="tname" style="font-size:.82rem;">🔄 Next Up Anytime ($10/L)</span><span class="tsub">Upgrade every 12 months</span></div>
+            <div class="stepper"><button type="button" class="sbtn" style="width:30px;height:30px;font-size:1rem;" onclick="stepNua(-1)">−</button><span class="sval" id="valNua" style="font-size:1rem;">0</span><button type="button" class="sbtn" style="width:30px;height:30px;font-size:1rem;" onclick="stepNua(1)">+</button></div>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;margin:6px 0;">
+            <span style="font-size:.75rem;font-weight:800;color:var(--b);">TRADE-IN INTAKE EVALUATOR</span>
+            <a href="https://tradein.att.com/" target="_blank" rel="noopener" style="font-size:.7rem;color:#38bdf8;text-decoration:underline;">tradein.att.com ↗</a>
+          </div>
+
+          <div id="tradeCardsBox"></div>
+        </div>
       </div>
     </div>
 
     <div class="panel">
-      <div class="ptitle"><span>Estimated Monthly Quote</span><span class="badge" id="discPill">Bank AP</span></div>
+      <div class="ptitle"><span>2. Dual-Bucket Savings & Next Steps</span><span class="badge" id="slotBadge">2x 50%-Off Slots</span></div>
+
       <div class="hero">
-        <div><div class="hero-lbl" id="heroLbl">Wireless Estimate</div><div class="hero-price" id="grandOut">$140.00</div></div>
-        <div class="save-pill" id="saveOut">Saves $80/mo</div>
+        <div><div class="hero-lbl" id="heroLbl">New Total Household Bill</div><div class="hero-price" id="grandOut">$140.00</div></div>
+        <div class="save-pill" id="saveOut">Saves $80.00/mo</div>
       </div>
-      <ul class="blist" id="bList"></ul>
-      <div class="rep-only" id="pitchBox"></div>
+
+      <div class="s-hub">
+        <h4>💰 Monthly Savings Breakdown (No Shell Games)</h4>
+        <div id="savingsBreakdown"></div>
+      </div>
+
+      <div class="next-sec">
+        <div class="next-hdr"><span>🌐 Option A: Home Internet (Targeting Potential Pool)</span></div>
+        <div class="chip-grid" id="netChips"></div>
+
+        <div class="next-hdr" style="margin-top:10px;"><span>🛡️ Option B: Protect Advantage (Targeting Guaranteed Pool)</span></div>
+        <div class="chip-grid" id="paChips"></div>
+
+        <div class="next-hdr" style="margin-top:10px;"><span>⌚ Option C: Connected Devices (Uses 50%-Off Slots)</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div class="cbox"><label>⌚ Watches ($5.50 / $10.99)</label><select id="wCount" onchange="recalc()"><option value="0">0 Watches</option><option value="1">1 Watch</option><option value="2">2 Watches</option><option value="3">3 Watches</option></select></div>
+          <div class="cbox"><label>📱 Tablets ($10.50 / $20.99)</label><select id="tCount" onchange="recalc()"><option value="0">0 Tablets</option><option value="1">1 Tablet</option><option value="2">2 Tablets</option><option value="3">3 Tablets</option></select></div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="twrap">
+  <button type="button" class="drawer-btn" onclick="toggleDrawer()">📊 Show 1–4 Line Rate Matrix & Rate Rules ▾</button>
+  <div class="drawer-content" id="matrixDrawer">
     <table>
       <thead><tr><th>COMBO</th><th>NO AP</th><th>NO AP+SIG</th><th>NO AP+APP</th><th>AUTOPAY</th><th>AP+SIG</th><th>AP+APPREC</th></tr></thead>
       <tbody id="mBody"></tbody>
     </table>
   </div>
 </div>
+
 <script>
 var RATES={1:[90,70,50],2:[80,60,45],3:[65,50,35],4:[50,40,30],5:[45,35,30],6:[40,35,30],7:[40,35,30],8:[40,35,30],9:[40,35,30],10:[40,35,30]};
-var NETS={none:{l:"No Internet",s:"Wireless Only",ap:0,b:0},"300":{l:"300 Mbps",s:"Fiber 300",ap:50,b:35},"500":{l:"500 Mbps",s:"Fiber 500",ap:60,b:45},"1000":{l:"1 GIG",s:"Fiber 1000",ap:70,b:50},"5000":{l:"5 GIG",s:"Fiber 5000",ap:110,b:85},aia:{l:"Internet Air",s:"5G Home",ap:50,b:35}};
-var st={prem:2,extra:0,val:2,qual:'fiber',net:'none'};
+var NETS={none:{l:"None",ap:0,b:0},"300":{l:"Fiber 300",ap:50,b:35},"500":{l:"Fiber 500",ap:60,b:45},"1000":{l:"1 GIG Fiber",ap:70,b:50},"5000":{l:"5 GIG Fiber",ap:110,b:85},aia:{l:"Internet Air",ap:60,b:48}};
+var PA_OPTS=[{k:0,l:"No PA",c:0},{k:16,l:"PA1 ($16)",c:16},{k:19,l:"PA1 ($19)",c:19},{k:25,l:"PA1 ($25)",c:25},{k:50,l:"PA4 ($50)",c:50}];
+
+var st={prem:2,extra:0,val:2,fn:false,net:'none',pa:0,upg:false,nua:0,tradeCount:1,trades:[{p:true,l:true,d:false,tier:'230'}]};
 
 function toggleCust(){
   var on=document.body.classList.toggle('cust-mode');
   document.getElementById('custBtn').classList.toggle('on',on);
   document.getElementById('custTxt').textContent=on?'ON':'OFF';
+}
+function toggleDrawer(){
+  var d=document.getElementById('matrixDrawer');
+  var open=d.style.display==='block';
+  d.style.display=open?'none':'block';
+}
+function toggleFn(){
+  st.fn=!st.fn;
+  document.getElementById('fnBtn').classList.toggle('on',st.fn);
+  document.getElementById('fnBtn').textContent=st.fn?'ON':'OFF';
+  document.getElementById('fnExplainer').style.display=st.fn?'block':'none';
+  recalc();
+}
+function toggleUpg(){
+  st.upg=!st.upg;
+  if(!st.upg)st.nua=0;
+  document.getElementById('upgBtn').textContent=st.upg?'YES':'NO';
+  document.getElementById('upgBtn').classList.toggle('on',st.upg);
+  document.getElementById('upgPanel').style.display=st.upg?'block':'none';
+  recalc();
+}
+function stepTradeCount(d){
+  var tot=st.prem+st.extra+st.val;
+  var nx=st.tradeCount+d;
+  if(nx<1||nx>tot)return;
+  st.tradeCount=nx;
+  while(st.trades.length<nx)st.trades.push({p:true,l:true,d:false,tier:'230'});
+  while(st.trades.length>nx)st.trades.pop();
+  recalc();
+}
+function setTradeQ(idx,k,val){
+  st.trades[idx][k]=val;
+  recalc();
+}
+function setTradeTier(idx,t){
+  st.trades[idx].tier=t;
+  recalc();
+}
+function stepNua(d){
+  var nx=st.nua+d;
+  if(nx<0||nx>st.tradeCount)return;
+  st.nua=nx;recalc();
 }
 function copyAddr(){
   var v=document.getElementById('addrIn').value;
@@ -173,17 +283,13 @@ function copyAddr(){
 function stepTier(k,d){
   var tot=st.prem+st.extra+st.val,nx=st[k]+d;
   if(nx<0||tot+d>10||tot+d<1)return;
-  st[k]=nx;recalc();
-}
-function setQual(m){
-  st.qual=m;
-  document.getElementById('qFiber').classList.toggle('active',m==='fiber');
-  document.getElementById('qAia').classList.toggle('active',m==='aia');
-  if(m==='aia'&&st.net!=='none')st.net='aia';
-  if(m==='fiber'&&st.net==='aia')st.net='300';
+  st[k]=nx;if(st.nua>tot+d)st.nua=tot+d;
+  if(st.tradeCount>tot+d)st.tradeCount=tot+d;
   recalc();
 }
 function pickNet(k){st.net=k;recalc();}
+function pickPa(c){st.pa=c;recalc();}
+
 function calcVoice(p,e,v,ap,d){
   var tot=p+e+v;if(!tot)return 0;
   var r=RATES[Math.min(tot,10)],pen=ap==='none'?10:(ap==='credit'?5:0);
@@ -197,51 +303,131 @@ function calcNet(k,ap){
   var t=NETS[k],pen=ap==='bank'?0:(ap==='debit'?5:10);
   return{c:t.b+pen,sv:t.ap-t.b};
 }
+
 function recalc(){
-  var tot=st.prem+st.extra+st.val,disc=document.getElementById('discType').value,ap=document.getElementById('apType').value;
-  var curB=parseFloat(document.getElementById('curBill').value)||0,curI=parseFloat(document.getElementById('curIsp').value)||0;
-  var w=+document.getElementById('wCount').value,t=+document.getElementById('tCount').value,nua=+document.getElementById('nuaCount').value,ins=+document.getElementById('insCost').value;
-  document.getElementById('valPrem').textContent=st.prem;document.getElementById('valExtra').textContent=st.extra;document.getElementById('valVal').textContent=st.val;
-  document.getElementById('linesBadge').textContent=tot+' Voice Line'+(tot>1?'s':'');
+  var tot=st.prem+st.extra+st.val;
+  var disc=st.fn?'apprec':document.getElementById('discType').value;
+  var ap=document.getElementById('apType').value;
+  var curB=parseFloat(document.getElementById('curBill').value)||0;
+  var curI=parseFloat(document.getElementById('curIsp').value)||0;
+  var w=+document.getElementById('wCount').value,t=+document.getElementById('tCount').value;
+
+  document.getElementById('valPrem').textContent=st.prem;
+  document.getElementById('valExtra').textContent=st.extra;
+  document.getElementById('valVal').textContent=st.val;
+  document.getElementById('valNua').textContent=st.nua;
+  document.getElementById('tradeCountVal').textContent=st.tradeCount;
+  document.getElementById('linesBadge').textContent=(st.fn?(tot+1):tot)+' Voice Line'+((st.fn?tot+1:tot)>1?'s':'');
   document.getElementById('slotBadge').textContent=st.prem+'x 50%-Off Slots';
 
-  var vCost=calcVoice(st.prem,st.extra,st.val,ap,disc),sl=st.prem,tC=0,wC=0;
+  var vCost=0;
+  if(st.fn){
+    var fnLineCost=ap==='none'?57.99:47.99;
+    vCost=fnLineCost+calcVoice(st.prem,st.extra,st.val,ap,'apprec');
+  }else{
+    vCost=calcVoice(st.prem,st.extra,st.val,ap,disc);
+  }
+
+  var sl=st.prem,tC=0,wC=0;
   for(var i=0;i<t;i++){if(sl>0){tC+=10.5;sl--;}else tC+=20.99;}
   for(var j=0;j<w;j++){if(sl>0){wC+=5.5;sl--;}else wC+=10.99;}
-  var wOnly=vCost+tC+wC+nua*10+ins;
 
-  var ks=st.qual==='fiber'?['none','300','500','1000','5000']:['none','aia'],fh='';
-  for(var x=0;x<ks.length;x++){
-    var k=ks[x],inf=NETS[k],no=calcNet(k,ap),df=(wOnly+no.c)-curB;
-    var tg=k==='none'?'<span class="fnet low">Wireless Only</span>':(df<=0?'<span class="fnet free">NET: -$'+Math.abs(df).toFixed(0)+'/mo FREE!</span>':'<span class="fnet low">Net +$'+df.toFixed(0)+' vs Old</span>');
-    fh+='<button type="button" class="fcard '+(st.net===k?'active':'')+'" onclick="pickNet(\''+k+'\')"><span class="fspeed">'+inf.l+'</span><span class="fprice">'+(k==='none'?'$0':'$'+no.c)+'</span><span style="font-size:.68rem;color:#94a3b8;display:block">'+inf.s+'</span>'+tg+'</button>';
+  var nuaC=st.upg?(st.nua*10):0;
+  var sn=calcNet(st.net,ap);
+
+  var devFin=0,devCred=0;
+  var tHtml='';
+  for(var idx=0;idx<st.tradeCount;idx++){
+    var tr=st.trades[idx];
+    devFin+=33.34;
+    var eligible=(tr.p && tr.l);
+    var cred=0;
+    if(eligible){
+      if(tr.d){
+        cred=9.73;
+      }else{
+        if(tr.tier==='230'){
+          cred=(st.prem>0)?33.34:((st.extra>0)?25.84:13.89);
+        }else if(tr.tier==='130'){
+          cred=(st.prem>0||st.extra>0)?25.84:13.89;
+        }else{
+          cred=9.73;
+        }
+      }
+    }
+    devCred+=cred;
+
+    tHtml+='<div class="trade-card">'+
+      '<div style="font-weight:800;font-size:.78rem;margin-bottom:4px;display:flex;justify-content:space-between;">'+
+        '<span>Device #'+(idx+1)+' Upgrade</span>'+
+        '<span style="color:'+(eligible?(cred>0?'#34d399':'#fff'):'#ef4444')+';font-size:.74rem;">'+
+          (eligible?('-$'+cred.toFixed(2)+'/mo credit'):'❌ Ineligible (Lock/Power)')+
+        '</span>'+
+      '</div>'+
+      '<div class="q-row"><span>Powers on and stays on?</span><div>'+
+        '<button type="button" class="btn-yn '+(tr.p?'active-y':'')+'" onclick="setTradeQ('+idx+',\'p\',true)">YES</button> '+
+        '<button type="button" class="btn-yn '+(!tr.p?'active-n':'')+'" onclick="setTradeQ('+idx+',\'p\',false)">NO</button></div></div>'+
+      '<div class="q-row"><span>Find My / Google Lock OFF?</span><div>'+
+        '<button type="button" class="btn-yn '+(tr.l?'active-y':'')+'" onclick="setTradeQ('+idx+',\'l\',true)">YES</button> '+
+        '<button type="button" class="btn-yn '+(!tr.l?'active-n':'')+'" onclick="setTradeQ('+idx+',\'l\',false)">NO</button></div></div>'+
+      '<div class="q-row"><span>Cracks, chips, or LCD bleed?</span><div>'+
+        '<button type="button" class="btn-yn '+(tr.d?'active-n':'')+'" onclick="setTradeQ('+idx+',\'d\',true)">YES</button> '+
+        '<button type="button" class="btn-yn '+(!tr.d?'active-y':'')+'" onclick="setTradeQ('+idx+',\'d\',false)">NO</button></div></div>';
+
+    if(eligible && !tr.d){
+      tHtml+='<div class="tier-pills">'+
+        '<button type="button" class="tpill '+(tr.tier==='230'?'active':'')+'" onclick="setTradeTier('+idx+',\'230\')">$230+ Value<br>Up to $1200</button>'+
+        '<button type="button" class="tpill '+(tr.tier==='130'?'active':'')+'" onclick="setTradeTier('+idx+',\'130\')">$130-$229<br>Up to $930</button>'+
+        '<button type="button" class="tpill '+(tr.tier==='35'?'active':'')+'" onclick="setTradeTier('+idx+',\'35\')">$35-$129<br>Up to $350</button>'+
+      '</div>';
+    }
+    tHtml+='</div>';
   }
-  document.getElementById('fiberBox').innerHTML=fh;
+  document.getElementById('tradeCardsBox').innerHTML=tHtml;
 
-  var sn=calcNet(st.net,ap),grand=wOnly+sn.c,saved=(curB+(st.net!=='none'?curI:0))-grand;
+  var netDevCost=st.upg?Math.max(0,devFin-devCred):0;
+  var grand=vCost+tC+wC+nuaC+st.pa+sn.c+netDevCost;
+
+  var guarSave=curB-vCost;
+  var potSave=curI;
+  var totalPool=guarSave+potSave;
+  var netTotalSavings=(curB+curI)-grand;
+
   document.getElementById('grandOut').textContent='$'+grand.toFixed(2);
   var sb=document.getElementById('saveOut');
-  sb.style.color=saved>=0?'#34d399':'#fbbf24';
-  sb.innerHTML=saved>=0?'Saves $'+saved.toFixed(2)+'/mo<br><small>($'+(saved*12).toFixed(0)+'/yr)</small>':'+$'+Math.abs(saved).toFixed(2)+'/mo Net';
+  sb.style.color=netTotalSavings>=0?'#34d399':'#fbbf24';
+  sb.innerHTML=netTotalSavings>=0?'Total Saves $'+netTotalSavings.toFixed(2)+'/mo<br><small>($'+(netTotalSavings*12).toFixed(0)+'/yr)</small>':'+$'+Math.abs(netTotalSavings).toFixed(2)+'/mo Net';
 
-  var bl='<li><span>Voice ('+st.prem+'P/'+st.extra+'E/'+st.val+'V)</span><strong>$'+vCost.toFixed(2)+'</strong></li>';
-  if(w||t)bl+='<li><span>Watches/Tablets</span><strong>$'+(wC+tC).toFixed(2)+'</strong></li>';
-  if(nua)bl+='<li><span>Next Up ('+nua+'x)</span><strong>$'+(nua*10).toFixed(2)+'</strong></li>';
-  if(ins)bl+='<li><span>Protection</span><strong>$'+ins.toFixed(2)+'</strong></li>';
-  if(st.net!=='none')bl+='<li><span>'+NETS[st.net].s+'</span><strong>$'+sn.c.toFixed(2)+' <small style="color:#34d399">(-$'+sn.sv+' Bundled)</small></strong></li>';
-  document.getElementById('bList').innerHTML=bl;
+  var bh='';
+  bh+='<div class="s-row"><span>• Guaranteed Wireless Savings (vs $'+curB+')</span><strong style="color:#34d399;">'+(guarSave>=0?'+$'+guarSave.toFixed(2)+'/mo':'-$'+Math.abs(guarSave).toFixed(2))+'</strong></div>';
+  bh+='<div class="s-row"><span>• Potential Internet Elimination (Spectrum/Xfinity)</span><strong style="color:#38bdf8;">+$'+potSave.toFixed(2)+'/mo</strong></div>';
+  bh+='<div class="s-row tot" style="border-top:1px dashed var(--bd);margin-top:4px;"><span>🟢 Total Household Savings Pool</span><strong style="color:#34d399;">+$'+totalPool.toFixed(2)+'/mo</strong></div>';
 
-  var ph='',ws=curB-wOnly;
-  if(st.net==='none'&&ws>0){
-    var n3=calcNet('300',ap).c-ws,n1=calcNet('1000',ap).c-ws;
-    ph+='<div class="pitch"><strong>🎯 35% Close Rate Pitch (Saved $'+ws.toFixed(0)+'/mo on Wireless!):</strong>Tap <b>300 Mbps</b> to bundle Fiber for <b>'+(n3<=0?'$'+Math.abs(n3).toFixed(0)+'/mo LESS than old bill':'+$'+n3.toFixed(0)+'/mo net')+'</b>, or <b>1 GIG for +$'+n1.toFixed(0)+'/mo net</b>!</div>';
+  if(st.net!=='none') bh+='<div class="s-row" style="font-size:.78rem;padding-top:4px;"><span>↳ Bundled '+NETS[st.net].l+'</span><strong>-$'+sn.c.toFixed(2)+'/mo</strong></div>';
+  if(st.pa>0) bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ Protect Advantage</span><strong>-$'+st.pa.toFixed(2)+'/mo</strong></div>';
+  if(st.upg && netDevCost>0) bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ Net Device Installments ('+st.tradeCount+'x)</span><strong>-$'+netDevCost.toFixed(2)+'/mo</strong></div>';
+  if(nuaC>0) bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ Next Up Anytime ('+st.nua+'x)</span><strong>-$'+nuaC.toFixed(2)+'/mo</strong></div>';
+
+  document.getElementById('savingsBreakdown').innerHTML=bh;
+
+  var nks=['none','300','500','1000','5000','aia'],nh='';
+  for(var x=0;x<nks.length;x++){
+    var k=nks[x],inf=NETS[k],no=calcNet(k,ap);
+    var netIspGain=curI-no.c;
+    var sub=k==='none'?'Wireless Only':(netIspGain>=0?'+$'+netIspGain.toFixed(0)+'/mo captured':'-$'+Math.abs(netIspGain).toFixed(0)+'/mo net');
+    nh+='<button type="button" class="chip '+(st.net===k?'active':'')+'" onclick="pickNet(\''+k+'\')">'+inf.l+'<b>'+(k==='none'?'$0':'$'+no.c)+'</b><small>'+sub+'</small></button>';
   }
-  if(tot===3){
-    var f4=calcVoice(st.prem,st.extra,st.val+1,ap,disc)-vCost;
-    if(f4<=5)ph+='<div class="pitch"><strong>💡 4th Line Pitch:</strong>4th Value line is '+(f4<=0?'FREE ($0 change)!':'+$'+f4.toFixed(2)+'/mo!')+'</div>';
+  document.getElementById('netChips').innerHTML=nh;
+
+  var ph='';
+  for(var y=0;y<PA_OPTS.length;y++){
+    var po=PA_OPTS[y];
+    var pSub=po.c===0?'No Coverage':(guarSave>=po.c?'Covered by savings!':'+$'+(po.c-guarSave).toFixed(0)+'/mo out-of-pocket');
+    ph+='<button type="button" class="chip '+(st.pa===po.c?'active':'')+'" onclick="pickPa('+po.c+')">'+po.l+'<b>$'+po.c+'</b><small>'+pSub+'</small></button>';
   }
-  document.getElementById('pitchBox').innerHTML=ph;
+  document.getElementById('paChips').innerHTML=ph;
 }
+
 function buildTable(){
   var h='';
   for(var L=1;L<=4;L++){
