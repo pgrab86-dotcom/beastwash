@@ -3,8 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
 <title>AT&T Wireless 2.0 & Solutions Hub</title>
 <style>
 :root{--b:#00a8e0;--bg:#0b111e;--c:#151f32;--bd:#263552;--t:#f8fafc;--m:#94a3b8;--g:#10b981;--w:#f59e0b;--r:#ef4444}
@@ -28,20 +26,16 @@ body{background:var(--bg);color:var(--t);padding:12px;line-height:1.4}
 .top-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:14px}
 .cbox{background:var(--c);border:1px solid var(--bd);border-radius:10px;padding:10px 12px}
 .cbox label{display:block;font-size:.68rem;font-weight:700;text-transform:uppercase;color:var(--m);margin-bottom:5px}
-
-/* Restored Top Suggestion Engine */
 .opp-box{background:linear-gradient(135deg,#0d1a2d 0%,#16263f 100%);border:2px solid var(--b);border-radius:12px;padding:12px 14px;margin-bottom:14px}
 .opp-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:10px}
 .opp-hdr span{font-size:.86rem;font-weight:900;color:#fff}
 .opp-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}
-.opp-card{background:var(--bg);border:1px solid var(--bd);border-radius:9px;padding:10px;cursor:pointer;transition:border-color .15s}
-.opp-card:hover{border-color:var(--b)}
+.opp-card{background:var(--bg);border:1px solid var(--bd);border-radius:9px;padding:10px;cursor:pointer}
 .opp-card.active{border:2px solid var(--g);background:rgba(16,185,129,.1)}
 .opp-title{font-size:.8rem;font-weight:800;color:var(--b);display:flex;justify-content:space-between}
 .opp-price{font-size:1.15rem;font-weight:900;color:#fff;margin:3px 0}
 .opp-sub{font-size:.72rem;color:var(--m)}
 .opp-save{font-size:.75rem;font-weight:800;color:#34d399;margin-top:4px}
-
 .fn-box{background:rgba(0,168,224,.08);border:1px solid var(--b);border-radius:10px;padding:10px 12px;margin-bottom:12px;display:none}
 .fn-box b{color:var(--b);font-size:.82rem}
 .fn-box ul{list-style:none;margin-top:5px;font-size:.74rem;color:var(--m)}
@@ -146,7 +140,6 @@ body.cust-mode .rep-only{display:none!important}
     </div>
   </div>
 
-  <!-- RESTORED TOP-OF-PAGE SUGGESTION ENGINE -->
   <div class="opp-box" id="oppBox">
     <div class="opp-hdr">
       <span id="oppHdrText">🎯 INSTANT RERATE OPPORTUNITIES (Tap to Apply Mix)</span>
@@ -424,7 +417,6 @@ function renderTopOpportunities(){
   var fnCost=st.fn?(ap==='none'?57.99:47.99):0;
 
   var options=[];
-  // Option 1: Max Cashflow Path (All Value Plus)
   var c1=fnCost+calcVoice(0,0,voiceLinesToDistribute,ap,disc);
   options.push({
     name:"Max Cashflow Path",
@@ -434,7 +426,6 @@ function renderTopOpportunities(){
     hook:"Frees up maximum cash for internet or accessories"
   });
 
-  // Option 2: Flagship / Sweet Spot Mix (Premium + Value)
   var p2=Math.min(2,voiceLinesToDistribute), v2=voiceLinesToDistribute-p2;
   var c2=fnCost+calcVoice(p2,0,v2,ap,disc);
   options.push({
@@ -445,7 +436,6 @@ function renderTopOpportunities(){
     hook:p2+"x $1,200 Trade Slots & 50% Watch/Tab Slots"
   });
 
-  // Option 3: Balanced Family Tier
   var p3=1, e3=Math.min(2,Math.max(0,voiceLinesToDistribute-1)), v3=Math.max(0,voiceLinesToDistribute-1-e3);
   var c3=fnCost+calcVoice(p3,e3,v3,ap,disc);
   options.push({
@@ -543,4 +533,73 @@ function recalc(){
 
     if(eligible && !tr.d){
       tHtml+='<div class="tier-pills">'+
-        '<button type="button" class="tpill '+(tr.tier==='230'?'active':'')+'" onclick="setTradeTier('+idx+',\'230\')">$2
+        '<button type="button" class="tpill '+(tr.tier==='230'?'active':'')+'" onclick="setTradeTier('+idx+',\'230\')">$230+ Value<br>Up to $1200</button>'+
+        '<button type="button" class="tpill '+(tr.tier==='130'?'active':'')+'" onclick="setTradeTier('+idx+',\'130\')">$130-$229<br>Up to $930</button>'+
+        '<button type="button" class="tpill '+(tr.tier==='35'?'active':'')+'" onclick="setTradeTier('+idx+',\'35\')">$35-$129<br>Up to $350</button>'+
+      '</div>';
+    }
+    tHtml+='</div>';
+  }
+  document.getElementById('tradeCardsBox').innerHTML=tHtml;
+
+  var netDevCost=st.upg?Math.max(0,devFin-devCred):0;
+  var grand=vCost+tC+wC+nuaC+st.pa+sn.c+netDevCost;
+
+  var guarSave=curB-vCost;
+  var potSave=curI;
+  var totalPool=guarSave+potSave;
+  var netTotalSavings=(curB+curI)-grand;
+
+  document.getElementById('grandOut').textContent='$'+grand.toFixed(2);
+  var sb=document.getElementById('saveOut');
+  sb.style.color=netTotalSavings>=0?'#34d399':'#fbbf24';
+  sb.innerHTML=netTotalSavings>=0?'Total Saves $'+netTotalSavings.toFixed(2)+'/mo<br><small>($'+(netTotalSavings*12).toFixed(0)+'/yr)</small>':'+$'+Math.abs(netTotalSavings).toFixed(2)+'/mo Net';
+
+  var bh='';
+  bh+='<div class="s-row"><span>• Guaranteed Wireless Savings (vs $'+curB+')</span><strong style="color:#34d399;">'+(guarSave>=0?'+$'+guarSave.toFixed(2)+'/mo':'-$'+Math.abs(guarSave).toFixed(2))+'</strong></div>';
+  bh+='<div class="s-row"><span>• Potential Internet Elimination (Spectrum/Xfinity)</span><strong style="color:#38bdf8;">+$'+potSave.toFixed(2)+'/mo</strong></div>';
+  bh+='<div class="s-row tot" style="border-top:1px dashed var(--bd);margin-top:4px;"><span>🟢 Total Household Savings Pool</span><strong style="color:#34d399;">+$'+totalPool.toFixed(2)+'/mo</strong></div>';
+
+  if(st.net!=='none') bh+='<div class="s-row" style="font-size:.78rem;padding-top:4px;"><span>↳ Bundled '+NETS[st.net].l+'</span><strong>-$'+sn.c.toFixed(2)+'/mo</strong></div>';
+  if(st.pa>0) bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ Protect Advantage</span><strong>-$'+st.pa.toFixed(2)+'/mo</strong></div>';
+  if(st.upg && netDevCost>0) bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ Net Device Installments ('+st.tradeCount+'x)</span><strong>-$'+netDevCost.toFixed(2)+'/mo</strong></div>';
+  if(nuaC>0) bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ Next Up Anytime ('+st.nua+'x)</span><strong>-$'+nuaC.toFixed(2)+'/mo</strong></div>';
+
+  document.getElementById('savingsBreakdown').innerHTML=bh;
+
+  var nks=['none','300','500','1000','5000','aia'],nh='';
+  for(var x=0;x<nks.length;x++){
+    var k=nks[x],inf=NETS[k],no=calcNet(k,ap);
+    var netIspGain=curI-no.c;
+    var sub=k==='none'?'Wireless Only':(netIspGain>=0?'+$'+netIspGain.toFixed(0)+'/mo captured':'-$'+Math.abs(netIspGain).toFixed(0)+'/mo net');
+    nh+='<button type="button" class="chip '+(st.net===k?'active':'')+'" onclick="pickNet(\''+k+'\')">'+inf.l+'<b>'+(k==='none'?'$0':'$'+no.c)+'</b><small>'+sub+'</small></button>';
+  }
+  document.getElementById('netChips').innerHTML=nh;
+
+  var ph='';
+  for(var y=0;y<PA_OPTS.length;y++){
+    var po=PA_OPTS[y];
+    var pSub=po.c===0?'No Coverage':(guarSave>=po.c?'Covered by savings!':'+$'+(po.c-guarSave).toFixed(0)+'/mo out-of-pocket');
+    ph+='<button type="button" class="chip '+(st.pa===po.c?'active':'')+'" onclick="pickPa('+po.c+')">'+po.l+'<b>$'+po.c+'</b><small>'+pSub+'</small></button>';
+  }
+  document.getElementById('paChips').innerHTML=ph;
+}
+
+function buildTable(){
+  var h='';
+  for(var L=1;L<=4;L++){
+    h+='<tr class="ghdr"><td colspan="7">'+L+'-Line Combinations</td></tr>';
+    for(var p=0;p<=L;p++)for(var e=0;e<=L-p;e++){
+      var v=L-p-e,lb=[];if(p)lb.push(p+'P');if(e)lb.push(e+'E');if(v)lb.push(v+'V');
+      h+='<tr><td><b>'+lb.join(' + ')+'</b></td><td>$'+calcVoice(p,e,v,'none','none').toFixed(2)+'</td><td>$'+calcVoice(p,e,v,'none','sig').toFixed(2)+'</td><td>$'+calcVoice(p,e,v,'none','apprec').toFixed(2)+'</td><td>$'+calcVoice(p,e,v,'bank','none').toFixed(2)+'</td><td style="color:#38bdf8;font-weight:700">$'+calcVoice(p,e,v,'bank','sig').toFixed(2)+'</td><td style="color:#34d399;font-weight:700">$'+calcVoice(p,e,v,'bank','apprec').toFixed(2)+'</td></tr>';
+    }
+  }
+  document.getElementById('mBody').innerHTML=h;
+}
+
+buildTable();
+renderTopOpportunities();
+recalc();
+</script>
+</body>
+</html>
