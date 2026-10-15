@@ -40,9 +40,9 @@ body{background:radial-gradient(circle at 50% -20%, #152744 0%, #060b14 65%);col
 .pill-safe{font-size:.68rem;background:rgba(16,185,129,.16);border:1px solid var(--g);color:#34d399;padding:2px 8px;border-radius:99px;font-weight:800}
 .prequal-row{display:grid;grid-template-columns:1.5fr auto auto auto;gap:8px}
 @media(max-width:760px){.prequal-row{grid-template-columns:1fr 1fr}.addr-in{grid-column:1/-1}}
-.addr-in,select,input[type=number],input[type=text]{width:100%;background:rgba(6,11,20,0.85);color:#fff;border:1px solid var(--bd);padding:9px 12px;border-radius:8px;font-size:.9rem;font-weight:600;outline:none}
+.addr-in,select,input[type=number],input[type=text]{width:100%;background:rgba(6,11,20,0.85);color:#fff;border:1px solid var(--bd);padding:9px 12px;border-radius:8px;font-size:.9rem;font-weight:600;outline:none;transition:border-color .15s ease}
 .addr-in:focus,select:focus,input:focus{border-color:var(--b);box-shadow:0 0 10px rgba(0,168,224,0.2)}
-.act-btn{background:var(--b);color:#000!important;text-decoration:none!important;border:none;padding:9px 14px;border-radius:8px;font-size:.8rem;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.act-btn{background:var(--b);color:#000!important;text-decoration:none!important;border:none;padding:9px 14px;border-radius:8px;font-size:.8rem;font-weight:800;cursor:pointer;text-align:center;display:inline-flex;align-items:center;justify-content:center;transition:transform .1s ease}
 .act-btn:active{transform:scale(0.97)}
 .act-btn.sec{background:var(--surface);color:#fff!important;border:1px solid var(--bd)}
 .toast{font-size:.76rem;color:#34d399;font-weight:700;margin-top:6px;display:none}
@@ -127,9 +127,7 @@ td{padding:6px 10px;border-bottom:1px solid rgba(30,47,77,0.6)}
 .btab{background:#060b14;border:1px solid var(--bd);color:var(--m);padding:5px 10px;border-radius:6px;font-size:.74rem;font-weight:800;cursor:pointer}
 .btab.active{background:var(--b);color:#000;border-color:var(--b)}
 
-/* =========================================================================
-   CLEAN CUSTOMER PRESENTATION MODE (WHEN CUSTOMER VIEW IS ON)
-   ========================================================================= */
+/* CLEAN PRESENTATION MODE */
 body.cust-mode .prequal,
 body.cust-mode .top-grid,
 body.cust-mode .opp-box,
@@ -288,7 +286,7 @@ body.cust-mode .panel-title-text{font-size:1.05rem;font-weight:800;color:#fff;}
       <div class="trow" style="background:#132338;border-color:#38bdf8;margin-bottom:8px;">
         <div>
           <span class="tname" style="color:#38bdf8;">🎉 New Lines Activated (10/12–12/31)</span>
-          <span class="tsub">-$5/mo off per line for 12 mos on 4+ line accounts[span_11](start_span)[span_11](end_span)</span>
+          <span class="tsub">-$5/mo off per line for 12 mos on 4+ line accounts[span_0](start_span)[span_0](end_span)</span>
         </div>
         <div class="stepper">
           <button type="button" class="sbtn" style="border-color:#38bdf8;" onclick="stepNewLines(-1)">−</button>
@@ -299,15 +297,15 @@ body.cust-mode .panel-title-text{font-size:1.05rem;font-weight:800;color:#fff;}
 
       <!-- VOICE TIERS -->
       <div class="trow">
-        <div><span class="tname">🐆 Unlimited Premium 2.0</span><span class="tsub">Uncapped • 60GB Hotspot • $1,200 Trade Promo[span_12](start_span)[span_12](end_span)[span_13](start_span)[span_13](end_span)[span_14](start_span)[span_14](end_span)</span></div>
+        <div><span class="tname">🐆 Unlimited Premium 2.0</span><span class="tsub">Uncapped • 60GB Hotspot • $1,200 Trade Promo[span_1](start_span)[span_1](end_span)[span_2](start_span)[span_2](end_span)[span_3](start_span)[span_3](end_span)</span></div>
         <div class="stepper"><button type="button" class="sbtn" onclick="stepTier('prem',-1)">−</button><span class="sval mono" id="valPrem">2</span><button type="button" class="sbtn" onclick="stepTier('prem',1)">+</button></div>
       </div>
       <div class="trow">
-        <div><span class="tname">🐇 Unlimited Extra 2.0</span><span class="tsub">75GB priority • 30GB Hotspot • $930–$1,000 Trade Promo[span_15](start_span)[span_15](end_span)[span_16](start_span)[span_16](end_span)[span_17](start_span)[span_17](end_span)</span></div>
+        <div><span class="tname">🐇 Unlimited Extra 2.0</span><span class="tsub">75GB priority • 30GB Hotspot • $930–$1,000 Trade Promo[span_4](start_span)[span_4](end_span)[span_5](start_span)[span_5](end_span)[span_6](start_span)[span_6](end_span)</span></div>
         <div class="stepper"><button type="button" class="sbtn" onclick="stepTier('extra',-1)">−</button><span class="sval mono" id="valExtra">0</span><button type="button" class="sbtn" onclick="stepTier('extra',1)">+</button></div>
       </div>
       <div class="trow">
-        <div><span class="tname">🐢 Value Plus 2.0</span><span class="tsub">Standard data • $500 Trade Promo[span_18](start_span)[span_18](end_span)[span_19](start_span)[span_19](end_span)[span_20](start_span)[span_20](end_span)[span_21](start_span)[span_21](end_span)[span_22](start_span)[span_22](end_span)</span></div>
+        <div><span class="tname">🐢 Value Plus 2.0</span><span class="tsub">Standard data • $500 Trade Promo[span_7](start_span)[span_7](end_span)[span_8](start_span)[span_8](end_span)[span_9](start_span)[span_9](end_span)[span_10](start_span)[span_10](end_span)[span_11](start_span)[span_11](end_span)</span></div>
         <div class="stepper"><button type="button" class="sbtn" onclick="stepTier('val',-1)">−</button><span class="sval mono" id="valVal">2</span><button type="button" class="sbtn" onclick="stepTier('val',1)">+</button></div>
       </div>
 
@@ -323,7 +321,7 @@ body.cust-mode .panel-title-text{font-size:1.05rem;font-weight:800;color:#fff;}
       <!-- HARDWARE UPGRADE & NEXT UP ANYTIME TURN-IN GATEKEEPER -->
       <div class="upg-bar">
         <div class="upg-toggle">
-          <div><span class="tname" style="font-size:.84rem;">📱 Hardware Upgrade & Trade/Turn-In</span><span class="tsub">Next Up Anytime & Trade-In Evaluator[span_23](start_span)[span_23](end_span)</span></div>
+          <div><span class="tname" style="font-size:.84rem;">📱 Hardware Upgrade & Trade/Turn-In</span><span class="tsub">Next Up Anytime & Trade-In Evaluator[span_12](start_span)[span_12](end_span)</span></div>
           <button type="button" id="upgBtn" class="btn-mode" style="padding:6px 12px;font-size:.76rem;" onclick="toggleUpg()">NO</button>
         </div>
 
@@ -342,7 +340,7 @@ body.cust-mode .panel-title-text{font-size:1.05rem;font-weight:800;color:#fff;}
           <div class="trow" style="background:#0e1e36;border-color:#34d399;margin-bottom:8px;">
             <div>
               <span class="tname" style="font-size:.8rem;color:#34d399;">🎁 $100 Visa Card (Exclusive Rewards)</span>
-              <span class="tsub">Apply in OPUS Bundle Builder for each new smartphone line[span_24](start_span)[span_24](end_span)</span>
+              <span class="tsub">Apply in OPUS Bundle Builder for each new smartphone line[span_13](start_span)[span_13](end_span)</span>
             </div>
             <button type="button" id="visaBtn" class="btn-mode" style="padding:4px 10px;font-size:.72rem;border-color:#34d399;" onclick="toggleVisaReward()">OFF</button>
           </div>
@@ -354,7 +352,7 @@ body.cust-mode .panel-title-text{font-size:1.05rem;font-weight:800;color:#fff;}
 
           <div id="tradeCardsBox"></div>
 
-          <!-- COLLAPSIBLE TIERED DEVICE MATRIX (FROM SALESFORCE ARTICLES) -->
+          <!-- COLLAPSIBLE TIERED DEVICE MATRIX -->
           <button type="button" class="drawer-btn" style="margin-top:8px;font-size:.75rem;" onclick="toggleDeviceDrawer()">📋 View Current Tiered Device Offers (No Trade Req'd) ▾</button>
           <div class="drawer-content" id="deviceDrawer" style="padding:10px;">
             <div class="brand-tabs">
@@ -375,7 +373,7 @@ body.cust-mode .panel-title-text{font-size:1.05rem;font-weight:800;color:#fff;}
 
     <!-- RIGHT PANEL: PROPOSAL SUMMARY, SOLUTIONS & SMS -->
     <div class="panel">
-      <!-- CUSTOMER PROPOSAL BANNER (VISIBLE ONLY WHEN CUSTOMER VIEW IS ON) -->
+      <!-- CUSTOMER PROPOSAL BANNER -->
       <div class="cust-banner">
         <h3>✨ Personalized AT&T Solutions Proposal</h3>
         <p>Prepared for You by Philip Grab • AT&T Greenwood • Direct: 317-987-5763</p>
@@ -406,7 +404,7 @@ body.cust-mode .panel-title-text{font-size:1.05rem;font-weight:800;color:#fff;}
         <!-- BROADBAND -->
         <div class="next-hdr">
           <span>🌐 Option A: Home Internet (Targeting Potential Pool)</span>
-          <span style="font-size:.68rem;color:#34d399;font-weight:700;">$0 Install • Free Gateway[span_25](start_span)[span_25](end_span)[span_26](start_span)[span_26](end_span)[span_27](start_span)[span_27](end_span)[span_28](start_span)[span_28](end_span) • Contract Buyout Support</span>
+          <span style="font-size:.68rem;color:#34d399;font-weight:700;">$0 Install • Free Gateway • Contract Buyout Support</span>
         </div>
         <div class="chip-grid" id="netChips"></div>
 
@@ -542,7 +540,7 @@ var st={
   extra:0,
   val:2,
   fn:false,
-  newLines:0, // Q4 4+ line promo
+  newLines:0,
   byod:0,
   visaReward:false,
   net:'none',
@@ -771,7 +769,7 @@ function renderTopOpportunities(){
     p:p2, e:0, v:v2,
     cost:c2,
     desc:p2+"x Prem + "+v2+"x Value",
-    hook:p2+"x $1,200 Trade Slots & 50% Watch/Tab Slots"
+    hook:p2+"x $1,200 Trade Slots & 50% Watch/Tab Slots[span_14](start_span)[span_14](end_span)[span_15](start_span)[span_15](end_span)[span_16](start_span)[span_16](end_span)"
   });
 
   var p3=1, e3=Math.min(2,Math.max(0,totLines-1)), v3=Math.max(0,totLines-1-e3);
@@ -883,7 +881,7 @@ function recalc(){
 
     if(eligible){
       if(tr.d){
-        cred=9.73; // Damaged floor ($350 credit)
+        cred=9.73; // Damaged floor ($350 credit)[span_17](start_span)[span_17](end_span)[span_18](start_span)[span_18](end_span)
       }else{
         var b=tr.brand;
         var tKey=tr.tier;
@@ -995,7 +993,7 @@ function recalc(){
   }
 
   // ITEMIZED PROPOSAL BREAKDOWN
-  if(q4NewPromo>0) bh+='<div class="s-row" style="font-size:.78rem;color:#38bdf8;"><span>↳ Q4 New Line Credit ('+st.newLines+'x @ $5/mo for 12 mos)[span_29](start_span)[span_29](end_span)</span><strong>-$'+q4NewPromo.toFixed(2)+'/mo</strong></div>';
+  if(q4NewPromo>0) bh+='<div class="s-row" style="font-size:.78rem;color:#38bdf8;"><span>↳ Q4 New Line Credit ('+st.newLines+'x @ $5/mo for 12 mos)[span_19](start_span)[span_19](end_span)</span><strong>-$'+q4NewPromo.toFixed(2)+'/mo</strong></div>';
   if(st.byod>0) bh+='<div class="s-row" style="font-size:.78rem;color:#34d399;"><span>↳ BYOD Port Credits ('+st.byod+'x @ $10/mo)</span><strong>-$'+byodCredits.toFixed(2)+'/mo</strong></div>';
   if(st.net!=='none') bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ Bundled '+NETS[st.net].l+'</span><strong>-$'+sn.c.toFixed(2)+'/mo</strong></div>';
   if(st.dtv!=='none'){
@@ -1009,7 +1007,7 @@ function recalc(){
   }
   if(st.upg && netDevCost>0) bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ Net Device Installments ('+st.tradeCount+'x)</span><strong>-$'+netDevCost.toFixed(2)+'/mo</strong></div>';
   if(nuaC>0) bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ Next Up Anytime ('+st.nua+'x)</span><strong>-$'+nuaC.toFixed(2)+'/mo</strong></div>';
-  if(st.visaReward) bh+='<div class="s-row" style="font-size:.78rem;color:#34d399;"><span>🎁 Exclusive Reward Card in OPUS[span_30](start_span)[span_30](end_span):</span><strong>+$100.00 Visa Card</strong></div>';
+  if(st.visaReward) bh+='<div class="s-row" style="font-size:.78rem;color:#34d399;"><span>🎁 Exclusive Reward Card in OPUS[span_20](start_span)[span_20](end_span):</span><strong>+$100.00 Visa Card</strong></div>';
 
   document.getElementById('savingsBreakdown').innerHTML=bh;
 
@@ -1081,9 +1079,9 @@ function generateSmsQuoteText(){
   msg+="📱 Wireless Plan ("+tot+" Lines): "+st.prem+" Prem / "+st.extra+" Extra / "+st.val+" Value Plus\n";
   msg+="Discount: "+discName+" w/ AutoPay\n";
 
-  if(st.newLines>0 && tot>=4) msg+="🎉 Q4 New Line Savings: "+st.newLines+" Lines (-$"+(st.newLines*5)+"/mo for 12 mos)[span_31](start_span)[span_31](end_span)\n";
+  if(st.newLines>0 && tot>=4) msg+="🎉 Q4 New Line Savings: "+st.newLines+" Lines (-$"+(st.newLines*5)+"/mo for 12 mos)[span_21](start_span)[span_21](end_span)\n";
   if(st.byod>0) msg+="📲 BYOD Switcher Credits: "+st.byod+" Lines (-$"+(st.byod*10)+"/mo for 36 mos)\n";
-  if(st.visaReward) msg+="🎁 Bonus: $100 AT&T Visa Reward Card included[span_32](start_span)[span_32](end_span)!\n";
+  if(st.visaReward) msg+="🎁 Bonus: $100 AT&T Visa Reward Card included[span_22](start_span)[span_22](end_span)!\n";
   if(st.net!=='none') msg+="🌐 Home Internet: "+NETS[st.net].l+" ($"+calcNet(st.net,document.getElementById('apType').value).c+"/mo bundled)\n";
   if(st.dtv!=='none'){
     var dInfo=calcDtv();
