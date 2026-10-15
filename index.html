@@ -287,7 +287,7 @@ body.cust-mode .panel-title-text{font-size:1.05rem;font-weight:800;color:#fff;}
       <div class="trow" style="background:#132338;border-color:#38bdf8;margin-bottom:8px;">
         <div>
           <span class="tname" style="color:#38bdf8;">🎉 New Lines Activated (10/12–12/31)</span>
-          <span class="tsub">-$5/mo off per line for 12 mos on 4+ line accounts[span_0](start_span)[span_0](end_span)</span>
+          <span class="tsub">-$5/mo off per line for 12 mos on 4+ line accounts</span>
         </div>
         <div class="stepper">
           <button type="button" class="sbtn" style="border-color:#38bdf8;" onclick="stepNewLines(-1)">−</button>
@@ -298,15 +298,15 @@ body.cust-mode .panel-title-text{font-size:1.05rem;font-weight:800;color:#fff;}
 
       <!-- VOICE TIERS -->
       <div class="trow">
-        <div><span class="tname">🐆 Unlimited Premium 2.0</span><span class="tsub">Uncapped • 60GB Hotspot • $1,200 Trade Promo[span_1](start_span)[span_1](end_span)[span_2](start_span)[span_2](end_span)[span_3](start_span)[span_3](end_span)</span></div>
+        <div><span class="tname">🐆 Unlimited Premium 2.0</span><span class="tsub">Uncapped • 60GB Hotspot • $1,200 Trade Promo</span></div>
         <div class="stepper"><button type="button" class="sbtn" onclick="stepTier('prem',-1)">−</button><span class="sval mono" id="valPrem">2</span><button type="button" class="sbtn" onclick="stepTier('prem',1)">+</button></div>
       </div>
       <div class="trow">
-        <div><span class="tname">🐇 Unlimited Extra 2.0</span><span class="tsub">75GB priority • 30GB Hotspot • $930–$1,000 Trade Promo[span_4](start_span)[span_4](end_span)[span_5](start_span)[span_5](end_span)[span_6](start_span)[span_6](end_span)</span></div>
+        <div><span class="tname">🐇 Unlimited Extra 2.0</span><span class="tsub">75GB priority • 30GB Hotspot • $930–$1,000 Trade Promo</span></div>
         <div class="stepper"><button type="button" class="sbtn" onclick="stepTier('extra',-1)">−</button><span class="sval mono" id="valExtra">0</span><button type="button" class="sbtn" onclick="stepTier('extra',1)">+</button></div>
       </div>
       <div class="trow">
-        <div><span class="tname">🐢 Value Plus 2.0</span><span class="tsub">Standard data • $500 Trade Promo[span_7](start_span)[span_7](end_span)[span_8](start_span)[span_8](end_span)[span_9](start_span)[span_9](end_span)[span_10](start_span)[span_10](end_span)[span_11](start_span)[span_11](end_span)</span></div>
+        <div><span class="tname">🐢 Value Plus 2.0</span><span class="tsub">Standard data • $500 Trade Promo</span></div>
         <div class="stepper"><button type="button" class="sbtn" onclick="stepTier('val',-1)">−</button><span class="sval mono" id="valVal">2</span><button type="button" class="sbtn" onclick="stepTier('val',1)">+</button></div>
       </div>
 
@@ -322,7 +322,7 @@ body.cust-mode .panel-title-text{font-size:1.05rem;font-weight:800;color:#fff;}
       <!-- HARDWARE UPGRADE & NEXT UP ANYTIME TURN-IN GATEKEEPER -->
       <div class="upg-bar">
         <div class="upg-toggle">
-          <div><span class="tname" style="font-size:.84rem;">📱 Hardware Upgrade & Trade/Turn-In</span><span class="tsub">Next Up Anytime & Trade-In Evaluator[span_12](start_span)[span_12](end_span)</span></div>
+          <div><span class="tname" style="font-size:.84rem;">📱 Hardware Upgrade & Trade/Turn-In</span><span class="tsub">Next Up Anytime & Trade-In Evaluator</span></div>
           <button type="button" id="upgBtn" class="btn-mode" style="padding:6px 12px;font-size:.76rem;" onclick="toggleUpg()">NO</button>
         </div>
 
@@ -341,7 +341,7 @@ body.cust-mode .panel-title-text{font-size:1.05rem;font-weight:800;color:#fff;}
           <div class="trow" style="background:#0e1e36;border-color:#34d399;margin-bottom:8px;">
             <div>
               <span class="tname" style="font-size:.8rem;color:#34d399;">🎁 $100 Visa Card (Exclusive Rewards)</span>
-              <span class="tsub">Apply in OPUS Bundle Builder for each new smartphone line[span_13](start_span)[span_13](end_span)</span>
+              <span class="tsub">Apply in OPUS Bundle Builder for each new smartphone line</span>
             </div>
             <button type="button" id="visaBtn" class="btn-mode" style="padding:4px 10px;font-size:.72rem;border-color:#34d399;" onclick="toggleVisaReward()">OFF</button>
           </div>
@@ -770,7 +770,7 @@ function renderTopOpportunities(){
     p:p2, e:0, v:v2,
     cost:c2,
     desc:p2+"x Prem + "+v2+"x Value",
-    hook:p2+"x $1,200 Trade Slots & 50% Watch/Tab Slots[span_14](start_span)[span_14](end_span)[span_15](start_span)[span_15](end_span)[span_16](start_span)[span_16](end_span)"
+    hook:p2+"x $1,200 Trade Slots & 50% Watch/Tab Slots"
   });
 
   var p3=1, e3=Math.min(2,Math.max(0,totLines-1)), v3=Math.max(0,totLines-1-e3);
@@ -843,7 +843,7 @@ function recalc(){
 
   var vCost=calcVoice(st.prem,st.extra,st.val,ap,disc);
 
-  // Q4 $5/mo off new lines on 4+ line accounts (10/12-12/31/26)[span_17](start_span)[span_17](end_span)
+  // Q4 $5/mo off new lines on 4+ line accounts (10/12-12/31/26)
   var q4NewPromo=0;
   if(tot>=4 && st.newLines>0){
     q4NewPromo=st.newLines*5.00;
@@ -871,7 +871,7 @@ function recalc(){
   var htpCost=st.htp?25:0;
   var totalProtCost=paCost+htpCost;
 
-  // NEXT UP ANYTIME & TRADE-IN TIER EVALUATION (OCT 9, 2026 MATRIX)[span_18](start_span)[span_18](end_span)[span_19](start_span)[span_19](end_span)[span_20](start_span)[span_20](end_span)[span_21](start_span)[span_21](end_span)[span_22](start_span)[span_22](end_span)[span_23](start_span)[span_23](end_span)
+  // NEXT UP ANYTIME & TRADE-IN TIER EVALUATION (OCT 9, 2026 MATRIX)
   var devFin=0,devCred=0;
   var tHtml='';
   for(var idx=0;idx<st.tradeCount;idx++){
@@ -882,7 +882,7 @@ function recalc(){
 
     if(eligible){
       if(tr.d){
-        cred=9.73; // Damaged floor ($350 credit)[span_24](start_span)[span_24](end_span)[span_25](start_span)[span_25](end_span)
+        cred=9.73;
       }else{
         var b=tr.brand;
         var tKey=tr.tier;
@@ -994,7 +994,7 @@ function recalc(){
   }
 
   // ITEMIZED PROPOSAL BREAKDOWN
-  if(q4NewPromo>0) bh+='<div class="s-row" style="font-size:.78rem;color:#38bdf8;"><span>↳ Q4 New Line Credit ('+st.newLines+'x @ $5/mo for 12 mos)[span_26](start_span)[span_26](end_span)</span><strong>-$'+q4NewPromo.toFixed(2)+'/mo</strong></div>';
+  if(q4NewPromo>0) bh+='<div class="s-row" style="font-size:.78rem;color:#38bdf8;"><span>↳ Q4 New Line Credit ('+st.newLines+'x @ $5/mo for 12 mos)</span><strong>-$'+q4NewPromo.toFixed(2)+'/mo</strong></div>';
   if(st.byod>0) bh+='<div class="s-row" style="font-size:.78rem;color:#34d399;"><span>↳ BYOD Port Credits ('+st.byod+'x @ $10/mo)</span><strong>-$'+byodCredits.toFixed(2)+'/mo</strong></div>';
   if(st.net!=='none') bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ Bundled '+NETS[st.net].l+'</span><strong>-$'+sn.c.toFixed(2)+'/mo</strong></div>';
   if(st.dtv!=='none'){
@@ -1008,7 +1008,7 @@ function recalc(){
   }
   if(st.upg && netDevCost>0) bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ Net Device Installments ('+st.tradeCount+'x)</span><strong>-$'+netDevCost.toFixed(2)+'/mo</strong></div>';
   if(nuaC>0) bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ Next Up Anytime ('+st.nua+'x)</span><strong>-$'+nuaC.toFixed(2)+'/mo</strong></div>';
-  if(st.visaReward) bh+='<div class="s-row" style="font-size:.78rem;color:#34d399;"><span>🎁 Exclusive Reward Card in OPUS[span_27](start_span)[span_27](end_span):</span><strong>+$100.00 Visa Card</strong></div>';
+  if(st.visaReward) bh+='<div class="s-row" style="font-size:.78rem;color:#34d399;"><span>🎁 Exclusive Reward Card in OPUS:</span><strong>+$100.00 Visa Card</strong></div>';
 
   document.getElementById('savingsBreakdown').innerHTML=bh;
 
@@ -1080,9 +1080,9 @@ function generateSmsQuoteText(){
   msg+="📱 Wireless Plan ("+tot+" Lines): "+st.prem+" Prem / "+st.extra+" Extra / "+st.val+" Value Plus\n";
   msg+="Discount: "+discName+" w/ AutoPay\n";
 
-  if(st.newLines>0 && tot>=4) msg+="🎉 Q4 New Line Savings: "+st.newLines+" Lines (-$"+(st.newLines*5)+"/mo for 12 mos)[span_28](start_span)[span_28](end_span)\n";
+  if(st.newLines>0 && tot>=4) msg+="🎉 Q4 New Line Savings: "+st.newLines+" Lines (-$"+(st.newLines*5)+"/mo for 12 mos)\n";
   if(st.byod>0) msg+="📲 BYOD Switcher Credits: "+st.byod+" Lines (-$"+(st.byod*10)+"/mo for 36 mos)\n";
-  if(st.visaReward) msg+="🎁 Bonus: $100 AT&T Visa Reward Card included[span_29](start_span)[span_29](end_span)!\n";
+  if(st.visaReward) msg+="🎁 Bonus: $100 AT&T Visa Reward Card included!\n";
   if(st.net!=='none') msg+="🌐 Home Internet: "+NETS[st.net].l+" ($"+calcNet(st.net,document.getElementById('apType').value).c+"/mo bundled)\n";
   if(st.dtv!=='none'){
     var dInfo=calcDtv();
