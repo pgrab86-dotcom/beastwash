@@ -127,7 +127,46 @@ td{padding:6px 10px;border-bottom:1px solid rgba(30,47,77,0.6)}
 .btab{background:#060b14;border:1px solid var(--bd);color:var(--m);padding:5px 10px;border-radius:6px;font-size:.74rem;font-weight:800;cursor:pointer}
 .btab.active{background:var(--b);color:#000;border-color:var(--b)}
 
-body.cust-mode .rep-only{display:none!important}
+/* =========================================================================
+   CLEAN CUSTOMER PRESENTATION MODE (WHEN CUSTOMER VIEW IS ON)
+   ========================================================================= */
+body.cust-mode .prequal,
+body.cust-mode .top-grid,
+body.cust-mode .opp-box,
+body.cust-mode .main-grid > .panel:first-child,
+body.cust-mode .drawer-btn,
+body.cust-mode .drawer-content,
+body.cust-mode .sms-box,
+body.cust-mode .rep-only {
+  display: none !important;
+}
+
+body.cust-mode .main-grid {
+  grid-template-columns: 1fr !important;
+  max-width: 680px;
+  margin: 0 auto 20px auto;
+}
+
+body.cust-mode .panel {
+  background: linear-gradient(145deg, #0e1726 0%, #132238 100%);
+  border: 2px solid var(--b);
+  box-shadow: 0 16px 40px rgba(0,168,224,0.18);
+}
+
+.cust-banner{
+  display:none;
+  background:rgba(0,168,224,0.1);
+  border:1px solid var(--b);
+  border-radius:10px;
+  padding:12px 14px;
+  margin-bottom:14px;
+  text-align:center;
+}
+.cust-banner h3{font-size:.95rem;color:#fff;font-weight:800;}
+.cust-banner p{font-size:.75rem;color:var(--m);margin-top:2px;}
+
+body.cust-mode .cust-banner{display:block;}
+body.cust-mode .panel-title-text{font-size:1.05rem;font-weight:800;color:#fff;}
 </style>
 </head>
 <body>
@@ -249,7 +288,7 @@ body.cust-mode .rep-only{display:none!important}
       <div class="trow" style="background:#132338;border-color:#38bdf8;margin-bottom:8px;">
         <div>
           <span class="tname" style="color:#38bdf8;">🎉 New Lines Activated (10/12–12/31)</span>
-          <span class="tsub">-$5/mo off per line for 12 mos on 4+ line accounts</span>
+          <span class="tsub">-$5/mo off per line for 12 mos on 4+ line accounts[span_11](start_span)[span_11](end_span)</span>
         </div>
         <div class="stepper">
           <button type="button" class="sbtn" style="border-color:#38bdf8;" onclick="stepNewLines(-1)">−</button>
@@ -260,15 +299,15 @@ body.cust-mode .rep-only{display:none!important}
 
       <!-- VOICE TIERS -->
       <div class="trow">
-        <div><span class="tname">🐆 Unlimited Premium 2.0</span><span class="tsub">Uncapped • 60GB Hotspot • $1,200 Trade Promo</span></div>
+        <div><span class="tname">🐆 Unlimited Premium 2.0</span><span class="tsub">Uncapped • 60GB Hotspot • $1,200 Trade Promo[span_12](start_span)[span_12](end_span)[span_13](start_span)[span_13](end_span)[span_14](start_span)[span_14](end_span)</span></div>
         <div class="stepper"><button type="button" class="sbtn" onclick="stepTier('prem',-1)">−</button><span class="sval mono" id="valPrem">2</span><button type="button" class="sbtn" onclick="stepTier('prem',1)">+</button></div>
       </div>
       <div class="trow">
-        <div><span class="tname">🐇 Unlimited Extra 2.0</span><span class="tsub">75GB priority • 30GB Hotspot • $930–$1,000 Trade Promo</span></div>
+        <div><span class="tname">🐇 Unlimited Extra 2.0</span><span class="tsub">75GB priority • 30GB Hotspot • $930–$1,000 Trade Promo[span_15](start_span)[span_15](end_span)[span_16](start_span)[span_16](end_span)[span_17](start_span)[span_17](end_span)</span></div>
         <div class="stepper"><button type="button" class="sbtn" onclick="stepTier('extra',-1)">−</button><span class="sval mono" id="valExtra">0</span><button type="button" class="sbtn" onclick="stepTier('extra',1)">+</button></div>
       </div>
       <div class="trow">
-        <div><span class="tname">🐢 Value Plus 2.0</span><span class="tsub">Standard data • $500 Trade Promo</span></div>
+        <div><span class="tname">🐢 Value Plus 2.0</span><span class="tsub">Standard data • $500 Trade Promo[span_18](start_span)[span_18](end_span)[span_19](start_span)[span_19](end_span)[span_20](start_span)[span_20](end_span)[span_21](start_span)[span_21](end_span)[span_22](start_span)[span_22](end_span)</span></div>
         <div class="stepper"><button type="button" class="sbtn" onclick="stepTier('val',-1)">−</button><span class="sval mono" id="valVal">2</span><button type="button" class="sbtn" onclick="stepTier('val',1)">+</button></div>
       </div>
 
@@ -284,7 +323,7 @@ body.cust-mode .rep-only{display:none!important}
       <!-- HARDWARE UPGRADE & NEXT UP ANYTIME TURN-IN GATEKEEPER -->
       <div class="upg-bar">
         <div class="upg-toggle">
-          <div><span class="tname" style="font-size:.84rem;">📱 Hardware Upgrade & Trade/Turn-In</span><span class="tsub">Next Up Anytime & Trade-In Evaluator</span></div>
+          <div><span class="tname" style="font-size:.84rem;">📱 Hardware Upgrade & Trade/Turn-In</span><span class="tsub">Next Up Anytime & Trade-In Evaluator[span_23](start_span)[span_23](end_span)</span></div>
           <button type="button" id="upgBtn" class="btn-mode" style="padding:6px 12px;font-size:.76rem;" onclick="toggleUpg()">NO</button>
         </div>
 
@@ -303,7 +342,7 @@ body.cust-mode .rep-only{display:none!important}
           <div class="trow" style="background:#0e1e36;border-color:#34d399;margin-bottom:8px;">
             <div>
               <span class="tname" style="font-size:.8rem;color:#34d399;">🎁 $100 Visa Card (Exclusive Rewards)</span>
-              <span class="tsub">Apply in OPUS Bundle Builder for each new smartphone line</span>
+              <span class="tsub">Apply in OPUS Bundle Builder for each new smartphone line[span_24](start_span)[span_24](end_span)</span>
             </div>
             <button type="button" id="visaBtn" class="btn-mode" style="padding:4px 10px;font-size:.72rem;border-color:#34d399;" onclick="toggleVisaReward()">OFF</button>
           </div>
@@ -334,10 +373,16 @@ body.cust-mode .rep-only{display:none!important}
       </div>
     </div>
 
-    <!-- RIGHT PANEL: SAVINGS HUB, SOLUTIONS & SMS -->
+    <!-- RIGHT PANEL: PROPOSAL SUMMARY, SOLUTIONS & SMS -->
     <div class="panel">
+      <!-- CUSTOMER PROPOSAL BANNER (VISIBLE ONLY WHEN CUSTOMER VIEW IS ON) -->
+      <div class="cust-banner">
+        <h3>✨ Personalized AT&T Solutions Proposal</h3>
+        <p>Prepared for You by Philip Grab • AT&T Greenwood • Direct: 317-987-5763</p>
+      </div>
+
       <div class="ptitle">
-        <span>2. Savings Breakdown & Next Steps</span>
+        <span class="panel-title-text">2. Solutions Summary & Next Steps</span>
         <span class="badge" id="slotBadge">2x 50%-Off Slots</span>
       </div>
 
@@ -361,7 +406,7 @@ body.cust-mode .rep-only{display:none!important}
         <!-- BROADBAND -->
         <div class="next-hdr">
           <span>🌐 Option A: Home Internet (Targeting Potential Pool)</span>
-          <span style="font-size:.68rem;color:#34d399;font-weight:700;">$0 Install • Free Gateway • Contract Buyout Support</span>
+          <span style="font-size:.68rem;color:#34d399;font-weight:700;">$0 Install • Free Gateway[span_25](start_span)[span_25](end_span)[span_26](start_span)[span_26](end_span)[span_27](start_span)[span_27](end_span)[span_28](start_span)[span_28](end_span) • Contract Buyout Support</span>
         </div>
         <div class="chip-grid" id="netChips"></div>
 
@@ -515,6 +560,7 @@ function toggleCust(){
   var on=document.body.classList.toggle('cust-mode');
   document.getElementById('custBtn').classList.toggle('on',on);
   document.getElementById('custTxt').textContent=on?'ON':'OFF';
+  recalc();
 }
 function toggleDrawer(){
   var d=document.getElementById('matrixDrawer');
@@ -831,7 +877,7 @@ function recalc(){
   var tHtml='';
   for(var idx=0;idx<st.tradeCount;idx++){
     var tr=st.trades[idx];
-    devFin+=33.34; // ~$1,200 device benchmark
+    devFin+=33.34;
     var eligible=(tr.p && tr.l);
     var cred=0;
 
@@ -935,13 +981,21 @@ function recalc(){
   sb.style.color=netTotalSavings>=0?'#34d399':'#fbbf24';
   sb.innerHTML=netTotalSavings>=0?'Total Saves $'+netTotalSavings.toFixed(2)+'/mo<br><small>($'+(netTotalSavings*12).toFixed(0)+'/yr)</small>':'+$'+Math.abs(netTotalSavings).toFixed(2)+'/mo Net';
 
-  var bh='';
-  bh+='<div class="s-row"><span>• Guaranteed Wireless Savings (vs $'+curB+')</span><strong style="color:#34d399;">'+(guarSave>=0?'+$'+guarSave.toFixed(2)+'/mo':'-$'+Math.abs(guarSave).toFixed(2))+'</strong></div>';
-  if(curI>0) bh+='<div class="s-row"><span>• Potential Internet Elimination (Spectrum/Xfinity)</span><strong style="color:#38bdf8;">+$'+curI.toFixed(2)+'/mo</strong></div>';
-  if(curTv>0) bh+='<div class="s-row"><span>• Potential Pay TV / Cable Elimination</span><strong style="color:var(--p);">+$'+curTv.toFixed(2)+'/mo</strong></div>';
-  bh+='<div class="s-row tot" style="border-top:1px dashed var(--bd);margin-top:4px;"><span>🟢 Total Household Savings Pool</span><strong style="color:#34d399;">+$'+totalPool.toFixed(2)+'/mo</strong></div>';
+  var isCust=document.body.classList.contains('cust-mode');
 
-  if(q4NewPromo>0) bh+='<div class="s-row" style="font-size:.78rem;color:#38bdf8;"><span>↳ Q4 New Line Credit ('+st.newLines+'x @ $5/mo for 12 mos)</span><strong>-$'+q4NewPromo.toFixed(2)+'/mo</strong></div>';
+  var bh='';
+  if(!isCust){
+    bh+='<div class="s-row"><span>• Guaranteed Wireless Savings (vs $'+curB+')</span><strong style="color:#34d399;">'+(guarSave>=0?'+$'+guarSave.toFixed(2)+'/mo':'-$'+Math.abs(guarSave).toFixed(2))+'</strong></div>';
+    if(curI>0) bh+='<div class="s-row"><span>• Potential Internet Elimination (Spectrum/Xfinity)</span><strong style="color:#38bdf8;">+$'+curI.toFixed(2)+'/mo</strong></div>';
+    if(curTv>0) bh+='<div class="s-row"><span>• Potential Pay TV / Cable Elimination</span><strong style="color:var(--p);">+$'+curTv.toFixed(2)+'/mo</strong></div>';
+    bh+='<div class="s-row tot" style="border-top:1px dashed var(--bd);margin-top:4px;"><span>🟢 Total Household Savings Pool</span><strong style="color:#34d399;">+$'+totalPool.toFixed(2)+'/mo</strong></div>';
+  }else{
+    bh+='<div class="s-row" style="font-size:.9rem;font-weight:700;"><span>Total Monthly Investment:</span><strong style="color:#fff;">$'+grand.toFixed(2)+'/mo</strong></div>';
+    bh+='<div class="s-row" style="font-size:.9rem;font-weight:800;color:#34d399;"><span>Your Net Household Savings:</span><strong>Saves $'+netTotalSavings.toFixed(2)+'/mo</strong></div>';
+  }
+
+  // ITEMIZED PROPOSAL BREAKDOWN
+  if(q4NewPromo>0) bh+='<div class="s-row" style="font-size:.78rem;color:#38bdf8;"><span>↳ Q4 New Line Credit ('+st.newLines+'x @ $5/mo for 12 mos)[span_29](start_span)[span_29](end_span)</span><strong>-$'+q4NewPromo.toFixed(2)+'/mo</strong></div>';
   if(st.byod>0) bh+='<div class="s-row" style="font-size:.78rem;color:#34d399;"><span>↳ BYOD Port Credits ('+st.byod+'x @ $10/mo)</span><strong>-$'+byodCredits.toFixed(2)+'/mo</strong></div>';
   if(st.net!=='none') bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ Bundled '+NETS[st.net].l+'</span><strong>-$'+sn.c.toFixed(2)+'/mo</strong></div>';
   if(st.dtv!=='none'){
@@ -951,11 +1005,11 @@ function recalc(){
   if(st.htp) bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ HomeTech Protection</span><strong>-$25.00/mo</strong></div>';
   if(aip.total>0){
     bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ '+aip.label+' (12-Mo AIP)</span><strong>-$'+aip.monthly.toFixed(2)+'/mo</strong></div>';
-    bh+='<div class="s-row rep-only" style="font-size:.72rem;color:#38bdf8;padding-left:10px;"><span>💰 Est. AIP Commission (5%):</span><strong>+$'+aip.comm.toFixed(2)+'</strong></div>';
+    if(!isCust) bh+='<div class="s-row rep-only" style="font-size:.72rem;color:#38bdf8;padding-left:10px;"><span>💰 Est. AIP Commission (5%):</span><strong>+$'+aip.comm.toFixed(2)+'</strong></div>';
   }
   if(st.upg && netDevCost>0) bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ Net Device Installments ('+st.tradeCount+'x)</span><strong>-$'+netDevCost.toFixed(2)+'/mo</strong></div>';
   if(nuaC>0) bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ Next Up Anytime ('+st.nua+'x)</span><strong>-$'+nuaC.toFixed(2)+'/mo</strong></div>';
-  if(st.visaReward) bh+='<div class="s-row" style="font-size:.78rem;color:#34d399;"><span>🎁 Exclusive Reward Card in OPUS:</span><strong>+$100.00 Visa Card</strong></div>';
+  if(st.visaReward) bh+='<div class="s-row" style="font-size:.78rem;color:#34d399;"><span>🎁 Exclusive Reward Card in OPUS[span_30](start_span)[span_30](end_span):</span><strong>+$100.00 Visa Card</strong></div>';
 
   document.getElementById('savingsBreakdown').innerHTML=bh;
 
@@ -1027,9 +1081,9 @@ function generateSmsQuoteText(){
   msg+="📱 Wireless Plan ("+tot+" Lines): "+st.prem+" Prem / "+st.extra+" Extra / "+st.val+" Value Plus\n";
   msg+="Discount: "+discName+" w/ AutoPay\n";
 
-  if(st.newLines>0 && tot>=4) msg+="🎉 Q4 New Line Savings: "+st.newLines+" Lines (-$"+(st.newLines*5)+"/mo for 12 mos)\n";
+  if(st.newLines>0 && tot>=4) msg+="🎉 Q4 New Line Savings: "+st.newLines+" Lines (-$"+(st.newLines*5)+"/mo for 12 mos)[span_31](start_span)[span_31](end_span)\n";
   if(st.byod>0) msg+="📲 BYOD Switcher Credits: "+st.byod+" Lines (-$"+(st.byod*10)+"/mo for 36 mos)\n";
-  if(st.visaReward) msg+="🎁 Bonus: $100 AT&T Visa Reward Card included!\n";
+  if(st.visaReward) msg+="🎁 Bonus: $100 AT&T Visa Reward Card included[span_32](start_span)[span_32](end_span)!\n";
   if(st.net!=='none') msg+="🌐 Home Internet: "+NETS[st.net].l+" ($"+calcNet(st.net,document.getElementById('apType').value).c+"/mo bundled)\n";
   if(st.dtv!=='none'){
     var dInfo=calcDtv();
