@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>AT&T Executive Solutions Studio & Rerate Engine • eliterate.com</title>
+<title>AT&T Executive Solutions Studio & Rerate Engine • elitererate.com</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
@@ -40,9 +40,9 @@ body{background:radial-gradient(circle at 50% -20%, #152744 0%, #060b14 65%);col
 .pill-safe{font-size:.68rem;background:rgba(16,185,129,.16);border:1px solid var(--g);color:#34d399;padding:2px 8px;border-radius:99px;font-weight:800}
 .prequal-row{display:grid;grid-template-columns:1.5fr auto auto auto;gap:8px}
 @media(max-width:760px){.prequal-row{grid-template-columns:1fr 1fr}.addr-in{grid-column:1/-1}}
-.addr-in,select,input[type=number],input[type=text]{width:100%;background:rgba(6,11,20,0.85);color:#fff;border:1px solid var(--bd);padding:9px 12px;border-radius:8px;font-size:.9rem;font-weight:600;outline:none;transition:border-color .15s ease}
+.addr-in,select,input[type=number],input[type=text]{width:100%;background:rgba(6,11,20,0.85);color:#fff;border:1px solid var(--bd);padding:9px 12px;border-radius:8px;font-size:.9rem;font-weight:600;outline:none}
 .addr-in:focus,select:focus,input:focus{border-color:var(--b);box-shadow:0 0 10px rgba(0,168,224,0.2)}
-.act-btn{background:var(--b);color:#000!important;text-decoration:none!important;border:none;padding:9px 14px;border-radius:8px;font-size:.8rem;font-weight:800;cursor:pointer;text-align:center;display:inline-flex;align-items:center;justify-content:center;transition:transform .1s ease}
+.act-btn{background:var(--b);color:#000!important;text-decoration:none!important;border:none;padding:9px 14px;border-radius:8px;font-size:.8rem;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
 .act-btn:active{transform:scale(0.97)}
 .act-btn.sec{background:var(--surface);color:#fff!important;border:1px solid var(--bd)}
 .toast{font-size:.76rem;color:#34d399;font-weight:700;margin-top:6px;display:none}
@@ -172,7 +172,7 @@ body.cust-mode .panel-title-text{font-size:1.05rem;font-weight:800;color:#fff;}
   <div class="hdr">
     <div>
       <h1>AT&T <span>Solutions Studio & Rerate Engine</span></h1>
-      <p class="rep-only"><span style="color:#34d399;">● Engine Live</span> • Floor Rerate, Broadband & SMS Engine • eliterate.com</p>
+      <p class="rep-only"><span style="color:#34d399;">● Engine Live</span> • Floor Rerate, Broadband & SMS Engine • elitererate.com</p>
     </div>
     <button type="button" id="custBtn" class="btn-mode" onclick="toggleCust()">
       👁️ Customer View: <span id="custTxt">OFF</span>
@@ -205,7 +205,8 @@ body.cust-mode .panel-title-text{font-size:1.05rem;font-weight:800;color:#fff;}
       <select id="lineCountSelect" onchange="onLineCountChange()">
         <option value="1">1 Line</option><option value="2">2 Lines</option><option value="3">3 Lines</option>
         <option value="4" selected>4 Lines</option><option value="5">5 Lines</option><option value="6">6 Lines</option>
-        <option value="7">7 Lines</option><option value="8">8 Lines</option><option value="9">9 Lines</option><option value="10">10 Lines</option>
+        <option value="7">7 Lines</option><option value="8">8 Lines</option><option value="9">9 Lines</option>
+        <option value="10">10 Lines</option>
       </select>
     </div>
     <div class="cbox">
@@ -842,7 +843,7 @@ function recalc(){
 
   var vCost=calcVoice(st.prem,st.extra,st.val,ap,disc);
 
-  // Q4 $5/mo off new lines on 4+ line accounts (10/12-12/31/26)
+  // Q4 $5/mo off new lines on 4+ line accounts (10/12-12/31/26)[span_17](start_span)[span_17](end_span)
   var q4NewPromo=0;
   if(tot>=4 && st.newLines>0){
     q4NewPromo=st.newLines*5.00;
@@ -870,7 +871,7 @@ function recalc(){
   var htpCost=st.htp?25:0;
   var totalProtCost=paCost+htpCost;
 
-  // NEXT UP ANYTIME & TRADE-IN TIER EVALUATION (OCT 9, 2026 MATRIX)
+  // NEXT UP ANYTIME & TRADE-IN TIER EVALUATION (OCT 9, 2026 MATRIX)[span_18](start_span)[span_18](end_span)[span_19](start_span)[span_19](end_span)[span_20](start_span)[span_20](end_span)[span_21](start_span)[span_21](end_span)[span_22](start_span)[span_22](end_span)[span_23](start_span)[span_23](end_span)
   var devFin=0,devCred=0;
   var tHtml='';
   for(var idx=0;idx<st.tradeCount;idx++){
@@ -881,7 +882,7 @@ function recalc(){
 
     if(eligible){
       if(tr.d){
-        cred=9.73; // Damaged floor ($350 credit)[span_17](start_span)[span_17](end_span)[span_18](start_span)[span_18](end_span)
+        cred=9.73; // Damaged floor ($350 credit)[span_24](start_span)[span_24](end_span)[span_25](start_span)[span_25](end_span)
       }else{
         var b=tr.brand;
         var tKey=tr.tier;
@@ -993,7 +994,7 @@ function recalc(){
   }
 
   // ITEMIZED PROPOSAL BREAKDOWN
-  if(q4NewPromo>0) bh+='<div class="s-row" style="font-size:.78rem;color:#38bdf8;"><span>↳ Q4 New Line Credit ('+st.newLines+'x @ $5/mo for 12 mos)[span_19](start_span)[span_19](end_span)</span><strong>-$'+q4NewPromo.toFixed(2)+'/mo</strong></div>';
+  if(q4NewPromo>0) bh+='<div class="s-row" style="font-size:.78rem;color:#38bdf8;"><span>↳ Q4 New Line Credit ('+st.newLines+'x @ $5/mo for 12 mos)[span_26](start_span)[span_26](end_span)</span><strong>-$'+q4NewPromo.toFixed(2)+'/mo</strong></div>';
   if(st.byod>0) bh+='<div class="s-row" style="font-size:.78rem;color:#34d399;"><span>↳ BYOD Port Credits ('+st.byod+'x @ $10/mo)</span><strong>-$'+byodCredits.toFixed(2)+'/mo</strong></div>';
   if(st.net!=='none') bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ Bundled '+NETS[st.net].l+'</span><strong>-$'+sn.c.toFixed(2)+'/mo</strong></div>';
   if(st.dtv!=='none'){
@@ -1007,7 +1008,7 @@ function recalc(){
   }
   if(st.upg && netDevCost>0) bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ Net Device Installments ('+st.tradeCount+'x)</span><strong>-$'+netDevCost.toFixed(2)+'/mo</strong></div>';
   if(nuaC>0) bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ Next Up Anytime ('+st.nua+'x)</span><strong>-$'+nuaC.toFixed(2)+'/mo</strong></div>';
-  if(st.visaReward) bh+='<div class="s-row" style="font-size:.78rem;color:#34d399;"><span>🎁 Exclusive Reward Card in OPUS[span_20](start_span)[span_20](end_span):</span><strong>+$100.00 Visa Card</strong></div>';
+  if(st.visaReward) bh+='<div class="s-row" style="font-size:.78rem;color:#34d399;"><span>🎁 Exclusive Reward Card in OPUS[span_27](start_span)[span_27](end_span):</span><strong>+$100.00 Visa Card</strong></div>';
 
   document.getElementById('savingsBreakdown').innerHTML=bh;
 
@@ -1079,9 +1080,9 @@ function generateSmsQuoteText(){
   msg+="📱 Wireless Plan ("+tot+" Lines): "+st.prem+" Prem / "+st.extra+" Extra / "+st.val+" Value Plus\n";
   msg+="Discount: "+discName+" w/ AutoPay\n";
 
-  if(st.newLines>0 && tot>=4) msg+="🎉 Q4 New Line Savings: "+st.newLines+" Lines (-$"+(st.newLines*5)+"/mo for 12 mos)[span_21](start_span)[span_21](end_span)\n";
+  if(st.newLines>0 && tot>=4) msg+="🎉 Q4 New Line Savings: "+st.newLines+" Lines (-$"+(st.newLines*5)+"/mo for 12 mos)[span_28](start_span)[span_28](end_span)\n";
   if(st.byod>0) msg+="📲 BYOD Switcher Credits: "+st.byod+" Lines (-$"+(st.byod*10)+"/mo for 36 mos)\n";
-  if(st.visaReward) msg+="🎁 Bonus: $100 AT&T Visa Reward Card included[span_22](start_span)[span_22](end_span)!\n";
+  if(st.visaReward) msg+="🎁 Bonus: $100 AT&T Visa Reward Card included[span_29](start_span)[span_29](end_span)!\n";
   if(st.net!=='none') msg+="🌐 Home Internet: "+NETS[st.net].l+" ($"+calcNet(st.net,document.getElementById('apType').value).c+"/mo bundled)\n";
   if(st.dtv!=='none'){
     var dInfo=calcDtv();
@@ -1096,7 +1097,7 @@ function generateSmsQuoteText(){
 
   msg+="\n💰 Total New Monthly Bill: "+grand+"\n";
   msg+="🎉 Net Household Savings: "+saveText+"\n\n";
-  msg+="Review your full breakdown online at https://eliterate.com\n";
+  msg+="Review your full breakdown online at https://elitererate.com\n";
   msg+="Quote prepared by Philip at AT&T Greenwood. Call or text me at 317-987-5763 to finalize your order!";
   return msg;
 }
