@@ -3,196 +3,196 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>AT&T Elite Rerate & Savings Tool</title>
+  <title>AT&T Elite Rerate</title>
   <style>
     :root {
-      --bg-main: #060b19;
-      --card-bg: #0c1731;
-      --card-border: #1d2d5a;
+      --bg: #040814;
+      --card-bg: #09132b;
+      --card-border: #16264c;
       --accent-blue: #0088cc;
-      --accent-light: #00a8e8;
-      --text-main: #f0f4f8;
-      --text-muted: #8fa0bc;
-      --badge-bg: #10244c;
-      --badge-border: #1e3c79;
-      --input-bg: #081126;
-      --highlight-purple: #c084fc;
-      --highlight-green: #1dd1a1;
-      --highlight-cyan: #00bcd4;
+      --accent-cyan: #00bcd4;
+      --text: #f1f5f9;
+      --text-muted: #8295b5;
+      --badge-bg: #0d1e40;
+      --badge-border: #1c3566;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      -webkit-tap-highlight-color: transparent;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
     body {
-      background-color: var(--bg-main);
-      color: var(--text-main);
-      padding: 16px 12px;
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 12px;
       display: flex;
       justify-content: center;
     }
 
     .container {
       width: 100%;
-      max-width: 500px;
+      max-width: 480px;
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
 
-    /* Option Cards */
+    /* Cards */
     .option-card {
-      background-color: var(--card-bg);
+      background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 12px;
-      padding: 14px 16px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
-    .compact-row {
+    .card-top {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      cursor: pointer;
+      align-items: flex-start;
+      gap: 8px;
     }
 
-    .header-text {
+    .title-group {
       display: flex;
       flex-direction: column;
       gap: 3px;
-      flex: 1;
     }
 
-    .header-title {
+    .title {
+      font-size: 13.5px;
       font-weight: 700;
-      font-size: 14px;
-      color: #ffffff;
-      line-height: 1.25;
+      color: #fff;
     }
 
-    .header-subtitle {
+    .sub {
       font-size: 11px;
       font-weight: 500;
-      line-height: 1.3;
     }
 
-    .action-side {
+    .sub-green { color: #10b981; }
+    .sub-purple { color: #c084fc; }
+
+    .badge-wrap {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       flex-shrink: 0;
     }
 
     .pool-badge {
-      background-color: var(--badge-bg);
+      background: var(--badge-bg);
       border: 1px solid var(--badge-border);
-      color: var(--accent-light);
+      color: #38bdf8;
       padding: 4px 8px;
-      border-radius: 14px;
+      border-radius: 12px;
       font-size: 12px;
       font-weight: 600;
       white-space: nowrap;
     }
 
-    /* Toggle Switch */
+    /* Interactive Body Rows */
+    .card-body {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .row-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12.5px;
+      color: var(--text);
+    }
+
+    /* Switches */
     .switch {
       position: relative;
       display: inline-block;
-      width: 44px;
-      height: 24px;
+      width: 42px;
+      height: 22px;
       flex-shrink: 0;
     }
 
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
+    .switch input { opacity: 0; width: 0; height: 0; }
 
     .slider {
       position: absolute;
       cursor: pointer;
       inset: 0;
-      background-color: #1a2747;
-      transition: 0.2s ease-in-out;
-      border-radius: 24px;
-      border: 1px solid #283e75;
+      background-color: #172442;
+      border: 1px solid #293b66;
+      border-radius: 20px;
+      transition: 0.2s;
     }
 
     .slider:before {
       position: absolute;
       content: "";
-      height: 16px;
-      width: 16px;
+      height: 14px;
+      width: 14px;
       left: 3px;
       bottom: 3px;
-      background-color: #ffffff;
-      transition: 0.2s ease-in-out;
+      background: #fff;
       border-radius: 50%;
+      transition: 0.2s;
     }
 
     input:checked + .slider {
       background-color: var(--accent-blue);
-      border-color: var(--accent-light);
+      border-color: #38bdf8;
     }
 
     input:checked + .slider:before {
       transform: translateX(20px);
     }
 
-    /* Option D - Devices */
-    .device-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
+    /* Option D Grid */
     .device-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
     }
 
-    .device-box {
-      background: var(--input-bg);
+    .device-col {
+      background: #060d1f;
       border: 1px solid var(--card-border);
       border-radius: 8px;
-      padding: 8px 10px;
+      padding: 8px;
       display: flex;
       flex-direction: column;
       gap: 6px;
     }
 
-    .device-box label {
-      font-size: 10.5px;
+    .device-col label {
+      font-size: 10px;
       font-weight: 700;
       color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.4px;
     }
 
-    .device-box select {
-      background: #0d1a38;
-      color: #ffffff;
-      border: 1px solid var(--card-border);
+    select {
+      background: #0a1633;
+      color: #fff;
+      border: 1px solid #1c3566;
       border-radius: 6px;
-      padding: 7px;
-      font-size: 13px;
+      padding: 6px 8px;
+      font-size: 12.5px;
       outline: none;
       width: 100%;
     }
 
     /* Register Due Today */
-    .register-card {
-      background-color: var(--card-bg);
+    .register-box {
+      background: var(--card-bg);
       border: 1px dashed var(--card-border);
       border-radius: 12px;
       padding: 12px 14px;
@@ -204,154 +204,125 @@
     .register-title {
       font-size: 11px;
       font-weight: 700;
-      color: var(--highlight-cyan);
+      color: var(--accent-cyan);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
 
-    .register-amount {
-      font-size: 13px;
-      color: var(--text-main);
+    .register-body {
+      font-size: 12.5px;
+      color: var(--text);
     }
 
-    .register-footnote {
-      font-size: 10.5px;
+    .register-sub {
+      font-size: 10px;
       color: var(--text-muted);
-      line-height: 1.35;
+      line-height: 1.3;
     }
 
-    /* SMS Quote Generator */
-    .sms-card {
-      background-color: var(--card-bg);
+    /* SMS Box */
+    .sms-box {
+      background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 12px;
-      padding: 14px 16px;
+      padding: 14px;
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
 
-    .sms-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: #ffffff;
-    }
-
-    .sms-input {
-      background-color: var(--input-bg);
+    .sms-box input {
+      background: #060d1f;
       border: 1px solid var(--card-border);
       border-radius: 8px;
-      padding: 10px 12px;
-      color: #ffffff;
-      font-size: 14px;
+      padding: 10px;
+      color: #fff;
+      font-size: 13px;
       outline: none;
-      width: 100%;
     }
 
-    .btn-primary {
+    .sms-btn {
       background: linear-gradient(180deg, #0088cc 0%, #006699 100%);
-      color: #ffffff;
+      color: #fff;
       border: none;
       border-radius: 8px;
-      padding: 11px;
+      padding: 10px;
       font-size: 13px;
       font-weight: 600;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
     }
 
-    .btn-secondary {
-      background: #0d1a38;
+    .copy-btn {
+      background: #0b1736;
       border: 1px solid var(--card-border);
-      color: #ffffff;
+      color: #fff;
       border-radius: 8px;
       padding: 9px;
       font-size: 12.5px;
       font-weight: 600;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
     }
 
-    /* OPUS Checklist (Next Up Anytime Removed) */
+    /* Checklist */
     .checklist-card {
-      background-color: var(--card-bg);
+      background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 12px;
-      padding: 14px 16px;
+      padding: 14px;
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
 
     .checklist-title {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
-      color: var(--highlight-cyan);
+      color: var(--accent-cyan);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
 
-    .checklist-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .checklist-item {
+    .check-item {
       display: flex;
       align-items: center;
       gap: 10px;
-      font-size: 12.5px;
-      color: #cfd9e8;
+      font-size: 12px;
+      color: #cbd5e1;
       cursor: pointer;
-      user-select: none;
     }
 
-    .checklist-item input[type="checkbox"] {
+    .check-item input[type="checkbox"] {
       appearance: none;
       width: 16px;
       height: 16px;
-      border: 1px solid #365084;
+      border: 1px solid #283d6e;
       border-radius: 4px;
-      background: var(--input-bg);
+      background: #060d1f;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
     }
 
-    .checklist-item input[type="checkbox"]:checked {
+    .check-item input[type="checkbox"]:checked {
       background-color: var(--accent-blue);
-      border-color: var(--accent-light);
+      border-color: #38bdf8;
     }
 
-    .checklist-item input[type="checkbox"]:checked:after {
+    .check-item input[type="checkbox"]:checked:after {
       content: "✔";
       font-size: 10px;
-      color: #ffffff;
+      color: #fff;
     }
 
-    /* Rate Matrix Collapsible Button */
-    .matrix-toggle-btn {
-      background: #0e1d3f;
+    .matrix-btn {
+      background: #0d1a38;
       border: 1px solid var(--card-border);
-      color: var(--accent-light);
+      color: #38bdf8;
       padding: 12px;
       border-radius: 8px;
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 600;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
+      text-align: center;
     }
   </style>
 </head>
@@ -359,69 +330,75 @@
 
   <div class="container">
 
-    <!-- Option A: Home Internet Consolidation -->
-    <div class="option-card compact-row" onclick="handleCardClick(event, 'toggle-internet')">
-      <div class="header-text">
-        <div class="header-title">🌐 Option A: Home Internet Consolidation</div>
-        <div class="header-subtitle" style="color: var(--highlight-green);">$0 Install • Free Gateway • Contract Buyout Support</div>
-      </div>
-      <div class="action-side">
-        <label class="switch" onclick="event.stopPropagation()">
-          <input type="checkbox" id="toggle-internet" onchange="calculateRerate()">
-          <span class="slider"></span>
-        </label>
-        <div class="pool-badge" id="pool-internet">Pool: +$0.00/mo</div>
-      </div>
-    </div>
-
-    <!-- Option B: DIRECTV via Internet Revision -->
-    <div class="option-card compact-row" onclick="handleCardClick(event, 'toggle-directv')">
-      <div class="header-text">
-        <div class="header-title">📺 Option B: DIRECTV via Internet Revision</div>
-        <div class="header-subtitle" style="color: var(--highlight-purple);">1st Gemini Box Included • Disney/Hulu Included Free</div>
-      </div>
-      <div class="action-side">
-        <label class="switch" onclick="event.stopPropagation()">
-          <input type="checkbox" id="toggle-directv" onchange="calculateRerate()">
-          <span class="slider"></span>
-        </label>
-        <div class="pool-badge" id="pool-directv">Pool: +$0.00/mo</div>
-      </div>
-    </div>
-
-    <!-- Option C: Protection & HomeTech -->
-    <div class="option-card compact-row" onclick="handleCardClick(event, 'toggle-hometech')">
-      <div class="header-text">
-        <div class="header-title">🛡️ Option C: Protection & HomeTech</div>
-      </div>
-      <div class="action-side">
-        <label class="switch" onclick="event.stopPropagation()">
-          <input type="checkbox" id="toggle-hometech" onchange="calculateRerate()">
-          <span class="slider"></span>
-        </label>
-        <div class="pool-badge" id="pool-protection">Pool: +$0.00/mo</div>
-      </div>
-    </div>
-
-    <!-- Option D: Connected Devices & Tech Accessories -->
+    <!-- Option A -->
     <div class="option-card">
-      <div class="device-header">
-        <div class="header-title">⌚ Option D: Connected Devices & Tech Accessories</div>
+      <div class="card-top">
+        <div class="title-group">
+          <div class="title">🌐 Option A: Home Internet Consolidation</div>
+          <div class="sub sub-green">$0 Install • Free Gateway • Contract Buyout Support</div>
+        </div>
+        <div class="badge-wrap">
+          <label class="switch">
+            <input type="checkbox" id="toggle-internet" onchange="runUpdate()">
+            <span class="slider"></span>
+          </label>
+          <div class="pool-badge" id="pool-internet">Pool: +$0.00/mo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Option B -->
+    <div class="option-card">
+      <div class="card-top">
+        <div class="title-group">
+          <div class="title">📺 Option B: DIRECTV via Internet Revision</div>
+          <div class="sub sub-purple">1st Gemini Box Included • Disney/Hulu Included Free</div>
+        </div>
+        <div class="badge-wrap">
+          <label class="switch">
+            <input type="checkbox" id="toggle-directv" onchange="runUpdate()">
+            <span class="slider"></span>
+          </label>
+          <div class="pool-badge" id="pool-directv">Pool: +$0.00/mo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Option C -->
+    <div class="option-card">
+      <div class="card-top">
+        <div class="title-group">
+          <div class="title">🛡️ Option C: Protection & HomeTech</div>
+        </div>
+        <div class="badge-wrap">
+          <label class="switch">
+            <input type="checkbox" id="toggle-hometech" onchange="runUpdate()">
+            <span class="slider"></span>
+          </label>
+          <div class="pool-badge" id="pool-protection">Pool: +$0.00/mo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Option D -->
+    <div class="option-card">
+      <div class="card-top" style="margin-bottom: 2px;">
+        <div class="title">⌚ Option D: Connected Devices & Tech Accessories</div>
         <div class="pool-badge" id="pool-accessories">Pool: +$0.00/mo</div>
       </div>
       <div class="device-grid">
-        <div class="device-box">
+        <div class="device-col">
           <label>⌚ WATCHES ($5.50 / $10.99)</label>
-          <select id="watch-count" onchange="calculateRerate()">
+          <select id="watch-count" onchange="runUpdate()">
             <option value="0">0 Watches</option>
             <option value="1">1 Watch</option>
             <option value="2">2 Watches</option>
             <option value="3">3 Watches</option>
           </select>
         </div>
-        <div class="device-box">
+        <div class="device-col">
           <label>📱 TABLETS ($10.50 / $20.99)</label>
-          <select id="tablet-count" onchange="calculateRerate()">
+          <select id="tablet-count" onchange="runUpdate()">
             <option value="0">0 Tablets</option>
             <option value="1">1 Tablet</option>
             <option value="2">2 Tablets</option>
@@ -431,119 +408,92 @@
       </div>
     </div>
 
-    <!-- Due Today at Register -->
-    <div class="register-card">
+    <!-- Register Due Today -->
+    <div class="register-box">
       <div class="register-title">🏷️ DUE TODAY AT REGISTER (EXISTING ACCOUNT UPGRADES)</div>
-      <div class="register-amount" id="register-total">No hardware upgrades selected ($0 due today).</div>
-      <div class="register-footnote">
+      <div class="register-body">No hardware upgrades selected ($0 due today).</div>
+      <div class="register-sub">
         *Estimates 7% IN sales tax on retail device value + $35 upgrade fees.<br />
         New accounts subject to credit check.
       </div>
     </div>
 
-    <!-- Instant Customer SMS Quote Generator -->
-    <div class="sms-card">
-      <div class="sms-title">📱 Instant Customer SMS Quote Generator</div>
-      <input type="tel" class="sms-input" id="customer-phone" placeholder="Enter customer 10–digit cell #..." maxlength="14" />
-      <button class="btn-primary" onclick="sendSmsQuote()">💬 Send SMS Quote</button>
-      <button class="btn-secondary" onclick="copyQuote()">📋 Copy Text</button>
+    <!-- SMS Quote -->
+    <div class="sms-box">
+      <div class="title">📱 Instant Customer SMS Quote Generator</div>
+      <input type="tel" id="sms-phone" placeholder="Enter customer 10–digit cell #..." />
+      <button class="sms-btn" onclick="sendSms()">💬 Send SMS Quote</button>
+      <button class="copy-btn" onclick="copyQuote()">📋 Copy Text</button>
     </div>
 
-    <!-- OPUS Order Execution Checklist -->
+    <!-- OPUS Checklist (No Next Up) -->
     <div class="checklist-card">
       <div class="checklist-title">📋 OPUS ORDER EXECUTION CHECKLIST</div>
-      <div class="checklist-group">
-        <label class="checklist-item">
-          <input type="checkbox" />
-          <span>Rerate plan group to Unlimited Your Way 2.0</span>
-        </label>
-        <label class="checklist-item">
-          <input type="checkbox" />
-          <span>Enroll customer in Bank/Debit AutoPay ($10/line off)</span>
-        </label>
-        <label class="checklist-item">
-          <input type="checkbox" />
-          <span>Verify address in Broadband Lead before building cart</span>
-        </label>
-        <label class="checklist-item">
-          <input type="checkbox" />
-          <span>Claim $100 Visa Card in OPUS Bundle Builder / Exclusive Rewards</span>
-        </label>
-        <label class="checklist-item">
-          <input type="checkbox" />
-          <span>Confirm Trade-in promo credit tier ($1,200 / $930 / $500)</span>
-        </label>
-      </div>
+      <label class="check-item">
+        <input type="checkbox" />
+        <span>Rerate plan group to Unlimited Your Way 2.0</span>
+      </label>
+      <label class="check-item">
+        <input type="checkbox" />
+        <span>Enroll customer in Bank/Debit AutoPay ($10/line off)</span>
+      </label>
+      <label class="check-item">
+        <input type="checkbox" />
+        <span>Verify address in Broadband Lead before building cart</span>
+      </label>
+      <label class="check-item">
+        <input type="checkbox" />
+        <span>Claim $100 Visa Card in OPUS Bundle Builder / Exclusive Rewards</span>
+      </label>
+      <label class="check-item">
+        <input type="checkbox" />
+        <span>Confirm Trade-in promo credit tier ($1,200 / $930 / $500)</span>
+      </label>
     </div>
 
-    <!-- Collapsible Rate Matrix Action -->
-    <button class="matrix-toggle-btn">
+    <div class="matrix-btn">
       📊 Show 1–4 Line Rate Matrix & Rate Rules ▾
-    </button>
+    </div>
 
   </div>
 
   <script>
-    function handleCardClick(event, inputId) {
-      const toggle = document.getElementById(inputId);
-      if (toggle) {
-        toggle.checked = !toggle.checked;
-        calculateRerate();
-      }
+    function runUpdate() {
+      const internetOn = document.getElementById('toggle-internet').checked;
+      const dtvOn = document.getElementById('toggle-directv').checked;
+      const homeTechOn = document.getElementById('toggle-hometech').checked;
+      
+      const watches = parseInt(document.getElementById('watch-count').value, 10);
+      const tablets = parseInt(document.getElementById('tablet-count').value, 10);
+
+      document.getElementById('pool-internet').innerText = `Pool: +$${(internetOn ? 47.00 : 0).toFixed(2)}/mo`;
+      document.getElementById('pool-directv').innerText = `Pool: +$${(dtvOn ? 69.99 : 0).toFixed(2)}/mo`;
+      document.getElementById('pool-protection').innerText = `Pool: +$${(homeTechOn ? 25.00 : 0).toFixed(2)}/mo`;
+
+      const accTotal = (watches * 10.99) + (tablets * 20.99);
+      document.getElementById('pool-accessories').innerText = `Pool: +$${accTotal.toFixed(2)}/mo`;
     }
 
-    function calculateRerate() {
-      // Internet Air / Base Fiber ($47/mo bundle value)
-      const internetActive = document.getElementById('toggle-internet').checked;
-      const internetVal = internetActive ? 47.00 : 0.00;
-      document.getElementById('pool-internet').innerText = `Pool: +$${internetVal.toFixed(2)}/mo`;
-
-      // DIRECTV Entertainment standard tier ($69.99/mo)
-      const dtvActive = document.getElementById('toggle-directv').checked;
-      const dtvVal = dtvActive ? 69.99 : 0.00;
-      document.getElementById('pool-directv').innerText = `Pool: +$${dtvVal.toFixed(2)}/mo`;
-
-      // Home Tech Protection ($25.00/mo)
-      const hometechActive = document.getElementById('toggle-hometech').checked;
-      const hometechVal = hometechActive ? 25.00 : 0.00;
-      document.getElementById('pool-protection').innerText = `Pool: +$${hometechVal.toFixed(2)}/mo`;
-
-      // Option D: Connected Devices
-      const watchCount = parseInt(document.getElementById('watch-count').value, 10);
-      const tabletCount = parseInt(document.getElementById('tablet-count').value, 10);
-      const accessoriesVal = (watchCount * 10.99) + (tabletCount * 20.99);
-      document.getElementById('pool-accessories').innerText = `Pool: +$${accessoriesVal.toFixed(2)}/mo`;
-    }
-
-    function sendSmsQuote() {
-      const phoneInput = document.getElementById('customer-phone');
-      const cleanNumber = phoneInput.value.replace(/\D/g, '');
-      if (cleanNumber.length < 10) {
-        alert('Please enter a valid 10-digit customer cell phone number.');
-        return;
-      }
-      const message = encodeURIComponent(generateQuoteText());
-      window.open(`sms:${cleanNumber}?body=${message}`, '_self');
+    function sendSms() {
+      const val = document.getElementById('sms-phone').value.replace(/\D/g, '');
+      if (val.length < 10) return alert('Enter a valid 10-digit phone number');
+      window.open(`sms:${val}?body=${encodeURIComponent(getQuoteText())}`, '_self');
     }
 
     function copyQuote() {
-      const text = generateQuoteText();
-      navigator.clipboard.writeText(text).then(() => {
-        alert('Quote summary successfully copied to clipboard!');
-      });
+      navigator.clipboard.writeText(getQuoteText()).then(() => alert('Quote copied!'));
     }
 
-    function generateQuoteText() {
-      return `AT&T Monthly Rerate Quote Summary:\n` +
-             `• Home Internet: ${document.getElementById('pool-internet').innerText.replace('Pool: ', '')}\n` +
-             `• DIRECTV via Internet: ${document.getElementById('pool-directv').innerText.replace('Pool: ', '')}\n` +
-             `• HomeTech Protection: ${document.getElementById('pool-protection').innerText.replace('Pool: ', '')}\n` +
-             `• Connected Devices: ${document.getElementById('pool-accessories').innerText.replace('Pool: ', '')}\n\n` +
-             `Bank/Debit AutoPay discount applied. Validated via OPUS bundle rules.`;
+    function getQuoteText() {
+      return `AT&T Monthly Summary:\n` +
+             `• Internet: ${document.getElementById('pool-internet').innerText.replace('Pool: ', '')}\n` +
+             `• DIRECTV: ${document.getElementById('pool-directv').innerText.replace('Pool: ', '')}\n` +
+             `• HomeTech: ${document.getElementById('pool-protection').innerText.replace('Pool: ', '')}\n` +
+             `• Connected: ${document.getElementById('pool-accessories').innerText.replace('Pool: ', '')}\n\n` +
+             `Includes Bank/Debit AutoPay discount.`;
     }
 
-    // Phone number input formatter
-    document.getElementById('customer-phone').addEventListener('input', function(e) {
+    document.getElementById('sms-phone').addEventListener('input', (e) => {
       let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
       e.target.value = !x[2] ? x[1] : `(${x[1]}) ${x[2]}` + (x[3] ? `-${x[3]}` : '');
     });
