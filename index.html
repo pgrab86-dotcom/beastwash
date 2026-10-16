@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AT&T Savings Finder & Quote Builder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>AT&T Elite Rerate & Savings Tool</title>
   <style>
     :root {
       --bg-main: #060b19;
@@ -16,6 +18,9 @@
       --badge-bg: #10244c;
       --badge-border: #1e3c79;
       --input-bg: #081126;
+      --highlight-purple: #c084fc;
+      --highlight-green: #1dd1a1;
+      --highlight-cyan: #00bcd4;
     }
 
     * {
@@ -23,107 +28,86 @@
       margin: 0;
       padding: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
       background-color: var(--bg-main);
       color: var(--text-main);
-      padding: 16px;
+      padding: 16px 12px;
       display: flex;
       justify-content: center;
     }
 
     .container {
       width: 100%;
-      max-width: 520px;
+      max-width: 500px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 12px;
     }
 
-    /* Option Card Styles */
+    /* Option Cards */
     .option-card {
       background-color: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 12px;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
+      padding: 14px 16px;
     }
 
-    .option-header {
+    .compact-row {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      gap: 10px;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
     }
 
     .header-text {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px;
+      flex: 1;
     }
 
     .header-title {
       font-weight: 700;
-      font-size: 15px;
+      font-size: 14px;
       color: #ffffff;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      line-height: 1.25;
     }
 
     .header-subtitle {
-      font-size: 12px;
-      color: #1dd1a1;
+      font-size: 11px;
       font-weight: 500;
+      line-height: 1.3;
+    }
+
+    .action-side {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
     }
 
     .pool-badge {
       background-color: var(--badge-bg);
       border: 1px solid var(--badge-border);
       color: var(--accent-light);
-      padding: 4px 10px;
-      border-radius: 16px;
-      font-size: 13px;
+      padding: 4px 8px;
+      border-radius: 14px;
+      font-size: 12px;
       font-weight: 600;
       white-space: nowrap;
     }
 
-    /* Interactive Body Controls */
-    .option-controls {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      padding-top: 6px;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .toggle-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 13px;
-      color: var(--text-main);
-    }
-
-    .toggle-row select {
-      background-color: var(--input-bg);
-      color: #fff;
-      border: 1px solid var(--card-border);
-      border-radius: 8px;
-      padding: 6px 10px;
-      font-size: 13px;
-      outline: none;
-    }
-
-    /* Toggle Switches */
+    /* Toggle Switch */
     .switch {
       position: relative;
       display: inline-block;
       width: 44px;
       height: 24px;
+      flex-shrink: 0;
     }
 
     .switch input {
@@ -136,10 +120,10 @@
       position: absolute;
       cursor: pointer;
       inset: 0;
-      background-color: #1b2644;
-      transition: 0.25s;
+      background-color: #1a2747;
+      transition: 0.2s ease-in-out;
       border-radius: 24px;
-      border: 1px solid var(--card-border);
+      border: 1px solid #283e75;
     }
 
     .slider:before {
@@ -149,8 +133,8 @@
       width: 16px;
       left: 3px;
       bottom: 3px;
-      background-color: #fff;
-      transition: 0.25s;
+      background-color: #ffffff;
+      transition: 0.2s ease-in-out;
       border-radius: 50%;
     }
 
@@ -163,29 +147,36 @@
       transform: translateX(20px);
     }
 
-    /* Connected Devices Grid */
+    /* Option D - Devices */
+    .device-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
     .device-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 10px;
     }
 
     .device-box {
       background: var(--input-bg);
       border: 1px solid var(--card-border);
       border-radius: 8px;
-      padding: 10px;
+      padding: 8px 10px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
     }
 
     .device-box label {
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 700;
       color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.4px;
     }
 
     .device-box select {
@@ -193,28 +184,29 @@
       color: #ffffff;
       border: 1px solid var(--card-border);
       border-radius: 6px;
-      padding: 8px;
+      padding: 7px;
       font-size: 13px;
-      width: 100%;
       outline: none;
+      width: 100%;
     }
 
-    /* Register Due Today Box */
+    /* Register Due Today */
     .register-card {
       background-color: var(--card-bg);
       border: 1px dashed var(--card-border);
       border-radius: 12px;
-      padding: 14px 16px;
+      padding: 12px 14px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 4px;
     }
 
     .register-title {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
-      color: #00bcd4;
+      color: var(--highlight-cyan);
       text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .register-amount {
@@ -223,9 +215,9 @@
     }
 
     .register-footnote {
-      font-size: 11px;
+      font-size: 10.5px;
       color: var(--text-muted);
-      line-height: 1.4;
+      line-height: 1.35;
     }
 
     /* SMS Quote Generator */
@@ -233,14 +225,14 @@
       background-color: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 12px;
-      padding: 16px;
+      padding: 14px 16px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
     .sms-title {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
       color: #ffffff;
     }
@@ -249,30 +241,26 @@
       background-color: var(--input-bg);
       border: 1px solid var(--card-border);
       border-radius: 8px;
-      padding: 12px;
+      padding: 10px 12px;
       color: #ffffff;
       font-size: 14px;
       outline: none;
       width: 100%;
     }
 
-    .sms-input::placeholder {
-      color: #4f6388;
-    }
-
     .btn-primary {
       background: linear-gradient(180deg, #0088cc 0%, #006699 100%);
-      color: #fff;
+      color: #ffffff;
       border: none;
       border-radius: 8px;
-      padding: 12px;
-      font-size: 14px;
+      padding: 11px;
+      font-size: 13px;
       font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     .btn-secondary {
@@ -280,31 +268,31 @@
       border: 1px solid var(--card-border);
       color: #ffffff;
       border-radius: 8px;
-      padding: 10px;
-      font-size: 13px;
+      padding: 9px;
+      font-size: 12.5px;
       font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
     }
 
-    /* Execution Checklist (Next Up Anytime Removed) */
+    /* OPUS Checklist (Next Up Anytime Removed) */
     .checklist-card {
       background-color: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 12px;
-      padding: 16px;
+      padding: 14px 16px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
     .checklist-title {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
-      color: #00bcd4;
+      color: var(--highlight-cyan);
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
@@ -312,16 +300,17 @@
     .checklist-group {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
 
     .checklist-item {
       display: flex;
       align-items: center;
       gap: 10px;
-      font-size: 13px;
+      font-size: 12.5px;
       color: #cfd9e8;
       cursor: pointer;
+      user-select: none;
     }
 
     .checklist-item input[type="checkbox"] {
@@ -335,6 +324,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
     }
 
     .checklist-item input[type="checkbox"]:checked {
@@ -345,10 +335,10 @@
     .checklist-item input[type="checkbox"]:checked:after {
       content: "✔";
       font-size: 10px;
-      color: #fff;
+      color: #ffffff;
     }
 
-    /* Collapsible Matrix Action */
+    /* Rate Matrix Collapsible Button */
     .matrix-toggle-btn {
       background: #0e1d3f;
       border: 1px solid var(--card-border);
@@ -369,108 +359,60 @@
 
   <div class="container">
 
-    <!-- OPTION A: Home Internet Consolidation -->
-    <div class="option-card">
-      <div class="option-header">
-        <div class="header-text">
-          <div class="header-title">🌐 Option A: Home Internet Consolidation</div>
-          <div class="header-subtitle">$0 Install • Free Gateway • Contract Buyout Support</div>
-        </div>
+    <!-- Option A: Home Internet Consolidation -->
+    <div class="option-card compact-row" onclick="handleCardClick(event, 'toggle-internet')">
+      <div class="header-text">
+        <div class="header-title">🌐 Option A: Home Internet Consolidation</div>
+        <div class="header-subtitle" style="color: var(--highlight-green);">$0 Install • Free Gateway • Contract Buyout Support</div>
+      </div>
+      <div class="action-side">
+        <label class="switch" onclick="event.stopPropagation()">
+          <input type="checkbox" id="toggle-internet" onchange="calculateRerate()">
+          <span class="slider"></span>
+        </label>
         <div class="pool-badge" id="pool-internet">Pool: +$0.00/mo</div>
       </div>
-      <div class="option-controls">
-        <div class="toggle-row">
-          <span>Add AT&T Internet / Internet Air</span>
-          <label class="switch">
-            <input type="checkbox" id="toggle-internet" onchange="recalculateTotals()">
-            <span class="slider"></span>
-          </label>
-        </div>
-        <div class="toggle-row">
-          <span>Tier Selection</span>
-          <select id="internet-tier" onchange="recalculateTotals()">
-            <option value="47">Internet Air / 300M ($47.00/mo)</option>
-            <option value="60">Fiber 500M ($60.00/mo)</option>
-            <option value="80">Fiber 1 GIG ($80.00/mo)</option>
-          </select>
-        </div>
-      </div>
     </div>
 
-    <!-- OPTION B: DIRECTV via Internet Revision -->
-    <div class="option-card">
-      <div class="option-header">
-        <div class="header-text">
-          <div class="header-title">📺 Option B: DIRECTV via Internet Revision</div>
-          <div class="header-subtitle" style="color: #c084fc;">1st Gemini Box Included • Disney/Hulu Included Free</div>
-        </div>
+    <!-- Option B: DIRECTV via Internet Revision -->
+    <div class="option-card compact-row" onclick="handleCardClick(event, 'toggle-directv')">
+      <div class="header-text">
+        <div class="header-title">📺 Option B: DIRECTV via Internet Revision</div>
+        <div class="header-subtitle" style="color: var(--highlight-purple);">1st Gemini Box Included • Disney/Hulu Included Free</div>
+      </div>
+      <div class="action-side">
+        <label class="switch" onclick="event.stopPropagation()">
+          <input type="checkbox" id="toggle-directv" onchange="calculateRerate()">
+          <span class="slider"></span>
+        </label>
         <div class="pool-badge" id="pool-directv">Pool: +$0.00/mo</div>
       </div>
-      <div class="option-controls">
-        <div class="toggle-row">
-          <span>DIRECTV Package</span>
-          <label class="switch">
-            <input type="checkbox" id="toggle-directv" onchange="recalculateTotals()">
-            <span class="slider"></span>
-          </label>
-        </div>
-        <div class="toggle-row">
-          <span>Channel Package</span>
-          <select id="directv-package" onchange="recalculateTotals()">
-            <option value="69.99">Entertainment ($69.99/mo)</option>
-            <option value="84.99">Choice ($84.99/mo)</option>
-            <option value="114.99">Ultimate ($114.99/mo)</option>
-            <option value="154.99">Premier ($154.99/mo)</option>
-          </select>
-        </div>
-        <div class="toggle-row">
-          <span>Additional Gemini Box (+$10/mo ea)</span>
-          <label class="switch">
-            <input type="checkbox" id="toggle-extra-box" onchange="recalculateTotals()">
-            <span class="slider"></span>
-          </label>
-        </div>
-        <div class="toggle-row">
-          <span>Marion County RSN Fee (+$21.99/mo Choice+)</span>
-          <label class="switch">
-            <input type="checkbox" id="toggle-rsn" onchange="recalculateTotals()">
-            <span class="slider"></span>
-          </label>
-        </div>
-      </div>
     </div>
 
-    <!-- OPTION C: Protection & HomeTech -->
-    <div class="option-card">
-      <div class="option-header">
-        <div class="header-text">
-          <div class="header-title">🛡️ Option C: Protection & HomeTech</div>
-        </div>
+    <!-- Option C: Protection & HomeTech -->
+    <div class="option-card compact-row" onclick="handleCardClick(event, 'toggle-hometech')">
+      <div class="header-text">
+        <div class="header-title">🛡️ Option C: Protection & HomeTech</div>
+      </div>
+      <div class="action-side">
+        <label class="switch" onclick="event.stopPropagation()">
+          <input type="checkbox" id="toggle-hometech" onchange="calculateRerate()">
+          <span class="slider"></span>
+        </label>
         <div class="pool-badge" id="pool-protection">Pool: +$0.00/mo</div>
       </div>
-      <div class="option-controls">
-        <div class="toggle-row">
-          <span>AT&T Home Tech Protection ($25.00/mo)</span>
-          <label class="switch">
-            <input type="checkbox" id="toggle-hometech" onchange="recalculateTotals()">
-            <span class="slider"></span>
-          </label>
-        </div>
-      </div>
     </div>
 
-    <!-- OPTION D: Connected Devices & Tech Accessories -->
+    <!-- Option D: Connected Devices & Tech Accessories -->
     <div class="option-card">
-      <div class="option-header">
-        <div class="header-text">
-          <div class="header-title">⌚ Option D: Connected Devices & Tech Accessories</div>
-        </div>
+      <div class="device-header">
+        <div class="header-title">⌚ Option D: Connected Devices & Tech Accessories</div>
         <div class="pool-badge" id="pool-accessories">Pool: +$0.00/mo</div>
       </div>
       <div class="device-grid">
         <div class="device-box">
           <label>⌚ WATCHES ($5.50 / $10.99)</label>
-          <select id="watch-count" onchange="recalculateTotals()">
+          <select id="watch-count" onchange="calculateRerate()">
             <option value="0">0 Watches</option>
             <option value="1">1 Watch</option>
             <option value="2">2 Watches</option>
@@ -479,7 +421,7 @@
         </div>
         <div class="device-box">
           <label>📱 TABLETS ($10.50 / $20.99)</label>
-          <select id="tablet-count" onchange="recalculateTotals()">
+          <select id="tablet-count" onchange="calculateRerate()">
             <option value="0">0 Tablets</option>
             <option value="1">1 Tablet</option>
             <option value="2">2 Tablets</option>
@@ -507,7 +449,7 @@
       <button class="btn-secondary" onclick="copyQuote()">📋 Copy Text</button>
     </div>
 
-    <!-- OPUS ORDER EXECUTION CHECKLIST (Next Up Removed) -->
+    <!-- OPUS Order Execution Checklist -->
     <div class="checklist-card">
       <div class="checklist-title">📋 OPUS ORDER EXECUTION CHECKLIST</div>
       <div class="checklist-group">
@@ -534,7 +476,7 @@
       </div>
     </div>
 
-    <!-- Matrix Collapsible Button -->
+    <!-- Collapsible Rate Matrix Action -->
     <button class="matrix-toggle-btn">
       📊 Show 1–4 Line Rate Matrix & Rate Rules ▾
     </button>
@@ -542,46 +484,42 @@
   </div>
 
   <script>
-    function recalculateTotals() {
-      // Option A: Internet
-      let internetPool = 0;
-      if (document.getElementById('toggle-internet').checked) {
-        internetPool += parseFloat(document.getElementById('internet-tier').value);
+    function handleCardClick(event, inputId) {
+      const toggle = document.getElementById(inputId);
+      if (toggle) {
+        toggle.checked = !toggle.checked;
+        calculateRerate();
       }
-      document.getElementById('pool-internet').innerText = `Pool: +$${internetPool.toFixed(2)}/mo`;
+    }
 
-      // Option B: DIRECTV
-      let directvPool = 0;
-      if (document.getElementById('toggle-directv').checked) {
-        directvPool += parseFloat(document.getElementById('directv-package').value);
-        if (document.getElementById('toggle-extra-box').checked) {
-          directvPool += 10.00;
-        }
-        if (document.getElementById('toggle-rsn').checked) {
-          directvPool += 21.99;
-        }
-      }
-      document.getElementById('pool-directv').innerText = `Pool: +$${directvPool.toFixed(2)}/mo`;
+    function calculateRerate() {
+      // Internet Air / Base Fiber ($47/mo bundle value)
+      const internetActive = document.getElementById('toggle-internet').checked;
+      const internetVal = internetActive ? 47.00 : 0.00;
+      document.getElementById('pool-internet').innerText = `Pool: +$${internetVal.toFixed(2)}/mo`;
 
-      // Option C: Protection
-      let protectionPool = 0;
-      if (document.getElementById('toggle-hometech').checked) {
-        protectionPool += 25.00;
-      }
-      document.getElementById('pool-protection').innerText = `Pool: +$${protectionPool.toFixed(2)}/mo`;
+      // DIRECTV Entertainment standard tier ($69.99/mo)
+      const dtvActive = document.getElementById('toggle-directv').checked;
+      const dtvVal = dtvActive ? 69.99 : 0.00;
+      document.getElementById('pool-directv').innerText = `Pool: +$${dtvVal.toFixed(2)}/mo`;
+
+      // Home Tech Protection ($25.00/mo)
+      const hometechActive = document.getElementById('toggle-hometech').checked;
+      const hometechVal = hometechActive ? 25.00 : 0.00;
+      document.getElementById('pool-protection').innerText = `Pool: +$${hometechVal.toFixed(2)}/mo`;
 
       // Option D: Connected Devices
       const watchCount = parseInt(document.getElementById('watch-count').value, 10);
       const tabletCount = parseInt(document.getElementById('tablet-count').value, 10);
-      const accessoriesPool = (watchCount * 10.99) + (tabletCount * 20.99);
-      document.getElementById('pool-accessories').innerText = `Pool: +$${accessoriesPool.toFixed(2)}/mo`;
+      const accessoriesVal = (watchCount * 10.99) + (tabletCount * 20.99);
+      document.getElementById('pool-accessories').innerText = `Pool: +$${accessoriesVal.toFixed(2)}/mo`;
     }
 
     function sendSmsQuote() {
       const phoneInput = document.getElementById('customer-phone');
       const cleanNumber = phoneInput.value.replace(/\D/g, '');
       if (cleanNumber.length < 10) {
-        alert('Please enter a valid 10-digit phone number.');
+        alert('Please enter a valid 10-digit customer cell phone number.');
         return;
       }
       const message = encodeURIComponent(generateQuoteText());
@@ -591,25 +529,24 @@
     function copyQuote() {
       const text = generateQuoteText();
       navigator.clipboard.writeText(text).then(() => {
-        alert('Quote summary copied to clipboard!');
+        alert('Quote summary successfully copied to clipboard!');
       });
     }
 
     function generateQuoteText() {
-      return `AT&T Monthly Estimate Summary:\n` +
-             `• Internet: ${document.getElementById('pool-internet').innerText.replace('Pool: ', '')}\n` +
-             `• DIRECTV: ${document.getElementById('pool-directv').innerText.replace('Pool: ', '')}\n` +
-             `• Protection: ${document.getElementById('pool-protection').innerText.replace('Pool: ', '')}\n` +
+      return `AT&T Monthly Rerate Quote Summary:\n` +
+             `• Home Internet: ${document.getElementById('pool-internet').innerText.replace('Pool: ', '')}\n` +
+             `• DIRECTV via Internet: ${document.getElementById('pool-directv').innerText.replace('Pool: ', '')}\n` +
+             `• HomeTech Protection: ${document.getElementById('pool-protection').innerText.replace('Pool: ', '')}\n` +
              `• Connected Devices: ${document.getElementById('pool-accessories').innerText.replace('Pool: ', '')}\n\n` +
-             `AutoPay with Bank/Debit included. Validated at current promotional rates.`;
+             `Bank/Debit AutoPay discount applied. Validated via OPUS bundle rules.`;
     }
 
-    // Phone input auto-formatting
+    // Phone number input formatter
     document.getElementById('customer-phone').addEventListener('input', function(e) {
       let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
       e.target.value = !x[2] ? x[1] : `(${x[1]}) ${x[2]}` + (x[3] ? `-${x[3]}` : '');
     });
   </script>
-
 </body>
 </html>
