@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#060b14">
+<title>AT&T Executive Solutions Studio & Rerate Engine • elitererate.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --b:#00a8e0;
+  --b-glow:rgba(0,168,224,0.35);
+  --bg:#060b14;
+  --surface:#0e1726;
+  --surface-raised:#152238;
+  --bd:#1e2f4d;
+  --t:#f8fafc;
+  --m:#8da2c0;
+  --g:#10b981;
+  --g-glow:rgba(16,185,129,0.3);
+  --w:#f59e0b;
+  --r:#ef4444;
+  --p:#a855f7;
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif;-webkit-tap-highlight-color:transparent}
+body{background:radial-gradient(circle at 50% -20%, #152744 0%, #060b14 65%);color:var(--t);padding:16px;line-height:1.45;min-height:100vh}
+.mono{font-family:'JetBrains Mono',monospace}
+.wrap{max-width:1160px;margin:0 auto}
+
+.hdr{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;padding-bottom:14px;margin-bottom:16px;border-bottom:1px solid var(--bd)}
+.hdr h1{font-size:1.35rem;font-weight:800;letter-spacing:-0.02em;color:#fff}
+.hdr h1 span{color:var(--b);text-shadow:0 0 16px var(--b-glow)}
+.hdr p{font-size:.72rem;color:var(--m);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-top:2px}
+.hdr-actions{display:flex;gap:8px;align-items:center}
+.btn-mode{background:var(--surface-raised);border:1.5px solid var(--b);color:#fff;padding:8px 16px;border-radius:99px;font-size:.82rem;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 0 12px rgba(0,168,224,0.15)}
+.btn-mode.on{background:var(--b);color:#000;box-shadow:0 0 20px var(--b-glow)}
+
+.stage-card{background:var(--surface);border:1px solid var(--bd);border-radius:14px;padding:16px;margin-bottom:16px;box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.stage-title{font-size:.95rem;font-weight:800;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;color:#fff}
+.stage-num{background:var(--b);color:#000;width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:900;margin-right:8px}
+.badge{font-size:.7rem;background:rgba(0,168,224,.18);color:var(--b);padding:3px 9px;border-radius:99px;font-weight:800}
+
+.intent-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
+.intent-chip{background:rgba(6,11,20,0.75);border:1.5px solid var(--bd);border-radius:10px;padding:12px;text-align:center;cursor:pointer;transition:all .18s ease;font-size:.82rem;font-weight:800;color:var(--t)}
+.intent-chip:hover{border-color:var(--b);transform:translateY(-2px)}
+.intent-chip.active{border-color:var(--b);background:rgba(0,168,224,0.16);box-shadow:0 0 16px var(--b-glow);color:#fff}
+
+.input-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.cbox{background:rgba(6,11,20,0.7);border:1px solid var(--bd);border-radius:10px;padding:10px 12px}
+.cbox label{display:block;font-size:.68rem;font-weight:800;text-transform:uppercase;color:var(--m);margin-bottom:5px;letter-spacing:0.04em}
+select,input[type=number],input[type=text]{width:100%;background:rgba(6,11,20,0.9);color:#fff;border:1px solid var(--bd);padding:9px 12px;border-radius:8px;font-size:.9rem;font-weight:600;outline:none}
+select:focus,input:focus{border-color:var(--b);box-shadow:0 0 10px rgba(0,168,224,0.2)}
+
+.trow{display:flex;justify-content:space-between;align-items:center;background:rgba(6,11,20,0.65);border:1px solid var(--bd);border-radius:10px;padding:9px 12px;margin-bottom:8px}
+.tname{font-weight:700;font-size:.9rem;display:block}.tsub{font-size:.72rem;color:var(--m)}
+.stepper{display:flex;align-items:center;gap:8px}
+.sbtn{width:36px;height:36px;border-radius:8px;border:2px solid var(--b);background:var(--surface-raised);color:#fff;font-size:1.25rem;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.sbtn:active{background:var(--b);color:#000}
+.sval{min-width:24px;text-align:center;font-weight:900;font-size:1.15rem}
+
+.opp-box{background:linear-gradient(135deg,#0c182b 0%,#142540 100%);border:2px solid var(--b);border-radius:14px;padding:14px 16px;margin-bottom:16px;box-shadow:0 12px 30px rgba(0,168,224,0.15)}
+.opp-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.opp-hdr span{font-size:.88rem;font-weight:900;letter-spacing:-0.01em}
+.opp-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.opp-card{background:rgba(6,11,20,0.75);border:1.5px solid var(--bd);border-radius:10px;padding:12px;cursor:pointer;transition:all .18s ease}
+.opp-card:hover{border-color:var(--b);transform:translateY(-2px)}
+.opp-card.active{border-color:var(--g);background:rgba(16,185,129,0.08);box-shadow:0 0 16px var(--g-glow)}
+.opp-title{font-size:.82rem;font-weight:800;color:var(--b);display:flex;justify-content:space-between}
+.opp-price{font-size:1.25rem;font-weight:900;color:#fff;margin:4px 0}
+.opp-sub{font-size:.72rem;color:var(--m);line-height:1.35}
+.opp-save{font-size:.76rem;font-weight:800;color:#34d399;margin-top:6px}
+
+.fn-box{background:rgba(0,168,224,.08);border:1px solid var(--b);border-radius:10px;padding:10px 12px;margin-bottom:12px;display:none}
+.fn-box b{color:var(--b);font-size:.82rem}
+.fn-box ul{list-style:none;margin-top:5px;font-size:.74rem;color:var(--m)}
+
+.chip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:6px;margin-top:6px}
+.chip{background:rgba(6,11,20,0.7);border:1px solid var(--bd);border-radius:8px;padding:8px 4px;text-align:center;cursor:pointer;color:#fff;font-size:.76rem;font-weight:700;transition:all .15s ease}
+.chip:hover{border-color:var(--b)}
+.chip.active{border:2px solid var(--b);background:rgba(0,168,224,.18);box-shadow:0 0 12px rgba(0,168,224,0.2)}
+.chip.active-dtv{border:2px solid var(--p);background:rgba(168,85,247,.18);box-shadow:0 0 12px rgba(168,85,247,0.25)}
+.chip b{display:block;font-size:.92rem;color:var(--b);margin:2px 0}
+.chip small{display:block;font-size:.65rem;color:#34d399;font-weight:800}
+
+.hero{background:linear-gradient(135deg,#004899 0%,#0077cc 100%);border-radius:12px;padding:16px;display:flex;justify-content:space-between;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,119,204,0.25);margin-bottom:12px}
+.hero-lbl{font-size:.72rem;text-transform:uppercase;font-weight:800;color:rgba(255,255,255,0.85);letter-spacing:0.04em}
+.hero-price{font-size:2.2rem;font-weight:900;color:#fff;letter-spacing:-0.02em}
+.save-pill{background:rgba(16,185,129,.24);border:1.5px solid var(--g);color:#34d399;padding:6px 12px;border-radius:8px;text-align:right;font-weight:800;font-size:.84rem}
+
+.s-hub{background:rgba(6,11,20,0.85);border:1px solid var(--bd);border-radius:10px;padding:12px}
+.s-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dashed var(--bd);font-size:.84rem}
+.s-row.tot{border-bottom:none;padding-top:8px;font-size:.95rem;font-weight:900}
+
+.trade-card{background:#0e192c;border:1px solid var(--bd);border-radius:8px;padding:10px;margin-top:8px}
+.q-row{display:flex;justify-content:space-between;align-items:center;font-size:.76rem;padding:4px 0}
+.btn-yn{background:var(--surface);border:1px solid var(--bd);color:var(--t);padding:4px 9px;border-radius:6px;font-size:.72rem;font-weight:800;cursor:pointer}
+.btn-yn.active-y{background:var(--g);color:#000;border-color:var(--g)}
+.btn-yn.active-n{background:var(--r);color:#fff;border-color:var(--r)}
+.tier-pills{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:4px;margin-top:6px}
+.tpill{background:var(--bg);border:1px solid var(--bd);color:var(--m);padding:6px 2px;border-radius:6px;font-size:.66rem;font-weight:800;text-align:center;cursor:pointer}
+.tpill.active{border-color:var(--b);color:#fff;background:rgba(0,168,224,.2)}
+
+.act-btn{background:var(--b);color:#000!important;text-decoration:none!important;border:none;padding:9px 14px;border-radius:8px;font-size:.8rem;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.act-btn.sec{background:var(--surface);color:#fff!important;border:1px solid var(--bd)}
+.drawer-btn{width:100%;background:var(--surface);border:1px solid var(--bd);color:var(--b);padding:10px;border-radius:10px;font-size:.82rem;font-weight:800;cursor:pointer;margin-top:12px;text-align:center}
+.drawer-content{display:none;background:var(--surface);border:1px solid var(--bd);border-radius:12px;padding:12px;margin-top:8px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.76rem;min-width:640px}
+th{background:#0a1220;color:var(--b);text-align:left;padding:8px 10px;border-bottom:1px solid var(--bd);font-weight:800}
+td{padding:6px 10px;border-bottom:1px solid rgba(30,47,77,0.6)}
+.ghdr td{background:rgba(0,168,224,.14);color:#fff;font-weight:800}
+
+.brand-tabs{display:flex;gap:6px;margin-bottom:10px}
+.btab{background:#060b14;border:1px solid var(--bd);color:var(--m);padding:5px 10px;border-radius:6px;font-size:.74rem;font-weight:800;cursor:pointer}
+.btab.active{background:var(--b);color:#000;border-color:var(--b)}
+
+.reg-box{background:#0e1a2f;border:1px dashed var(--b);border-radius:8px;padding:10px;margin-top:10px}
+.reg-box h5{font-size:.76rem;color:var(--b);text-transform:uppercase;margin-bottom:4px;font-weight:800}
+.sms-box{background:rgba(6,11,20,0.85);border:1px solid var(--bd);border-radius:10px;padding:12px;margin-top:14px}
+.sms-row{display:grid;grid-template-columns:1fr auto auto;gap:8px;margin-top:8px}
+@media(max-width:600px){.sms-row{grid-template-columns:1fr}}
+
+.opus-box{background:#111b2c;border:1px solid var(--bd);border-radius:10px;padding:12px;margin-top:14px}
+.opus-box h4{font-size:.78rem;color:var(--b);font-weight:800;text-transform:uppercase;margin-bottom:6px}
+.opus-item{display:flex;align-items:center;gap:8px;font-size:.76rem;color:var(--m);padding:3px 0}
+.opus-item input{accent-color:var(--b)}
+
+/* CLEAN PRESENTATION MODE: HIDES ALL STAGES EXCEPT PROPOSAL */
+body.cust-mode #stageGreeting,
+body.cust-mode #stageBaseline,
+body.cust-mode #stageDriver,
+body.cust-mode #stageHome,
+body.cust-mode #stageProtection,
+body.cust-mode .drawer-btn,
+body.cust-mode .drawer-content,
+body.cust-mode .sms-box,
+body.cust-mode .opus-box,
+body.cust-mode .rep-only {
+  display: none !important;
+}
+
+body.cust-mode #stageFinal {
+  max-width: 680px;
+  margin: 0 auto;
+  border: 2px solid var(--b);
+  box-shadow: 0 16px 40px rgba(0,168,224,0.18);
+  background: linear-gradient(145deg, #0e1726 0%, #132238 100%);
+}
+
+.cust-banner{display:none;background:rgba(0,168,224,0.1);border:1px solid var(--b);border-radius:10px;padding:12px 14px;margin-bottom:14px;text-align:center}
+.cust-banner h3{font-size:.95rem;color:#fff;font-weight:800;}
+.cust-banner p{font-size:.75rem;color:var(--m);margin-top:2px;}
+body.cust-mode .cust-banner{display:block;}
+
+@media print {
+  body { background:#fff !important; color:#000 !important; padding:0; }
+  .hdr, .stage-card:not(#stageFinal), .drawer-btn, .drawer-content, .sms-box, .opus-box, .rep-only, .btn-mode { display:none !important; }
+  .wrap, #stageFinal { max-width:100% !important; border:none !important; box-shadow:none !important; background:#fff !important; }
+  .hero { background:#f1f5f9 !important; color:#000 !important; border:1px solid #cbd5e1 !important; box-shadow:none !important; }
+  .hero-price { color:#000 !important; }
+  .save-pill { border:1px solid #10b981 !important; color:#047857 !important; background:transparent !important; }
+  .s-hub { background:#f8fafc !important; border:1px solid #cbd5e1 !important; }
+  .cust-banner { display:block !important; border:1px solid #00a8e0 !important; background:#f0f9ff !important; color:#000 !important; }
+  .cust-banner h3 { color:#0284c7 !important; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <!-- HEADER -->
+  <div class="hdr">
+    <div>
+      <h1>AT&T <span>Executive Solutions Studio</span></h1>
+      <p class="rep-only"><span style="color:#34d399;">● Engine Live</span> • Consultative Workflow Architecture • elitererate.com</p>
+    </div>
+    <div class="hdr-actions">
+      <button type="button" class="act-btn sec" style="padding:7px 12px;font-size:.76rem;" onclick="window.print()">🖨️ Print Sheet</button>
+      <button type="button" id="custBtn" class="btn-mode" onclick="toggleCust()">
+        👁️ Customer View: <span id="custTxt">OFF</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- STAGE 1: GREETING & INTENT SELECTOR -->
+  <div class="stage-card" id="stageGreeting">
+    <div class="stage-title">
+      <div><span class="stage-num">1</span> What Brings You In Today? (Select One or Multiple)</div>
+      <span class="badge">Consultation Intent</span>
+    </div>
+    <div class="intent-grid">
+      <div class="intent-chip active" id="chipUpg" onclick="toggleIntent('upg')">📱 Hardware Upgrade(s)</div>
+      <div class="intent-chip active" id="chipAal" onclick="toggleIntent('aal')">📲 Add New Line(s)</div>
+      <div class="intent-chip active" id="chipNet" onclick="toggleIntent('net')">🌐 AT&T Fiber / Internet</div>
+      <div class="intent-chip" id="chipDtv" onclick="toggleIntent('dtv')">📺 DIRECTV via Internet</div>
+      <div class="intent-chip active" id="chipAudit" onclick="toggleIntent('audit')">💳 Bill Review & Plan Optimization</div>
+    </div>
+  </div>
+
+  <!-- STAGE 2: ACCOUNT BASELINE & STEALTH PRE-QUAL -->
+  <div class="stage-card" id="stageBaseline">
+    <div class="stage-title">
+      <div><span class="stage-num">2</span> Current Account Baseline & Address Pre-Check</div>
+      <span class="badge">Zero-OPUS Pre-Check</span>
+    </div>
+
+    <!-- STEALTH PRE-QUAL BAR -->
+    <div class="prequal rep-only" style="margin-bottom:12px;">
+      <div class="prequal-top">
+        <span>🏠 Stealth Address Check (Check before opening Broadband Lead)</span>
+        <span class="pill-safe">🛡️ Protects Close Rate Denominator</span>
+      </div>
+      <div class="prequal-row">
+        <input type="text" id="addrIn" placeholder="Enter customer street address & zip...">
+        <button type="button" class="act-btn sec" onclick="copyAddr()">📋 Copy</button>
+        <a href="https://www.att.com/internet/availability/" target="_blank" rel="noopener" class="act-btn" onclick="copyAddr()">🔍 AT&T Check</a>
+        <a href="https://broadbandmap.fcc.gov/home" target="_blank" rel="noopener" class="act-btn sec" onclick="copyAddr()">🗺️ FCC Map</a>
+      </div>
+      <div id="toast" style="font-size:.76rem;color:#34d399;font-weight:700;margin-top:6px;display:none;">✅ Address copied to clipboard!</div>
+    </div>
+
+    <!-- CURRENT BASELINE INPUTS -->
+    <div class="input-grid">
+      <div class="cbox">
+        <label>Current Wireless Bill ($)</label>
+        <input type="number" id="curBill" value="220" oninput="onInputsChange()">
+      </div>
+      <div class="cbox">
+        <label>Total Lines on Account</label>
+        <select id="lineCountSelect" onchange="onLineCountChange()">
+          <option value="1">1 Line</option><option value="2">2 Lines</option><option value="3">3 Lines</option>
+          <option value="4" selected>4 Lines</option><option value="5">5 Lines</option><option value="6">6 Lines</option>
+          <option value="7">7 Lines</option><option value="8">8 Lines</option><option value="9">9 Lines</option>
+          <option value="10">10 Lines</option>
+        </select>
+      </div>
+      <div class="cbox">
+        <label>Current ISP Bill (Spectrum/Xfinity)</label>
+        <input type="number" id="curIsp" value="80" oninput="recalc()">
+      </div>
+      <div class="cbox">
+        <label>Current Pay TV / Cable ($)</label>
+        <input type="number" id="curTv" value="0" placeholder="e.g. 130" oninput="recalc()">
+      </div>
+      <div class="cbox">
+        <label>Discount Program (FAN)</label>
+        <select id="discType" onchange="onInputsChange()">
+          <option value="sig">Signature (Corporate/Union FAN)</option>
+          <option value="apprec">Appreciation (Mil/Teach/FN/Health)</option>
+          <option value="none">Standard Consumer (No FAN)</option>
+        </select>
+      </div>
+      <div class="cbox">
+        <label>AutoPay Method</label>
+        <select id="apType" onchange="onInputsChange()">
+          <option value="bank">Bank Account ($10/L + $10 Fiber)</option>
+          <option value="debit">Debit Card ($10/L + $5 Fiber)</option>
+          <option value="credit">Credit Card ($5/L + $0 Fiber)</option>
+          <option value="none">No AutoPay ($0 off)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAGE 3: PRIMARY DRIVER (PLAN RESTOCK & HARDWARE) -->
+  <div class="stage-card" id="stageDriver">
+    <div class="stage-title">
+      <div><span class="stage-num">3</span> Primary Driver: Plan Restructure & Device Solutions</div>
+      <span class="badge" id="ledgerVoiceBadge">Step 1 Pool: +$0.00/mo</span>
+    </div>
+
+    <!-- RECOMMENDED RATE PLAN COMBINATIONS -->
+    <div class="opp-box" style="margin-bottom:14px;">
+      <div class="opp-hdr">
+        <span id="oppHdrText">🎯 Recommended Rate Plan Combinations</span>
+        <span class="badge" style="background:rgba(16,185,129,.2);color:#34d399;">Calculated Live</span>
+      </div>
+      <div class="opp-cards" id="oppCards"></div>
+    </div>
+
+    <!-- FIRSTNET TOGGLE -->
+    <div class="trow" style="background:#112036;border-color:var(--b);margin-bottom:10px;">
+      <div>
+        <span class="tname" style="color:var(--b);">🚨 FirstNet & Family Primary Line</span>
+        <span class="tsub">Standard Tier Rate • Band 14 Dedicated Spectrum & Priority Preemption</span>
+      </div>
+      <button type="button" id="fnBtn" class="btn-mode" style="padding:6px 12px;font-size:.76rem;" onclick="toggleFn()">OFF</button>
+    </div>
+
+    <div class="fn-box" id="fnExplainer">
+      <b>🛡️ FirstNet Priority Network Active:</b>
+      <ul>
+        <li>• <strong>Band 14 Dedicated Lane:</strong> Physically separate spectrum reserved for public safety.</li>
+        <li>• <strong>Always-On Preemption:</strong> Never slowed down during disasters, emergencies, or stadium crowds.</li>
+        <li>• <strong>Unified Family Pricing:</strong> Standard multi-line rate + 20% Premium / 15% Extra / 10% Value appreciation.</li>
+      </ul>
+    </div>
+
+    <!-- Q4 $5/MO OFF 4+ LINE PROMO STEPPER (10/12-12/31) -->
+    <div class="trow" style="background:#132338;border-color:#38bdf8;margin-bottom:8px;">
+      <div>
+        <span class="tname" style="color:#38bdf8;">🎉 New Lines Activated (10/12–12/31)</span>
+        <span class="tsub">-$5/mo off per line for 12 mos on 4+ line accounts</span>
+      </div>
+      <div class="stepper">
+        <button type="button" class="sbtn" style="border-color:#38bdf8;" onclick="stepNewLines(-1)">−</button>
+        <span class="sval mono" id="valNewLines" style="color:#38bdf8;">0</span>
+        <button type="button" class="sbtn" style="border-color:#38bdf8;" onclick="stepNewLines(1)">+</button>
+      </div>
+    </div>
+
+    <!-- VOICE PLAN TIERS -->
+    <div class="trow">
+      <div><span class="tname">🐆 Unlimited Premium 2.0</span><span class="tsub">Uncapped • 60GB Hotspot • $1,200 Trade Promo</span></div>
+      <div class="stepper"><button type="button" class="sbtn" onclick="stepTier('prem',-1)">−</button><span class="sval mono" id="valPrem">2</span><button type="button" class="sbtn" onclick="stepTier('prem',1)">+</button></div>
+    </div>
+    <div class="trow">
+      <div><span class="tname">🐇 Unlimited Extra 2.0</span><span class="tsub">75GB priority • 30GB Hotspot • $930–$1,000 Trade Promo</span></div>
+      <div class="stepper"><button type="button" class="sbtn" onclick="stepTier('extra',-1)">−</button><span class="sval mono" id="valExtra">0</span><button type="button" class="sbtn" onclick="stepTier('extra',1)">+</button></div>
+    </div>
+    <div class="trow">
+      <div><span class="tname">🐢 Value Plus 2.0</span><span class="tsub">Standard data • $500 Trade Promo</span></div>
+      <div class="stepper"><button type="button" class="sbtn" onclick="stepTier('val',-1)">−</button><span class="sval mono" id="valVal">2</span><button type="button" class="sbtn" onclick="stepTier('val',1)">+</button></div>
+    </div>
+
+    <!-- BYOD SWITCHER LINES -->
+    <div class="trow" style="background:#112036;border-color:var(--g);margin-top:10px;">
+      <div>
+        <span class="tname" style="color:#34d399;">📲 BYOD / Switcher Lines ($360 Credit)</span>
+        <span class="tsub">-$10.00/mo credit per line over 36 months</span>
+      </div>
+      <div class="stepper"><button type="button" class="sbtn" style="border-color:var(--g);" onclick="stepByod(-1)">−</button><span class="sval mono" id="valByod">0</span><button type="button" class="sbtn" style="border-color:var(--g);" onclick="stepByod(1)">+</button></div>
+    </div>
+
+    <!-- HARDWARE UPGRADE & TRADE INTAKE SECTION -->
+    <div class="upg-bar" style="background:rgba(6,11,20,0.65);border:1px solid var(--bd);border-radius:10px;padding:10px 12px;margin-top:10px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div><span class="tname" style="font-size:.84rem;">📱 Hardware Upgrade & Trade/Turn-In Evaluator</span><span class="tsub">Next Up Anytime & Trade-In Eligibility</span></div>
+        <button type="button" id="upgBtn" class="btn-mode" style="padding:6px 12px;font-size:.76rem;" onclick="toggleUpg()">NO</button>
+      </div>
+
+      <div id="upgPanel" style="display:none;margin-top:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <span style="font-size:.74rem;color:var(--m);font-weight:700;">UPGRADING LINES</span>
+          <div class="stepper"><button type="button" class="sbtn" style="width:28px;height:28px;font-size:1rem;" onclick="stepTradeCount(-1)">−</button><span class="sval mono" id="tradeCountVal" style="font-size:.95rem;">1</span><button type="button" class="sbtn" style="width:28px;height:28px;font-size:1rem;" onclick="stepTradeCount(1)">+</button></div>
+        </div>
+
+        <div class="trow" style="margin-bottom:8px;">
+          <div><span class="tname" style="font-size:.82rem;">🔄 Next Up Anytime ($10/L)</span><span class="tsub">Upgrade every 12 mos (33% paid)</span></div>
+          <div class="stepper"><button type="button" class="sbtn" style="width:30px;height:30px;font-size:1rem;" onclick="stepNua(-1)">−</button><span class="sval mono" id="valNua" style="font-size:1rem;">0</span><button type="button" class="sbtn" style="width:30px;height:30px;font-size:1rem;" onclick="stepNua(1)">+</button></div>
+        </div>
+
+        <!-- EXCLUSIVE REWARDS $100 VISA CARD TOGGLE -->
+        <div class="trow" style="background:#0e1e36;border-color:#34d399;margin-bottom:8px;">
+          <div>
+            <span class="tname" style="font-size:.8rem;color:#34d399;">🎁 $100 Visa Card (Exclusive Rewards)</span>
+            <span class="tsub">Apply in OPUS Bundle Builder for each new smartphone line</span>
+          </div>
+          <button type="button" id="visaBtn" class="btn-mode" style="padding:4px 10px;font-size:.72rem;border-color:#34d399;" onclick="toggleVisaReward()">OFF</button>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;margin:6px 0;">
+          <span style="font-size:.75rem;font-weight:800;color:var(--b);">TRADE-IN / TURN-IN EVALUATOR</span>
+          <a href="https://tradein.att.com/" target="_blank" rel="noopener" style="font-size:.7rem;color:#38bdf8;text-decoration:underline;">tradein.att.com ↗</a>
+        </div>
+
+        <div id="tradeCardsBox"></div>
+
+        <!-- TIERED DEVICE MATRIX DRAWER -->
+        <button type="button" class="drawer-btn" style="margin-top:8px;font-size:.75rem;" onclick="toggleDeviceDrawer()">📋 View Current Tiered Device Offers (No Trade Req'd) ▾</button>
+        <div class="drawer-content" id="deviceDrawer" style="padding:10px;">
+          <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;">
+            <div style="display:flex;gap:6px;">
+              <button type="button" id="tabModeAal" class="btab active" style="background:#10b981;color:#000;border-color:#10b981;" onclick="setOfferMode('aal')">📲 Add-A-Line Specials</button>
+              <button type="button" id="tabModeUpg" class="btab" onclick="setOfferMode('upg')">🔄 Upgrade Offers</button>
+            </div>
+            <div class="brand-tabs" style="margin-bottom:0;">
+              <button type="button" class="btab active" onclick="filterBrand('all')">All</button>
+              <button type="button" class="btab" onclick="filterBrand('apple')">Apple</button>
+              <button type="button" class="btab" onclick="filterBrand('samsung')">Samsung</button>
+              <button type="button" class="btab" onclick="filterBrand('pixel')">Pixel</button>
+              <button type="button" class="btab" onclick="filterBrand('moto')">Moto</button>
+            </div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>DEVICE MODEL</th>
+                <th>RETAIL</th>
+                <th id="thOfferPrice" style="color:#10b981;">AAL PROMO PRICE</th>
+                <th>36-MO SAVINGS</th>
+              </tr>
+            </thead>
+            <tbody id="deviceTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAGE 4: HOME SOLUTIONS (FIBER & DIRECTV) -->
+  <div class="stage-card" id="stageHome">
+    <div class="stage-title">
+      <div><span class="stage-num">4</span> Home Solutions Expansion: Fiber & Entertainment</div>
+      <span class="badge" id="ledgerNetBadge">Running Pool: +$0.00/mo</span>
+    </div>
+
+    <!-- BROADBAND -->
+    <div style="font-size:.82rem;font-weight:800;color:#fff;margin-bottom:4px;">🌐 Option A: Home Internet Consolidation</div>
+    <div style="font-size:.68rem;color:#34d399;font-weight:700;margin-bottom:6px;">$0 Install • Free Gateway • Contract Buyout Support</div>
+    <div class="chip-grid" id="netChips">
+      <button type="button" class="chip active" id="btnNet_none" onclick="pickNet('none')">None<b>$0</b><small>Wireless Only</small></button>
+      <button type="button" class="chip" id="btnNet_300" onclick="pickNet('300')">Fiber 300<b>$35</b><small id="subNet_300">Save vs ISP</small></button>
+      <button type="button" class="chip" id="btnNet_500" onclick="pickNet('500')">Fiber 500<b>$45</b><small id="subNet_500">Save vs ISP</small></button>
+      <button type="button" class="chip" id="btnNet_1000" onclick="pickNet('1000')">1 GIG Fiber<b>$50</b><small id="subNet_1000">Save vs ISP</small></button>
+      <button type="button" class="chip" id="btnNet_5000" onclick="pickNet('5000')">
