@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#060b14">
-<title>AT&T Executive Solutions Studio & Consultative Journey • eliterate.com</title>
+<title>AT&T Executive Solutions Studio & Rerate Engine • elitererate.com</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
@@ -40,26 +40,22 @@ body{background:radial-gradient(circle at 50% -20%, #152744 0%, #060b14 65%);col
 .btn-mode{background:var(--surface-raised);border:1.5px solid var(--b);color:#fff;padding:8px 16px;border-radius:99px;font-size:.82rem;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 0 12px rgba(0,168,224,0.15)}
 .btn-mode.on{background:var(--b);color:#000;box-shadow:0 0 20px var(--b-glow)}
 
-/* STAGE CARDS & WATERFALL LAYOUT */
 .stage-card{background:var(--surface);border:1px solid var(--bd);border-radius:14px;padding:16px;margin-bottom:16px;box-shadow:0 8px 24px rgba(0,0,0,0.3)}
 .stage-title{font-size:.95rem;font-weight:800;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;color:#fff}
 .stage-num{background:var(--b);color:#000;width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:900;margin-right:8px}
 .badge{font-size:.7rem;background:rgba(0,168,224,.18);color:var(--b);padding:3px 9px;border-radius:99px;font-weight:800}
 
-/* INTENT SELECTOR CHIPS */
 .intent-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
 .intent-chip{background:rgba(6,11,20,0.75);border:1.5px solid var(--bd);border-radius:10px;padding:12px;text-align:center;cursor:pointer;transition:all .18s ease;font-size:.82rem;font-weight:800;color:var(--t)}
 .intent-chip:hover{border-color:var(--b);transform:translateY(-2px)}
 .intent-chip.active{border-color:var(--b);background:rgba(0,168,224,0.16);box-shadow:0 0 16px var(--b-glow);color:#fff}
 
-/* INPUTS GRID */
 .input-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
 .cbox{background:rgba(6,11,20,0.7);border:1px solid var(--bd);border-radius:10px;padding:10px 12px}
 .cbox label{display:block;font-size:.68rem;font-weight:800;text-transform:uppercase;color:var(--m);margin-bottom:5px;letter-spacing:0.04em}
 select,input[type=number],input[type=text]{width:100%;background:rgba(6,11,20,0.9);color:#fff;border:1px solid var(--bd);padding:9px 12px;border-radius:8px;font-size:.9rem;font-weight:600;outline:none}
 select:focus,input:focus{border-color:var(--b);box-shadow:0 0 10px rgba(0,168,224,0.2)}
 
-/* STEPPER ROWS */
 .trow{display:flex;justify-content:space-between;align-items:center;background:rgba(6,11,20,0.65);border:1px solid var(--bd);border-radius:10px;padding:9px 12px;margin-bottom:8px}
 .tname{font-weight:700;font-size:.9rem;display:block}.tsub{font-size:.72rem;color:var(--m)}
 .stepper{display:flex;align-items:center;gap:8px}
@@ -67,26 +63,38 @@ select:focus,input:focus{border-color:var(--b);box-shadow:0 0 10px rgba(0,168,22
 .sbtn:active{background:var(--b);color:#000}
 .sval{min-width:24px;text-align:center;font-weight:900;font-size:1.15rem}
 
-/* SELECTION CHIPS */
-.chip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:6px;margin-top:6px}
+.opp-box{background:linear-gradient(135deg,#0c182b 0%,#142540 100%);border:2px solid var(--b);border-radius:14px;padding:14px 16px;margin-bottom:16px;box-shadow:0 12px 30px rgba(0,168,224,0.15)}
+.opp-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.opp-hdr span{font-size:.88rem;font-weight:900;letter-spacing:-0.01em}
+.opp-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.opp-card{background:rgba(6,11,20,0.75);border:1.5px solid var(--bd);border-radius:10px;padding:12px;cursor:pointer;transition:all .18s ease}
+.opp-card:hover{border-color:var(--b);transform:translateY(-2px)}
+.opp-card.active{border-color:var(--g);background:rgba(16,185,129,0.08);box-shadow:0 0 16px var(--g-glow)}
+.opp-title{font-size:.82rem;font-weight:800;color:var(--b);display:flex;justify-content:space-between}
+.opp-price{font-size:1.25rem;font-weight:900;color:#fff;margin:4px 0}
+.opp-sub{font-size:.72rem;color:var(--m);line-height:1.35}
+.opp-save{font-size:.76rem;font-weight:800;color:#34d399;margin-top:6px}
+
+.fn-box{background:rgba(0,168,224,.08);border:1px solid var(--b);border-radius:10px;padding:10px 12px;margin-bottom:12px;display:none}
+.fn-box b{color:var(--b);font-size:.82rem}
+.fn-box ul{list-style:none;margin-top:5px;font-size:.74rem;color:var(--m)}
+
+.chip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:6px;margin-top:6px}
 .chip{background:rgba(6,11,20,0.7);border:1px solid var(--bd);border-radius:8px;padding:8px 4px;text-align:center;cursor:pointer;color:#fff;font-size:.76rem;font-weight:700;transition:all .15s ease}
 .chip.active{border:2px solid var(--b);background:rgba(0,168,224,.18);box-shadow:0 0 12px rgba(0,168,224,0.2)}
 .chip.active-dtv{border:2px solid var(--p);background:rgba(168,85,247,.18);box-shadow:0 0 12px rgba(168,85,247,0.25)}
 .chip b{display:block;font-size:.92rem;color:var(--b);margin:2px 0}
 .chip small{display:block;font-size:.65rem;color:#34d399;font-weight:800}
 
-/* HERO TERMINAL */
 .hero{background:linear-gradient(135deg,#004899 0%,#0077cc 100%);border-radius:12px;padding:16px;display:flex;justify-content:space-between;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,119,204,0.25);margin-bottom:12px}
 .hero-lbl{font-size:.72rem;text-transform:uppercase;font-weight:800;color:rgba(255,255,255,0.85);letter-spacing:0.04em}
 .hero-price{font-size:2.2rem;font-weight:900;color:#fff;letter-spacing:-0.02em}
 .save-pill{background:rgba(16,185,129,.24);border:1.5px solid var(--g);color:#34d399;padding:6px 12px;border-radius:8px;text-align:right;font-weight:800;font-size:.84rem}
 
-/* DUAL BUCKET LEDGER */
 .s-hub{background:rgba(6,11,20,0.85);border:1px solid var(--bd);border-radius:10px;padding:12px}
 .s-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dashed var(--bd);font-size:.84rem}
 .s-row.tot{border-bottom:none;padding-top:8px;font-size:.95rem;font-weight:900}
 
-/* TRADE CARDS */
 .trade-card{background:#0e192c;border:1px solid var(--bd);border-radius:8px;padding:10px;margin-top:8px}
 .q-row{display:flex;justify-content:space-between;align-items:center;font-size:.76rem;padding:4px 0}
 .btn-yn{background:var(--surface);border:1px solid var(--bd);color:var(--t);padding:4px 9px;border-radius:6px;font-size:.72rem;font-weight:800;cursor:pointer}
@@ -96,7 +104,6 @@ select:focus,input:focus{border-color:var(--b);box-shadow:0 0 10px rgba(0,168,22
 .tpill{background:var(--bg);border:1px solid var(--bd);color:var(--m);padding:6px 2px;border-radius:6px;font-size:.66rem;font-weight:800;text-align:center;cursor:pointer}
 .tpill.active{border-color:var(--b);color:#fff;background:rgba(0,168,224,.2)}
 
-/* ACTION BUTTONS & DRAWERS */
 .act-btn{background:var(--b);color:#000!important;text-decoration:none!important;border:none;padding:9px 14px;border-radius:8px;font-size:.8rem;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
 .act-btn.sec{background:var(--surface);color:#fff!important;border:1px solid var(--bd)}
 .drawer-btn{width:100%;background:var(--surface);border:1px solid var(--bd);color:var(--b);padding:10px;border-radius:10px;font-size:.82rem;font-weight:800;cursor:pointer;margin-top:12px;text-align:center}
@@ -106,22 +113,27 @@ th{background:#0a1220;color:var(--b);text-align:left;padding:8px 10px;border-bot
 td{padding:6px 10px;border-bottom:1px solid rgba(30,47,77,0.6)}
 .ghdr td{background:rgba(0,168,224,.14);color:#fff;font-weight:800}
 
-/* BRAND TABS */
 .brand-tabs{display:flex;gap:6px;margin-bottom:10px}
 .btab{background:#060b14;border:1px solid var(--bd);color:var(--m);padding:5px 10px;border-radius:6px;font-size:.74rem;font-weight:800;cursor:pointer}
 .btab.active{background:var(--b);color:#000;border-color:var(--b)}
 
-/* CHECKLIST & SMS */
-.opus-box{background:#111b2c;border:1px solid var(--bd);border-radius:10px;padding:12px;margin-top:14px}
-.opus-box h4{font-size:.78rem;color:var(--b);font-weight:800;text-transform:uppercase;margin-bottom:6px}
-.opus-item{display:flex;align-items:center;gap:8px;font-size:.76rem;color:var(--m);padding:3px 0}
-.opus-item input{accent-color:var(--b)}
+.reg-box{background:#0e1a2f;border:1px dashed var(--b);border-radius:8px;padding:10px;margin-top:10px}
+.reg-box h5{font-size:.76rem;color:var(--b);text-transform:uppercase;margin-bottom:4px;font-weight:800}
 .sms-box{background:rgba(6,11,20,0.85);border:1px solid var(--bd);border-radius:10px;padding:12px;margin-top:14px}
 .sms-row{display:grid;grid-template-columns:1fr auto auto;gap:8px;margin-top:8px}
 @media(max-width:600px){.sms-row{grid-template-columns:1fr}}
 
-/* CUSTOMER PRESENTATION MODE */
-body.cust-mode .stage-card:not(#stageFinal):not(#stageGreeting),
+.opus-box{background:#111b2c;border:1px solid var(--bd);border-radius:10px;padding:12px;margin-top:14px}
+.opus-box h4{font-size:.78rem;color:var(--b);font-weight:800;text-transform:uppercase;margin-bottom:6px}
+.opus-item{display:flex;align-items:center;gap:8px;font-size:.76rem;color:var(--m);padding:3px 0}
+.opus-item input{accent-color:var(--b)}
+
+/* CLEAN PRESENTATION MODE: HIDES ALL STAGES EXCEPT PROPOSAL */
+body.cust-mode #stageGreeting,
+body.cust-mode #stageBaseline,
+body.cust-mode #stageDriver,
+body.cust-mode #stageHome,
+body.cust-mode #stageProtection,
 body.cust-mode .drawer-btn,
 body.cust-mode .drawer-content,
 body.cust-mode .sms-box,
@@ -129,18 +141,20 @@ body.cust-mode .opus-box,
 body.cust-mode .rep-only {
   display: none !important;
 }
+
 body.cust-mode #stageFinal {
   max-width: 680px;
   margin: 0 auto;
   border: 2px solid var(--b);
   box-shadow: 0 16px 40px rgba(0,168,224,0.18);
+  background: linear-gradient(145deg, #0e1726 0%, #132238 100%);
 }
+
 .cust-banner{display:none;background:rgba(0,168,224,0.1);border:1px solid var(--b);border-radius:10px;padding:12px 14px;margin-bottom:14px;text-align:center}
 .cust-banner h3{font-size:.95rem;color:#fff;font-weight:800;}
 .cust-banner p{font-size:.75rem;color:var(--m);margin-top:2px;}
 body.cust-mode .cust-banner{display:block;}
 
-/* PRINT STYLESHEET */
 @media print {
   body { background:#fff !important; color:#000 !important; padding:0; }
   .hdr, .stage-card:not(#stageFinal), .drawer-btn, .drawer-content, .sms-box, .opus-box, .rep-only, .btn-mode { display:none !important; }
@@ -160,7 +174,7 @@ body.cust-mode .cust-banner{display:block;}
   <div class="hdr">
     <div>
       <h1>AT&T <span>Executive Solutions Studio</span></h1>
-      <p class="rep-only"><span style="color:#34d399;">● Engine Live</span> • Consultative Workflow Architecture • eliterate.com</p>
+      <p class="rep-only"><span style="color:#34d399;">● Engine Live</span> • Consultative Workflow Architecture • elitererate.com</p>
     </div>
     <div class="hdr-actions">
       <button type="button" class="act-btn sec" style="padding:7px 12px;font-size:.76rem;" onclick="window.print()">🖨️ Print Sheet</button>
@@ -218,7 +232,8 @@ body.cust-mode .cust-banner{display:block;}
         <select id="lineCountSelect" onchange="onLineCountChange()">
           <option value="1">1 Line</option><option value="2">2 Lines</option><option value="3">3 Lines</option>
           <option value="4" selected>4 Lines</option><option value="5">5 Lines</option><option value="6">6 Lines</option>
-          <option value="7">7 Lines</option><option value="8">8 Lines</option><option value="9">9 Lines</option><option value="10">10 Lines</option>
+          <option value="7">7 Lines</option><option value="8">8 Lines</option><option value="9">9 Lines</option>
+          <option value="10">10 Lines</option>
         </select>
       </div>
       <div class="cbox">
@@ -249,14 +264,14 @@ body.cust-mode .cust-banner{display:block;}
     </div>
   </div>
 
-  <!-- STAGE 3: PRIMARY DRIVER (PLAN CONFIG, FIRSTNET & HARDWARE) -->
+  <!-- STAGE 3: PRIMARY DRIVER (PLAN RESTOCK & HARDWARE) -->
   <div class="stage-card" id="stageDriver">
     <div class="stage-title">
       <div><span class="stage-num">3</span> Primary Driver: Plan Restructure & Device Solutions</div>
       <span class="badge" id="ledgerVoiceBadge">Step 1 Pool: +$0.00/mo</span>
     </div>
 
-    <!-- TOP SUGGESTION PATHS -->
+    <!-- RECOMMENDED RATE PLAN COMBINATIONS -->
     <div class="opp-box" style="margin-bottom:14px;">
       <div class="opp-hdr">
         <span id="oppHdrText">🎯 Recommended Rate Plan Combinations</span>
@@ -287,7 +302,7 @@ body.cust-mode .cust-banner{display:block;}
     <div class="trow" style="background:#132338;border-color:#38bdf8;margin-bottom:8px;">
       <div>
         <span class="tname" style="color:#38bdf8;">🎉 New Lines Activated (10/12–12/31)</span>
-        <span class="tsub">-$5/mo off per line for 12 mos on 4+ line accounts[span_11](start_span)[span_11](end_span)</span>
+        <span class="tsub">-$5/mo off per line for 12 mos on 4+ line accounts</span>
       </div>
       <div class="stepper">
         <button type="button" class="sbtn" style="border-color:#38bdf8;" onclick="stepNewLines(-1)">−</button>
@@ -298,15 +313,15 @@ body.cust-mode .cust-banner{display:block;}
 
     <!-- VOICE PLAN TIERS -->
     <div class="trow">
-      <div><span class="tname">🐆 Unlimited Premium 2.0</span><span class="tsub">Uncapped • 60GB Hotspot • $1,200 Trade Promo[span_12](start_span)[span_12](end_span)[span_13](start_span)[span_13](end_span)[span_14](start_span)[span_14](end_span)</span></div>
+      <div><span class="tname">🐆 Unlimited Premium 2.0</span><span class="tsub">Uncapped • 60GB Hotspot • $1,200 Trade Promo</span></div>
       <div class="stepper"><button type="button" class="sbtn" onclick="stepTier('prem',-1)">−</button><span class="sval mono" id="valPrem">2</span><button type="button" class="sbtn" onclick="stepTier('prem',1)">+</button></div>
     </div>
     <div class="trow">
-      <div><span class="tname">🐇 Unlimited Extra 2.0</span><span class="tsub">75GB priority • 30GB Hotspot • $930–$1,000 Trade Promo[span_15](start_span)[span_15](end_span)[span_16](start_span)[span_16](end_span)[span_17](start_span)[span_17](end_span)</span></div>
+      <div><span class="tname">🐇 Unlimited Extra 2.0</span><span class="tsub">75GB priority • 30GB Hotspot • $930–$1,000 Trade Promo</span></div>
       <div class="stepper"><button type="button" class="sbtn" onclick="stepTier('extra',-1)">−</button><span class="sval mono" id="valExtra">0</span><button type="button" class="sbtn" onclick="stepTier('extra',1)">+</button></div>
     </div>
     <div class="trow">
-      <div><span class="tname">🐢 Value Plus 2.0</span><span class="tsub">Standard data • $500 Trade Promo[span_18](start_span)[span_18](end_span)[span_19](start_span)[span_19](end_span)[span_20](start_span)[span_20](end_span)[span_21](start_span)[span_21](end_span)[span_22](start_span)[span_22](end_span)</span></div>
+      <div><span class="tname">🐢 Value Plus 2.0</span><span class="tsub">Standard data • $500 Trade Promo</span></div>
       <div class="stepper"><button type="button" class="sbtn" onclick="stepTier('val',-1)">−</button><span class="sval mono" id="valVal">2</span><button type="button" class="sbtn" onclick="stepTier('val',1)">+</button></div>
     </div>
 
@@ -322,7 +337,7 @@ body.cust-mode .cust-banner{display:block;}
     <!-- HARDWARE UPGRADE & TRADE INTAKE SECTION -->
     <div class="upg-bar">
       <div class="upg-toggle">
-        <div><span class="tname" style="font-size:.84rem;">📱 Hardware Upgrade & Trade/Turn-In Evaluator</span><span class="tsub">Next Up Anytime & Trade-In Eligibility[span_23](start_span)[span_23](end_span)</span></div>
+        <div><span class="tname" style="font-size:.84rem;">📱 Hardware Upgrade & Trade/Turn-In Evaluator</span><span class="tsub">Next Up Anytime & Trade-In Eligibility</span></div>
         <button type="button" id="upgBtn" class="btn-mode" style="padding:6px 12px;font-size:.76rem;" onclick="toggleUpg()">NO</button>
       </div>
 
@@ -341,7 +356,7 @@ body.cust-mode .cust-banner{display:block;}
         <div class="trow" style="background:#0e1e36;border-color:#34d399;margin-bottom:8px;">
           <div>
             <span class="tname" style="font-size:.8rem;color:#34d399;">🎁 $100 Visa Card (Exclusive Rewards)</span>
-            <span class="tsub">Apply in OPUS Bundle Builder for each new smartphone line[span_24](start_span)[span_24](end_span)</span>
+            <span class="tsub">Apply in OPUS Bundle Builder for each new smartphone line</span>
           </div>
           <button type="button" id="visaBtn" class="btn-mode" style="padding:4px 10px;font-size:.72rem;border-color:#34d399;" onclick="toggleVisaReward()">OFF</button>
         </div>
@@ -392,12 +407,12 @@ body.cust-mode .cust-banner{display:block;}
       <span class="badge" id="ledgerNetBadge">Running Pool: +$0.00/mo</span>
     </div>
 
-    <!-- BROADBAND STEP -->
+    <!-- BROADBAND -->
     <div style="font-size:.82rem;font-weight:800;color:#fff;margin-bottom:4px;">🌐 Option A: Home Internet Consolidation</div>
-    <div style="font-size:.68rem;color:#34d399;font-weight:700;margin-bottom:6px;">$0 Install • Free Gateway[span_25](start_span)[span_25](end_span)[span_26](start_span)[span_26](end_span)[span_27](start_span)[span_27](end_span)[span_28](start_span)[span_28](end_span) • Contract Buyout Support</div>
+    <div style="font-size:.68rem;color:#34d399;font-weight:700;margin-bottom:6px;">$0 Install • Free Gateway • Contract Buyout Support</div>
     <div class="chip-grid" id="netChips"></div>
 
-    <!-- DIRECTV STEP -->
+    <!-- DIRECTV -->
     <div style="font-size:.82rem;font-weight:800;color:#fff;margin-top:14px;margin-bottom:4px;">📺 Option B: DIRECTV via Internet Revision</div>
     <div style="font-size:.68rem;color:var(--p);font-weight:700;margin-bottom:6px;">1st Gemini Box Included • Disney/Hulu Included Free</div>
     <div class="chip-grid" id="dtvChips"></div>
@@ -436,7 +451,7 @@ body.cust-mode .cust-banner{display:block;}
 
   <!-- STAGE 6: THE TRANSFER, EXECUTIVE LEDGER & CLOSING -->
   <div class="stage-card" id="stageFinal">
-    <!-- CUSTOMER BANNER -->
+    <!-- CUSTOMER BANNER (SHOWN IN CUSTOMER VIEW) -->
     <div class="cust-banner">
       <h3>✨ Personalized AT&T Solutions Proposal</h3>
       <p>Prepared for You by Philip Grab • AT&T Greenwood • Direct: 317-987-5763</p>
@@ -476,7 +491,7 @@ body.cust-mode .cust-banner{display:block;}
         <button type="button" class="act-btn" onclick="sendSmsQuote()">💬 Send SMS Quote</button>
         <button type="button" class="act-btn sec" onclick="copySmsQuote()">📋 Copy Text</button>
       </div>
-      <div id="smsToast" class="toast">✅ Formatted quote copied to clipboard!</div>
+      <div id="smsToast" style="font-size:.76rem;color:#34d399;font-weight:700;margin-top:6px;display:none;">✅ Formatted quote copied to clipboard!</div>
     </div>
 
     <!-- OPUS EXECUTION CHECKLIST (REP VIEW ONLY) -->
@@ -485,8 +500,8 @@ body.cust-mode .cust-banner{display:block;}
       <div class="opus-item"><input type="checkbox"> Rerate plan group to Unlimited Your Way 2.0</div>
       <div class="opus-item"><input type="checkbox"> Enroll customer in Bank/Debit AutoPay ($10/line off)</div>
       <div class="opus-item"><input type="checkbox"> Verify address in Broadband Lead before building cart</div>
-      <div class="opus-item"><input type="checkbox"> Claim $100 Visa Card in OPUS Bundle Builder / Exclusive Rewards[span_29](start_span)[span_29](end_span)</div>
-      <div class="opus-item"><input type="checkbox"> Confirm Trade-in promo credit tier ($1,200 / $930 / $500)[span_30](start_span)[span_30](end_span)[span_31](start_span)[span_31](end_span)[span_32](start_span)[span_32](end_span)</div>
+      <div class="opus-item"><input type="checkbox"> Claim $100 Visa Card in OPUS Bundle Builder / Exclusive Rewards</div>
+      <div class="opus-item"><input type="checkbox"> Confirm Trade-in promo credit tier ($1,200 / $930 / $500)</div>
       <div class="opus-item"><input type="checkbox"> Attach Next Up Anytime ($10/line) on upgrading hardware</div>
     </div>
   </div>
@@ -538,7 +553,6 @@ var PA_OPTS=[
   {k:"50",l:"PA4 ($50)",c:50}
 ];
 
-// SALESFORCE KNOWLEDGE ARTICLE TIERED PROMO DATA (OCTOBER 2026)[span_33](start_span)[span_33](end_span)[span_34](start_span)[span_34](end_span)[span_35](start_span)[span_35](end_span)
 var TIERED_DEVICES=[
   {b:"apple", name:"iPhone 17e 256GB", msrp:699.99, aal:5.99, upg:7.99},
   {b:"apple", name:"iPhone 17e 512GB", msrp:899.99, aal:11.99, upg:13.99},
@@ -703,8 +717,11 @@ function stepNua(d){
 function copyAddr(){
   var v=document.getElementById('addrIn').value;
   if(v&&navigator.clipboard)navigator.clipboard.writeText(v);
-  var t=document.getElementById('toast');t.style.display='block';
-  setTimeout(function(){t.style.display='none';},3000);
+  var t=document.getElementById('toast');
+  if(t){
+    t.style.display='block';
+    setTimeout(function(){t.style.display='none';},3000);
+  }
 }
 
 function syncLineCountDropdown(tot){
@@ -832,7 +849,7 @@ function renderTopOpportunities(){
     p:p2, e:0, v:v2,
     cost:c2,
     desc:p2+"x Prem + "+v2+"x Value",
-    hook:"2x $1,200 Trade Slots & 50% Watch/Tab Slots[span_36](start_span)[span_36](end_span)[span_37](start_span)[span_37](end_span)[span_38](start_span)[span_38](end_span)"
+    hook:"2x $1,200 Trade Slots & 50% Watch/Tab Slots"
   });
 
   var p3=1, e3=Math.min(2,Math.max(0,totLines-1)), v3=Math.max(0,totLines-1-e3);
@@ -931,7 +948,8 @@ function recalc(){
   var dtv=calcDtv();
   var aip=getAipDetails();
 
-  document.getElementById('dtvBoxControl').style.display=st.dtv!=='none'?'block':'none';
+  var dtvControl=document.getElementById('dtvBoxControl');
+  if(dtvControl) dtvControl.style.display=st.dtv!=='none'?'block':'none';
 
   var paCost=0;
   for(var pIdx=0;pIdx<PA_OPTS.length;pIdx++){
@@ -950,7 +968,7 @@ function recalc(){
 
     if(eligible){
       if(tr.d){
-        cred=9.73; // Damaged floor ($350 credit)[span_39](start_span)[span_39](end_span)[span_40](start_span)[span_40](end_span)
+        cred=9.73;
       }else{
         var b=tr.brand;
         var tKey=tr.tier;
@@ -1033,7 +1051,8 @@ function recalc(){
     }
     tHtml+='</div>';
   }
-  document.getElementById('tradeCardsBox').innerHTML=tHtml;
+  var tradeBox=document.getElementById('tradeCardsBox');
+  if(tradeBox) tradeBox.innerHTML=tHtml;
 
   var netDevCost=st.upg?Math.max(0,devFin-devCred):0;
   var grand=netVoiceCost+tC+wC+nuaC+totalProtCost+sn.c+dtv.cost+aip.monthly+netDevCost;
@@ -1079,8 +1098,7 @@ function recalc(){
     bh+='<div class="s-row" style="font-size:.9rem;font-weight:800;color:#34d399;"><span>Your Net Household Savings:</span><strong>Saves $'+netTotalSavings.toFixed(2)+'/mo</strong></div>';
   }
 
-  // ITEMIZED PROPOSAL BREAKDOWN
-  if(q4NewPromo>0) bh+='<div class="s-row" style="font-size:.78rem;color:#38bdf8;"><span>↳ Q4 New Line Credit ('+st.newLines+'x @ $5/mo for 12 mos)[span_41](start_span)[span_41](end_span)</span><strong>-$'+q4NewPromo.toFixed(2)+'/mo</strong></div>';
+  if(q4NewPromo>0) bh+='<div class="s-row" style="font-size:.78rem;color:#38bdf8;"><span>↳ Q4 New Line Credit ('+st.newLines+'x @ $5/mo for 12 mos)</span><strong>-$'+q4NewPromo.toFixed(2)+'/mo</strong></div>';
   if(st.byod>0) bh+='<div class="s-row" style="font-size:.78rem;color:#34d399;"><span>↳ BYOD Port Credits ('+st.byod+'x @ $10/mo)</span><strong>-$'+byodCredits.toFixed(2)+'/mo</strong></div>';
   if(st.net!=='none') bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ Bundled '+NETS[st.net].l+'</span><strong>-$'+sn.c.toFixed(2)+'/mo</strong></div>';
   if(st.dtv!=='none'){
@@ -1094,9 +1112,10 @@ function recalc(){
   }
   if(st.upg && netDevCost>0) bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ Net Device Installments ('+st.tradeCount+'x)</span><strong>-$'+netDevCost.toFixed(2)+'/mo</strong></div>';
   if(nuaC>0) bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ Next Up Anytime ('+st.nua+'x)</span><strong>-$'+nuaC.toFixed(2)+'/mo</strong></div>';
-  if(st.visaReward) bh+='<div class="s-row" style="font-size:.78rem;color:#34d399;"><span>🎁 Exclusive Reward Card in OPUS:</span><strong>+$100.00 Visa Card[span_42](start_span)[span_42](end_span)</strong></div>';
+  if(st.visaReward) bh+='<div class="s-row" style="font-size:.78rem;color:#34d399;"><span>🎁 Exclusive Reward Card in OPUS:</span><strong>+$100.00 Visa Card</strong></div>';
 
-  document.getElementById('savingsBreakdown').innerHTML=bh;
+  var sbBreakdown=document.getElementById('savingsBreakdown');
+  if(sbBreakdown) sbBreakdown.innerHTML=bh;
 
   // BROADBAND CHIPS
   var nks=['none','300','500','1000','5000','aia'],nh='';
@@ -1106,7 +1125,8 @@ function recalc(){
     var sub=k==='none'?'Wireless Only':(netIspGainVal>=0?'+$'+netIspGainVal.toFixed(0)+'/mo captured':'-$'+Math.abs(netIspGainVal).toFixed(0)+'/mo net');
     nh+='<button type="button" class="chip '+(st.net===k?'active':'')+'" onclick="pickNet(\''+k+'\')">'+inf.l+'<b>'+(k==='none'?'$0':'$'+no.c)+'</b><small>'+sub+'</small></button>';
   }
-  document.getElementById('netChips').innerHTML=nh;
+  var netBox=document.getElementById('netChips');
+  if(netBox) netBox.innerHTML=nh;
 
   // DIRECTV CHIPS (MARION COUNTY)
   var dks=['none','ent','choice'],dh='';
@@ -1118,7 +1138,8 @@ function recalc(){
     var sub=dk==='none'?'No TV Package':(netTvGainVal>=0?'+$'+netTvGainVal.toFixed(0)+'/mo captured':'-$'+Math.abs(netTvGainVal).toFixed(0)+'/mo net');
     dh+='<button type="button" class="chip '+(isSel?'active-dtv':'')+'" onclick="pickDtv(\''+dk+'\')">'+dInfo.l+'<b>'+(dk==='none'?'$0':'$'+dCost.toFixed(2))+'</b><small>'+sub+'</small></button>';
   }
-  document.getElementById('dtvChips').innerHTML=dh;
+  var dtvBox=document.getElementById('dtvChips');
+  if(dtvBox) dtvBox.innerHTML=dh;
 
   // PROTECTION CHIPS
   var ph='';
@@ -1128,19 +1149,23 @@ function recalc(){
     ph+='<button type="button" class="chip '+(isSel?'active':'')+'" onclick="pickPa(\''+po.k+'\')">'+po.l+'<b>$'+po.c+'</b><small>'+(po.c===0?'No Wireless':'Per Account/Line')+'</small></button>';
   }
   ph+='<button type="button" class="chip '+(st.htp?'active':'')+'" onclick="toggleHtp()">HomeTech (HTP)<b>$25</b><small>'+(st.htp?'ACTIVE':'All Home Tech')+'</small></button>';
-  document.getElementById('paChips').innerHTML=ph;
+  var paBox=document.getElementById('paChips');
+  if(paBox) paBox.innerHTML=ph;
 
   // REGISTER ESTIMATOR
-  if(st.upg){
-    var estRetailTotal=st.tradeCount*1100;
-    var estTax=estRetailTotal*0.07;
-    var estUpgradeFees=st.tradeCount*35;
-    document.getElementById('regDueDetails').innerHTML=
-      '• <strong>Estimated Tax (7% IN):</strong> ~$'+estTax.toFixed(2)+'<br>'+
-      '• <strong>Upgrade Fees ($35/line):</strong> $'+estUpgradeFees.toFixed(2)+' (Waived on select FANs)<br>'+
-      '• <strong>Total Due at Counter:</strong> <span style="color:#fff;font-weight:800;">~$'+(estTax+estUpgradeFees).toFixed(2)+'</span>';
-  }else{
-    document.getElementById('regDueDetails').innerHTML='No device upgrades selected ($0.00 due today).';
+  var regDue=document.getElementById('regDueDetails');
+  if(regDue){
+    if(st.upg){
+      var estRetailTotal=st.tradeCount*1100;
+      var estTax=estRetailTotal*0.07;
+      var estUpgradeFees=st.tradeCount*35;
+      regDue.innerHTML=
+        '• <strong>Estimated Tax (7% IN):</strong> ~$'+estTax.toFixed(2)+'<br>'+
+        '• <strong>Upgrade Fees ($35/line):</strong> $'+estUpgradeFees.toFixed(2)+' (Waived on select FANs)<br>'+
+        '• <strong>Total Due at Counter:</strong> <span style="color:#fff;font-weight:800;">~$'+(estTax+estUpgradeFees).toFixed(2)+'</span>';
+    }else{
+      regDue.innerHTML='No device upgrades selected ($0.00 due today).';
+    }
   }
 }
 
@@ -1153,7 +1178,8 @@ function buildTable(){
       h+='<tr><td><b>'+lb.join(' + ')+'</b></td><td>$'+calcVoice(p,e,v,'none','none').toFixed(2)+'</td><td>$'+calcVoice(p,e,v,'none','sig').toFixed(2)+'</td><td>$'+calcVoice(p,e,v,'none','apprec').toFixed(2)+'</td><td>$'+calcVoice(p,e,v,'bank','none').toFixed(2)+'</td><td style="color:#38bdf8;font-weight:700">$'+calcVoice(p,e,v,'bank','sig').toFixed(2)+'</td><td style="color:#34d399;font-weight:700">$'+calcVoice(p,e,v,'bank','apprec').toFixed(2)+'</td></tr>';
     }
   }
-  document.getElementById('mBody').innerHTML=h;
+  var mb=document.getElementById('mBody');
+  if(mb) mb.innerHTML=h;
 }
 
 function generateSmsQuoteText(){
@@ -1166,9 +1192,9 @@ function generateSmsQuoteText(){
   msg+="📱 Wireless Plan ("+tot+" Lines): "+st.prem+" Prem / "+st.extra+" Extra / "+st.val+" Value Plus\n";
   msg+="Discount: "+discName+" w/ AutoPay\n";
 
-  if(st.newLines>0 && tot>=4) msg+="🎉 Q4 New Line Savings: "+st.newLines+" Lines (-$"+(st.newLines*5)+"/mo for 12 mos)[span_43](start_span)[span_43](end_span)\n";
+  if(st.newLines>0 && tot>=4) msg+="🎉 Q4 New Line Savings: "+st.newLines+" Lines (-$"+(st.newLines*5)+"/mo for 12 mos)\n";
   if(st.byod>0) msg+="📲 BYOD Switcher Credits: "+st.byod+" Lines (-$"+(st.byod*10)+"/mo for 36 mos)\n";
-  if(st.visaReward) msg+="🎁 Bonus: $100 AT&T Visa Reward Card included[span_44](start_span)[span_44](end_span)!\n";
+  if(st.visaReward) msg+="🎁 Bonus: $100 AT&T Visa Reward Card included!\n";
   if(st.net!=='none') msg+="🌐 Home Internet: "+NETS[st.net].l+" ($"+calcNet(st.net,document.getElementById('apType').value).c+"/mo bundled)\n";
   if(st.dtv!=='none'){
     var dInfo=calcDtv();
@@ -1183,7 +1209,7 @@ function generateSmsQuoteText(){
 
   msg+="\n💰 Total New Monthly Bill: "+grand+"\n";
   msg+="🎉 Net Household Savings: "+saveText+"\n\n";
-  msg+="Review your full breakdown online at https://eliterate.com\n";
+  msg+="Review your full breakdown online at https://elitererate.com\n";
   msg+="Quote prepared by Philip at AT&T Greenwood. Call or text me at 317-987-5763 to finalize your order!";
   return msg;
 }
@@ -1201,8 +1227,10 @@ function copySmsQuote(){
     navigator.clipboard.writeText(text);
   }
   var t=document.getElementById('smsToast');
-  t.style.display='block';
-  setTimeout(function(){t.style.display='none';},3500);
+  if(t){
+    t.style.display='block';
+    setTimeout(function(){t.style.display='none';},3500);
+  }
 }
 
 buildTable();
