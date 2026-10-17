@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#060b14">
-<title>AT&T Executive Solutions Studio & Rerate Engine • eliterate.com</title>
+<title>AT&T Executive Solutions Studio & Rerate Engine • elitererate.com</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
@@ -45,7 +45,7 @@ body{background:radial-gradient(circle at 50% -20%, #152744 0%, #060b14 65%);col
 .pill-safe{font-size:.68rem;background:rgba(16,185,129,.16);border:1px solid var(--g);color:#34d399;padding:2px 8px;border-radius:99px;font-weight:800}
 .prequal-row{display:grid;grid-template-columns:1.5fr auto auto auto;gap:8px}
 @media(max-width:760px){.prequal-row{grid-template-columns:1fr 1fr}.addr-in{grid-column:1/-1}}
-.addr-in,select,input[type=number],input[type=text]{width:100%;background:rgba(6,11,20,0.85);color:#fff;border:1px solid var(--bd);padding:9px 12px;border-radius:8px;font-size:.9rem;font-weight:600;outline:none;transition:border-color .15s ease}
+.addr-in,select,input[type=number],input[type=text]{width:100%;background:rgba(6,11,20,0.85);color:#fff;border:1px solid var(--bd);padding:9px 12px;border-radius:8px;font-size:.9rem;font-weight:600;outline:none}
 .addr-in:focus,select:focus,input:focus{border-color:var(--b);box-shadow:0 0 10px rgba(0,168,224,0.2)}
 .act-btn{background:var(--b);color:#000!important;text-decoration:none!important;border:none;padding:9px 14px;border-radius:8px;font-size:.8rem;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
 .act-btn:active{transform:scale(0.97)}
@@ -232,8 +232,7 @@ body.cust-mode .panel-title-text{font-size:1.05rem;font-weight:800;color:#fff;}
       <select id="lineCountSelect" onchange="onLineCountChange()">
         <option value="1">1 Line</option><option value="2">2 Lines</option><option value="3">3 Lines</option>
         <option value="4" selected>4 Lines</option><option value="5">5 Lines</option><option value="6">6 Lines</option>
-        <option value="7">7 Lines</option><option value="8">8 Lines</option><option value="9">9 Lines</option>
-        <option value="10">10 Lines</option>
+        <option value="7">7 Lines</option><option value="8">8 Lines</option><option value="9">9 Lines</option><option value="10">10 Lines</option>
       </select>
     </div>
     <div class="cbox">
@@ -1067,6 +1066,7 @@ function recalc(){
   sb.style.color=netTotalSavings>=0?'#34d399':'#fbbf24';
   sb.innerHTML=netTotalSavings>=0?'Total Saves $'+netTotalSavings.toFixed(2)+'/mo<br><small>($'+(netTotalSavings*12).toFixed(0)+'/yr)</small>':'+$'+Math.abs(netTotalSavings).toFixed(2)+'/mo Net';
 
+  // STEP-BY-STEP WATERFALL LEDGER
   var poolStep1 = guarSave;
   document.getElementById('ledgerVoiceBadge').textContent = 'Step 1 Pool: ' + (poolStep1>=0?'+$':'-$') + Math.abs(poolStep1).toFixed(2) + '/mo';
 
@@ -1097,7 +1097,7 @@ function recalc(){
     bh+='<div class="s-row" style="font-size:.9rem;font-weight:800;color:#34d399;"><span>Your Net Household Savings:</span><strong>Saves $'+netTotalSavings.toFixed(2)+'/mo</strong></div>';
   }
 
-  if(q4NewPromo>0) bh+='<div class="s-row" style="font-size:.78rem;color:#38bdf8;"><span>↳ Q4 New Line Credit ('+st.newLines+'x @ $5/mo for 12 mos)[span_14](start_span)[span_14](end_span)</span><strong>-$'+q4NewPromo.toFixed(2)+'/mo</strong></div>';
+  if(q4NewPromo>0) bh+='<div class="s-row" style="font-size:.78rem;color:#38bdf8;"><span>↳ Q4 New Line Credit ('+st.newLines+'x @ $5/mo for 12 mos)[span_5](start_span)[span_5](end_span)</span><strong>-$'+q4NewPromo.toFixed(2)+'/mo</strong></div>';
   if(st.byod>0) bh+='<div class="s-row" style="font-size:.78rem;color:#34d399;"><span>↳ BYOD Port Credits ('+st.byod+'x @ $10/mo)</span><strong>-$'+byodCredits.toFixed(2)+'/mo</strong></div>';
   if(st.net!=='none') bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ Bundled '+NETS[st.net].l+'</span><strong>-$'+sn.c.toFixed(2)+'/mo</strong></div>';
   if(st.dtv!=='none'){
@@ -1111,30 +1111,33 @@ function recalc(){
   }
   if(st.upg && netDevCost>0) bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ Net Device Installments ('+st.tradeCount+'x)</span><strong>-$'+netDevCost.toFixed(2)+'/mo</strong></div>';
   if(nuaC>0) bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ Next Up Anytime ('+st.nua+'x)</span><strong>-$'+nuaC.toFixed(2)+'/mo</strong></div>';
-  if(st.visaReward) bh+='<div class="s-row" style="font-size:.78rem;color:#34d399;"><span>🎁 Exclusive Reward Card in OPUS[span_15](start_span)[span_15](end_span):</span><strong>+$100.00 Visa Card</strong></div>';
+  if(st.visaReward) bh+='<div class="s-row" style="font-size:.78rem;color:#34d399;"><span>🎁 Exclusive Reward Card in OPUS[span_6](start_span)[span_6](end_span):</span><strong>+$100.00 Visa Card</strong></div>';
 
   document.getElementById('savingsBreakdown').innerHTML=bh;
 
+  // BROADBAND CHIPS
   var nks=['none','300','500','1000','5000','aia'],nh='';
   for(var x=0;x<nks.length;x++){
     var k=nks[x],inf=NETS[k],no=calcNet(k,ap);
-    var netIspGain=curI-no.c;
-    var sub=k==='none'?'Wireless Only':(netIspGain>=0?'+$'+netIspGain.toFixed(0)+'/mo captured':'-$'+Math.abs(netIspGain).toFixed(0)+'/mo net');
+    var netIspGainVal=curI-no.c;
+    var sub=k==='none'?'Wireless Only':(netIspGainVal>=0?'+$'+netIspGainVal.toFixed(0)+'/mo captured':'-$'+Math.abs(netIspGainVal).toFixed(0)+'/mo net');
     nh+='<button type="button" class="chip '+(st.net===k?'active':'')+'" onclick="pickNet(\''+k+'\')">'+inf.l+'<b>'+(k==='none'?'$0':'$'+no.c)+'</b><small>'+sub+'</small></button>';
   }
   document.getElementById('netChips').innerHTML=nh;
 
+  // DIRECTV CHIPS (MARION COUNTY)
   var dks=['none','ent','choice'],dh='';
   for(var dIdx=0;dIdx<dks.length;dIdx++){
     var dk=dks[dIdx],dInfo=DTV_TIERS[dk];
     var isSel=(st.dtv===dk);
     var dCost=dk==='none'?0:(dInfo.base+10+dInfo.rsn);
-    var netTvGain=curTv-dCost;
-    var sub=dk==='none'?'No TV Package':(netTvGain>=0?'+$'+netTvGain.toFixed(0)+'/mo captured':'-$'+Math.abs(netTvGain).toFixed(0)+'/mo net');
+    var netTvGainVal=curTv-dCost;
+    var sub=dk==='none'?'No TV Package':(netTvGainVal>=0?'+$'+netTvGainVal.toFixed(0)+'/mo captured':'-$'+Math.abs(netTvGainVal).toFixed(0)+'/mo net');
     dh+='<button type="button" class="chip '+(isSel?'active-dtv':'')+'" onclick="pickDtv(\''+dk+'\')">'+dInfo.l+'<b>'+(dk==='none'?'$0':'$'+dCost.toFixed(2))+'</b><small>'+sub+'</small></button>';
   }
   document.getElementById('dtvChips').innerHTML=dh;
 
+  // PROTECTION CHIPS
   var ph='';
   for(var y=0;y<PA_OPTS.length;y++){
     var po=PA_OPTS[y];
@@ -1144,6 +1147,7 @@ function recalc(){
   ph+='<button type="button" class="chip '+(st.htp?'active':'')+'" onclick="toggleHtp()">HomeTech (HTP)<b>$25</b><small>'+(st.htp?'ACTIVE':'All Home Tech')+'</small></button>';
   document.getElementById('paChips').innerHTML=ph;
 
+  // DUE TODAY REGISTER
   if(st.upg){
     var estRetailTotal=st.tradeCount*1100;
     var estTax=estRetailTotal*0.07;
@@ -1179,9 +1183,9 @@ function generateSmsQuoteText(){
   msg+="📱 Wireless Plan ("+tot+" Lines): "+st.prem+" Prem / "+st.extra+" Extra / "+st.val+" Value Plus\n";
   msg+="Discount: "+discName+" w/ AutoPay\n";
 
-  if(st.newLines>0 && tot>=4) msg+="🎉 Q4 New Line Savings: "+st.newLines+" Lines (-$"+(st.newLines*5)+"/mo for 12 mos)[span_16](start_span)[span_16](end_span)\n";
+  if(st.newLines>0 && tot>=4) msg+="🎉 Q4 New Line Savings: "+st.newLines+" Lines (-$"+(st.newLines*5)+"/mo for 12 mos)[span_7](start_span)[span_7](end_span)\n";
   if(st.byod>0) msg+="📲 BYOD Switcher Credits: "+st.byod+" Lines (-$"+(st.byod*10)+"/mo for 36 mos)\n";
-  if(st.visaReward) msg+="🎁 Bonus: $100 AT&T Visa Reward Card included[span_17](start_span)[span_17](end_span)!\n";
+  if(st.visaReward) msg+="🎁 Bonus: $100 AT&T Visa Reward Card included[span_8](start_span)[span_8](end_span)!\n";
   if(st.net!=='none') msg+="🌐 Home Internet: "+NETS[st.net].l+" ($"+calcNet(st.net,document.getElementById('apType').value).c+"/mo bundled)\n";
   if(st.dtv!=='none'){
     var dInfo=calcDtv();
