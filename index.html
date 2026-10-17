@@ -10,126 +10,300 @@
 <title>AT&T Executive Solutions Studio & Rerate Engine • elitererate.com</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --b:#00a8e0;
-  --b-glow:rgba(0,168,224,0.35);
-  --bg:#060b14;
-  --surface:#0e1726;
-  --surface-raised:#152238;
-  --bd:#1e2f4d;
+  --b-glow:rgba(0,168,224,0.4);
+  --bg:#050912;
+  --surface:rgba(14,23,38,0.72);
+  --surface-raised:rgba(21,34,56,0.85);
+  --bd:rgba(30,47,77,0.7);
+  --bd-hover:rgba(0,168,224,0.5);
   --t:#f8fafc;
-  --m:#8da2c0;
+  --m:#8fa4c3;
   --g:#10b981;
-  --g-glow:rgba(16,185,129,0.3);
+  --g-glow:rgba(16,185,129,0.35);
   --w:#f59e0b;
   --r:#ef4444;
   --p:#a855f7;
+  --p-glow:rgba(168,85,247,0.35);
 }
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif;-webkit-tap-highlight-color:transparent}
-body{background:radial-gradient(circle at 50% -20%, #152744 0%, #060b14 65%);color:var(--t);padding:16px;line-height:1.45;min-height:100vh}
+body{
+  background:radial-gradient(circle at 50% -10%, #172d50 0%, #080f1d 45%, #050912 100%);
+  color:var(--t);
+  padding:16px;
+  line-height:1.45;
+  min-height:100vh;
+  font-variant-numeric:tabular-nums;
+}
 .mono{font-family:'JetBrains Mono',monospace}
 .wrap{max-width:1160px;margin:0 auto}
 
-.hdr{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;padding-bottom:14px;margin-bottom:16px;border-bottom:1px solid var(--bd)}
-.hdr h1{font-size:1.35rem;font-weight:800;letter-spacing:-0.02em;color:#fff}
-.hdr h1 span{color:var(--b);text-shadow:0 0 16px var(--b-glow)}
-.hdr p{font-size:.72rem;color:var(--m);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-top:2px}
+/* HEADER */
+.hdr{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid var(--bd)}
+.hdr h1{font-size:1.4rem;font-weight:900;letter-spacing:-0.03em;color:#fff}
+.hdr h1 span{color:var(--b);text-shadow:0 0 20px var(--b-glow)}
+.hdr p{font-size:.72rem;color:var(--m);font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-top:2px}
 .hdr-actions{display:flex;gap:8px;align-items:center}
-.btn-mode{background:var(--surface-raised);border:1.5px solid var(--b);color:#fff;padding:8px 16px;border-radius:99px;font-size:.82rem;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 0 12px rgba(0,168,224,0.15)}
-.btn-mode.on{background:var(--b);color:#000;box-shadow:0 0 20px var(--b-glow)}
+.btn-mode{
+  background:var(--surface-raised);
+  border:1.5px solid var(--b);
+  color:#fff;
+  padding:8px 18px;
+  border-radius:99px;
+  font-size:.82rem;
+  font-weight:800;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  box-shadow:0 0 16px rgba(0,168,224,0.18);
+  transition:all .2s ease;
+}
+.btn-mode:active{transform:scale(0.96)}
+.btn-mode.on{background:var(--b);color:#000;box-shadow:0 0 25px var(--b-glow)}
 
-.stage-card{background:var(--surface);border:1px solid var(--bd);border-radius:14px;padding:16px;margin-bottom:16px;box-shadow:0 8px 24px rgba(0,0,0,0.3)}
-.stage-title{font-size:.95rem;font-weight:800;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;color:#fff}
-.stage-num{background:var(--b);color:#000;width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:900;margin-right:8px}
-.badge{font-size:.7rem;background:rgba(0,168,224,.18);color:var(--b);padding:3px 9px;border-radius:99px;font-weight:800}
+/* STAGE CARDS & GLASSMORPHISM */
+.stage-card{
+  background:var(--surface);
+  border:1px solid var(--bd);
+  border-radius:16px;
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.35);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  transition:border-color .2s ease;
+}
+.stage-card:hover{border-color:var(--bd-hover)}
+.stage-title{font-size:.96rem;font-weight:800;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;color:#fff}
+.stage-num{
+  background:linear-gradient(135deg,var(--b),#0077cc);
+  color:#000;
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:.75rem;
+  font-weight:900;
+  margin-right:8px;
+  box-shadow:0 0 10px var(--b-glow);
+}
+.badge{
+  font-size:.72rem;
+  background:rgba(0,168,224,.15);
+  border:1px solid rgba(0,168,224,0.3);
+  color:var(--b);
+  padding:3px 10px;
+  border-radius:99px;
+  font-weight:800;
+}
 
+/* INTENT SELECTOR CHIPS */
 .intent-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
-.intent-chip{background:rgba(6,11,20,0.75);border:1.5px solid var(--bd);border-radius:10px;padding:12px;text-align:center;cursor:pointer;transition:all .18s ease;font-size:.82rem;font-weight:800;color:var(--t)}
+.intent-chip{
+  background:rgba(6,11,20,0.65);
+  border:1.5px solid var(--bd);
+  border-radius:12px;
+  padding:12px 10px;
+  text-align:center;
+  cursor:pointer;
+  transition:all .18s cubic-bezier(0.16, 1, 0.3, 1);
+  font-size:.82rem;
+  font-weight:800;
+  color:var(--t);
+}
 .intent-chip:hover{border-color:var(--b);transform:translateY(-2px)}
-.intent-chip.active{border-color:var(--b);background:rgba(0,168,224,0.16);box-shadow:0 0 16px var(--b-glow);color:#fff}
+.intent-chip:active{transform:scale(0.98)}
+.intent-chip.active{
+  border-color:var(--b);
+  background:linear-gradient(145deg, rgba(0,168,224,0.22) 0%, rgba(6,11,20,0.8) 100%);
+  box-shadow:0 0 20px var(--b-glow);
+  color:#fff;
+}
 
+/* INPUTS GRID */
 .input-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
-.cbox{background:rgba(6,11,20,0.7);border:1px solid var(--bd);border-radius:10px;padding:10px 12px}
-.cbox label{display:block;font-size:.68rem;font-weight:800;text-transform:uppercase;color:var(--m);margin-bottom:5px;letter-spacing:0.04em}
-select,input[type=number],input[type=text]{width:100%;background:rgba(6,11,20,0.9);color:#fff;border:1px solid var(--bd);padding:9px 12px;border-radius:8px;font-size:.9rem;font-weight:600;outline:none}
-select:focus,input:focus{border-color:var(--b);box-shadow:0 0 10px rgba(0,168,224,0.2)}
+.cbox{background:rgba(6,11,20,0.65);border:1px solid var(--bd);border-radius:12px;padding:10px 12px}
+.cbox label{display:block;font-size:.68rem;font-weight:800;text-transform:uppercase;color:var(--m);margin-bottom:6px;letter-spacing:0.05em}
+select,input[type=number],input[type=text]{
+  width:100%;
+  background:rgba(6,11,20,0.85);
+  color:#fff;
+  border:1px solid var(--bd);
+  padding:9px 12px;
+  border-radius:8px;
+  font-size:.9rem;
+  font-weight:600;
+  outline:none;
+  transition:all .15s ease;
+}
+select:focus,input:focus{border-color:var(--b);box-shadow:0 0 12px rgba(0,168,224,0.3)}
 
-.trow{display:flex;justify-content:space-between;align-items:center;background:rgba(6,11,20,0.65);border:1px solid var(--bd);border-radius:10px;padding:9px 12px;margin-bottom:8px}
+/* STEPPER ROWS */
+.trow{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(6,11,20,0.65);
+  border:1px solid var(--bd);
+  border-radius:12px;
+  padding:10px 12px;
+  margin-bottom:8px;
+  transition:border-color .15s ease;
+}
+.trow:hover{border-color:rgba(0,168,224,0.35)}
 .tname{font-weight:700;font-size:.9rem;display:block}.tsub{font-size:.72rem;color:var(--m)}
 .stepper{display:flex;align-items:center;gap:8px}
-.sbtn{width:36px;height:36px;border-radius:8px;border:2px solid var(--b);background:var(--surface-raised);color:#fff;font-size:1.25rem;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.sbtn:active{background:var(--b);color:#000}
+.sbtn{
+  width:36px;
+  height:36px;
+  border-radius:8px;
+  border:2px solid var(--b);
+  background:var(--surface-raised);
+  color:#fff;
+  font-size:1.25rem;
+  font-weight:900;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:all .15s ease;
+}
+.sbtn:active{background:var(--b);color:#000;transform:scale(0.94)}
 .sval{min-width:24px;text-align:center;font-weight:900;font-size:1.15rem}
 
-.opp-box{background:linear-gradient(135deg,#0c182b 0%,#142540 100%);border:2px solid var(--b);border-radius:14px;padding:14px 16px;margin-bottom:16px;box-shadow:0 12px 30px rgba(0,168,224,0.15)}
+/* RERATE OPPORTUNITY CARDS */
+.opp-box{
+  background:linear-gradient(135deg,#0c192d 0%,#13243f 100%);
+  border:2px solid var(--b);
+  border-radius:14px;
+  padding:14px 16px;
+  margin-bottom:16px;
+  box-shadow:0 12px 35px rgba(0,168,224,0.18);
+}
 .opp-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:10px}
-.opp-hdr span{font-size:.88rem;font-weight:900;letter-spacing:-0.01em}
+.opp-hdr span{font-size:.9rem;font-weight:900;letter-spacing:-0.01em}
 .opp-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
-.opp-card{background:rgba(6,11,20,0.75);border:1.5px solid var(--bd);border-radius:10px;padding:12px;cursor:pointer;transition:all .18s ease}
+.opp-card{
+  background:rgba(6,11,20,0.75);
+  border:1.5px solid var(--bd);
+  border-radius:12px;
+  padding:12px;
+  cursor:pointer;
+  transition:all .2s cubic-bezier(0.16, 1, 0.3, 1);
+}
 .opp-card:hover{border-color:var(--b);transform:translateY(-2px)}
-.opp-card.active{border-color:var(--g);background:rgba(16,185,129,0.08);box-shadow:0 0 16px var(--g-glow)}
+.opp-card:active{transform:scale(0.98)}
+.opp-card.active{
+  border-color:var(--g);
+  background:radial-gradient(circle at top right, rgba(16,185,129,0.14) 0%, rgba(6,11,20,0.85) 100%);
+  box-shadow:0 0 20px var(--g-glow);
+}
 .opp-title{font-size:.82rem;font-weight:800;color:var(--b);display:flex;justify-content:space-between}
-.opp-price{font-size:1.25rem;font-weight:900;color:#fff;margin:4px 0}
+.opp-price{font-size:1.3rem;font-weight:900;color:#fff;margin:4px 0}
 .opp-sub{font-size:.72rem;color:var(--m);line-height:1.35}
 .opp-save{font-size:.76rem;font-weight:800;color:#34d399;margin-top:6px}
 
-.fn-box{background:rgba(0,168,224,.08);border:1px solid var(--b);border-radius:10px;padding:10px 12px;margin-bottom:12px;display:none}
-.fn-box b{color:var(--b);font-size:.82rem}
-.fn-box ul{list-style:none;margin-top:5px;font-size:.74rem;color:var(--m)}
-
+/* DYNAMIC CHIPS */
 .chip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:6px;margin-top:6px}
-.chip{background:rgba(6,11,20,0.7);border:1px solid var(--bd);border-radius:8px;padding:8px 4px;text-align:center;cursor:pointer;color:#fff;font-size:.76rem;font-weight:700;transition:all .15s ease}
-.chip:hover{border-color:var(--b)}
-.chip.active{border:2px solid var(--b);background:rgba(0,168,224,.18);box-shadow:0 0 12px rgba(0,168,224,0.2)}
-.chip.active-dtv{border:2px solid var(--p);background:rgba(168,85,247,.18);box-shadow:0 0 12px rgba(168,85,247,0.25)}
-.chip b{display:block;font-size:.92rem;color:var(--b);margin:2px 0}
+.chip{
+  background:rgba(6,11,20,0.7);
+  border:1.5px solid var(--bd);
+  border-radius:10px;
+  padding:10px 4px;
+  text-align:center;
+  cursor:pointer;
+  color:#fff;
+  font-size:.76rem;
+  font-weight:700;
+  transition:all .18s ease;
+}
+.chip:hover{border-color:var(--b);transform:translateY(-1px)}
+.chip:active{transform:scale(0.97)}
+.chip.active{
+  border-color:var(--b);
+  background:linear-gradient(145deg, rgba(0,168,224,0.22) 0%, rgba(6,11,20,0.85) 100%);
+  box-shadow:0 0 16px rgba(0,168,224,0.3);
+}
+.chip.active-dtv{
+  border-color:var(--p);
+  background:linear-gradient(145deg, rgba(168,85,247,0.22) 0%, rgba(6,11,20,0.85) 100%);
+  box-shadow:0 0 16px var(--p-glow);
+}
+.chip b{display:block;font-size:.95rem;color:var(--b);margin:2px 0}
+.chip.active-dtv b{color:var(--p)}
 .chip small{display:block;font-size:.65rem;color:#34d399;font-weight:800}
 
-.hero{background:linear-gradient(135deg,#004899 0%,#0077cc 100%);border-radius:12px;padding:16px;display:flex;justify-content:space-between;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,119,204,0.25);margin-bottom:12px}
-.hero-lbl{font-size:.72rem;text-transform:uppercase;font-weight:800;color:rgba(255,255,255,0.85);letter-spacing:0.04em}
-.hero-price{font-size:2.2rem;font-weight:900;color:#fff;letter-spacing:-0.02em}
-.save-pill{background:rgba(16,185,129,.24);border:1.5px solid var(--g);color:#34d399;padding:6px 12px;border-radius:8px;text-align:right;font-weight:800;font-size:.84rem}
+/* HERO CASHFLOW TERMINAL */
+.hero{
+  background:linear-gradient(135deg,#004899 0%,#0077cc 100%);
+  border-radius:14px;
+  padding:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  box-shadow:0 12px 30px rgba(0,119,204,0.3);
+  margin-bottom:12px;
+}
+.hero-lbl{font-size:.72rem;text-transform:uppercase;font-weight:800;color:rgba(255,255,255,0.85);letter-spacing:0.06em}
+.hero-price{font-size:2.3rem;font-weight:900;color:#fff;letter-spacing:-0.03em}
+.save-pill{
+  background:rgba(16,185,129,.24);
+  border:1.5px solid var(--g);
+  color:#34d399;
+  padding:8px 14px;
+  border-radius:10px;
+  text-align:right;
+  font-weight:800;
+  font-size:.86rem;
+  box-shadow:0 0 15px var(--g-glow);
+}
 
-.s-hub{background:rgba(6,11,20,0.85);border:1px solid var(--bd);border-radius:10px;padding:12px}
-.s-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dashed var(--bd);font-size:.84rem}
-.s-row.tot{border-bottom:none;padding-top:8px;font-size:.95rem;font-weight:900}
+.s-hub{background:rgba(6,11,20,0.85);border:1px solid var(--bd);border-radius:12px;padding:14px}
+.s-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--bd);font-size:.85rem}
+.s-row.tot{border-bottom:none;padding-top:10px;font-size:.96rem;font-weight:900}
 
-.trade-card{background:#0e192c;border:1px solid var(--bd);border-radius:8px;padding:10px;margin-top:8px}
+/* TRADE CARDS */
+.trade-card{background:#0d1829;border:1px solid var(--bd);border-radius:10px;padding:10px;margin-top:8px}
 .q-row{display:flex;justify-content:space-between;align-items:center;font-size:.76rem;padding:4px 0}
-.btn-yn{background:var(--surface);border:1px solid var(--bd);color:var(--t);padding:4px 9px;border-radius:6px;font-size:.72rem;font-weight:800;cursor:pointer}
-.btn-yn.active-y{background:var(--g);color:#000;border-color:var(--g)}
+.btn-yn{background:var(--surface);border:1px solid var(--bd);color:var(--t);padding:4px 10px;border-radius:6px;font-size:.72rem;font-weight:800;cursor:pointer}
+.btn-yn.active-y{background:var(--g);color:#000;border-color:var(--g);box-shadow:0 0 10px var(--g-glow)}
 .btn-yn.active-n{background:var(--r);color:#fff;border-color:var(--r)}
 .tier-pills{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:4px;margin-top:6px}
 .tpill{background:var(--bg);border:1px solid var(--bd);color:var(--m);padding:6px 2px;border-radius:6px;font-size:.66rem;font-weight:800;text-align:center;cursor:pointer}
-.tpill.active{border-color:var(--b);color:#fff;background:rgba(0,168,224,.2)}
+.tpill.active{border-color:var(--b);color:#fff;background:rgba(0,168,224,.22);box-shadow:0 0 10px var(--b-glow)}
 
-.act-btn{background:var(--b);color:#000!important;text-decoration:none!important;border:none;padding:9px 14px;border-radius:8px;font-size:.8rem;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.act-btn{background:var(--b);color:#000!important;text-decoration:none!important;border:none;padding:9px 16px;border-radius:8px;font-size:.8rem;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:all .15s ease}
+.act-btn:active{transform:scale(0.97)}
 .act-btn.sec{background:var(--surface);color:#fff!important;border:1px solid var(--bd)}
 .drawer-btn{width:100%;background:var(--surface);border:1px solid var(--bd);color:var(--b);padding:10px;border-radius:10px;font-size:.82rem;font-weight:800;cursor:pointer;margin-top:12px;text-align:center}
 .drawer-content{display:none;background:var(--surface);border:1px solid var(--bd);border-radius:12px;padding:12px;margin-top:8px;overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:.76rem;min-width:640px}
 th{background:#0a1220;color:var(--b);text-align:left;padding:8px 10px;border-bottom:1px solid var(--bd);font-weight:800}
 td{padding:6px 10px;border-bottom:1px solid rgba(30,47,77,0.6)}
-.ghdr td{background:rgba(0,168,224,.14);color:#fff;font-weight:800}
 
 .brand-tabs{display:flex;gap:6px;margin-bottom:10px}
-.btab{background:#060b14;border:1px solid var(--bd);color:var(--m);padding:5px 10px;border-radius:6px;font-size:.74rem;font-weight:800;cursor:pointer}
+.btab{background:#060b14;border:1px solid var(--bd);color:var(--m);padding:5px 12px;border-radius:6px;font-size:.74rem;font-weight:800;cursor:pointer}
 .btab.active{background:var(--b);color:#000;border-color:var(--b)}
 
-.reg-box{background:#0e1a2f;border:1px dashed var(--b);border-radius:8px;padding:10px;margin-top:10px}
+.reg-box{background:#0d1829;border:1px dashed var(--b);border-radius:10px;padding:12px;margin-top:10px}
 .reg-box h5{font-size:.76rem;color:var(--b);text-transform:uppercase;margin-bottom:4px;font-weight:800}
-.sms-box{background:rgba(6,11,20,0.85);border:1px solid var(--bd);border-radius:10px;padding:12px;margin-top:14px}
+.sms-box{background:rgba(6,11,20,0.85);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-top:14px}
 .sms-row{display:grid;grid-template-columns:1fr auto auto;gap:8px;margin-top:8px}
 @media(max-width:600px){.sms-row{grid-template-columns:1fr}}
 
-.opus-box{background:#111b2c;border:1px solid var(--bd);border-radius:10px;padding:12px;margin-top:14px}
+.opus-box{background:#0d1829;border:1px solid var(--bd);border-radius:10px;padding:12px;margin-top:14px}
 .opus-box h4{font-size:.78rem;color:var(--b);font-weight:800;text-transform:uppercase;margin-bottom:6px}
 .opus-item{display:flex;align-items:center;gap:8px;font-size:.76rem;color:var(--m);padding:3px 0}
 .opus-item input{accent-color:var(--b)}
 
-/* CLEAN PRESENTATION MODE: HIDES ALL STAGES EXCEPT PROPOSAL */
+/* CLEAN PRESENTATION MODE: HIDES ALL STAGES EXCEPT FINAL PROPOSAL CARD */
 body.cust-mode #stageGreeting,
 body.cust-mode #stageBaseline,
 body.cust-mode #stageDriver,
@@ -147,13 +321,13 @@ body.cust-mode #stageFinal {
   max-width: 680px;
   margin: 0 auto;
   border: 2px solid var(--b);
-  box-shadow: 0 16px 40px rgba(0,168,224,0.18);
+  box-shadow: 0 16px 45px rgba(0,168,224,0.22);
   background: linear-gradient(145deg, #0e1726 0%, #132238 100%);
 }
 
-.cust-banner{display:none;background:rgba(0,168,224,0.1);border:1px solid var(--b);border-radius:10px;padding:12px 14px;margin-bottom:14px;text-align:center}
-.cust-banner h3{font-size:.95rem;color:#fff;font-weight:800;}
-.cust-banner p{font-size:.75rem;color:var(--m);margin-top:2px;}
+.cust-banner{display:none;background:rgba(0,168,224,0.12);border:1px solid var(--b);border-radius:12px;padding:14px;margin-bottom:14px;text-align:center}
+.cust-banner h3{font-size:1rem;color:#fff;font-weight:800;}
+.cust-banner p{font-size:.76rem;color:var(--m);margin-top:2px;}
 body.cust-mode .cust-banner{display:block;}
 
 @media print {
@@ -233,8 +407,7 @@ body.cust-mode .cust-banner{display:block;}
         <select id="lineCountSelect" onchange="onLineCountChange()">
           <option value="1">1 Line</option><option value="2">2 Lines</option><option value="3">3 Lines</option>
           <option value="4" selected>4 Lines</option><option value="5">5 Lines</option><option value="6">6 Lines</option>
-          <option value="7">7 Lines</option><option value="8">8 Lines</option><option value="9">9 Lines</option>
-          <option value="10">10 Lines</option>
+          <option value="7">7 Lines</option><option value="8">8 Lines</option><option value="9">9 Lines</option><option value="10">10 Lines</option>
         </select>
       </div>
       <div class="cbox">
@@ -273,7 +446,7 @@ body.cust-mode .cust-banner{display:block;}
     </div>
 
     <!-- RECOMMENDED RATE PLAN COMBINATIONS -->
-    <div class="opp-box" style="margin-bottom:14px;">
+    <div class="opp-box">
       <div class="opp-hdr">
         <span id="oppHdrText">🎯 Recommended Rate Plan Combinations</span>
         <span class="badge" style="background:rgba(16,185,129,.2);color:#34d399;">Calculated Live</span>
@@ -303,7 +476,7 @@ body.cust-mode .cust-banner{display:block;}
     <div class="trow" style="background:#132338;border-color:#38bdf8;margin-bottom:8px;">
       <div>
         <span class="tname" style="color:#38bdf8;">🎉 New Lines Activated (10/12–12/31)</span>
-        <span class="tsub">-$5/mo off per line for 12 mos on 4+ line accounts</span>
+        <span class="tsub">-$5/mo off per line for 12 mos on 4+ line accounts[span_11](start_span)[span_11](end_span)</span>
       </div>
       <div class="stepper">
         <button type="button" class="sbtn" style="border-color:#38bdf8;" onclick="stepNewLines(-1)">−</button>
@@ -314,15 +487,15 @@ body.cust-mode .cust-banner{display:block;}
 
     <!-- VOICE PLAN TIERS -->
     <div class="trow">
-      <div><span class="tname">🐆 Unlimited Premium 2.0</span><span class="tsub">Uncapped • 60GB Hotspot • $1,200 Trade Promo</span></div>
+      <div><span class="tname">🐆 Unlimited Premium 2.0</span><span class="tsub">Uncapped • 60GB Hotspot • $1,200 Trade Promo[span_12](start_span)[span_12](end_span)[span_13](start_span)[span_13](end_span)[span_14](start_span)[span_14](end_span)</span></div>
       <div class="stepper"><button type="button" class="sbtn" onclick="stepTier('prem',-1)">−</button><span class="sval mono" id="valPrem">2</span><button type="button" class="sbtn" onclick="stepTier('prem',1)">+</button></div>
     </div>
     <div class="trow">
-      <div><span class="tname">🐇 Unlimited Extra 2.0</span><span class="tsub">75GB priority • 30GB Hotspot • $930–$1,000 Trade Promo</span></div>
+      <div><span class="tname">🐇 Unlimited Extra 2.0</span><span class="tsub">75GB priority • 30GB Hotspot • $930–$1,000 Trade Promo[span_15](start_span)[span_15](end_span)[span_16](start_span)[span_16](end_span)[span_17](start_span)[span_17](end_span)</span></div>
       <div class="stepper"><button type="button" class="sbtn" onclick="stepTier('extra',-1)">−</button><span class="sval mono" id="valExtra">0</span><button type="button" class="sbtn" onclick="stepTier('extra',1)">+</button></div>
     </div>
     <div class="trow">
-      <div><span class="tname">🐢 Value Plus 2.0</span><span class="tsub">Standard data • $500 Trade Promo</span></div>
+      <div><span class="tname">🐢 Value Plus 2.0</span><span class="tsub">Standard data • $500 Trade Promo[span_18](start_span)[span_18](end_span)[span_19](start_span)[span_19](end_span)[span_20](start_span)[span_20](end_span)[span_21](start_span)[span_21](end_span)[span_22](start_span)[span_22](end_span)</span></div>
       <div class="stepper"><button type="button" class="sbtn" onclick="stepTier('val',-1)">−</button><span class="sval mono" id="valVal">2</span><button type="button" class="sbtn" onclick="stepTier('val',1)">+</button></div>
     </div>
 
@@ -336,9 +509,9 @@ body.cust-mode .cust-banner{display:block;}
     </div>
 
     <!-- HARDWARE UPGRADE & TRADE INTAKE SECTION -->
-    <div class="upg-bar" style="background:rgba(6,11,20,0.65);border:1px solid var(--bd);border-radius:10px;padding:10px 12px;margin-top:10px;">
+    <div class="upg-bar" style="background:rgba(6,11,20,0.65);border:1px solid var(--bd);border-radius:12px;padding:12px;margin-top:10px;">
       <div style="display:flex;justify-content:space-between;align-items:center;">
-        <div><span class="tname" style="font-size:.84rem;">📱 Hardware Upgrade & Trade/Turn-In Evaluator</span><span class="tsub">Next Up Anytime & Trade-In Eligibility</span></div>
+        <div><span class="tname" style="font-size:.84rem;">📱 Hardware Upgrade & Trade/Turn-In Evaluator</span><span class="tsub">Next Up Anytime & Trade-In Eligibility[span_23](start_span)[span_23](end_span)</span></div>
         <button type="button" id="upgBtn" class="btn-mode" style="padding:6px 12px;font-size:.76rem;" onclick="toggleUpg()">NO</button>
       </div>
 
@@ -357,7 +530,7 @@ body.cust-mode .cust-banner{display:block;}
         <div class="trow" style="background:#0e1e36;border-color:#34d399;margin-bottom:8px;">
           <div>
             <span class="tname" style="font-size:.8rem;color:#34d399;">🎁 $100 Visa Card (Exclusive Rewards)</span>
-            <span class="tsub">Apply in OPUS Bundle Builder for each new smartphone line</span>
+            <span class="tsub">Apply in OPUS Bundle Builder for each new smartphone line[span_24](start_span)[span_24](end_span)</span>
           </div>
           <button type="button" id="visaBtn" class="btn-mode" style="padding:4px 10px;font-size:.72rem;border-color:#34d399;" onclick="toggleVisaReward()">OFF</button>
         </div>
@@ -410,7 +583,7 @@ body.cust-mode .cust-banner{display:block;}
 
     <!-- BROADBAND -->
     <div style="font-size:.82rem;font-weight:800;color:#fff;margin-bottom:4px;">🌐 Option A: Home Internet Consolidation</div>
-    <div style="font-size:.68rem;color:#34d399;font-weight:700;margin-bottom:6px;">$0 Install • Free Gateway • Contract Buyout Support</div>
+    <div style="font-size:.68rem;color:#34d399;font-weight:700;margin-bottom:6px;">$0 Install • Free Gateway[span_25](start_span)[span_25](end_span)[span_26](start_span)[span_26](end_span)[span_27](start_span)[span_27](end_span)[span_28](start_span)[span_28](end_span) • Contract Buyout Support</div>
     <div class="chip-grid" id="netChips">
       <button type="button" class="chip active" id="btnNet_none" onclick="pickNet('none')">None<b>$0</b><small>Wireless Only</small></button>
       <button type="button" class="chip" id="btnNet_300" onclick="pickNet('300')">Fiber 300<b>$35</b><small id="subNet_300">Save vs ISP</small></button>
@@ -519,8 +692,8 @@ body.cust-mode .cust-banner{display:block;}
       <div class="opus-item"><input type="checkbox"> Rerate plan group to Unlimited Your Way 2.0</div>
       <div class="opus-item"><input type="checkbox"> Enroll customer in Bank/Debit AutoPay ($10/line off)</div>
       <div class="opus-item"><input type="checkbox"> Verify address in Broadband Lead before building cart</div>
-      <div class="opus-item"><input type="checkbox"> Claim $100 Visa Card in OPUS Bundle Builder / Exclusive Rewards</div>
-      <div class="opus-item"><input type="checkbox"> Confirm Trade-in promo credit tier ($1,200 / $930 / $500)</div>
+      <div class="opus-item"><input type="checkbox"> Claim $100 Visa Card in OPUS Bundle Builder / Exclusive Rewards[span_29](start_span)[span_29](end_span)</div>
+      <div class="opus-item"><input type="checkbox"> Confirm Trade-in promo credit tier ($1,200 / $930 / $500)[span_30](start_span)[span_30](end_span)[span_31](start_span)[span_31](end_span)[span_32](start_span)[span_32](end_span)</div>
       <div class="opus-item"><input type="checkbox"> Attach Next Up Anytime ($10/line) on upgrading hardware</div>
     </div>
   </div>
@@ -572,32 +745,33 @@ var PA_OPTS=[
   {k:"50",l:"PA4 ($50)",c:50}
 ];
 
+// SALESFORCE KNOWLEDGE ARTICLE TIERED PROMO DATA (OCTOBER 2026)[span_33](start_span)[span_33](end_span)[span_34](start_span)[span_34](end_span)[span_35](start_span)[span_35](end_span)
 var TIERED_DEVICES=[
-  {b:"apple", name:"iPhone 17e 256GB", msrp:699.99, aal:5.99, upg:7.99},
-  {b:"apple", name:"iPhone 17e 512GB", msrp:899.99, aal:11.99, upg:13.99},
-  {b:"apple", name:"iPhone Air 256GB", msrp:1099.99, aal:5.99, upg:9.99},
-  {b:"apple", name:"iPhone Air 512GB", msrp:1299.99, aal:11.99, upg:15.99},
-  {b:"apple", name:"iPhone Air 1TB", msrp:1699.99, aal:17.99, upg:21.99},
-  {b:"apple", name:"iPhone 17 Pro 256GB", msrp:1099.99, aal:14.99, upg:19.99},
-  {b:"apple", name:"iPhone 17 Pro 512GB", msrp:1299.99, aal:20.99, upg:25.99},
-  {b:"apple", name:"iPhone 17 Pro 1TB", msrp:1499.99, aal:26.99, upg:31.99},
-  {b:"apple", name:"iPhone 17 Pro Max 256GB", msrp:1199.99, aal:19.99, upg:24.99},
-  {b:"apple", name:"iPhone 17 Pro Max 512GB", msrp:1399.99, aal:25.99, upg:30.99},
-  {b:"apple", name:"iPhone 17 Pro Max 1TB", msrp:1599.99, aal:31.99, upg:36.99},
-  {b:"apple", name:"iPhone 17 Pro Max 2TB", msrp:1999.99, aal:37.99, upg:42.99},
+  {b:"apple", name:"iPhone 17e 256GB", msrp:699.99, aal:5.99, upg:7.99},[span_36](start_span)[span_36](end_span)
+  {b:"apple", name:"iPhone 17e 512GB", msrp:899.99, aal:11.99, upg:13.99},[span_37](start_span)[span_37](end_span)
+  {b:"apple", name:"iPhone Air 256GB", msrp:1099.99, aal:5.99, upg:9.99},[span_38](start_span)[span_38](end_span)
+  {b:"apple", name:"iPhone Air 512GB", msrp:1299.99, aal:11.99, upg:15.99},[span_39](start_span)[span_39](end_span)
+  {b:"apple", name:"iPhone Air 1TB", msrp:1699.99, aal:17.99, upg:21.99},[span_40](start_span)[span_40](end_span)
+  {b:"apple", name:"iPhone 17 Pro 256GB", msrp:1099.99, aal:14.99, upg:19.99},[span_41](start_span)[span_41](end_span)
+  {b:"apple", name:"iPhone 17 Pro 512GB", msrp:1299.99, aal:20.99, upg:25.99},[span_42](start_span)[span_42](end_span)
+  {b:"apple", name:"iPhone 17 Pro 1TB", msrp:1499.99, aal:26.99, upg:31.99},[span_43](start_span)[span_43](end_span)
+  {b:"apple", name:"iPhone 17 Pro Max 256GB", msrp:1199.99, aal:19.99, upg:24.99},[span_44](start_span)[span_44](end_span)
+  {b:"apple", name:"iPhone 17 Pro Max 512GB", msrp:1399.99, aal:25.99, upg:30.99},[span_45](start_span)[span_45](end_span)
+  {b:"apple", name:"iPhone 17 Pro Max 1TB", msrp:1599.99, aal:31.99, upg:36.99},[span_46](start_span)[span_46](end_span)
+  {b:"apple", name:"iPhone 17 Pro Max 2TB", msrp:1999.99, aal:37.99, upg:42.99},[span_47](start_span)[span_47](end_span)
 
-  {b:"samsung", name:"Galaxy A17 5G", msrp:269.99, aal:0.00, upg:null},
-  {b:"samsung", name:"Galaxy A37 5G", msrp:489.99, aal:2.99, upg:9.99},
-  {b:"samsung", name:"Galaxy A57 5G", msrp:599.99, aal:5.99, upg:null},
-  {b:"samsung", name:"Galaxy S26 FE 128GB", msrp:699.99, aal:2.99, upg:12.99},
-  {b:"samsung", name:"Galaxy S25 Edge 256GB", msrp:1099.99, aal:10.99, upg:25.99},
+  {b:"samsung", name:"Galaxy A17 5G", msrp:269.99, aal:0.00, upg:null},[span_48](start_span)[span_48](end_span)
+  {b:"samsung", name:"Galaxy A37 5G", msrp:489.99, aal:2.99, upg:9.99},[span_49](start_span)[span_49](end_span)
+  {b:"samsung", name:"Galaxy A57 5G", msrp:599.99, aal:5.99, upg:null},[span_50](start_span)[span_50](end_span)
+  {b:"samsung", name:"Galaxy S26 FE 128GB", msrp:699.99, aal:2.99, upg:12.99},[span_51](start_span)[span_51](end_span)
+  {b:"samsung", name:"Galaxy S25 Edge 256GB", msrp:1099.99, aal:10.99, upg:25.99},[span_52](start_span)[span_52](end_span)
 
-  {b:"pixel", name:"Pixel 10a 128GB", msrp:624.99, aal:8.99, upg:8.99},
-  {b:"pixel", name:"Pixel 11 256GB", msrp:939.99, aal:10.99, upg:10.99},
+  {b:"pixel", name:"Pixel 10a 128GB", msrp:624.99, aal:8.99, upg:8.99},[span_53](start_span)[span_53](end_span)
+  {b:"pixel", name:"Pixel 11 256GB", msrp:939.99, aal:10.99, upg:10.99},[span_54](start_span)[span_54](end_span)
 
-  {b:"moto", name:"Moto G (2026)", msrp:262.99, aal:0.00, upg:4.99},
-  {b:"moto", name:"Motorola Edge (2026)", msrp:529.99, aal:5.99, upg:10.99},
-  {b:"moto", name:"Motorola razr+ 2026", msrp:1044.99, aal:9.99, upg:12.99}
+  {b:"moto", name:"Moto G (2026)", msrp:262.99, aal:0.00, upg:4.99},[span_55](start_span)[span_55](end_span)
+  {b:"moto", name:"Motorola Edge (2026)", msrp:529.99, aal:5.99, upg:10.99},[span_56](start_span)[span_56](end_span)
+  {b:"moto", name:"Motorola razr+ 2026", msrp:1044.99, aal:9.99, upg:12.99}[span_57](start_span)[span_57](end_span)
 ];
 
 var st={
@@ -899,7 +1073,7 @@ function renderTopOpportunities(){
     p:p2, e:0, v:v2,
     cost:c2,
     desc:p2+"x Prem + "+v2+"x Value",
-    hook:"2x $1,200 Trade Slots & 50% Watch/Tab Slots"
+    hook:"2x $1,200 Trade Slots & 50% Watch/Tab Slots[span_58](start_span)[span_59](start_span)[span_60](start_span)"[span_58](end_span)[span_59](end_span)[span_60](end_span)
   });
 
   var p3=1, e3=Math.min(2,Math.max(0,totLines-1)), v3=Math.max(0,totLines-1-e3);
@@ -981,11 +1155,13 @@ function recalc(){
 
   var vCost=calcVoice(st.prem,st.extra,st.val,ap,disc);
 
+  // Q4 $5/mo off new lines on 4+ line accounts (10/12-12/31/26)[span_61](start_span)[span_61](end_span)
   var q4NewPromo=0;
   if(tot>=4 && st.newLines>0){
     q4NewPromo=st.newLines*5.00;
   }
 
+  // BYOD $360 credit (-$10/mo for 36 mos)
   var byodCredits=st.byod*10.00;
   var netVoiceCost=Math.max(0,vCost - q4NewPromo - byodCredits);
 
@@ -1008,6 +1184,7 @@ function recalc(){
   var htpCost=st.htp?25:0;
   var totalProtCost=paCost+htpCost;
 
+  // NEXT UP ANYTIME & TRADE-IN TIER EVALUATION[span_62](start_span)[span_62](end_span)[span_63](start_span)[span_63](end_span)[span_64](start_span)[span_64](end_span)[span_65](start_span)[span_65](end_span)[span_66](start_span)[span_66](end_span)[span_67](start_span)[span_67](end_span)
   var devFin=0,devCred=0;
   var tHtml='';
   for(var idx=0;idx<st.tradeCount;idx++){
@@ -1018,7 +1195,7 @@ function recalc(){
 
     if(eligible){
       if(tr.d){
-        cred=9.73;
+        cred=9.73; // Damaged floor ($350 credit)[span_68](start_span)[span_68](end_span)[span_69](start_span)[span_69](end_span)
       }else{
         var b=tr.brand;
         var tKey=tr.tier;
@@ -1117,7 +1294,7 @@ function recalc(){
   sb.style.color=netTotalSavings>=0?'#34d399':'#fbbf24';
   sb.innerHTML=netTotalSavings>=0?'Total Saves $'+netTotalSavings.toFixed(2)+'/mo<br><small>($'+(netTotalSavings*12).toFixed(0)+'/yr)</small>':'+$'+Math.abs(netTotalSavings).toFixed(2)+'/mo Net';
 
-  // PROGRESSIVE WATERFALL LEDGER POOL TRACKING
+  // STEP-BY-STEP WATERFALL LEDGER
   var poolStep1 = guarSave;
   document.getElementById('ledgerVoiceBadge').textContent = 'Step 1 Pool: ' + (poolStep1>=0?'+$':'-$') + Math.abs(poolStep1).toFixed(2) + '/mo';
 
@@ -1171,7 +1348,7 @@ function recalc(){
     bh+='<div class="s-row" style="font-size:.9rem;font-weight:800;color:#34d399;"><span>Your Net Household Savings:</span><strong>Saves $'+netTotalSavings.toFixed(2)+'/mo</strong></div>';
   }
 
-  if(q4NewPromo>0) bh+='<div class="s-row" style="font-size:.78rem;color:#38bdf8;"><span>↳ Q4 New Line Credit ('+st.newLines+'x @ $5/mo for 12 mos)</span><strong>-$'+q4NewPromo.toFixed(2)+'/mo</strong></div>';
+  if(q4NewPromo>0) bh+='<div class="s-row" style="font-size:.78rem;color:#38bdf8;"><span>↳ Q4 New Line Credit ('+st.newLines+'x @ $5/mo for 12 mos)[span_70](start_span)[span_70](end_span)</span><strong>-$'+q4NewPromo.toFixed(2)+'/mo</strong></div>';
   if(st.byod>0) bh+='<div class="s-row" style="font-size:.78rem;color:#34d399;"><span>↳ BYOD Port Credits ('+st.byod+'x @ $10/mo)</span><strong>-$'+byodCredits.toFixed(2)+'/mo</strong></div>';
   if(st.net!=='none') bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ Bundled '+NETS[st.net].l+'</span><strong>-$'+sn.c.toFixed(2)+'/mo</strong></div>';
   if(st.dtv!=='none'){
@@ -1185,7 +1362,7 @@ function recalc(){
   }
   if(st.upg && netDevCost>0) bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ Net Device Installments ('+st.tradeCount+'x)</span><strong>-$'+netDevCost.toFixed(2)+'/mo</strong></div>';
   if(nuaC>0) bh+='<div class="s-row" style="font-size:.78rem;"><span>↳ Next Up Anytime ('+st.nua+'x)</span><strong>-$'+nuaC.toFixed(2)+'/mo</strong></div>';
-  if(st.visaReward) bh+='<div class="s-row" style="font-size:.78rem;color:#34d399;"><span>🎁 Exclusive Reward Card in OPUS:</span><strong>+$100.00 Visa Card</strong></div>';
+  if(st.visaReward) bh+='<div class="s-row" style="font-size:.78rem;color:#34d399;"><span>🎁 Exclusive Reward Card in OPUS:</span><strong>+$100.00 Visa Card[span_71](start_span)[span_71](end_span)</strong></div>';
 
   var sbBreakdown=document.getElementById('savingsBreakdown');
   if(sbBreakdown) sbBreakdown.innerHTML=bh;
@@ -1226,9 +1403,9 @@ function generateSmsQuoteText(){
   msg+="📱 Wireless Plan ("+tot+" Lines): "+st.prem+" Prem / "+st.extra+" Extra / "+st.val+" Value Plus\n";
   msg+="Discount: "+discName+" w/ AutoPay\n";
 
-  if(st.newLines>0 && tot>=4) msg+="🎉 Q4 New Line Savings: "+st.newLines+" Lines (-$"+(st.newLines*5)+"/mo for 12 mos)\n";
+  if(st.newLines>0 && tot>=4) msg+="🎉 Q4 New Line Savings: "+st.newLines+" Lines (-$"+(st.newLines*5)+"/mo for 12 mos)[span_72](start_span)[span_72](end_span)\n";
   if(st.byod>0) msg+="📲 BYOD Switcher Credits: "+st.byod+" Lines (-$"+(st.byod*10)+"/mo for 36 mos)\n";
-  if(st.visaReward) msg+="🎁 Bonus: $100 AT&T Visa Reward Card included!\n";
+  if(st.visaReward) msg+="🎁 Bonus: $100 AT&T Visa Reward Card included[span_73](start_span)[span_73](end_span)!\n";
   if(st.net!=='none') msg+="🌐 Home Internet: "+NETS[st.net].l+" ($"+calcNet(st.net,document.getElementById('apType').value).c+"/mo bundled)\n";
   if(st.dtv!=='none'){
     var dInfo=calcDtv();
