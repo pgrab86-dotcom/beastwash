@@ -867,11 +867,13 @@ window.runCalc = function() {
 };
 
 // DIGITAL BACKGROUND FLOWING FIBER WAVES SCRIPT
-(function initDigitalCanvas() {
+// MULTI-STRAND CHROMATIC FIBER-OPTIC & PHOTON ENGINE
+(function initFiberOpticEngine() {
   var canvas = document.getElementById('digital-bg-canvas');
   if (!canvas) return;
   var ctx = canvas.getContext('2d');
-  var width, height, step = 0;
+  var width, height, time = 0;
+  var mouse = { x: -1000, y: -1000, targetX: -1000, targetY: -1000 };
 
   function resize() {
     width = canvas.width = window.innerWidth;
@@ -880,39 +882,88 @@ window.runCalc = function() {
   window.addEventListener('resize', resize);
   resize();
 
-  function renderWave() {
+  window.addEventListener('mousemove', function(e) {
+    mouse.targetX = e.clientX;
+    mouse.targetY = e.clientY;
+  });
+  window.addEventListener('touchmove', function(e) {
+    if (e.touches.length > 0) {
+      mouse.targetX = e.touches[0].clientX;
+      mouse.targetY = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  // 8 Dedicated Fiber Optic Strands
+  var strands = [
+    { color: 'rgba(0, 168, 232, 0.45)', pulseColor: '#38BDF8', speed: 0.009, freq: 0.0022, amp: 85, offset: 0.30, pulses: [0.1, 0.6] },
+    { color: 'rgba(0, 87, 184, 0.55)', pulseColor: '#60A5FA', speed: 0.007, freq: 0.0018, amp: 110, offset: 0.45, pulses: [0.3, 0.8] },
+    { color: 'rgba(168, 85, 247, 0.4)', pulseColor: '#C084FC', speed: 0.011, freq: 0.0026, amp: 75, offset: 0.60, pulses: [0.2, 0.75] },
+    { color: 'rgba(14, 165, 233, 0.35)', pulseColor: '#7DD3FC', speed: 0.008, freq: 0.0015, amp: 95, offset: 0.75, pulses: [0.4, 0.9] },
+    { color: 'rgba(56, 189, 248, 0.25)', pulseColor: '#BAE6FD', speed: 0.012, freq: 0.003, amp: 65, offset: 0.20, pulses: [0.05, 0.55] },
+    { color: 'rgba(99, 102, 241, 0.35)', pulseColor: '#A5B4FC', speed: 0.006, freq: 0.0016, amp: 120, offset: 0.50, pulses: [0.15, 0.7] },
+    { color: 'rgba(236, 72, 153, 0.25)', pulseColor: '#F472B6', speed: 0.010, freq: 0.0024, amp: 80, offset: 0.38, pulses: [0.25, 0.85] },
+    { color: 'rgba(2, 132, 199, 0.45)', pulseColor: '#38BDF8', speed: 0.0075, freq: 0.002, amp: 105, offset: 0.68, pulses: [0.35, 0.65] }
+  ];
+
+  function draw() {
     ctx.clearRect(0, 0, width, height);
-    step += 0.007;
+    time += 0.012;
 
-    // Line 1: Cyan Fiber Wave
-    ctx.beginPath();
-    ctx.lineWidth = 1.5;
-    ctx.strokeStyle = 'rgba(14, 165, 233, 0.22)';
-    for (var x = 0; x < width; x += 10) {
-      var y = Math.sin(x * 0.003 + step) * 60 + Math.cos(x * 0.002 - step) * 35 + height * 0.35;
-      if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-    }
-    ctx.stroke();
+    // Smooth touch/mouse tracking
+    mouse.x += (mouse.targetX - mouse.x) * 0.05;
+    mouse.y += (mouse.targetY - mouse.y) * 0.05;
 
-    // Line 2: AT&T Blue Primary Wave
-    ctx.beginPath();
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = 'rgba(0, 87, 184, 0.3)';
-    for (var x2 = 0; x2 < width; x2 += 10) {
-      var y2 = Math.cos(x2 * 0.0025 - step * 1.2) * 80 + Math.sin(x2 * 0.0015 + step) * 45 + height * 0.65;
-      if (x2 === 0) ctx.moveTo(x2, y2); else ctx.lineTo(x2, y2);
-    }
-    ctx.stroke();
+    strands.forEach(function(s) {
+      ctx.beginPath();
+      ctx.lineWidth = 1.8;
+      ctx.strokeStyle = s.color;
+      ctx.shadowBlur = 12;
+      ctx.shadowColor = s.pulseColor;
 
-    requestAnimationFrame(renderWave);
+      var points = [];
+      for (var x = 0; x <= width; x += 15) {
+        var baseWave = Math.sin(x * s.freq + time * s.speed * 80) * s.amp 
+                     + Math.cos(x * (s.freq * 0.7) - time * s.speed * 50) * (s.amp * 0.45);
+        var y = baseWave + height * s.offset;
+
+        // Interactive touch deflection warp
+        var dx = x - mouse.x;
+        var dy = y - mouse.y;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 180) {
+          var force = (180 - dist) / 180;
+          y += Math.sin(dist * 0.05 - time * 2) * 25 * force;
+        }
+
+        points.push({ x: x, y: y });
+        if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+
+      // Traveling Laser Pulses (Photons)
+      s.pulses.forEach(function(pProgress, idx) {
+        var currentP = (pProgress + time * (s.speed * 0.4)) % 1;
+        var targetIdx = Math.floor(currentP * (points.length - 1));
+        var pt = points[targetIdx];
+        if (pt) {
+          ctx.beginPath();
+          ctx.arc(pt.x, pt.y, 3.5, 0, Math.PI * 2);
+          ctx.fillStyle = s.pulseColor;
+          ctx.shadowBlur = 20;
+          ctx.shadowColor = s.pulseColor;
+          ctx.fill();
+
+          // Outer bloom ring
+          ctx.beginPath();
+          ctx.arc(pt.x, pt.y, 7, 0, Math.PI * 2);
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      });
+    });
+
+    requestAnimationFrame(draw);
   }
-  renderWave();
+  draw();
 })();
-
-window.onload = function() {
-  window.runCalc();
-};
-</script>
-
-</body>
-</html>
