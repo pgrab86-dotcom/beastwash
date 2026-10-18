@@ -39,14 +39,14 @@
     height: 100vh;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.65;
+    opacity: 0.85;
   }
 
-  /* FLOATING GLOW ORBS */
+  /* AMBIENT GLOW ORBS */
   .floating-orb {
     position: fixed;
     border-radius: 50%;
-    filter: blur(55px);
+    filter: blur(60px);
     pointer-events: none;
     z-index: 1;
     will-change: transform;
@@ -55,27 +55,18 @@
   .orb-1 {
     width: 380px;
     height: 380px;
-    background: radial-gradient(circle, rgba(0, 119, 237, 0.45) 0%, rgba(3, 7, 18, 0) 70%);
+    background: radial-gradient(circle, rgba(0, 119, 237, 0.35) 0%, rgba(3, 7, 18, 0) 70%);
     top: -100px;
     left: 10%;
   }
   .orb-2 {
     width: 320px;
     height: 320px;
-    background: radial-gradient(circle, rgba(168, 85, 247, 0.35) 0%, rgba(3, 7, 18, 0) 70%);
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.25) 0%, rgba(3, 7, 18, 0) 70%);
     bottom: -60px;
     right: 5%;
     animation-duration: 22s;
     animation-delay: -5s;
-  }
-  .orb-3 {
-    width: 250px;
-    height: 250px;
-    background: radial-gradient(circle, rgba(14, 165, 233, 0.3) 0%, rgba(3, 7, 18, 0) 70%);
-    top: 45%;
-    right: 35%;
-    animation-duration: 15s;
-    animation-delay: -8s;
   }
   @keyframes floatOrb {
     0% { transform: translate3d(0, 0, 0) scale(1); }
@@ -86,7 +77,7 @@
   .app-container {
     max-width: 920px;
     margin: 0 auto;
-    background: rgba(15, 23, 42, 0.72);
+    background: rgba(15, 23, 42, 0.76);
     -webkit-backdrop-filter: blur(40px);
     backdrop-filter: blur(40px);
     border: 1px solid rgba(255, 255, 255, 0.16);
@@ -328,7 +319,7 @@
     box-shadow: 0 4px 14px rgba(6, 78, 59, 0.45), inset 0 1px 0 rgba(255,255,255,0.3);
   }
 
-  /* DUE TODAY REGISTER CARD */
+  /* DUE TODAY AT REGISTER */
   .due-box {
     background: rgba(10, 25, 47, 0.8);
     border: 1px dashed rgba(56, 189, 248, 0.5);
@@ -366,13 +357,12 @@
 </head>
 <body>
 
-<!-- HARDWARE-ACCELERATED DIGITAL BACKGROUND CANVAS -->
+<!-- HARDWARE-ACCELERATED FIBER OPTIC CANVAS -->
 <canvas id="digital-bg-canvas"></canvas>
 
-<!-- FLOATING GLOW PARTICLES -->
+<!-- AMBIENT LIGHT ORBS -->
 <div class="floating-orb orb-1"></div>
 <div class="floating-orb orb-2"></div>
-<div class="floating-orb orb-3"></div>
 
 <div class="app-container">
   <!-- HEADER -->
@@ -866,13 +856,12 @@ window.runCalc = function() {
   document.getElementById('sms-text').value = sms;
 };
 
-// DIGITAL BACKGROUND FLOWING FIBER WAVES SCRIPT
-// MULTI-STRAND CHROMATIC FIBER-OPTIC & PHOTON ENGINE
+// MULTI-STRAND CHROMATIC FIBER-OPTIC ENGINE
 (function initFiberOpticEngine() {
   var canvas = document.getElementById('digital-bg-canvas');
   if (!canvas) return;
   var ctx = canvas.getContext('2d');
-  var width, height, time = 0;
+  var width = 0, height = 0, time = 0;
   var mouse = { x: -1000, y: -1000, targetX: -1000, targetY: -1000 };
 
   function resize() {
@@ -887,33 +876,30 @@ window.runCalc = function() {
     mouse.targetY = e.clientY;
   });
   window.addEventListener('touchmove', function(e) {
-    if (e.touches.length > 0) {
+    if (e.touches && e.touches.length > 0) {
       mouse.targetX = e.touches[0].clientX;
       mouse.targetY = e.touches[0].clientY;
     }
   }, { passive: true });
 
-  // 8 Dedicated Fiber Optic Strands
   var strands = [
     { color: 'rgba(0, 168, 232, 0.45)', pulseColor: '#38BDF8', speed: 0.009, freq: 0.0022, amp: 85, offset: 0.30, pulses: [0.1, 0.6] },
     { color: 'rgba(0, 87, 184, 0.55)', pulseColor: '#60A5FA', speed: 0.007, freq: 0.0018, amp: 110, offset: 0.45, pulses: [0.3, 0.8] },
-    { color: 'rgba(168, 85, 247, 0.4)', pulseColor: '#C084FC', speed: 0.011, freq: 0.0026, amp: 75, offset: 0.60, pulses: [0.2, 0.75] },
+    { color: 'rgba(168, 85, 247, 0.40)', pulseColor: '#C084FC', speed: 0.011, freq: 0.0026, amp: 75, offset: 0.60, pulses: [0.2, 0.75] },
     { color: 'rgba(14, 165, 233, 0.35)', pulseColor: '#7DD3FC', speed: 0.008, freq: 0.0015, amp: 95, offset: 0.75, pulses: [0.4, 0.9] },
-    { color: 'rgba(56, 189, 248, 0.25)', pulseColor: '#BAE6FD', speed: 0.012, freq: 0.003, amp: 65, offset: 0.20, pulses: [0.05, 0.55] },
-    { color: 'rgba(99, 102, 241, 0.35)', pulseColor: '#A5B4FC', speed: 0.006, freq: 0.0016, amp: 120, offset: 0.50, pulses: [0.15, 0.7] },
-    { color: 'rgba(236, 72, 153, 0.25)', pulseColor: '#F472B6', speed: 0.010, freq: 0.0024, amp: 80, offset: 0.38, pulses: [0.25, 0.85] },
-    { color: 'rgba(2, 132, 199, 0.45)', pulseColor: '#38BDF8', speed: 0.0075, freq: 0.002, amp: 105, offset: 0.68, pulses: [0.35, 0.65] }
+    { color: 'rgba(56, 189, 248, 0.25)', pulseColor: '#BAE6FD', speed: 0.012, freq: 0.0030, amp: 65, offset: 0.20, pulses: [0.05, 0.55] },
+    { color: 'rgba(99, 102, 241, 0.35)', pulseColor: '#A5B4FC', speed: 0.006, freq: 0.0016, amp: 120, offset: 0.50, pulses: [0.15, 0.7] }
   ];
 
   function draw() {
     ctx.clearRect(0, 0, width, height);
     time += 0.012;
 
-    // Smooth touch/mouse tracking
     mouse.x += (mouse.targetX - mouse.x) * 0.05;
     mouse.y += (mouse.targetY - mouse.y) * 0.05;
 
-    strands.forEach(function(s) {
+    for (var i = 0; i < strands.length; i++) {
+      var s = strands[i];
       ctx.beginPath();
       ctx.lineWidth = 1.8;
       ctx.strokeStyle = s.color;
@@ -926,7 +912,6 @@ window.runCalc = function() {
                      + Math.cos(x * (s.freq * 0.7) - time * s.speed * 50) * (s.amp * 0.45);
         var y = baseWave + height * s.offset;
 
-        // Interactive touch deflection warp
         var dx = x - mouse.x;
         var dy = y - mouse.y;
         var dist = Math.sqrt(dx * dx + dy * dy);
@@ -940,8 +925,8 @@ window.runCalc = function() {
       }
       ctx.stroke();
 
-      // Traveling Laser Pulses (Photons)
-      s.pulses.forEach(function(pProgress, idx) {
+      for (var j = 0; j < s.pulses.length; j++) {
+        var pProgress = s.pulses[j];
         var currentP = (pProgress + time * (s.speed * 0.4)) % 1;
         var targetIdx = Math.floor(currentP * (points.length - 1));
         var pt = points[targetIdx];
@@ -949,21 +934,28 @@ window.runCalc = function() {
           ctx.beginPath();
           ctx.arc(pt.x, pt.y, 3.5, 0, Math.PI * 2);
           ctx.fillStyle = s.pulseColor;
-          ctx.shadowBlur = 20;
+          ctx.shadowBlur = 18;
           ctx.shadowColor = s.pulseColor;
           ctx.fill();
 
-          // Outer bloom ring
           ctx.beginPath();
           ctx.arc(pt.x, pt.y, 7, 0, Math.PI * 2);
           ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
           ctx.lineWidth = 1;
           ctx.stroke();
         }
-      });
-    });
+      }
+    }
 
     requestAnimationFrame(draw);
   }
   draw();
 })();
+
+window.onload = function() {
+  window.runCalc();
+};
+</script>
+
+</body>
+</html>
