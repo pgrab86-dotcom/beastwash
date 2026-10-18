@@ -3,34 +3,34 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>AT&T Executive Solutions Studio • elitererate.com</title>
+<title>AT&T Warp Engine • elitererate.com</title>
 
 <!-- iOS PWA Standalone Meta Tags -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Solutions Studio">
-<meta name="theme-color" content="#030712">
-<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='40' fill='%230057B8'/><text x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' font-size='95'>🐆</text></svg>">
+<meta name="apple-mobile-web-app-title" content="Warp Rerate">
+<meta name="theme-color" content="#000000">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='40' fill='%23000000'/><text x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' font-size='95'>🚀</text></svg>">
 
 <style>
   @page { size: letter landscape; margin: 0.2in; }
   * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
   
   :root {
-    --att-blue: #0057B8;
-    --att-azure: #00A8E8;
-    --emerald-glow: #10B981;
-    --glass-bg: rgba(15, 23, 42, 0.65);
-    --glass-border: rgba(255, 255, 255, 0.08);
+    --warp-cyan: #00f0ff;
+    --warp-magenta: #ff0055;
+    --warp-purple: #9d00ff;
+    --warp-green: #00ff66;
+    --warp-gold: #ffb800;
   }
 
   body {
     margin: 0;
     padding: 16px;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, sans-serif;
     color: #F8FAFC;
-    background: #030712;
+    background: #000000;
     min-height: 100vh;
     font-size: 9.5px;
     -webkit-font-smoothing: antialiased;
@@ -40,8 +40,8 @@
     -webkit-user-select: none;
   }
 
-  /* FLUID SPATIAL AURORA CANVAS */
-  #aurora-canvas {
+  /* 3D WARP SPEED HYPERSPACE CANVAS */
+  #warp-canvas {
     position: fixed;
     top: 0;
     left: 0;
@@ -49,51 +49,66 @@
     height: 100vh;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.85;
   }
 
   .app-container {
-    max-width: 900px;
+    max-width: 940px;
     margin: 0 auto;
-    background: rgba(10, 15, 30, 0.72);
-    -webkit-backdrop-filter: blur(50px) saturate(180%);
-    backdrop-filter: blur(50px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 24px;
-    box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    overflow: hidden;
+    background: rgba(10, 10, 20, 0.72);
+    -webkit-backdrop-filter: blur(40px) saturate(200%);
+    backdrop-filter: blur(40px) saturate(200%);
+    border-radius: 28px;
     position: relative;
     z-index: 2;
+    box-shadow: 0 0 80px rgba(0, 240, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.25);
   }
 
-  /* EXECUTIVE BAR */
+  /* NEON PRISM LIVING BORDER */
+  .app-container::before {
+    content: '';
+    position: absolute;
+    inset: -1.5px;
+    border-radius: 29px;
+    background: linear-gradient(90deg, var(--warp-cyan), var(--warp-purple), var(--warp-magenta), var(--warp-cyan));
+    background-size: 300% 300%;
+    animation: prismBorder 6s linear infinite;
+    z-index: -1;
+  }
+
+  @keyframes prismBorder {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* EXECUTIVE WARP HEADER */
   .header {
-    background: linear-gradient(180deg, rgba(15, 23, 42, 0.85) 0%, rgba(10, 15, 30, 0.6) 100%);
+    background: linear-gradient(180deg, rgba(20, 25, 45, 0.9) 0%, rgba(10, 10, 25, 0.6) 100%);
     padding: 16px 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid var(--glass-border);
-    position: relative;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 28px 28px 0 0;
   }
-  .header-brand { display: flex; flex-direction: column; gap: 3px; }
   .header h1 {
     margin: 0;
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 900;
     letter-spacing: -0.3px;
     color: #FFF;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+    text-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
   }
-  .header p { margin: 0; font-size: 8.5px; color: #94A3B8; font-weight: 500; letter-spacing: 0.2px; }
+  .header p { margin: 2px 0 0 0; font-size: 8.5px; color: #94A3B8; font-weight: 600; letter-spacing: 0.3px; }
   .header-actions { display: flex; gap: 10px; align-items: center; }
 
   /* SPEED LEGEND */
   .speed-legend {
-    background: rgba(3, 7, 18, 0.4);
-    border-bottom: 1px solid var(--glass-border);
+    background: rgba(5, 5, 12, 0.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     padding: 8px 24px;
     display: flex;
     justify-content: space-between;
@@ -107,23 +122,33 @@
   .legend-pill {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    padding: 3px 10px;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 4px 12px;
     border-radius: 20px;
   }
-  .legend-pill b { color: #E2E8F0; }
+  .legend-pill b { color: #FFF; }
+  .legend-pill.turbo { border-color: rgba(255, 0, 85, 0.4); background: rgba(255, 0, 85, 0.1); }
+  .legend-pill.turbo b { color: var(--warp-magenta); text-shadow: 0 0 10px var(--warp-magenta); }
 
-  /* SPATIAL SECTIONS */
+  /* SECTIONS */
   .section-card {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 16px;
+    background: rgba(20, 25, 45, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
     margin: 14px 20px;
     padding: 16px 20px;
-    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     position: relative;
+    overflow: hidden;
+  }
+  .section-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 40%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
+    pointer-events: none;
   }
 
   .sec-header {
@@ -133,9 +158,9 @@
     margin-bottom: 14px;
   }
   .sec-title {
-    font-size: 11px;
-    font-weight: 700;
-    color: #F8FAFC;
+    font-size: 11.5px;
+    font-weight: 800;
+    color: #FFF;
     letter-spacing: -0.2px;
     display: flex;
     align-items: center;
@@ -143,25 +168,25 @@
     text-transform: uppercase;
   }
   .pool-pill {
-    background: rgba(0, 87, 184, 0.2);
-    border: 1px solid rgba(0, 168, 232, 0.35);
-    color: #38BDF8;
-    padding: 4px 12px;
+    background: rgba(0, 240, 255, 0.15);
+    border: 1px solid var(--warp-cyan);
+    color: var(--warp-cyan);
+    padding: 4px 14px;
     border-radius: 20px;
-    font-size: 9px;
-    font-weight: 700;
-    box-shadow: 0 0 15px rgba(0, 168, 232, 0.15);
+    font-size: 9.5px;
+    font-weight: 800;
+    box-shadow: 0 0 18px rgba(0, 240, 255, 0.35);
   }
 
   /* BUTTONS & CONTROLS */
   .btn {
     background: rgba(255, 255, 255, 0.08);
     color: #FFF;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 8px;
-    padding: 7px 14px;
-    font-size: 9.5px;
-    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 10px;
+    font-weight: 700;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -170,18 +195,20 @@
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     -webkit-appearance: none;
   }
-  .btn:active { transform: scale(0.97); }
-  .btn-print { background: rgba(255, 255, 255, 0.05); }
+  .btn:active { transform: scale(0.96); }
+  .btn-print { background: rgba(255, 255, 255, 0.06); }
   .btn-pres {
-    background: rgba(0, 87, 184, 0.25);
-    border-color: rgba(56, 189, 248, 0.4);
-    color: #38BDF8;
+    background: rgba(0, 240, 255, 0.15);
+    border-color: var(--warp-cyan);
+    color: var(--warp-cyan);
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.25);
   }
   .btn-pres.active {
-    background: rgba(245, 158, 11, 0.2);
-    border-color: #F59E0B;
-    color: #FBBF24;
-    box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+    background: linear-gradient(180deg, rgba(255, 184, 0, 0.9) 0%, rgba(217, 119, 6, 0.9) 100%);
+    color: #000;
+    border-color: #FFF;
+    box-shadow: 0 0 25px rgba(255, 184, 0, 0.7);
+    font-weight: 900;
   }
 
   .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
@@ -189,99 +216,100 @@
   .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; }
 
   .control-group { display: flex; flex-direction: column; gap: 4px; }
-  .control-group label { font-size: 8px; font-weight: 600; color: #64748B; text-transform: uppercase; letter-spacing: 0.5px; }
+  .control-group label { font-size: 8px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.6px; }
   
   .control-group input, .control-group select {
-    padding: 9px 12px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 10px;
-    background: rgba(0, 0, 0, 0.3);
+    padding: 10px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.45);
     color: #FFF;
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 700;
     transition: all 0.2s;
   }
   .control-group input:focus, .control-group select:focus {
     outline: none;
-    border-color: #38BDF8;
-    box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+    border-color: var(--warp-cyan);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
   }
 
   /* SPATIAL SELECTION TILES */
   .pill-option {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
     padding: 14px 10px;
     text-align: center;
     cursor: pointer;
     transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .pill-option:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);
   }
   .pill-option.active {
-    background: linear-gradient(180deg, rgba(0, 87, 184, 0.35) 0%, rgba(0, 50, 120, 0.2) 100%);
-    border: 1px solid #0284C7;
-    box-shadow: 0 0 25px rgba(2, 132, 199, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    background: linear-gradient(180deg, rgba(0, 240, 255, 0.25) 0%, rgba(0, 102, 255, 0.15) 100%);
+    border: 1.5px solid var(--warp-cyan);
+    box-shadow: 0 0 30px rgba(0, 240, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
   }
-  .pill-title { font-size: 9.5px; font-weight: 700; color: #E2E8F0; }
-  .pill-price { font-size: 15px; font-weight: 800; color: #FFF; margin: 4px 0 2px 0; letter-spacing: -0.3px; }
-  .pill-sub { font-size: 7.5px; color: #64748B; font-weight: 500; }
+  .pill-title { font-size: 10px; font-weight: 800; color: #E2E8F0; }
+  .pill-price { font-size: 16px; font-weight: 900; color: #FFF; margin: 4px 0 2px 0; text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+  .pill-sub { font-size: 7.5px; color: #94A3B8; font-weight: 600; }
 
   /* PRECISION LINE COUNTER */
   .counter-row {
-    background: rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 12px;
-    padding: 12px 16px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 13px 18px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 8px;
+    margin-bottom: 9px;
   }
   .counter-info { display: flex; flex-direction: column; gap: 2px; }
-  .counter-title { font-size: 11px; font-weight: 700; color: #F8FAFC; display: flex; align-items: center; gap: 6px; }
-  .counter-desc { font-size: 8px; color: #64748B; }
+  .counter-title { font-size: 11.5px; font-weight: 800; color: #FFF; display: flex; align-items: center; gap: 6px; }
+  .counter-desc { font-size: 8px; color: #94A3B8; }
   
-  .counter-controls { display: flex; align-items: center; gap: 12px; }
+  .counter-controls { display: flex; align-items: center; gap: 14px; }
   .btn-circle {
-    width: 30px;
-    height: 30px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: #FFF;
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 800;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all 0.15s ease;
   }
-  .btn-circle:active { transform: scale(0.9); background: rgba(255, 255, 255, 0.12); }
-  .counter-val { font-size: 15px; font-weight: 800; color: #38BDF8; min-width: 18px; text-align: center; }
+  .btn-circle:active { transform: scale(0.88); background: rgba(0, 240, 255, 0.3); }
+  .counter-val { font-size: 16px; font-weight: 900; color: var(--warp-cyan); min-width: 22px; text-align: center; text-shadow: 0 0 15px rgba(0, 240, 255, 0.8); }
 
   /* CALLOUT BANNER */
   .callout-box {
-    background: rgba(239, 68, 68, 0.08);
-    border: 1px solid rgba(239, 68, 68, 0.25);
-    border-radius: 10px;
-    padding: 10px 14px;
+    background: rgba(255, 0, 85, 0.1);
+    border: 1px solid var(--warp-magenta);
+    border-radius: 12px;
+    padding: 12px 16px;
     margin-bottom: 12px;
     font-size: 8.5px;
     line-height: 1.45;
+    box-shadow: 0 0 25px rgba(255, 0, 85, 0.2);
   }
-  .callout-box b { color: #FCA5A5; }
+  .callout-box b { color: #FF6699; text-shadow: 0 0 10px rgba(255, 0, 85, 0.6); }
 
-  /* EXECUTIVE SUMMARY (BOTTOM ANCHOR) */
+  /* EXECUTIVE SUMMARY */
   .summary-card {
-    background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(10, 15, 30, 0.98) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    background: linear-gradient(180deg, rgba(15, 20, 40, 0.95) 0%, rgba(5, 8, 20, 0.98) 100%);
+    border: 1.5px solid var(--warp-cyan);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 50px rgba(0, 240, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
   }
   .summary-grid {
     display: flex;
@@ -291,46 +319,47 @@
     gap: 14px;
   }
   .sum-left { display: flex; flex-direction: column; gap: 2px; }
-  .sum-label { font-size: 8.5px; font-weight: 600; color: #64748B; text-transform: uppercase; letter-spacing: 0.5px; }
-  .sum-total { font-size: 36px; font-weight: 800; color: #FFF; letter-spacing: -1px; }
+  .sum-label { font-size: 9px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.6px; }
+  .sum-total { font-size: 40px; font-weight: 900; color: #FFF; letter-spacing: -1.5px; text-shadow: 0 0 30px rgba(0, 240, 255, 0.7); }
   .sum-savings {
-    background: rgba(16, 185, 129, 0.12);
-    border: 1px solid rgba(16, 185, 129, 0.35);
-    color: #34D399;
-    padding: 8px 16px;
-    border-radius: 10px;
-    font-size: 13px;
-    font-weight: 700;
+    background: linear-gradient(180deg, rgba(0, 255, 102, 0.95) 0%, rgba(0, 180, 70, 0.95) 100%);
+    border: 1.5px solid #FFF;
+    color: #000;
+    padding: 10px 18px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 900;
     text-align: right;
+    box-shadow: 0 0 35px rgba(0, 255, 102, 0.7);
   }
 
   /* REGISTER DUE TODAY */
   .due-box {
-    background: rgba(0, 0, 0, 0.35);
-    border: 1px dashed rgba(255, 255, 255, 0.12);
-    border-radius: 10px;
-    padding: 12px 14px;
+    background: rgba(0, 0, 0, 0.45);
+    border: 1px dashed var(--warp-cyan);
+    border-radius: 12px;
+    padding: 14px 16px;
     margin-top: 14px;
   }
-  .due-title { font-size: 9px; font-weight: 700; color: #FBBF24; text-transform: uppercase; margin-bottom: 3px; }
-  .due-amt { font-size: 15px; font-weight: 800; color: #FFF; margin-bottom: 2px; }
-  .due-sub { font-size: 7.5px; color: #64748B; }
+  .due-title { font-size: 9.5px; font-weight: 800; color: var(--warp-gold); text-transform: uppercase; margin-bottom: 3px; text-shadow: 0 0 10px rgba(255, 184, 0, 0.5); }
+  .due-amt { font-size: 16px; font-weight: 900; color: #FFF; margin-bottom: 2px; }
+  .due-sub { font-size: 7.5px; color: #94A3B8; }
 
   /* OPUS CHECKLIST */
   .checklist {
-    background: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    padding: 12px 14px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 14px 16px;
     margin-top: 14px;
     display: flex;
     flex-direction: column;
-    gap: 7px;
+    gap: 8px;
     font-size: 8.5px;
-    color: #94A3B8;
+    color: #CBD5E1;
   }
   .check-item { display: flex; align-items: center; gap: 8px; }
-  .check-item span { color: #10B981; font-weight: 700; }
+  .check-item span { color: var(--warp-green); font-weight: 900; text-shadow: 0 0 10px var(--warp-green); }
 
   /* PRESENTATION MODE OVERRIDES */
   body.presentation-mode .rep-only { display: none !important; }
@@ -342,19 +371,19 @@
 </head>
 <body>
 
-<!-- KINETIC FLUID SPATIAL AURORA CANVAS -->
-<canvas id="aurora-canvas"></canvas>
+<!-- 3D WARP SPEED HYPERSPACE CANVAS -->
+<canvas id="warp-canvas"></canvas>
 
 <div class="app-container">
   <!-- EXECUTIVE HEADER -->
   <div class="header">
-    <div class="header-brand">
+    <div>
       <h1>
         <span class="rep-only">AT&T Executive Solutions Studio</span>
         <span class="cust-only">AT&T Household Solutions Studio</span>
       </h1>
       <p>
-        <span class="rep-only">PORTFOLIO OPTIMIZATION • ACTIVE MARGIN ALLOCATION • OPUS RECONCILIATION</span>
+        <span class="rep-only">WARP VELOCITY ARCHITECTURE • DYNAMIC HYPERSPACE ENGINE</span>
         <span class="cust-only">TAILORED MULTI-LINE SAVINGS & CONNECTED HOME BLUEPRINT</span>
       </p>
     </div>
@@ -364,17 +393,17 @@
     </div>
   </div>
 
-  <!-- TIER SPEED LEGEND -->
+  <!-- SPEED LEGEND -->
   <div class="speed-legend">
     <div class="legend-items">
       <span class="legend-pill">🐢 <b>Value Plus 2.0:</b> Standard 5G • Core Unlimited</span>
       <span class="legend-pill">🐇 <b>Extra 2.0:</b> 75GB Priority Data • 30GB Hotspot</span>
       <span class="legend-pill">🐆 <b>Premium 2.0:</b> Unlimited Priority Data • 60GB Hotspot</span>
-      <span class="legend-pill">🚀 <b>Elite / Turbo / FirstNet:</b> Hyper-Priority QCI-7</span>
+      <span class="legend-pill turbo">🚀 <b>Hyper-Drive Turbo:</b> QCI-7 Peak Bandwidth</span>
     </div>
   </div>
 
-  <!-- SECTION 1: WHAT BRINGS YOU IN TODAY -->
+  <!-- SECTION 1: CONSULTATION SCOPE -->
   <div class="section-card">
     <div class="sec-header">
       <div class="sec-title">🎯 1. Consultation Scope</div>
@@ -508,7 +537,7 @@
       <div class="pool-pill" id="pool-badge-broadband">Pool: +$50.00/mo</div>
     </div>
 
-    <div style="font-size:8px; font-weight:700; color:#64748B; text-transform:uppercase; margin-bottom:8px;">Option A: Home Internet Consolidation</div>
+    <div style="font-size:8px; font-weight:800; color:var(--warp-cyan); text-transform:uppercase; margin-bottom:8px;">Option A: Home Internet Consolidation</div>
     <div class="grid-4" style="margin-bottom:14px;">
       <div class="pill-option active" id="bb-none" onclick="window.selectBroadband(0, this)">
         <div class="pill-title">None</div>
@@ -532,7 +561,7 @@
       </div>
     </div>
 
-    <div style="font-size:8px; font-weight:700; color:#64748B; text-transform:uppercase; margin-bottom:8px;">Option B: DIRECTV via Internet Revision</div>
+    <div style="font-size:8px; font-weight:800; color:var(--warp-magenta); text-transform:uppercase; margin-bottom:8px;">Option B: DIRECTV via Internet Revision</div>
     <div class="grid-3">
       <div class="pill-option active" id="dtv-none" onclick="window.selectDTV(0, this)">
         <div class="pill-title">No TV</div>
@@ -643,7 +672,7 @@
     </div>
 
     <div class="checklist rep-only">
-      <div style="font-weight:700; color:#FBBF24; text-transform:uppercase;">📝 OPUS ORDER CHECKLIST & AUDIT LOG</div>
+      <div style="font-weight:800; color:var(--warp-gold); text-transform:uppercase;">📝 OPUS ORDER CHECKLIST & AUDIT LOG</div>
       <div class="check-item"><span>✔</span> Verify and enroll customer in Debit/Checking AutoPay (-$10/line off base).</div>
       <div class="check-item"><span>✔</span> Confirm Employer or Union FAN discount attaches ($10/L off Premium drops to Extra price).</div>
       <div class="check-item"><span>✔</span> Verify Next Up Anytime ($10/line) on all eligible financing agreements.</div>
@@ -652,8 +681,8 @@
 
     <div class="control-group" style="margin-top:14px;">
       <label>📱 Instant Customer SMS Quote</label>
-      <textarea id="sms-text" style="width:100%; height:70px; background:rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.1); color:#E2E8F0; border-radius:10px; padding:10px; font-family:inherit; resize:none;" readonly></textarea>
-      <button type="button" class="btn" style="margin-top:8px; width:100%; background:rgba(0,87,184,0.35); border-color:#0284C7;" onclick="window.copySMS()">📋 Copy Text for Customer</button>
+      <textarea id="sms-text" style="width:100%; height:70px; background:rgba(0,0,0,0.5); border:1px solid rgba(0, 240, 255, 0.4); color:#E2E8F0; border-radius:12px; padding:10px; font-family:inherit; resize:none;" readonly></textarea>
+      <button type="button" class="btn" style="margin-top:8px; width:100%; background:linear-gradient(90deg, #0057B8, #00A8E8); border-color:var(--warp-cyan);" onclick="window.copySMS()">📋 Copy Text for Customer</button>
     </div>
   </div>
 </div>
@@ -811,14 +840,12 @@ window.runCalc = function() {
   document.getElementById('sum-new-total').textContent = "$" + totalHousehold.toFixed(2) + "/mo";
   var saveBox = document.getElementById('sum-savings-box');
   if (monthlySavings >= 0) {
-    saveBox.style.color = "#34D399";
-    saveBox.style.background = "rgba(16, 185, 129, 0.12)";
-    saveBox.style.borderColor = "rgba(16, 185, 129, 0.35)";
+    saveBox.style.color = "#000";
+    saveBox.style.background = "linear-gradient(180deg, rgba(0, 255, 102, 0.95) 0%, rgba(0, 180, 70, 0.95) 100%)";
     saveBox.textContent = "Saves $" + monthlySavings.toFixed(2) + "/mo vs Old Bill!";
   } else {
-    saveBox.style.color = "#F87171";
-    saveBox.style.background = "rgba(239, 68, 68, 0.12)";
-    saveBox.style.borderColor = "rgba(239, 68, 68, 0.35)";
+    saveBox.style.color = "#FFF";
+    saveBox.style.background = "linear-gradient(180deg, rgba(255, 0, 85, 0.95) 0%, rgba(180, 0, 60, 0.95) 100%)";
     saveBox.textContent = "+$" + Math.abs(monthlySavings).toFixed(2) + "/mo vs Old Bill";
   }
 
@@ -849,12 +876,15 @@ window.runCalc = function() {
   document.getElementById('sms-text').value = sms;
 };
 
-// KINETIC FLUID SPATIAL AURORA ENGINE
-(function initAuroraEngine() {
-  var canvas = document.getElementById('aurora-canvas');
+// 3D HYPERSPACE WARP ENGINE (SMOOTH KINETIC DEPTH)
+(function initWarpSpeed() {
+  var canvas = document.getElementById('warp-canvas');
   if (!canvas) return;
   var ctx = canvas.getContext('2d');
-  var width = 0, height = 0, time = 0;
+  var width = 0, height = 0;
+  var numStars = 600;
+  var stars = [];
+  var speed = 12;
 
   function resize() {
     width = canvas.width = window.innerWidth;
@@ -863,31 +893,54 @@ window.runCalc = function() {
   window.addEventListener('resize', resize);
   resize();
 
-  var orbs = [
-    { xRatio: 0.25, yRatio: 0.25, radius: 450, color: 'rgba(0, 87, 184, 0.45)', speed: 0.008, vx: 120, vy: 90 },
-    { xRatio: 0.75, yRatio: 0.35, radius: 520, color: 'rgba(14, 165, 233, 0.25)', speed: 0.006, vx: 140, vy: 110 },
-    { xRatio: 0.50, yRatio: 0.75, radius: 480, color: 'rgba(99, 102, 241, 0.22)', speed: 0.009, vx: 100, vy: 130 },
-    { xRatio: 0.85, yRatio: 0.85, radius: 400, color: 'rgba(168, 85, 247, 0.18)', speed: 0.007, vx: 80, vy: 80 }
-  ];
+  for (var i = 0; i < numStars; i++) {
+    stars.push({
+      x: (Math.random() - 0.5) * 2000,
+      y: (Math.random() - 0.5) * 2000,
+      z: Math.random() * 1000,
+      color: ['#00F0FF', '#BD00FF', '#0066FF', '#FFFFFF', '#00FF66'][Math.floor(Math.random() * 5)]
+    });
+  }
+
+  // Touch burst: Accelerate into hyper-warp on tap
+  window.addEventListener('touchstart', function() {
+    speed = 35;
+    setTimeout(function() { speed = 12; }, 800);
+  }, { passive: true });
 
   function draw() {
-    ctx.clearRect(0, 0, width, height);
-    time += 0.015;
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.28)';
+    ctx.fillRect(0, 0, width, height);
 
-    for (var i = 0; i < orbs.length; i++) {
-      var orb = orbs[i];
-      var cx = width * orb.xRatio + Math.sin(time * orb.speed * 20 + i) * orb.vx;
-      var cy = height * orb.yRatio + Math.cos(time * orb.speed * 18 + i) * orb.vy;
+    var cx = width / 2;
+    var cy = height / 2;
 
-      var grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, orb.radius);
-      grad.addColorStop(0, orb.color);
-      grad.addColorStop(0.5, orb.color.replace(/[\d\.]+\)$/, '0.12)'));
-      grad.addColorStop(1, 'rgba(3, 7, 18, 0)');
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      s.z -= speed;
 
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.arc(cx, cy, orb.radius, 0, Math.PI * 2);
-      ctx.fill();
+      if (s.z <= 0) {
+        s.z = 1000;
+        s.x = (Math.random() - 0.5) * 2000;
+        s.y = (Math.random() - 0.5) * 2000;
+      }
+
+      var k = 250 / s.z;
+      var px = s.x * k + cx;
+      var py = s.y * k + cy;
+
+      if (px >= 0 && px <= width && py >= 0 && py <= height) {
+        var prevK = 250 / (s.z + speed * 1.5);
+        var prevX = s.x * prevK + cx;
+        var prevY = s.y * prevK + cy;
+
+        ctx.beginPath();
+        ctx.moveTo(prevX, prevY);
+        ctx.lineTo(px, py);
+        ctx.strokeStyle = s.color;
+        ctx.lineWidth = Math.min(3, Math.max(0.6, (1 - s.z / 1000) * 2.8));
+        ctx.stroke();
+      }
     }
 
     requestAnimationFrame(draw);
