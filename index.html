@@ -28,9 +28,11 @@
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
     position: relative;
+    user-select: none;
+    -webkit-user-select: none;
   }
 
-  /* HARDWARE-ACCELERATED DIGITAL BACKGROUND CANVAS */
+  /* HARDWARE-ACCELERATED FIBER OPTIC DIGITAL CANVAS */
   #digital-bg-canvas {
     position: fixed;
     top: 0;
@@ -39,50 +41,50 @@
     height: 100vh;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.85;
+    opacity: 0.92;
   }
 
-  /* AMBIENT GLOW ORBS */
+  /* KINETIC AMBIENT GLOW ORBS */
   .floating-orb {
     position: fixed;
     border-radius: 50%;
-    filter: blur(60px);
+    filter: blur(65px);
     pointer-events: none;
     z-index: 1;
     will-change: transform;
-    animation: floatOrb 18s ease-in-out infinite alternate;
+    animation: hyperOrb 10s ease-in-out infinite alternate;
   }
   .orb-1 {
-    width: 380px;
-    height: 380px;
-    background: radial-gradient(circle, rgba(0, 119, 237, 0.35) 0%, rgba(3, 7, 18, 0) 70%);
-    top: -100px;
-    left: 10%;
+    width: 420px;
+    height: 420px;
+    background: radial-gradient(circle, rgba(0, 168, 232, 0.45) 0%, rgba(3, 7, 18, 0) 70%);
+    top: -120px;
+    left: 5%;
   }
   .orb-2 {
-    width: 320px;
-    height: 320px;
-    background: radial-gradient(circle, rgba(168, 85, 247, 0.25) 0%, rgba(3, 7, 18, 0) 70%);
-    bottom: -60px;
-    right: 5%;
-    animation-duration: 22s;
-    animation-delay: -5s;
+    width: 380px;
+    height: 380px;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.38) 0%, rgba(3, 7, 18, 0) 70%);
+    bottom: -80px;
+    right: 2%;
+    animation-duration: 12s;
+    animation-delay: -3s;
   }
-  @keyframes floatOrb {
+  @keyframes hyperOrb {
     0% { transform: translate3d(0, 0, 0) scale(1); }
-    50% { transform: translate3d(40px, 60px, 0) scale(1.15); }
-    100% { transform: translate3d(-30px, 40px, 0) scale(0.95); }
+    50% { transform: translate3d(50px, 70px, 0) scale(1.2); }
+    100% { transform: translate3d(-40px, 50px, 0) scale(0.9); }
   }
 
   .app-container {
     max-width: 920px;
     margin: 0 auto;
-    background: rgba(15, 23, 42, 0.76);
+    background: rgba(15, 23, 42, 0.74);
     -webkit-backdrop-filter: blur(40px);
     backdrop-filter: blur(40px);
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 20px;
-    box-shadow: 0 30px 70px -15px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.3);
     overflow: hidden;
     position: relative;
     z-index: 2;
@@ -95,7 +97,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.22);
     position: relative;
   }
   .header::after {
@@ -105,7 +107,7 @@
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 100%);
     pointer-events: none;
   }
-  .header h1 { margin: 0; font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; text-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+  .header h1 { margin: 0; font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; text-shadow: 0 2px 8px rgba(0,0,0,0.5); }
   .header p { margin: 2px 0 0 0; font-size: 8.5px; color: #E0F2FE; font-weight: 500; }
   .header-actions { display: flex; gap: 8px; align-items: center; z-index: 2; }
 
@@ -116,7 +118,7 @@
     border-radius: 14px;
     margin: 12px 18px;
     padding: 14px 18px;
-    box-shadow: 0 8px 26px -4px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 28px -4px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
     position: relative;
     overflow: hidden;
   }
@@ -145,21 +147,21 @@
     letter-spacing: 0.5px;
   }
   .pool-pill {
-    background: linear-gradient(180deg, rgba(30, 58, 138, 0.95) 0%, rgba(23, 37, 84, 0.95) 100%);
-    border: 1px solid rgba(56, 189, 248, 0.6);
-    color: #38BDF8;
+    background: linear-gradient(180deg, rgba(0, 119, 237, 0.95) 0%, rgba(30, 58, 138, 0.95) 100%);
+    border: 1px solid rgba(56, 189, 248, 0.7);
+    color: #FFF;
     padding: 4px 12px;
     border-radius: 20px;
     font-size: 9px;
     font-weight: 800;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 16px rgba(0, 119, 237, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.35);
   }
 
-  /* GLASS BUTTONS */
+  /* BUTTONS & CONTROLS */
   .btn {
-    background: linear-gradient(180deg, rgba(2, 132, 199, 0.9) 0%, rgba(3, 105, 161, 0.9) 100%);
+    background: linear-gradient(180deg, rgba(2, 132, 199, 0.92) 0%, rgba(3, 105, 161, 0.92) 100%);
     color: #FFF;
-    border: 1px solid rgba(255, 255, 255, 0.26);
+    border: 1px solid rgba(255, 255, 255, 0.28);
     border-radius: 8px;
     padding: 7px 14px;
     font-size: 9.5px;
@@ -170,18 +172,18 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.35);
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     -webkit-appearance: none;
   }
   .btn:active { transform: scale(0.97); }
-  .btn-print { background: rgba(51, 65, 85, 0.8); border-color: rgba(255,255,255,0.2); }
-  .btn-pres { background: rgba(14, 116, 144, 0.8); border-color: rgba(56, 189, 248, 0.5); }
+  .btn-print { background: rgba(51, 65, 85, 0.85); border-color: rgba(255,255,255,0.2); }
+  .btn-pres { background: rgba(14, 116, 144, 0.85); border-color: rgba(56, 189, 248, 0.5); }
   .btn-pres.active {
     background: linear-gradient(180deg, rgba(245, 158, 11, 0.95) 0%, rgba(217, 119, 6, 0.95) 100%);
     color: #0F172A;
     border-color: #FDE68A;
-    box-shadow: 0 0 20px rgba(245, 158, 11, 0.6);
+    box-shadow: 0 0 22px rgba(245, 158, 11, 0.65);
   }
 
   .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
@@ -193,25 +195,25 @@
   
   .control-group input, .control-group select {
     padding: 9px 12px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: 9px;
-    background: rgba(10, 16, 30, 0.75);
+    background: rgba(10, 16, 30, 0.78);
     color: #FFF;
     font-size: 11px;
     font-weight: 600;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.55), 0 1px 0 rgba(255, 255, 255, 0.08);
     transition: all 0.2s;
   }
   .control-group input:focus, .control-group select:focus {
     outline: none;
     border-color: #38BDF8;
-    box-shadow: 0 0 14px rgba(56, 189, 248, 0.45), inset 0 1px 2px rgba(0,0,0,0.4);
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.5), inset 0 1px 2px rgba(0,0,0,0.4);
   }
 
   /* GLASS PILL CARDS */
   .pill-option {
-    background: linear-gradient(135deg, rgba(20, 30, 50, 0.65) 0%, rgba(10, 16, 30, 0.7) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: linear-gradient(135deg, rgba(20, 30, 50, 0.65) 0%, rgba(10, 16, 30, 0.72) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: 10px;
     padding: 12px 10px;
     text-align: center;
@@ -225,34 +227,34 @@
     content: "";
     position: absolute;
     top: 0; left: 0; right: 0; height: 50%;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
     pointer-events: none;
   }
   .pill-option:hover {
-    border-color: rgba(56, 189, 248, 0.5);
+    border-color: rgba(56, 189, 248, 0.6);
     transform: translateY(-2px);
-    box-shadow: 0 8px 22px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.22);
+    box-shadow: 0 8px 24px rgba(0, 168, 232, 0.35), inset 0 1px 0 rgba(255,255,255,0.25);
   }
   .pill-option.active {
-    background: linear-gradient(135deg, rgba(30, 58, 138, 0.85) 0%, rgba(15, 23, 42, 0.95) 100%);
+    background: linear-gradient(135deg, rgba(30, 58, 138, 0.88) 0%, rgba(15, 23, 42, 0.96) 100%);
     border: 1.5px solid #38BDF8;
-    box-shadow: 0 0 22px rgba(56, 189, 248, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    box-shadow: 0 0 25px rgba(56, 189, 248, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.4);
   }
   .pill-title { font-size: 9.5px; font-weight: 800; color: #FFF; }
-  .pill-price { font-size: 13.5px; font-weight: 900; color: #38BDF8; margin: 4px 0; text-shadow: 0 1px 6px rgba(0,0,0,0.5); }
+  .pill-price { font-size: 13.5px; font-weight: 900; color: #38BDF8; margin: 4px 0; text-shadow: 0 0 10px rgba(56,189,248,0.6); }
   .pill-sub { font-size: 7.5px; color: #94A3B8; font-weight: 500; }
 
   /* COUNTER ROW */
   .counter-row {
-    background: linear-gradient(135deg, rgba(20, 30, 50, 0.65) 0%, rgba(10, 16, 30, 0.7) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: linear-gradient(135deg, rgba(20, 30, 50, 0.68) 0%, rgba(10, 16, 30, 0.75) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: 10px;
     padding: 12px 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 9px;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.1);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.12);
   }
   .counter-info { display: flex; flex-direction: column; gap: 2px; }
   .counter-title { font-size: 11.5px; font-weight: 800; color: #FFF; display: flex; align-items: center; gap: 6px; }
@@ -264,7 +266,7 @@
     height: 32px;
     border-radius: 50%;
     background: linear-gradient(180deg, rgba(40, 55, 80, 0.95) 0%, rgba(20, 30, 50, 0.95) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.28);
     color: #FFF;
     font-size: 15px;
     font-weight: 800;
@@ -276,26 +278,26 @@
     transition: transform 0.15s ease;
   }
   .btn-circle:active { transform: scale(0.9); }
-  .counter-val { font-size: 14px; font-weight: 900; color: #38BDF8; min-width: 18px; text-align: center; text-shadow: 0 1px 8px rgba(56,189,248,0.5); }
+  .counter-val { font-size: 14px; font-weight: 900; color: #38BDF8; min-width: 18px; text-align: center; text-shadow: 0 0 10px rgba(56,189,248,0.6); }
 
   /* CALLOUT BOXES */
   .callout-box {
-    background: rgba(42, 18, 21, 0.75);
-    border: 1px solid rgba(239, 68, 68, 0.5);
+    background: rgba(42, 18, 21, 0.78);
+    border: 1px solid rgba(239, 68, 68, 0.55);
     border-radius: 9px;
     padding: 10px 14px;
     margin-bottom: 12px;
     font-size: 8.5px;
     line-height: 1.4;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.2), inset 0 1px 0 rgba(255,255,255,0.12);
   }
   .callout-box b { color: #FCA5A5; }
 
   /* SUMMARY CARD */
   .summary-card {
-    background: linear-gradient(135deg, rgba(30, 58, 138, 0.65) 0%, rgba(15, 23, 42, 0.92) 100%);
+    background: linear-gradient(135deg, rgba(30, 58, 138, 0.7) 0%, rgba(15, 23, 42, 0.94) 100%);
     border: 1.5px solid #38BDF8;
-    box-shadow: 0 0 35px rgba(56, 189, 248, 0.35), inset 0 1px 0 rgba(255,255,255,0.3);
+    box-shadow: 0 0 40px rgba(56, 189, 248, 0.4), inset 0 1px 0 rgba(255,255,255,0.35);
   }
   .summary-grid {
     display: flex;
@@ -306,23 +308,23 @@
   }
   .sum-left { display: flex; flex-direction: column; gap: 2px; }
   .sum-label { font-size: 9px; font-weight: 800; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.5px; }
-  .sum-total { font-size: 30px; font-weight: 900; color: #FFF; text-shadow: 0 3px 12px rgba(0, 0, 0, 0.6); }
+  .sum-total { font-size: 32px; font-weight: 900; color: #FFF; text-shadow: 0 0 20px rgba(56,189,248,0.5); }
   .sum-savings {
     background: linear-gradient(180deg, rgba(6, 95, 70, 0.95) 0%, rgba(4, 78, 57, 0.95) 100%);
-    border: 1px solid rgba(74, 222, 128, 0.55);
+    border: 1px solid rgba(74, 222, 128, 0.6);
     color: #4ADE80;
     padding: 9px 16px;
     border-radius: 10px;
     font-size: 13.5px;
     font-weight: 900;
     text-align: right;
-    box-shadow: 0 4px 14px rgba(6, 78, 59, 0.45), inset 0 1px 0 rgba(255,255,255,0.3);
+    box-shadow: 0 0 25px rgba(74, 222, 128, 0.4), inset 0 1px 0 rgba(255,255,255,0.35);
   }
 
   /* DUE TODAY AT REGISTER */
   .due-box {
-    background: rgba(10, 25, 47, 0.8);
-    border: 1px dashed rgba(56, 189, 248, 0.5);
+    background: rgba(10, 25, 47, 0.82);
+    border: 1px dashed rgba(56, 189, 248, 0.55);
     border-radius: 10px;
     padding: 12px 16px;
     margin-top: 12px;
@@ -334,8 +336,8 @@
 
   /* OPUS CHECKLIST */
   .checklist {
-    background: rgba(10, 16, 30, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(10, 16, 30, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 10px;
     padding: 12px 16px;
     margin-top: 12px;
@@ -357,10 +359,10 @@
 </head>
 <body>
 
-<!-- HARDWARE-ACCELERATED FIBER OPTIC CANVAS -->
+<!-- HARDWARE-ACCELERATED HIGH-VELOCITY FIBER OPTIC CANVAS -->
 <canvas id="digital-bg-canvas"></canvas>
 
-<!-- AMBIENT LIGHT ORBS -->
+<!-- KINETIC LIGHT ORBS -->
 <div class="floating-orb orb-1"></div>
 <div class="floating-orb orb-2"></div>
 
@@ -519,443 +521,4 @@
 
     <div style="font-size:8.5px; font-weight:800; color:#38BDF8; margin-bottom:6px;">Option A: Home Internet Consolidation</div>
     <div class="grid-4" style="margin-bottom:12px;">
-      <div class="pill-option active" id="bb-none" onclick="window.selectBroadband(0, this)">
-        <div class="pill-title">None</div>
-        <div class="pill-price">$0</div>
-        <div class="pill-sub">Keep Provider</div>
-      </div>
-      <div class="pill-option" id="bb-air" onclick="window.selectBroadband(35, this)">
-        <div class="pill-title">Internet Air</div>
-        <div class="pill-price">$35/mo</div>
-        <div class="pill-sub">5G Home w/ AP</div>
-      </div>
-      <div class="pill-option" id="bb-f300" onclick="window.selectBroadband(35, this)">
-        <div class="pill-title">Fiber 300M</div>
-        <div class="pill-price">$35/mo</div>
-        <div class="pill-sub">Converged Rate</div>
-      </div>
-      <div class="pill-option" id="bb-f500" onclick="window.selectBroadband(45, this)">
-        <div class="pill-title">Fiber 500M</div>
-        <div class="pill-price">$45/mo</div>
-        <div class="pill-sub">Converged Rate</div>
-      </div>
-    </div>
-
-    <div style="font-size:8.5px; font-weight:800; color:#C084FC; margin-bottom:6px;">Option B: DIRECTV via Internet Revision</div>
-    <div class="grid-3">
-      <div class="pill-option active" id="dtv-none" onclick="window.selectDTV(0, this)">
-        <div class="pill-title">No TV</div>
-        <div class="pill-price">$0</div>
-      </div>
-      <div class="pill-option" id="dtv-ent" onclick="window.selectDTV(69.99, this)">
-        <div class="pill-title">Entertainment</div>
-        <div class="pill-price">$69.99/mo</div>
-        <div class="pill-sub">Gemini Included</div>
-      </div>
-      <div class="pill-option" id="dtv-choice" onclick="window.selectDTV(89.99, this)">
-        <div class="pill-title">Choice</div>
-        <div class="pill-price">$89.99/mo</div>
-        <div class="pill-sub">Regional Sports</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SECTION 5: PROTECTION & CONNECTED DEVICES -->
-  <div class="section-card">
-    <div class="sec-header">
-      <div class="sec-title">🛡️ 5. Protection & Connected Tech</div>
-      <div class="pool-pill" id="pool-badge-devices">Pool: +$50.00/mo</div>
-    </div>
-
-    <div class="grid-3" style="margin-bottom:12px;">
-      <div class="control-group">
-        <label>Device Protection</label>
-        <select id="addon-pa" onchange="window.runCalc()">
-          <option value="0">None (+$0/mo)</option>
-          <option value="17">1 Device Protect Advantage ($17/mo)</option>
-          <option value="34">2 Devices Protect Advantage ($34/mo)</option>
-          <option value="50">Protect Advantage 4+ Family ($50/mo)</option>
-          <option value="25">AT&T HomeTech Protection ($25/mo)</option>
-        </select>
-      </div>
-      <div class="control-group">
-        <label>⌚ Watches ($5.50 / $10.99)</label>
-        <select id="addon-watches" onchange="window.runCalc()">
-          <option value="0">0 Watches</option>
-          <option value="5.50">1 Watch (50% Off Promo @ $5.50/mo)</option>
-          <option value="16.49">2 Watches ($16.49/mo)</option>
-        </select>
-      </div>
-      <div class="control-group">
-        <label>📱 Tablets ($10.50 / $20.99)</label>
-        <select id="addon-tablets" onchange="window.runCalc()">
-          <option value="0">0 Tablets</option>
-          <option value="10.50">1 Tablet (50% Off Promo @ $10.50/mo)</option>
-          <option value="31.49">2 Tablets ($31.49/mo)</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="control-group">
-      <label>12-Mo Accessory Installments ($75 Minimum)</label>
-      <select id="addon-acc" onchange="window.runCalc()">
-        <option value="0">None ($0/mo)</option>
-        <option value="6.25">$75 Minimum Bundle (+$6.25/mo)</option>
-        <option value="8.33">$100 Bundle (+$8.33/mo)</option>
-        <option value="12.50">$150 Bundle (+$12.50/mo)</option>
-        <option value="16.67">$200 Bundle (+$16.67/mo)</option>
-      </select>
-    </div>
-  </div>
-
-  <!-- SECTION 6: EXECUTIVE SUMMARY & DEPARTURE -->
-  <div class="section-card summary-card">
-    <div class="sec-header">
-      <div class="sec-title">📊 6. Executive Summary & Out-The-Door Quote</div>
-    </div>
-
-    <div class="summary-grid">
-      <div class="sum-left">
-        <div class="sum-label">New Total Household Bill (w/ AutoPay)</div>
-        <div class="sum-total" id="sum-new-total">$130.00</div>
-      </div>
-      <div class="sum-savings" id="sum-savings-box">
-        Saves $50.00/mo vs Old Bill!
-      </div>
-    </div>
-
-    <div class="due-box">
-      <div class="due-title">🏷️ Due Today at Register (Existing Account Upgrades)</div>
-      <div class="due-amt" id="due-today-amt">No hardware upgrades selected ($0 due today).</div>
-      <div class="due-sub">*Estimates 7% IN sales tax on retail device value + $35 upgrade fee per device.</div>
-    </div>
-
-    <div class="grid-2" style="margin-top:12px;">
-      <div class="control-group">
-        <label>Upgrading Phone Count</label>
-        <select id="upgrade-count" onchange="window.runCalc()">
-          <option value="0">0 Phones Upgrading</option>
-          <option value="1">1 Phone Upgrading</option>
-          <option value="2">2 Phones Upgrading</option>
-          <option value="3">3 Phones Upgrading</option>
-          <option value="4">4 Phones Upgrading</option>
-        </select>
-      </div>
-      <div class="control-group">
-        <label>Average Retail Phone Value</label>
-        <select id="upgrade-val" onchange="window.runCalc()">
-          <option value="1000">$1,000 (iPhone 16 / S24 / Pixel 9)</option>
-          <option value="1200">$1,200 (iPhone 16 Pro Max / S24 Ultra)</option>
-          <option value="800">$800 (Base Tier Flagship)</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="checklist rep-only">
-      <div style="font-weight:800; color:#FBBF24; text-transform:uppercase;">📝 OPUS ORDER CHECKLIST & AUDIT LOG</div>
-      <div class="check-item"><span>✔</span> Verify and enroll customer in Debit/Checking AutoPay (-$10/line off base).</div>
-      <div class="check-item"><span>✔</span> Confirm Employer or Union FAN discount attaches ($10/L off Premium drops to Extra price).</div>
-      <div class="check-item"><span>✔</span> Verify Next Up Anytime ($10/line) on all eligible financing agreements.</div>
-      <div class="check-item"><span>✔</span> Confirm 7% IN sales tax collected at register for all upgraded equipment.</div>
-    </div>
-
-    <div class="control-group" style="margin-top:14px;">
-      <label>📱 Instant Customer SMS Quote</label>
-      <textarea id="sms-text" style="width:100%; height:70px; background:rgba(10,16,30,0.85); border:1px solid rgba(255,255,255,0.12); color:#E2E8F0; border-radius:9px; padding:10px; font-family:inherit; resize:none;" readonly></textarea>
-      <button type="button" class="btn" style="margin-top:8px; width:100%;" onclick="window.copySMS()">📋 Copy Text for Customer</button>
-    </div>
-  </div>
-</div>
-
-<script>
-window.broadbandCost = 0;
-window.dtvCost = 0;
-
-var rates = {
-  1: { prem: 90, ext: 70, val: 50, fanPrem: 80, noApPrem: 100, noApExt: 80, noApVal: 60 },
-  2: { prem: 80, ext: 60, val: 45, fanPrem: 70, noApPrem: 90, noApExt: 70, noApVal: 55 },
-  3: { prem: 65, ext: 50, val: 35, fanPrem: 50, noApPrem: 75, noApExt: 60, noApVal: 45 },
-  4: { prem: 50, ext: 40, val: 30, fanPrem: 40, noApPrem: 60, noApExt: 50, noApVal: 40 },
-  5: { prem: 40, ext: 35, val: 30.99, fanPrem: 30, noApPrem: 50, noApExt: 45, noApVal: 40.99 },
-  6: { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40.99 },
-  7: { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40.99 },
-  8: { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40.99 },
-  9: { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40.99 },
-  10: { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40.99 }
-};
-
-window.setLines = function(num) {
-  var n = parseInt(num, 10);
-  document.getElementById('cnt-prem').textContent = "1";
-  document.getElementById('cnt-extra').textContent = "0";
-  document.getElementById('cnt-val').textContent = (n > 1) ? (n - 1) : 0;
-  window.runCalc();
-};
-
-window.changeCount = function(type, delta) {
-  var prem = parseInt(document.getElementById('cnt-prem').textContent, 10);
-  var ext = parseInt(document.getElementById('cnt-extra').textContent, 10);
-  var val = parseInt(document.getElementById('cnt-val').textContent, 10);
-
-  if (type === 'prem') prem = Math.max(0, prem + delta);
-  if (type === 'extra') ext = Math.max(0, ext + delta);
-  if (type === 'val') val = Math.max(0, val + delta);
-
-  var total = prem + ext + val;
-  if (total > 10) return;
-  if (total === 0) prem = 1;
-
-  document.getElementById('cnt-prem').textContent = prem;
-  document.getElementById('cnt-extra').textContent = ext;
-  document.getElementById('cnt-val').textContent = val;
-
-  document.getElementById('curr-lines').value = (prem + ext + val);
-  window.runCalc();
-};
-
-window.selectBroadband = function(cost, el) {
-  window.broadbandCost = cost;
-  ['bb-none', 'bb-air', 'bb-f300', 'bb-f500'].forEach(function(id) {
-    var item = document.getElementById(id);
-    if (item) item.classList.remove('active');
-  });
-  el.classList.add('active');
-  window.runCalc();
-};
-
-window.selectDTV = function(cost, el) {
-  window.dtvCost = cost;
-  ['dtv-none', 'dtv-ent', 'dtv-choice'].forEach(function(id) {
-    var item = document.getElementById(id);
-    if (item) item.classList.remove('active');
-  });
-  el.classList.add('active');
-  window.runCalc();
-};
-
-window.togglePresMode = function() {
-  document.body.classList.toggle('presentation-mode');
-  var isPres = document.body.classList.contains('presentation-mode');
-  var btn = document.getElementById('pres-btn');
-  if (btn) {
-    btn.classList.toggle('active', isPres);
-    btn.innerHTML = isPres ? '👁️ Customer View: ON' : '👁️ Customer View: OFF';
-  }
-};
-
-window.copySMS = function() {
-  var t = document.getElementById('sms-text');
-  t.select();
-  document.execCommand('copy');
-  alert("Customer Quote Copied!");
-};
-
-window.runCalc = function() {
-  var totalInput = parseFloat(document.getElementById('curr-total').value) || 180.00;
-  var premCount = parseInt(document.getElementById('cnt-prem').textContent, 10) || 0;
-  var extCount = parseInt(document.getElementById('cnt-extra').textContent, 10) || 0;
-  var valCount = parseInt(document.getElementById('cnt-val').textContent, 10) || 0;
-  var totalLines = premCount + extCount + valCount;
-  if (totalLines < 1) totalLines = 1;
-
-  var discount = document.getElementById('curr-discount').value;
-  var apMethod = document.getElementById('curr-autopay').value;
-
-  var fnCallout = document.getElementById('fn-callout');
-  if (fnCallout) {
-    fnCallout.style.display = (discount === 'firstnet') ? 'block' : 'none';
-  }
-
-  var tierData = rates[Math.min(totalLines, 10)] || rates[4];
-
-  var premRate = tierData.prem;
-  var extRate = tierData.ext;
-  var valRate = tierData.val;
-
-  if (apMethod === 'none') {
-    premRate = tierData.noApPrem;
-    extRate = tierData.noApExt;
-    valRate = tierData.noApVal;
-  } else if (apMethod === 'credit') {
-    premRate += 5;
-    extRate += 5;
-    valRate += 5;
-  }
-
-  if (discount === 'fan') {
-    premRate = (apMethod === 'none') ? tierData.noApExt : (tierData.fanPrem + (apMethod === 'credit' ? 5 : 0));
-  } else if (discount === 'apprec' || discount === 'firstnet') {
-    premRate = +(premRate * 0.80).toFixed(2);
-    extRate = +(extRate * 0.85).toFixed(2);
-    valRate = +(valRate * 0.90).toFixed(2);
-  } else if (discount === 'fiber') {
-    premRate = +(premRate * 0.80).toFixed(2);
-    extRate = +(extRate * 0.80).toFixed(2);
-    valRate = +(valRate * 0.80).toFixed(2);
-  }
-
-  var wirelessPlanTotal = Number(((premCount * premRate) + (extCount * extRate) + (valCount * valRate)).toFixed(2));
-
-  // Add-ons
-  var nuaVal = document.getElementById('addon-nua').value;
-  var nuaCost = (nuaVal === 'all') ? totalLines * 10 : (parseInt(nuaVal, 10) || 0) * 10;
-  var turboVal = document.getElementById('addon-turbo').value;
-  var turboCost = (turboVal === 'all') ? totalLines * 7 : (parseInt(turboVal, 10) || 0) * 7;
-  var paCost = parseFloat(document.getElementById('addon-pa').value) || 0;
-  var watchCost = parseFloat(document.getElementById('addon-watches').value) || 0;
-  var tabletCost = parseFloat(document.getElementById('addon-tablets').value) || 0;
-  var accCost = parseFloat(document.getElementById('addon-acc').value) || 0;
-
-  var totalWireless = wirelessPlanTotal + nuaCost + turboCost + paCost + watchCost + tabletCost + accCost;
-  var totalHousehold = totalWireless + window.broadbandCost + window.dtvCost;
-
-  var monthlySavings = Number((totalInput - totalHousehold).toFixed(2));
-  var wirelessOnlySavings = Math.max(0, Number((totalInput - wirelessPlanTotal).toFixed(2)));
-
-  // UI Updates
-  document.getElementById('wireless-pool').textContent = "Wireless Base: $" + wirelessPlanTotal.toFixed(2) + "/mo";
-  document.getElementById('pool-badge-broadband').textContent = "Pool: +$" + wirelessOnlySavings.toFixed(2) + "/mo";
-  document.getElementById('pool-badge-devices').textContent = "Pool: +$" + wirelessOnlySavings.toFixed(2) + "/mo";
-
-  document.getElementById('sum-new-total').textContent = "$" + totalHousehold.toFixed(2) + "/mo";
-  var saveBox = document.getElementById('sum-savings-box');
-  if (monthlySavings >= 0) {
-    saveBox.style.color = "#4ADE80";
-    saveBox.style.background = "linear-gradient(180deg, rgba(6, 95, 70, 0.95) 0%, rgba(4, 78, 57, 0.95) 100%)";
-    saveBox.textContent = "Saves $" + monthlySavings.toFixed(2) + "/mo vs Old Bill!";
-  } else {
-    saveBox.style.color = "#F87171";
-    saveBox.style.background = "linear-gradient(180deg, rgba(69, 10, 10, 0.95) 0%, rgba(42, 18, 21, 0.95) 100%)";
-    saveBox.textContent = "+$" + Math.abs(monthlySavings).toFixed(2) + "/mo vs Old Bill";
-  }
-
-  // Register Due Today (Indiana 7% Tax + $35 Upgrade Fee)
-  var upCount = parseInt(document.getElementById('upgrade-count').value, 10) || 0;
-  var upVal = parseFloat(document.getElementById('upgrade-val').value) || 1000.00;
-  var dueBox = document.getElementById('due-today-amt');
-  if (upCount > 0) {
-    var tax = upVal * 0.07;
-    var fee = 35.00;
-    var totalDue = upCount * (tax + fee);
-    dueBox.textContent = "$" + totalDue.toFixed(2) + " Due Today (" + upCount + " phones x $" + tax.toFixed(2) + " IN sales tax + $" + fee.toFixed(2) + " upgrade fee)";
-  } else {
-    dueBox.textContent = "No hardware upgrades selected ($0 due today).";
-  }
-
-  // Customer SMS
-  var sms = "AT&T Quote: " + totalLines + " Lines (";
-  var planParts = [];
-  if (premCount > 0) planParts.push(premCount + "x Premium");
-  if (extCount > 0) planParts.push(extCount + "x Extra");
-  if (valCount > 0) planParts.push(valCount + "x Value");
-  sms += planParts.join(", ") + ").\nTotal Monthly: $" + totalHousehold.toFixed(2) + "/mo (w/ AutoPay).\n";
-  if (monthlySavings > 0) sms += "Estimated Savings: $" + monthlySavings.toFixed(2) + "/mo!\n";
-  if (window.broadbandCost > 0) sms += "• Includes AT&T Home Internet ($" + window.broadbandCost.toFixed(2) + "/mo)\n";
-  if (upCount > 0) sms += "• Due Today at Register: $" + (upCount * ((upVal * 0.07) + 35.00)).toFixed(2) + "\n";
-  sms += "Questions? Stop in-store to finalize!";
-  document.getElementById('sms-text').value = sms;
-};
-
-// MULTI-STRAND CHROMATIC FIBER-OPTIC ENGINE
-(function initFiberOpticEngine() {
-  var canvas = document.getElementById('digital-bg-canvas');
-  if (!canvas) return;
-  var ctx = canvas.getContext('2d');
-  var width = 0, height = 0, time = 0;
-  var mouse = { x: -1000, y: -1000, targetX: -1000, targetY: -1000 };
-
-  function resize() {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-  }
-  window.addEventListener('resize', resize);
-  resize();
-
-  window.addEventListener('mousemove', function(e) {
-    mouse.targetX = e.clientX;
-    mouse.targetY = e.clientY;
-  });
-  window.addEventListener('touchmove', function(e) {
-    if (e.touches && e.touches.length > 0) {
-      mouse.targetX = e.touches[0].clientX;
-      mouse.targetY = e.touches[0].clientY;
-    }
-  }, { passive: true });
-
-  var strands = [
-    { color: 'rgba(0, 168, 232, 0.45)', pulseColor: '#38BDF8', speed: 0.009, freq: 0.0022, amp: 85, offset: 0.30, pulses: [0.1, 0.6] },
-    { color: 'rgba(0, 87, 184, 0.55)', pulseColor: '#60A5FA', speed: 0.007, freq: 0.0018, amp: 110, offset: 0.45, pulses: [0.3, 0.8] },
-    { color: 'rgba(168, 85, 247, 0.40)', pulseColor: '#C084FC', speed: 0.011, freq: 0.0026, amp: 75, offset: 0.60, pulses: [0.2, 0.75] },
-    { color: 'rgba(14, 165, 233, 0.35)', pulseColor: '#7DD3FC', speed: 0.008, freq: 0.0015, amp: 95, offset: 0.75, pulses: [0.4, 0.9] },
-    { color: 'rgba(56, 189, 248, 0.25)', pulseColor: '#BAE6FD', speed: 0.012, freq: 0.0030, amp: 65, offset: 0.20, pulses: [0.05, 0.55] },
-    { color: 'rgba(99, 102, 241, 0.35)', pulseColor: '#A5B4FC', speed: 0.006, freq: 0.0016, amp: 120, offset: 0.50, pulses: [0.15, 0.7] }
-  ];
-
-  function draw() {
-    ctx.clearRect(0, 0, width, height);
-    time += 0.012;
-
-    mouse.x += (mouse.targetX - mouse.x) * 0.05;
-    mouse.y += (mouse.targetY - mouse.y) * 0.05;
-
-    for (var i = 0; i < strands.length; i++) {
-      var s = strands[i];
-      ctx.beginPath();
-      ctx.lineWidth = 1.8;
-      ctx.strokeStyle = s.color;
-      ctx.shadowBlur = 12;
-      ctx.shadowColor = s.pulseColor;
-
-      var points = [];
-      for (var x = 0; x <= width; x += 15) {
-        var baseWave = Math.sin(x * s.freq + time * s.speed * 80) * s.amp 
-                     + Math.cos(x * (s.freq * 0.7) - time * s.speed * 50) * (s.amp * 0.45);
-        var y = baseWave + height * s.offset;
-
-        var dx = x - mouse.x;
-        var dy = y - mouse.y;
-        var dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 180) {
-          var force = (180 - dist) / 180;
-          y += Math.sin(dist * 0.05 - time * 2) * 25 * force;
-        }
-
-        points.push({ x: x, y: y });
-        if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-      }
-      ctx.stroke();
-
-      for (var j = 0; j < s.pulses.length; j++) {
-        var pProgress = s.pulses[j];
-        var currentP = (pProgress + time * (s.speed * 0.4)) % 1;
-        var targetIdx = Math.floor(currentP * (points.length - 1));
-        var pt = points[targetIdx];
-        if (pt) {
-          ctx.beginPath();
-          ctx.arc(pt.x, pt.y, 3.5, 0, Math.PI * 2);
-          ctx.fillStyle = s.pulseColor;
-          ctx.shadowBlur = 18;
-          ctx.shadowColor = s.pulseColor;
-          ctx.fill();
-
-          ctx.beginPath();
-          ctx.arc(pt.x, pt.y, 7, 0, Math.PI * 2);
-          ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
-          ctx.lineWidth = 1;
-          ctx.stroke();
-        }
-      }
-    }
-
-    requestAnimationFrame(draw);
-  }
-  draw();
-})();
-
-window.onload = function() {
-  window.runCalc();
-};
-</script>
-
-</body>
-</html>
+      <d
