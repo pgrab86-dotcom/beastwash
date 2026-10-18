@@ -9,18 +9,27 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Solutions Studio">
-<meta name="theme-color" content="#030712">
+<meta name="apple-mobile-web-app-title" content="Elite Rerate">
+<meta name="theme-color" content="#020617">
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='40' fill='%230057B8'/><text x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' font-size='95'>🐆</text></svg>">
 
 <style>
   @page { size: letter landscape; margin: 0.2in; }
   * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
   
+  :root {
+    --neon-cyan: #00F0FF;
+    --neon-blue: #0066FF;
+    --neon-purple: #BD00FF;
+    --neon-green: #00FF66;
+    --neon-amber: #FFB800;
+    --neon-red: #FF0055;
+  }
+
   body {
     margin: 0;
     padding: 14px;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: #F8FAFC;
     background: #020617;
     min-height: 100vh;
@@ -32,7 +41,7 @@
     -webkit-user-select: none;
   }
 
-  /* HARDWARE-ACCELERATED FIBER OPTIC DIGITAL CANVAS */
+  /* HARDWARE-ACCELERATED HIGH-VELOCITY FIBER OPTIC CANVAS */
   #digital-bg-canvas {
     position: fixed;
     top: 0;
@@ -41,50 +50,50 @@
     height: 100vh;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.92;
+    opacity: 0.95;
   }
 
-  /* KINETIC AMBIENT GLOW ORBS */
+  /* KINETIC ELECTRIC LIGHT ORBS */
   .floating-orb {
     position: fixed;
     border-radius: 50%;
-    filter: blur(65px);
+    filter: blur(80px);
     pointer-events: none;
     z-index: 1;
     will-change: transform;
     animation: hyperOrb 10s ease-in-out infinite alternate;
   }
   .orb-1 {
-    width: 420px;
-    height: 420px;
-    background: radial-gradient(circle, rgba(0, 168, 232, 0.45) 0%, rgba(3, 7, 18, 0) 70%);
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, rgba(0, 240, 255, 0.35) 0%, rgba(3, 7, 18, 0) 70%);
     top: -120px;
-    left: 5%;
+    left: -5%;
   }
   .orb-2 {
-    width: 380px;
-    height: 380px;
-    background: radial-gradient(circle, rgba(168, 85, 247, 0.38) 0%, rgba(3, 7, 18, 0) 70%);
+    width: 420px;
+    height: 420px;
+    background: radial-gradient(circle, rgba(189, 0, 255, 0.3) 0%, rgba(3, 7, 18, 0) 70%);
     bottom: -80px;
-    right: 2%;
+    right: -5%;
     animation-duration: 12s;
     animation-delay: -3s;
   }
   @keyframes hyperOrb {
     0% { transform: translate3d(0, 0, 0) scale(1); }
-    50% { transform: translate3d(50px, 70px, 0) scale(1.2); }
-    100% { transform: translate3d(-40px, 50px, 0) scale(0.9); }
+    50% { transform: translate3d(60px, 80px, 0) scale(1.25); }
+    100% { transform: translate3d(-50px, 60px, 0) scale(0.9); }
   }
 
   .app-container {
-    max-width: 920px;
+    max-width: 940px;
     margin: 0 auto;
-    background: rgba(15, 23, 42, 0.74);
-    -webkit-backdrop-filter: blur(40px);
-    backdrop-filter: blur(40px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 20px;
-    box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    background: rgba(10, 16, 30, 0.78);
+    -webkit-backdrop-filter: blur(45px);
+    backdrop-filter: blur(45px);
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    border-radius: 22px;
+    box-shadow: 0 30px 90px -10px rgba(0, 0, 0, 0.95), 0 0 40px rgba(0, 240, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.35);
     overflow: hidden;
     position: relative;
     z-index: 2;
@@ -92,33 +101,70 @@
 
   /* EXECUTIVE HEADER */
   .header {
-    background: linear-gradient(180deg, rgba(0, 87, 184, 0.95) 0%, rgba(2, 63, 137, 0.85) 100%);
-    padding: 14px 20px;
+    background: linear-gradient(180deg, rgba(0, 102, 255, 0.95) 0%, rgba(0, 60, 180, 0.88) 100%);
+    padding: 14px 22px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+    border-bottom: 1px solid rgba(0, 240, 255, 0.4);
+    box-shadow: 0 4px 20px rgba(0, 102, 255, 0.4);
     position: relative;
   }
   .header::after {
     content: "";
     position: absolute;
     top: 0; left: 0; right: 0; height: 50%;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 100%);
     pointer-events: none;
   }
-  .header h1 { margin: 0; font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; text-shadow: 0 2px 8px rgba(0,0,0,0.5); }
-  .header p { margin: 2px 0 0 0; font-size: 8.5px; color: #E0F2FE; font-weight: 500; }
+  .header h1 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 2px 6px rgba(0, 0, 0, 0.6);
+  }
+  .header p { margin: 2px 0 0 0; font-size: 8.5px; color: #E0F2FE; font-weight: 600; letter-spacing: 0.4px; }
   .header-actions { display: flex; gap: 8px; align-items: center; z-index: 2; }
+
+  /* SPEED LEGEND */
+  .speed-legend {
+    background: rgba(3, 7, 18, 0.7);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 8px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    color: #E2E8F0;
+    font-size: 9px;
+  }
+  .legend-items { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .legend-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(20, 30, 50, 0.6);
+    border: 1px solid rgba(0, 240, 255, 0.25);
+    padding: 4px 10px;
+    border-radius: 30px;
+    font-size: 8.5px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  .legend-pill b { color: var(--neon-cyan); text-shadow: 0 0 8px rgba(0, 240, 255, 0.5); }
+  .legend-pill.rocket { border-color: rgba(255, 0, 85, 0.5); background: rgba(45, 10, 25, 0.6); }
+  .legend-pill.rocket b { color: #FF6699; text-shadow: 0 0 8px rgba(255, 0, 85, 0.6); }
 
   /* GLASS SECTION CARDS */
   .section-card {
-    background: linear-gradient(135deg, rgba(30, 41, 59, 0.55) 0%, rgba(15, 23, 42, 0.65) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 14px;
-    margin: 12px 18px;
-    padding: 14px 18px;
-    box-shadow: 0 8px 28px -4px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    background: linear-gradient(135deg, rgba(20, 32, 55, 0.65) 0%, rgba(10, 18, 35, 0.75) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 16px;
+    margin: 14px 20px;
+    padding: 16px 20px;
+    box-shadow: 0 10px 30px -4px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.18);
     position: relative;
     overflow: hidden;
   }
@@ -138,166 +184,179 @@
   }
   .sec-title {
     font-size: 12px;
-    font-weight: 800;
+    font-weight: 900;
     color: #FFF;
     display: flex;
     align-items: center;
     gap: 8px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.6px;
   }
   .pool-pill {
-    background: linear-gradient(180deg, rgba(0, 119, 237, 0.95) 0%, rgba(30, 58, 138, 0.95) 100%);
-    border: 1px solid rgba(56, 189, 248, 0.7);
+    background: linear-gradient(180deg, rgba(0, 102, 255, 0.95) 0%, rgba(0, 45, 140, 0.95) 100%);
+    border: 1.5px solid var(--neon-cyan);
     color: #FFF;
-    padding: 4px 12px;
+    padding: 4px 14px;
     border-radius: 20px;
-    font-size: 9px;
-    font-weight: 800;
-    box-shadow: 0 0 16px rgba(0, 119, 237, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    font-size: 9.5px;
+    font-weight: 900;
+    box-shadow: 0 0 18px rgba(0, 240, 255, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.8);
   }
 
   /* BUTTONS & CONTROLS */
   .btn {
-    background: linear-gradient(180deg, rgba(2, 132, 199, 0.92) 0%, rgba(3, 105, 161, 0.92) 100%);
+    background: linear-gradient(180deg, rgba(0, 102, 255, 0.95) 0%, rgba(0, 60, 180, 0.95) 100%);
     color: #FFF;
-    border: 1px solid rgba(255, 255, 255, 0.28);
-    border-radius: 8px;
-    padding: 7px 14px;
-    font-size: 9.5px;
-    font-weight: 700;
+    border: 1px solid rgba(0, 240, 255, 0.5);
+    border-radius: 9px;
+    padding: 8px 16px;
+    font-size: 10px;
+    font-weight: 800;
     cursor: pointer;
     text-transform: uppercase;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    box-shadow: 0 4px 18px rgba(0, 102, 255, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.4);
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     -webkit-appearance: none;
   }
   .btn:active { transform: scale(0.97); }
-  .btn-print { background: rgba(51, 65, 85, 0.85); border-color: rgba(255,255,255,0.2); }
-  .btn-pres { background: rgba(14, 116, 144, 0.85); border-color: rgba(56, 189, 248, 0.5); }
+  .btn-print { background: rgba(51, 65, 85, 0.85); border-color: rgba(255, 255, 255, 0.25); }
+  .btn-pres {
+    background: linear-gradient(180deg, rgba(14, 116, 144, 0.9) 0%, rgba(6, 78, 99, 0.9) 100%);
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.35);
+  }
   .btn-pres.active {
-    background: linear-gradient(180deg, rgba(245, 158, 11, 0.95) 0%, rgba(217, 119, 6, 0.95) 100%);
+    background: linear-gradient(180deg, rgba(255, 184, 0, 0.95) 0%, rgba(217, 119, 6, 0.95) 100%);
     color: #0F172A;
-    border-color: #FDE68A;
-    box-shadow: 0 0 22px rgba(245, 158, 11, 0.65);
+    border-color: #FFF;
+    box-shadow: 0 0 25px rgba(255, 184, 0, 0.75);
+    font-weight: 900;
   }
 
-  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
-  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
-  .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; }
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 12px; }
 
   .control-group { display: flex; flex-direction: column; gap: 4px; }
-  .control-group label { font-size: 8px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.5px; }
+  .control-group label { font-size: 8px; font-weight: 800; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.6px; }
   
   .control-group input, .control-group select {
-    padding: 9px 12px;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    border-radius: 9px;
-    background: rgba(10, 16, 30, 0.78);
+    padding: 10px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 10px;
+    background: rgba(10, 16, 30, 0.85);
     color: #FFF;
     font-size: 11px;
-    font-weight: 600;
-    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.55), 0 1px 0 rgba(255, 255, 255, 0.08);
+    font-weight: 700;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.6), 0 1px 0 rgba(255, 255, 255, 0.1);
     transition: all 0.2s;
   }
   .control-group input:focus, .control-group select:focus {
     outline: none;
-    border-color: #38BDF8;
-    box-shadow: 0 0 16px rgba(56, 189, 248, 0.5), inset 0 1px 2px rgba(0,0,0,0.4);
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 18px rgba(0, 240, 255, 0.6), inset 0 1px 2px rgba(0,0,0,0.5);
   }
 
   /* GLASS PILL CARDS */
   .pill-option {
-    background: linear-gradient(135deg, rgba(20, 30, 50, 0.65) 0%, rgba(10, 16, 30, 0.72) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 10px;
-    padding: 12px 10px;
+    background: linear-gradient(135deg, rgba(20, 32, 55, 0.7) 0%, rgba(10, 18, 35, 0.8) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 13px 10px;
     text-align: center;
     cursor: pointer;
     transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.12);
   }
   .pill-option::before {
     content: "";
     position: absolute;
     top: 0; left: 0; right: 0; height: 50%;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 100%);
     pointer-events: none;
   }
   .pill-option:hover {
-    border-color: rgba(56, 189, 248, 0.6);
+    border-color: var(--neon-cyan);
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 168, 232, 0.35), inset 0 1px 0 rgba(255,255,255,0.25);
+    box-shadow: 0 8px 26px rgba(0, 240, 255, 0.4), inset 0 1px 0 rgba(255,255,255,0.3);
   }
   .pill-option.active {
-    background: linear-gradient(135deg, rgba(30, 58, 138, 0.88) 0%, rgba(15, 23, 42, 0.96) 100%);
-    border: 1.5px solid #38BDF8;
-    box-shadow: 0 0 25px rgba(56, 189, 248, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    background: linear-gradient(135deg, rgba(0, 102, 255, 0.85) 0%, rgba(15, 23, 42, 0.95) 100%);
+    border: 1.5px solid var(--neon-cyan);
+    box-shadow: 0 0 26px rgba(0, 240, 255, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.45);
   }
-  .pill-title { font-size: 9.5px; font-weight: 800; color: #FFF; }
-  .pill-price { font-size: 13.5px; font-weight: 900; color: #38BDF8; margin: 4px 0; text-shadow: 0 0 10px rgba(56,189,248,0.6); }
-  .pill-sub { font-size: 7.5px; color: #94A3B8; font-weight: 500; }
+  .pill-title { font-size: 10px; font-weight: 900; color: #FFF; }
+  .pill-price { font-size: 14px; font-weight: 900; color: var(--neon-cyan); margin: 4px 0; text-shadow: 0 0 12px rgba(0, 240, 255, 0.7); }
+  .pill-sub { font-size: 7.5px; color: #94A3B8; font-weight: 600; }
 
   /* COUNTER ROW */
   .counter-row {
-    background: linear-gradient(135deg, rgba(20, 30, 50, 0.68) 0%, rgba(10, 16, 30, 0.75) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 10px;
-    padding: 12px 16px;
+    background: linear-gradient(135deg, rgba(20, 32, 55, 0.72) 0%, rgba(10, 18, 35, 0.82) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 12px;
+    padding: 13px 18px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 9px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.12);
+    margin-bottom: 10px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
   }
   .counter-info { display: flex; flex-direction: column; gap: 2px; }
-  .counter-title { font-size: 11.5px; font-weight: 800; color: #FFF; display: flex; align-items: center; gap: 6px; }
+  .counter-title { font-size: 12px; font-weight: 900; color: #FFF; display: flex; align-items: center; gap: 6px; }
   .counter-desc { font-size: 8px; color: #94A3B8; font-weight: 500; }
   
   .counter-controls { display: flex; align-items: center; gap: 12px; }
   .btn-circle {
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
-    background: linear-gradient(180deg, rgba(40, 55, 80, 0.95) 0%, rgba(20, 30, 50, 0.95) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.28);
+    background: linear-gradient(180deg, rgba(40, 60, 95, 0.95) 0%, rgba(15, 25, 45, 0.95) 100%);
+    border: 1px solid rgba(0, 240, 255, 0.4);
     color: #FFF;
-    font-size: 15px;
-    font-weight: 800;
+    font-size: 16px;
+    font-weight: 900;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.4), 0 0 10px rgba(0, 240, 255, 0.25), inset 0 1px 0 rgba(255,255,255,0.35);
     transition: transform 0.15s ease;
   }
   .btn-circle:active { transform: scale(0.9); }
-  .counter-val { font-size: 14px; font-weight: 900; color: #38BDF8; min-width: 18px; text-align: center; text-shadow: 0 0 10px rgba(56,189,248,0.6); }
+  .counter-val {
+    font-size: 15px;
+    font-weight: 900;
+    color: var(--neon-cyan);
+    min-width: 20px;
+    text-align: center;
+    text-shadow: 0 0 12px rgba(0, 240, 255, 0.8);
+  }
 
   /* CALLOUT BOXES */
   .callout-box {
-    background: rgba(42, 18, 21, 0.78);
-    border: 1px solid rgba(239, 68, 68, 0.55);
-    border-radius: 9px;
-    padding: 10px 14px;
+    background: rgba(45, 10, 25, 0.8);
+    border: 1px solid var(--neon-red);
+    border-radius: 10px;
+    padding: 12px 16px;
     margin-bottom: 12px;
     font-size: 8.5px;
-    line-height: 1.4;
-    box-shadow: 0 0 20px rgba(239, 68, 68, 0.2), inset 0 1px 0 rgba(255,255,255,0.12);
+    line-height: 1.45;
+    box-shadow: 0 0 25px rgba(255, 0, 85, 0.35), inset 0 1px 0 rgba(255,255,255,0.15);
   }
-  .callout-box b { color: #FCA5A5; }
+  .callout-box b { color: #FF6699; text-shadow: 0 0 8px rgba(255, 0, 85, 0.6); }
 
   /* SUMMARY CARD */
   .summary-card {
-    background: linear-gradient(135deg, rgba(30, 58, 138, 0.7) 0%, rgba(15, 23, 42, 0.94) 100%);
-    border: 1.5px solid #38BDF8;
-    box-shadow: 0 0 40px rgba(56, 189, 248, 0.4), inset 0 1px 0 rgba(255,255,255,0.35);
+    background: linear-gradient(135deg, rgba(0, 102, 255, 0.75) 0%, rgba(10, 18, 35, 0.96) 100%);
+    border: 1.5px solid var(--neon-cyan);
+    box-shadow: 0 0 45px rgba(0, 240, 255, 0.45), inset 0 1px 0 rgba(255,255,255,0.4);
   }
   .summary-grid {
     display: flex;
@@ -307,47 +366,54 @@
     gap: 14px;
   }
   .sum-left { display: flex; flex-direction: column; gap: 2px; }
-  .sum-label { font-size: 9px; font-weight: 800; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.5px; }
-  .sum-total { font-size: 32px; font-weight: 900; color: #FFF; text-shadow: 0 0 20px rgba(56,189,248,0.5); }
+  .sum-label { font-size: 9px; font-weight: 800; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.6px; }
+  .sum-total {
+    font-size: 34px;
+    font-weight: 900;
+    color: #FFF;
+    text-shadow: 0 0 25px rgba(0, 240, 255, 0.7), 0 2px 10px rgba(0, 0, 0, 0.8);
+  }
   .sum-savings {
-    background: linear-gradient(180deg, rgba(6, 95, 70, 0.95) 0%, rgba(4, 78, 57, 0.95) 100%);
-    border: 1px solid rgba(74, 222, 128, 0.6);
-    color: #4ADE80;
-    padding: 9px 16px;
-    border-radius: 10px;
-    font-size: 13.5px;
+    background: linear-gradient(180deg, rgba(0, 255, 102, 0.95) 0%, rgba(0, 180, 70, 0.95) 100%);
+    border: 1.5px solid #FFF;
+    color: #030712;
+    padding: 10px 18px;
+    border-radius: 12px;
+    font-size: 14px;
     font-weight: 900;
     text-align: right;
-    box-shadow: 0 0 25px rgba(74, 222, 128, 0.4), inset 0 1px 0 rgba(255,255,255,0.35);
+    box-shadow: 0 0 30px rgba(0, 255, 102, 0.6), inset 0 1px 0 rgba(255,255,255,0.5);
+    text-shadow: 0 1px 0 rgba(255,255,255,0.4);
   }
 
   /* DUE TODAY AT REGISTER */
   .due-box {
-    background: rgba(10, 25, 47, 0.82);
-    border: 1px dashed rgba(56, 189, 248, 0.55);
-    border-radius: 10px;
-    padding: 12px 16px;
-    margin-top: 12px;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    background: rgba(10, 25, 47, 0.85);
+    border: 1px dashed var(--neon-cyan);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-top: 14px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 0 15px rgba(0, 240, 255, 0.15);
   }
-  .due-title { font-size: 10px; font-weight: 800; color: #FBBF24; text-transform: uppercase; margin-bottom: 4px; }
-  .due-amt { font-size: 16px; font-weight: 900; color: #FFF; margin-bottom: 2px; }
-  .due-sub { font-size: 7.5px; color: #94A3B8; }
+  .due-title { font-size: 10.5px; font-weight: 900; color: var(--neon-amber); text-transform: uppercase; margin-bottom: 4px; text-shadow: 0 0 10px rgba(255, 184, 0, 0.6); }
+  .due-amt { font-size: 17px; font-weight: 900; color: #FFF; margin-bottom: 2px; }
+  .due-sub { font-size: 7.5px; color: #94A3B8; font-weight: 500; }
 
   /* OPUS CHECKLIST */
   .checklist {
-    background: rgba(10, 16, 30, 0.75);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 10px;
-    padding: 12px 16px;
-    margin-top: 12px;
+    background: rgba(10, 16, 30, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-top: 14px;
     display: flex;
     flex-direction: column;
-    gap: 7px;
+    gap: 8px;
     font-size: 8.5px;
     color: #CBD5E1;
   }
-  .check-item { display: flex; align-items: center; gap: 8px; }
+  .check-item { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+  .check-item span { color: var(--neon-green); font-weight: 900; text-shadow: 0 0 8px rgba(0, 255, 102, 0.7); }
 
   /* PRESENTATION MODE OVERRIDES */
   body.presentation-mode .rep-only { display: none !important; }
@@ -359,7 +425,7 @@
 </head>
 <body>
 
-<!-- HARDWARE-ACCELERATED HIGH-VELOCITY FIBER OPTIC CANVAS -->
+<!-- HARDWARE-ACCELERATED HIGH-VELOCITY FIBER CANVAS -->
 <canvas id="digital-bg-canvas"></canvas>
 
 <!-- KINETIC LIGHT ORBS -->
@@ -519,7 +585,7 @@
       <div class="pool-pill" id="pool-badge-broadband">Pool: +$50.00/mo</div>
     </div>
 
-    <div style="font-size:8.5px; font-weight:800; color:#38BDF8; margin-bottom:6px;">Option A: Home Internet Consolidation</div>
+    <div style="font-size:8.5px; font-weight:800; color:var(--neon-cyan); margin-bottom:6px;">Option A: Home Internet Consolidation</div>
     <div class="grid-4" style="margin-bottom:12px;">
       <div class="pill-option active" id="bb-none" onclick="window.selectBroadband(0, this)">
         <div class="pill-title">None</div>
@@ -543,7 +609,7 @@
       </div>
     </div>
 
-    <div style="font-size:8.5px; font-weight:800; color:#C084FC; margin-bottom:6px;">Option B: DIRECTV via Internet Revision</div>
+    <div style="font-size:8.5px; font-weight:800; color:var(--neon-purple); margin-bottom:6px;">Option B: DIRECTV via Internet Revision</div>
     <div class="grid-3">
       <div class="pill-option active" id="dtv-none" onclick="window.selectDTV(0, this)">
         <div class="pill-title">No TV</div>
@@ -632,7 +698,7 @@
       <div class="due-sub">*Estimates 7% IN sales tax on retail device value + $35 upgrade fee per device.</div>
     </div>
 
-    <div class="grid-2" style="margin-top:12px;">
+    <div class="grid-2" style="margin-top:14px;">
       <div class="control-group">
         <label>Upgrading Phone Count</label>
         <select id="upgrade-count" onchange="window.runCalc()">
@@ -654,7 +720,7 @@
     </div>
 
     <div class="checklist rep-only">
-      <div style="font-weight:800; color:#FBBF24; text-transform:uppercase;">📝 OPUS ORDER CHECKLIST & AUDIT LOG</div>
+      <div style="font-weight:900; color:var(--neon-amber); text-transform:uppercase; letter-spacing:0.5px;">📝 OPUS ORDER CHECKLIST & AUDIT LOG</div>
       <div class="check-item"><span>✔</span> Verify and enroll customer in Debit/Checking AutoPay (-$10/line off base).</div>
       <div class="check-item"><span>✔</span> Confirm Employer or Union FAN discount attaches ($10/L off Premium drops to Extra price).</div>
       <div class="check-item"><span>✔</span> Verify Next Up Anytime ($10/line) on all eligible financing agreements.</div>
@@ -663,7 +729,7 @@
 
     <div class="control-group" style="margin-top:14px;">
       <label>📱 Instant Customer SMS Quote</label>
-      <textarea id="sms-text" style="width:100%; height:70px; background:rgba(10,16,30,0.85); border:1px solid rgba(255,255,255,0.12); color:#E2E8F0; border-radius:9px; padding:10px; font-family:inherit; resize:none;" readonly></textarea>
+      <textarea id="sms-text" style="width:100%; height:70px; background:rgba(10,16,30,0.88); border:1px solid rgba(0, 240, 255, 0.35); color:#E2E8F0; border-radius:10px; padding:10px; font-family:inherit; resize:none;" readonly></textarea>
       <button type="button" class="btn" style="margin-top:8px; width:100%;" onclick="window.copySMS()">📋 Copy Text for Customer</button>
     </div>
   </div>
@@ -822,12 +888,12 @@ window.runCalc = function() {
   document.getElementById('sum-new-total').textContent = "$" + totalHousehold.toFixed(2) + "/mo";
   var saveBox = document.getElementById('sum-savings-box');
   if (monthlySavings >= 0) {
-    saveBox.style.color = "#4ADE80";
-    saveBox.style.background = "linear-gradient(180deg, rgba(6, 95, 70, 0.95) 0%, rgba(4, 78, 57, 0.95) 100%)";
+    saveBox.style.color = "#030712";
+    saveBox.style.background = "linear-gradient(180deg, rgba(0, 255, 102, 0.95) 0%, rgba(0, 180, 70, 0.95) 100%)";
     saveBox.textContent = "Saves $" + monthlySavings.toFixed(2) + "/mo vs Old Bill!";
   } else {
-    saveBox.style.color = "#F87171";
-    saveBox.style.background = "linear-gradient(180deg, rgba(69, 10, 10, 0.95) 0%, rgba(42, 18, 21, 0.95) 100%)";
+    saveBox.style.color = "#FFF";
+    saveBox.style.background = "linear-gradient(180deg, rgba(255, 0, 85, 0.95) 0%, rgba(180, 0, 60, 0.95) 100%)";
     saveBox.textContent = "+$" + Math.abs(monthlySavings).toFixed(2) + "/mo vs Old Bill";
   }
 
@@ -858,8 +924,8 @@ window.runCalc = function() {
   document.getElementById('sms-text').value = sms;
 };
 
-// MULTI-STRAND CHROMATIC FIBER-OPTIC & PHOTON ENGINE (TOUCH BURST ENABLED, ZERO MOUSE TRACKING)
-(function initHyperFiberEngine() {
+// HIGH-VELOCITY ELECTRIC FIBER-OPTIC & TOUCH BURST ENGINE
+(function initHyperElectricEngine() {
   var canvas = document.getElementById('digital-bg-canvas');
   if (!canvas) return;
   var ctx = canvas.getContext('2d');
@@ -873,37 +939,37 @@ window.runCalc = function() {
   window.addEventListener('resize', resize);
   resize();
 
-  // Touch particle shockwave generator
   window.addEventListener('touchstart', function(e) {
     if (e.touches && e.touches.length > 0) {
-      touchBursts.push({
-        x: e.touches[0].clientX,
-        y: e.touches[0].clientY,
-        radius: 0,
-        maxRadius: 220,
-        opacity: 1
-      });
+      for (var t = 0; t < e.touches.length; t++) {
+        touchBursts.push({
+          x: e.touches[t].clientX,
+          y: e.touches[t].clientY,
+          radius: 0,
+          maxRadius: 260,
+          opacity: 1
+        });
+      }
     }
   }, { passive: true });
 
   var strands = [
-    { color: 'rgba(0, 168, 232, 0.55)', pulseColor: '#38BDF8', speed: 0.024, freq: 0.0028, amp: 95, offset: 0.28, pulses: [0.05, 0.45, 0.85] },
-    { color: 'rgba(0, 87, 184, 0.65)', pulseColor: '#60A5FA', speed: 0.018, freq: 0.0020, amp: 125, offset: 0.46, pulses: [0.2, 0.6, 0.95] },
-    { color: 'rgba(168, 85, 247, 0.50)', pulseColor: '#C084FC', speed: 0.028, freq: 0.0032, amp: 85, offset: 0.62, pulses: [0.15, 0.55, 0.8] },
-    { color: 'rgba(14, 165, 233, 0.45)', pulseColor: '#7DD3FC', speed: 0.020, freq: 0.0018, amp: 105, offset: 0.78, pulses: [0.3, 0.7] },
-    { color: 'rgba(56, 189, 248, 0.35)', pulseColor: '#BAE6FD', speed: 0.030, freq: 0.0035, amp: 75, offset: 0.18, pulses: [0.1, 0.5, 0.9] },
-    { color: 'rgba(99, 102, 241, 0.45)', pulseColor: '#A5B4FC', speed: 0.016, freq: 0.0022, amp: 135, offset: 0.52, pulses: [0.25, 0.75] }
+    { color: 'rgba(0, 240, 255, 0.75)', pulseColor: '#00F0FF', speed: 0.038, freq: 0.0032, amp: 105, offset: 0.26, pulses: [0.05, 0.4, 0.8] },
+    { color: 'rgba(0, 102, 255, 0.85)', pulseColor: '#38BDF8', speed: 0.026, freq: 0.0022, amp: 135, offset: 0.44, pulses: [0.15, 0.55, 0.9] },
+    { color: 'rgba(189, 0, 255, 0.7)', pulseColor: '#E879F9', speed: 0.042, freq: 0.0036, amp: 95, offset: 0.60, pulses: [0.1, 0.5, 0.85] },
+    { color: 'rgba(0, 255, 102, 0.65)', pulseColor: '#6EE7B7', speed: 0.032, freq: 0.0026, amp: 115, offset: 0.76, pulses: [0.25, 0.7] },
+    { color: 'rgba(255, 0, 85, 0.5)', pulseColor: '#FDA4AF', speed: 0.045, freq: 0.0040, amp: 85, offset: 0.16, pulses: [0.08, 0.48, 0.88] },
+    { color: 'rgba(255, 184, 0, 0.6)', pulseColor: '#FDE68A', speed: 0.022, freq: 0.0024, amp: 145, offset: 0.52, pulses: [0.2, 0.65] }
   ];
 
   function draw() {
     ctx.clearRect(0, 0, width, height);
-    time += 0.022; // High velocity step
+    time += 0.030;
 
-    // Process touch shockwaves
     for (var b = touchBursts.length - 1; b >= 0; b--) {
       var burst = touchBursts[b];
-      burst.radius += 7;
-      burst.opacity -= 0.028;
+      burst.radius += 10;
+      burst.opacity -= 0.032;
 
       if (burst.opacity <= 0 || burst.radius >= burst.maxRadius) {
         touchBursts.splice(b, 1);
@@ -912,35 +978,34 @@ window.runCalc = function() {
 
       ctx.beginPath();
       ctx.arc(burst.x, burst.y, burst.radius, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(56, 189, 248, ' + burst.opacity * 0.7 + ')';
-      ctx.lineWidth = 2;
-      ctx.shadowBlur = 15;
-      ctx.shadowColor = '#38BDF8';
+      ctx.strokeStyle = 'rgba(0, 240, 255, ' + (burst.opacity * 0.8) + ')';
+      ctx.lineWidth = 2.5;
+      ctx.shadowBlur = 25;
+      ctx.shadowColor = '#00F0FF';
       ctx.stroke();
     }
 
     for (var i = 0; i < strands.length; i++) {
       var s = strands[i];
       ctx.beginPath();
-      ctx.lineWidth = 2.2;
+      ctx.lineWidth = 2.6;
       ctx.strokeStyle = s.color;
-      ctx.shadowBlur = 16;
+      ctx.shadowBlur = 20;
       ctx.shadowColor = s.pulseColor;
 
       var points = [];
-      for (var x = 0; x <= width; x += 12) {
-        var baseWave = Math.sin(x * s.freq + time * s.speed * 80) * s.amp 
-                     + Math.cos(x * (s.freq * 0.75) - time * s.speed * 50) * (s.amp * 0.5);
+      for (var x = 0; x <= width; x += 10) {
+        var baseWave = Math.sin(x * s.freq + time * s.speed * 85) * s.amp 
+                     + Math.cos(x * (s.freq * 0.8) - time * s.speed * 55) * (s.amp * 0.55);
         var y = baseWave + height * s.offset;
 
-        // Interactive touch warp deflection
         for (var tb = 0; tb < touchBursts.length; tb++) {
           var tBurst = touchBursts[tb];
           var dx = x - tBurst.x;
           var dy = y - tBurst.y;
           var dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < tBurst.radius + 60 && dist > tBurst.radius - 60) {
-            y += Math.sin((dist - tBurst.radius) * 0.1) * 35 * tBurst.opacity;
+          if (dist < tBurst.radius + 70 && dist > tBurst.radius - 70) {
+            y += Math.sin((dist - tBurst.radius) * 0.1) * 45 * tBurst.opacity;
           }
         }
 
@@ -949,40 +1014,36 @@ window.runCalc = function() {
       }
       ctx.stroke();
 
-      // High-Velocity Photons with Motion Trails
       for (var j = 0; j < s.pulses.length; j++) {
         var pProgress = s.pulses[j];
-        var currentP = (pProgress + time * (s.speed * 0.6)) % 1;
+        var currentP = (pProgress + time * (s.speed * 0.75)) % 1;
         var targetIdx = Math.floor(currentP * (points.length - 1));
         var pt = points[targetIdx];
         if (pt) {
-          // Trail
-          var prevIdx = Math.max(0, targetIdx - 3);
+          var prevIdx = Math.max(0, targetIdx - 4);
           var prevPt = points[prevIdx];
           if (prevPt) {
             ctx.beginPath();
             ctx.moveTo(prevPt.x, prevPt.y);
             ctx.lineTo(pt.x, pt.y);
             ctx.strokeStyle = s.pulseColor;
-            ctx.lineWidth = 4;
-            ctx.shadowBlur = 25;
+            ctx.lineWidth = 5;
+            ctx.shadowBlur = 30;
             ctx.shadowColor = s.pulseColor;
             ctx.stroke();
           }
 
-          // Photon head
           ctx.beginPath();
-          ctx.arc(pt.x, pt.y, 4, 0, Math.PI * 2);
+          ctx.arc(pt.x, pt.y, 4.5, 0, Math.PI * 2);
           ctx.fillStyle = '#FFFFFF';
-          ctx.shadowBlur = 30;
-          ctx.shadowColor = s.pulseColor;
+          ctx.shadowBlur = 35;
+          ctx.shadowColor = '#FFFFFF';
           ctx.fill();
 
-          // Outer energy bloom
           ctx.beginPath();
-          ctx.arc(pt.x, pt.y, 9, 0, Math.PI * 2);
+          ctx.arc(pt.x, pt.y, 11, 0, Math.PI * 2);
           ctx.strokeStyle = s.pulseColor;
-          ctx.lineWidth = 1.2;
+          ctx.lineWidth = 1.5;
           ctx.stroke();
         }
       }
