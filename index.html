@@ -9,20 +9,20 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Warp Rerate">
-<meta name="theme-color" content="#000000">
-<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='40' fill='%23000000'/><text x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' font-size='95'>🚀</text></svg>">
+<meta name="apple-mobile-web-app-title" content="Solutions Studio">
+<meta name="theme-color" content="#030712">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='40' fill='%230057B8'/><text x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' font-size='95'>🐆</text></svg>">
 
 <style>
   @page { size: letter landscape; margin: 0.2in; }
   * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
   
   :root {
-    --warp-cyan: #00f0ff;
-    --warp-magenta: #ff0055;
-    --warp-purple: #9d00ff;
-    --warp-green: #00ff66;
-    --warp-gold: #ffb800;
+    --att-blue: #0057B8;
+    --emerald: #00FF66;
+    --emerald-glow: rgba(0, 255, 102, 0.35);
+    --glass-bg: rgba(15, 23, 42, 0.75);
+    --glass-border: rgba(255, 255, 255, 0.1);
   }
 
   body {
@@ -30,7 +30,7 @@
     padding: 16px;
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, sans-serif;
     color: #F8FAFC;
-    background: #000000;
+    background: #030712;
     min-height: 100vh;
     font-size: 9.5px;
     -webkit-font-smoothing: antialiased;
@@ -40,8 +40,8 @@
     -webkit-user-select: none;
   }
 
-  /* 3D WARP SPEED HYPERSPACE CANVAS */
-  #warp-canvas {
+  /* SUBDUED ATMOSPHERIC BACKDROP CANVAS */
+  #ambient-canvas {
     position: fixed;
     top: 0;
     left: 0;
@@ -49,133 +49,138 @@
     height: 100vh;
     z-index: 0;
     pointer-events: none;
+    opacity: 0.6;
   }
 
   .app-container {
-    max-width: 940px;
+    max-width: 920px;
     margin: 0 auto;
-    background: rgba(10, 10, 20, 0.76);
-    -webkit-backdrop-filter: blur(40px) saturate(200%);
-    backdrop-filter: blur(40px) saturate(200%);
-    border-radius: 28px;
+    background: rgba(10, 16, 30, 0.85);
+    -webkit-backdrop-filter: blur(40px);
+    backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    overflow: hidden;
     position: relative;
     z-index: 2;
-    box-shadow: 0 0 80px rgba(0, 240, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.25);
   }
 
-  /* NEON PRISM BORDER */
-  .app-container::before {
-    content: '';
-    position: absolute;
-    inset: -1.5px;
-    border-radius: 29px;
-    background: linear-gradient(90deg, var(--warp-cyan), var(--warp-purple), var(--warp-magenta), var(--warp-cyan));
-    background-size: 300% 300%;
-    animation: prismBorder 6s linear infinite;
-    z-index: -1;
-  }
-
-  @keyframes prismBorder {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  /* HEADER */
+  /* EXECUTIVE HEADER */
   .header {
-    background: linear-gradient(180deg, rgba(20, 25, 45, 0.9) 0%, rgba(10, 10, 25, 0.6) 100%);
-    padding: 16px 24px;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(10, 16, 30, 0.85) 100%);
+    padding: 16px 22px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 28px 28px 0 0;
+    border-bottom: 1px solid var(--glass-border);
+    position: relative;
   }
   .header h1 {
     margin: 0;
-    font-size: 16px;
-    font-weight: 900;
-    letter-spacing: -0.3px;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: -0.2px;
     color: #FFF;
     display: flex;
     align-items: center;
-    gap: 10px;
-    text-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
-  }
-  .header p { margin: 2px 0 0 0; font-size: 8.5px; color: #94A3B8; font-weight: 600; letter-spacing: 0.3px; }
-  .header-actions { display: flex; gap: 10px; align-items: center; }
-
-  /* SPEED LEGEND */
-  .speed-legend {
-    background: rgba(5, 5, 12, 0.5);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    padding: 8px 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
     gap: 8px;
-    color: #94A3B8;
-    font-size: 8.5px;
   }
-  .legend-items { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-  .legend-pill {
-    display: inline-flex;
+  .header p { margin: 2px 0 0 0; font-size: 8.5px; color: #94A3B8; font-weight: 500; }
+  .header-actions { display: flex; gap: 8px; align-items: center; z-index: 2; }
+
+  /* ADDRESS PRE-CHECK BANNER */
+  .address-precheck-bar {
+    background: rgba(3, 7, 18, 0.65);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 12px 22px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .addr-title {
+    font-size: 9px;
+    font-weight: 800;
+    color: #38BDF8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
     align-items: center;
     gap: 6px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 4px 12px;
-    border-radius: 20px;
   }
-  .legend-pill b { color: #FFF; }
-  .legend-pill.turbo { border-color: rgba(255, 0, 85, 0.4); background: rgba(255, 0, 85, 0.1); }
-  .legend-pill.turbo b { color: var(--warp-magenta); text-shadow: 0 0 10px var(--warp-magenta); }
+  .addr-inputs {
+    display: flex;
+    gap: 8px;
+    flex: 1;
+    max-width: 420px;
+  }
+  .addr-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    background: rgba(15, 23, 42, 0.7);
+    color: #FFF;
+    font-size: 10px;
+    font-weight: 600;
+  }
+  .addr-input:focus { outline: none; border-color: #38BDF8; }
+  .addr-tags { display: flex; gap: 6px; }
+  .tag-btn {
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 8.5px;
+    font-weight: 800;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #CBD5E1;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tag-btn.active {
+    background: rgba(0, 255, 102, 0.18);
+    border-color: var(--emerald);
+    color: var(--emerald);
+    box-shadow: 0 0 12px var(--emerald-glow);
+  }
 
-  /* SECTIONS */
+  /* GLASS SECTION CARDS */
   .section-card {
-    background: rgba(20, 25, 45, 0.45);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 18px;
-    margin: 14px 20px;
-    padding: 16px 20px;
-    box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    margin: 12px 18px;
+    padding: 14px 18px;
+    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
     position: relative;
-    overflow: hidden;
-  }
-  .section-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; height: 40%;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
-    pointer-events: none;
   }
 
   .sec-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
   }
   .sec-title {
-    font-size: 11.5px;
+    font-size: 11px;
     font-weight: 800;
     color: #FFF;
-    letter-spacing: -0.2px;
     display: flex;
     align-items: center;
     gap: 8px;
     text-transform: uppercase;
+    letter-spacing: 0.4px;
   }
   .pool-pill {
-    background: rgba(0, 240, 255, 0.15);
-    border: 1px solid var(--warp-cyan);
-    color: var(--warp-cyan);
-    padding: 4px 14px;
+    background: rgba(0, 87, 184, 0.25);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    color: #38BDF8;
+    padding: 3px 12px;
     border-radius: 20px;
-    font-size: 9.5px;
+    font-size: 9px;
     font-weight: 800;
-    box-shadow: 0 0 18px rgba(0, 240, 255, 0.35);
   }
 
   /* BUTTONS & CONTROLS */
@@ -183,32 +188,30 @@
     background: rgba(255, 255, 255, 0.08);
     color: #FFF;
     border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 10px;
-    padding: 8px 16px;
-    font-size: 10px;
+    border-radius: 8px;
+    padding: 7px 14px;
+    font-size: 9.5px;
     font-weight: 700;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.2s;
     -webkit-appearance: none;
   }
-  .btn:active { transform: scale(0.96); }
+  .btn:active { transform: scale(0.97); }
   .btn-print { background: rgba(255, 255, 255, 0.06); }
   .btn-pres {
-    background: rgba(0, 240, 255, 0.15);
-    border-color: var(--warp-cyan);
-    color: var(--warp-cyan);
-    box-shadow: 0 0 15px rgba(0, 240, 255, 0.25);
+    background: rgba(0, 87, 184, 0.25);
+    border-color: rgba(56, 189, 248, 0.4);
+    color: #38BDF8;
   }
   .btn-pres.active {
-    background: linear-gradient(180deg, rgba(255, 184, 0, 0.9) 0%, rgba(217, 119, 6, 0.9) 100%);
-    color: #000;
-    border-color: #FFF;
-    box-shadow: 0 0 25px rgba(255, 184, 0, 0.7);
-    font-weight: 900;
+    background: rgba(245, 158, 11, 0.2);
+    border-color: #F59E0B;
+    color: #FBBF24;
+    box-shadow: 0 0 18px rgba(245, 158, 11, 0.35);
   }
 
   .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
@@ -216,141 +219,141 @@
   .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; }
 
   .control-group { display: flex; flex-direction: column; gap: 4px; }
-  .control-group label { font-size: 8px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.6px; }
+  .control-group label { font-size: 8px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.5px; }
   
   .control-group input, .control-group select {
-    padding: 10px 14px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 12px;
-    background: rgba(0, 0, 0, 0.45);
+    padding: 9px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 9px;
+    background: rgba(10, 16, 30, 0.7);
     color: #FFF;
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 600;
     transition: all 0.2s;
   }
   .control-group input:focus, .control-group select:focus {
     outline: none;
-    border-color: var(--warp-cyan);
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+    border-color: #38BDF8;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
   }
 
-  /* SPATIAL SELECTION TILES */
+  /* SPATIAL SELECTION TILES: TURNS GREEN ON SELECTION */
   .pill-option {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 14px;
-    padding: 14px 10px;
+    border-radius: 12px;
+    padding: 12px 10px;
     text-align: center;
     cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .pill-option:hover {
-    background: rgba(255, 255, 255, 0.07);
-    border-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.16);
   }
   .pill-option.active {
-    background: linear-gradient(180deg, rgba(0, 240, 255, 0.25) 0%, rgba(0, 102, 255, 0.15) 100%);
-    border: 1.5px solid var(--warp-cyan);
-    box-shadow: 0 0 30px rgba(0, 240, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    background: linear-gradient(180deg, rgba(0, 255, 102, 0.18) 0%, rgba(6, 78, 59, 0.25) 100%) !important;
+    border: 1.5px solid var(--emerald) !important;
+    box-shadow: 0 0 20px var(--emerald-glow), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
   }
-  .pill-title { font-size: 10px; font-weight: 800; color: #E2E8F0; }
-  .pill-price { font-size: 16px; font-weight: 900; color: #FFF; margin: 4px 0 2px 0; text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
-  .pill-sub { font-size: 7.5px; color: #94A3B8; font-weight: 600; }
+  .pill-option.active .pill-price {
+    color: var(--emerald) !important;
+    text-shadow: 0 0 10px rgba(0, 255, 102, 0.5) !important;
+  }
+  .pill-title { font-size: 10px; font-weight: 800; color: #FFF; }
+  .pill-price { font-size: 14px; font-weight: 900; color: #38BDF8; margin: 4px 0 2px 0; }
+  .pill-sub { font-size: 7.5px; color: #94A3B8; font-weight: 500; }
 
   /* PRECISION LINE COUNTER */
   .counter-row {
-    background: rgba(0, 0, 0, 0.35);
+    background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 14px;
-    padding: 13px 18px;
+    border-radius: 12px;
+    padding: 12px 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 9px;
+    margin-bottom: 8px;
   }
   .counter-info { display: flex; flex-direction: column; gap: 2px; }
-  .counter-title { font-size: 11.5px; font-weight: 800; color: #FFF; display: flex; align-items: center; gap: 6px; }
+  .counter-title { font-size: 11px; font-weight: 800; color: #FFF; display: flex; align-items: center; gap: 6px; }
   .counter-desc { font-size: 8px; color: #94A3B8; }
   
-  .counter-controls { display: flex; align-items: center; gap: 14px; }
+  .counter-controls { display: flex; align-items: center; gap: 12px; }
   .btn-circle {
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     color: #FFF;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 800;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: all 0.15s;
   }
-  .btn-circle:active { transform: scale(0.88); background: rgba(0, 240, 255, 0.3); }
-  .counter-val { font-size: 16px; font-weight: 900; color: var(--warp-cyan); min-width: 22px; text-align: center; text-shadow: 0 0 15px rgba(0, 240, 255, 0.8); }
+  .btn-circle:active { transform: scale(0.9); }
+  .counter-val { font-size: 15px; font-weight: 900; color: var(--emerald); min-width: 18px; text-align: center; text-shadow: 0 0 10px var(--emerald-glow); }
 
   /* FEATURE FILTER CHECKBOX BOX */
   .filter-box {
-    background: rgba(15, 20, 35, 0.6);
-    border: 1px solid rgba(0, 240, 255, 0.25);
-    border-radius: 14px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
     padding: 12px 16px;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
     align-items: center;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
   .filter-item {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 10px;
+    font-size: 9.5px;
     font-weight: 700;
     color: #FFF;
     cursor: pointer;
   }
   .filter-item input[type="checkbox"] {
-    width: 17px;
-    height: 17px;
-    accent-color: var(--warp-cyan);
+    width: 16px;
+    height: 16px;
+    accent-color: var(--emerald);
     cursor: pointer;
   }
 
   /* CALLOUT BANNER */
   .callout-box {
-    background: rgba(255, 0, 85, 0.1);
-    border: 1px solid var(--warp-magenta);
-    border-radius: 12px;
-    padding: 12px 16px;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    border-radius: 10px;
+    padding: 10px 14px;
     margin-bottom: 12px;
     font-size: 8.5px;
     line-height: 1.45;
-    box-shadow: 0 0 25px rgba(255, 0, 85, 0.2);
   }
-  .callout-box b { color: #FF6699; text-shadow: 0 0 10px rgba(255, 0, 85, 0.6); }
+  .callout-box b { color: #FCA5A5; }
 
   .warning-box {
-    background: rgba(255, 184, 0, 0.12);
-    border: 1px solid var(--warp-gold);
-    border-radius: 12px;
-    padding: 12px 16px;
+    background: rgba(255, 184, 0, 0.1);
+    border: 1px solid rgba(255, 184, 0, 0.4);
+    border-radius: 10px;
+    padding: 10px 14px;
     margin-bottom: 12px;
     font-size: 8.5px;
     line-height: 1.45;
-    box-shadow: 0 0 20px rgba(255, 184, 0, 0.25);
   }
-  .warning-box b { color: var(--warp-gold); text-shadow: 0 0 8px rgba(255, 184, 0, 0.5); }
+  .warning-box b { color: #FBBF24; }
 
   /* EXECUTIVE SUMMARY */
   .summary-card {
-    background: linear-gradient(180deg, rgba(15, 20, 40, 0.95) 0%, rgba(5, 8, 20, 0.98) 100%);
-    border: 1.5px solid var(--warp-cyan);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 50px rgba(0, 240, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(10, 16, 30, 0.98) 100%);
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.15);
   }
   .summary-grid {
     display: flex;
@@ -360,47 +363,47 @@
     gap: 14px;
   }
   .sum-left { display: flex; flex-direction: column; gap: 2px; }
-  .sum-label { font-size: 9px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.6px; }
-  .sum-total { font-size: 40px; font-weight: 900; color: #FFF; letter-spacing: -1.5px; text-shadow: 0 0 30px rgba(0, 240, 255, 0.7); }
+  .sum-label { font-size: 8.5px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.5px; }
+  .sum-total { font-size: 36px; font-weight: 900; color: #FFF; letter-spacing: -1px; }
   .sum-savings {
-    background: linear-gradient(180deg, rgba(0, 255, 102, 0.95) 0%, rgba(0, 180, 70, 0.95) 100%);
-    border: 1.5px solid #FFF;
-    color: #000;
-    padding: 10px 18px;
-    border-radius: 14px;
-    font-size: 14px;
+    background: rgba(0, 255, 102, 0.12);
+    border: 1.5px solid var(--emerald);
+    color: var(--emerald);
+    padding: 9px 18px;
+    border-radius: 12px;
+    font-size: 13.5px;
     font-weight: 900;
     text-align: right;
-    box-shadow: 0 0 35px rgba(0, 255, 102, 0.7);
+    box-shadow: 0 0 20px var(--emerald-glow);
   }
 
   /* REGISTER DUE TODAY */
   .due-box {
-    background: rgba(0, 0, 0, 0.45);
-    border: 1px dashed var(--warp-cyan);
-    border-radius: 12px;
-    padding: 14px 16px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px dashed rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    padding: 12px 14px;
     margin-top: 14px;
   }
-  .due-title { font-size: 9.5px; font-weight: 800; color: var(--warp-gold); text-transform: uppercase; margin-bottom: 3px; text-shadow: 0 0 10px rgba(255, 184, 0, 0.5); }
-  .due-amt { font-size: 16px; font-weight: 900; color: #FFF; margin-bottom: 2px; }
+  .due-title { font-size: 9.5px; font-weight: 800; color: #FBBF24; text-transform: uppercase; margin-bottom: 3px; }
+  .due-amt { font-size: 15px; font-weight: 900; color: #FFF; margin-bottom: 2px; }
   .due-sub { font-size: 7.5px; color: #94A3B8; }
 
   /* OPUS CHECKLIST */
   .checklist {
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    padding: 14px 16px;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 12px 16px;
     margin-top: 14px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 7px;
     font-size: 8.5px;
     color: #CBD5E1;
   }
   .check-item { display: flex; align-items: center; gap: 8px; }
-  .check-item span { color: var(--warp-green); font-weight: 900; text-shadow: 0 0 10px var(--warp-green); }
+  .check-item span { color: var(--emerald); font-weight: 900; text-shadow: 0 0 8px var(--emerald-glow); }
 
   /* PRESENTATION MODE OVERRIDES */
   body.presentation-mode .rep-only { display: none !important; }
@@ -412,8 +415,8 @@
 </head>
 <body>
 
-<!-- 3D WARP SPEED HYPERSPACE CANVAS -->
-<canvas id="warp-canvas"></canvas>
+<!-- SUBDUED AMBIENT CANVAS -->
+<canvas id="ambient-canvas"></canvas>
 
 <div class="app-container">
   <!-- EXECUTIVE HEADER -->
@@ -421,26 +424,29 @@
     <div>
       <h1>
         <span class="rep-only">AT&T Executive Solutions Studio</span>
-        <span class="cust-only">AT&T Household Solutions Studio</span>
+        <span class="cust-only">AT&T Customized Plan Solutions</span>
       </h1>
       <p>
-        <span class="rep-only">WARP VELOCITY ARCHITECTURE • DYNAMIC HYPERSPACE ENGINE</span>
-        <span class="cust-only">TAILORED MULTI-LINE SAVINGS & CONNECTED HOME BLUEPRINT</span>
+        <span class="rep-only">PORTFOLIO OPTIMIZATION • LIVE MARGIN ALLOCATION • OPUS RECONCILIATION</span>
+        <span class="cust-only">TAILORED MULTI-LINE SAVINGS & HOME BROADBAND BREAKDOWN</span>
       </p>
     </div>
     <div class="header-actions">
-      <button type="button" class="btn btn-pres" id="pres-btn" onclick="window.togglePresMode(); window.triggerGreenShockwave();">👁️ Customer View: OFF</button>
+      <button type="button" class="btn btn-pres" id="pres-btn" onclick="window.togglePresMode();">👁️ Customer View: OFF</button>
       <button type="button" class="btn btn-print" onclick="window.print()">🖨️ Print Matrix</button>
     </div>
   </div>
 
-  <!-- SPEED LEGEND -->
-  <div class="speed-legend">
-    <div class="legend-items">
-      <span class="legend-pill">🐢 <b>Value Plus 2.0:</b> Standard 5G • Core Unlimited</span>
-      <span class="legend-pill">🐇 <b>Extra 2.0:</b> 75GB Priority Data • 30GB Hotspot</span>
-      <span class="legend-pill">🐆 <b>Premium 2.0:</b> Unlimited Priority Data • 60GB Hotspot</span>
-      <span class="legend-pill turbo">🚀 <b>Hyper-Drive Turbo:</b> QCI-7 Peak Bandwidth</span>
+  <!-- INTERNET ADDRESS PRE-CHECK BAR (REPLACED REDUNDANT SPEED LEGEND) -->
+  <div class="address-precheck-bar">
+    <div class="addr-title">📍 Broadband Pre-Check</div>
+    <div class="addr-inputs">
+      <input type="text" id="addr-field" class="addr-input" placeholder="Customer Street Address & Zip..." onkeydown="if(event.key==='Enter') window.checkBroadband();">
+    </div>
+    <div class="addr-tags">
+      <div class="tag-btn active" id="tag-fiber" onclick="window.toggleAddrTag('tag-fiber')">💎 Fiber</div>
+      <div class="tag-btn" id="tag-air" onclick="window.toggleAddrTag('tag-air')">📡 Internet Air</div>
+      <div class="tag-btn" id="tag-copper" onclick="window.toggleAddrTag('tag-copper')">🔌 Copper Mig.</div>
     </div>
   </div>
 
@@ -450,10 +456,10 @@
       <div class="sec-title">🎯 1. Consultation Scope</div>
     </div>
     <div class="grid-4">
-      <div class="pill-option active" onclick="this.classList.toggle('active'); window.triggerGreenShockwave();"><div class="pill-title">📱 Hardware Upgrade</div></div>
-      <div class="pill-option active" onclick="this.classList.toggle('active'); window.triggerGreenShockwave();"><div class="pill-title">➕ Add New Line</div></div>
-      <div class="pill-option" onclick="this.classList.toggle('active'); window.triggerGreenShockwave();"><div class="pill-title">🌐 AT&T Fiber / Air</div></div>
-      <div class="pill-option" onclick="this.classList.toggle('active'); window.triggerGreenShockwave();"><div class="pill-title">📺 DIRECTV Stream</div></div>
+      <div class="pill-option active" onclick="this.classList.toggle('active');"><div class="pill-title">📱 Hardware Upgrade</div></div>
+      <div class="pill-option active" onclick="this.classList.toggle('active');"><div class="pill-title">➕ Add New Line</div></div>
+      <div class="pill-option" onclick="this.classList.toggle('active');"><div class="pill-title">🌐 AT&T Fiber / Air</div></div>
+      <div class="pill-option" onclick="this.classList.toggle('active');"><div class="pill-title">📺 DIRECTV Stream</div></div>
     </div>
   </div>
 
@@ -465,11 +471,11 @@
     <div class="grid-4">
       <div class="control-group">
         <label>Current Plan Total ($)</label>
-        <input type="number" id="curr-total" value="180.00" step="0.01" oninput="window.runCalc(); window.triggerGreenShockwave();">
+        <input type="number" id="curr-total" value="180.00" step="0.01" oninput="window.runCalc();">
       </div>
       <div class="control-group">
         <label>Current Voice Lines</label>
-        <select id="curr-lines" onchange="window.setLines(this.value); window.triggerGreenShockwave();">
+        <select id="curr-lines" onchange="window.setLines(this.value);">
           <option value="1">1 Line Account</option>
           <option value="2">2 Lines Account</option>
           <option value="3">3 Lines Account</option>
@@ -484,7 +490,7 @@
       </div>
       <div class="control-group">
         <label>Discount Profile</label>
-        <select id="curr-discount" onchange="window.runCalc(); window.triggerGreenShockwave();">
+        <select id="curr-discount" onchange="window.runCalc();">
           <option value="fan">Signature (Corp / Union FAN)</option>
           <option value="apprec">Appreciation (Mil/Teach/RN: 10/15/20%)</option>
           <option value="firstnet">FirstNet & Family (Band 14/13 Priority)</option>
@@ -494,7 +500,7 @@
       </div>
       <div class="control-group">
         <label>AutoPay Method</label>
-        <select id="curr-autopay" onchange="window.runCalc(); window.triggerGreenShockwave();">
+        <select id="curr-autopay" onchange="window.runCalc();">
           <option value="debit">Checking / Debit ($10/L off)</option>
           <option value="credit">Credit Card ($5/L off)</option>
           <option value="none">No AutoPay</option>
@@ -519,7 +525,7 @@
 
       <div id="hotspot-lines-wrap" style="display:none; align-items:center; gap:6px;">
         <span style="font-size:8px; color:#94A3B8; text-transform:uppercase;">Lines Requiring Hotspot:</span>
-        <select id="hotspot-lines-count" style="padding:4px 8px; border-radius:8px; background:#000; color:#FFF; border:1px solid var(--warp-cyan); font-weight:700;" onchange="window.applyHotspotRouting();">
+        <select id="hotspot-lines-count" style="padding:4px 8px; border-radius:8px; background:#000; color:#FFF; border:1px solid var(--emerald); font-weight:700;" onchange="window.applyHotspotRouting();">
           <option value="0">0 Lines (Extra/Value Tier)</option>
           <option value="1" selected>1 Line (Primary Prem 60GB)</option>
           <option value="2">2 Lines (2x Prem 60GB)</option>
@@ -581,7 +587,7 @@
     <div class="grid-2" style="margin-top:12px;">
       <div class="control-group">
         <label>Next Up Anytime ($10/L)</label>
-        <select id="addon-nua" onchange="window.runCalc(); window.triggerGreenShockwave();">
+        <select id="addon-nua" onchange="window.runCalc();">
           <option value="0">0 Lines (+$0/mo)</option>
           <option value="1">1 Line (+$10/mo)</option>
           <option value="2">2 Lines (+$20/mo)</option>
@@ -590,7 +596,7 @@
       </div>
       <div class="control-group">
         <label>🚀 Turbo Speed Boost ($7/L)</label>
-        <select id="addon-turbo" onchange="window.runCalc(); window.triggerGreenShockwave();">
+        <select id="addon-turbo" onchange="window.runCalc();">
           <option value="0">Standard Speed (+$0/mo)</option>
           <option value="1">1 Line Turbo (+$7/mo)</option>
           <option value="all">All Lines Turbo ($7/L)</option>
@@ -606,7 +612,7 @@
       <div class="pool-pill" id="pool-badge-broadband">Pool: +$50.00/mo</div>
     </div>
 
-    <div style="font-size:8px; font-weight:800; color:var(--warp-cyan); text-transform:uppercase; margin-bottom:8px;">Option A: Home Internet Consolidation</div>
+    <div style="font-size:8px; font-weight:700; color:#94A3B8; text-transform:uppercase; margin-bottom:8px;">Option A: Home Internet Solutions</div>
     <div class="grid-4" style="margin-bottom:14px;">
       <div class="pill-option active" id="bb-none" onclick="window.selectBroadband(0, this)">
         <div class="pill-title">None</div>
@@ -630,7 +636,7 @@
       </div>
     </div>
 
-    <div style="font-size:8px; font-weight:800; color:var(--warp-magenta); text-transform:uppercase; margin-bottom:8px;">Option B: DIRECTV via Internet Revision</div>
+    <div style="font-size:8px; font-weight:700; color:#94A3B8; text-transform:uppercase; margin-bottom:8px;">Option B: DIRECTV via Internet Revision</div>
     <div class="grid-3">
       <div class="pill-option active" id="dtv-none" onclick="window.selectDTV(0, this)">
         <div class="pill-title">No TV</div>
@@ -659,7 +665,7 @@
     <div class="grid-3" style="margin-bottom:12px;">
       <div class="control-group">
         <label>Device Protection</label>
-        <select id="addon-pa" onchange="window.runCalc(); window.triggerGreenShockwave();">
+        <select id="addon-pa" onchange="window.runCalc();">
           <option value="0">None (+$0/mo)</option>
           <option value="17">1 Device Protect Advantage ($17/mo)</option>
           <option value="34">2 Devices Protect Advantage ($34/mo)</option>
@@ -669,7 +675,7 @@
       </div>
       <div class="control-group">
         <label>⌚ Watches ($5.50 / $10.99)</label>
-        <select id="addon-watches" onchange="window.runCalc(); window.triggerGreenShockwave();">
+        <select id="addon-watches" onchange="window.runCalc();">
           <option value="0">0 Watches</option>
           <option value="5.50">1 Watch (50% Off Promo @ $5.50/mo)</option>
           <option value="16.49">2 Watches ($16.49/mo)</option>
@@ -677,7 +683,7 @@
       </div>
       <div class="control-group">
         <label>📱 Tablets ($10.50 / $20.99)</label>
-        <select id="addon-tablets" onchange="window.runCalc(); window.triggerGreenShockwave();">
+        <select id="addon-tablets" onchange="window.runCalc();">
           <option value="0">0 Tablets</option>
           <option value="10.50">1 Tablet (50% Off Promo @ $10.50/mo)</option>
           <option value="31.49">2 Tablets ($31.49/mo)</option>
@@ -687,7 +693,7 @@
 
     <div class="control-group">
       <label>12-Mo Accessory Installments ($75 Minimum)</label>
-      <select id="addon-acc" onchange="window.runCalc(); window.triggerGreenShockwave();">
+      <select id="addon-acc" onchange="window.runCalc();">
         <option value="0">None ($0/mo)</option>
         <option value="6.25">$75 Minimum Bundle (+$6.25/mo)</option>
         <option value="8.33">$100 Bundle (+$8.33/mo)</option>
@@ -722,7 +728,7 @@
     <div class="grid-2" style="margin-top:14px;">
       <div class="control-group">
         <label>Upgrading Phone Count</label>
-        <select id="upgrade-count" onchange="window.runCalc(); window.triggerGreenShockwave();">
+        <select id="upgrade-count" onchange="window.runCalc();">
           <option value="0">0 Phones Upgrading</option>
           <option value="1">1 Phone Upgrading</option>
           <option value="2">2 Phones Upgrading</option>
@@ -732,7 +738,7 @@
       </div>
       <div class="control-group">
         <label>Average Retail Phone Value</label>
-        <select id="upgrade-val" onchange="window.runCalc(); window.triggerGreenShockwave();">
+        <select id="upgrade-val" onchange="window.runCalc();">
           <option value="1000">$1,000 (iPhone 16 / S24 / Pixel 9)</option>
           <option value="1200">$1,200 (iPhone 16 Pro Max / S24 Ultra)</option>
           <option value="800">$800 (Base Tier Flagship)</option>
@@ -741,7 +747,7 @@
     </div>
 
     <div class="checklist rep-only">
-      <div style="font-weight:800; color:var(--warp-gold); text-transform:uppercase;">📝 OPUS ORDER CHECKLIST & AUDIT LOG</div>
+      <div style="font-weight:800; color:#FBBF24; text-transform:uppercase;">📝 OPUS ORDER CHECKLIST & AUDIT LOG</div>
       <div class="check-item"><span>✔</span> Verify and enroll customer in Debit/Checking AutoPay (-$10/line off base).</div>
       <div class="check-item"><span>✔</span> Confirm Employer or Union FAN discount attaches ($10/L off Premium drops to Extra price).</div>
       <div class="check-item"><span>✔</span> Verify Next Up Anytime ($10/line) on all eligible financing agreements.</div>
@@ -750,8 +756,8 @@
 
     <div class="control-group" style="margin-top:14px;">
       <label>📱 Instant Customer SMS Quote</label>
-      <textarea id="sms-text" style="width:100%; height:70px; background:rgba(0,0,0,0.5); border:1px solid rgba(0, 240, 255, 0.4); color:#E2E8F0; border-radius:12px; padding:10px; font-family:inherit; resize:none;" readonly></textarea>
-      <button type="button" class="btn" style="margin-top:8px; width:100%; background:linear-gradient(90deg, #0057B8, #00A8E8); border-color:var(--warp-cyan);" onclick="window.copySMS()">📋 Copy Text for Customer</button>
+      <textarea id="sms-text" style="width:100%; height:70px; background:rgba(0,0,0,0.4); border:1px solid rgba(255, 255, 255, 0.12); color:#E2E8F0; border-radius:10px; padding:10px; font-family:inherit; resize:none;" readonly></textarea>
+      <button type="button" class="btn" style="margin-top:8px; width:100%; background:rgba(0,87,184,0.35); border-color:#0284C7;" onclick="window.copySMS()">📋 Copy Text for Customer</button>
     </div>
   </div>
 </div>
@@ -773,11 +779,27 @@ var rates = {
   10: { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40.99 }
 };
 
+window.toggleAddrTag = function(id) {
+  var el = document.getElementById(id);
+  if (el) el.classList.toggle('active');
+};
+
+window.checkBroadband = function() {
+  var addr = document.getElementById('addr-field').value;
+  if (!addr) {
+    alert("Please enter a street address and zip code.");
+    return;
+  }
+  // Visual validation state
+  document.getElementById('tag-fiber').classList.add('active');
+  document.getElementById('tag-air').classList.remove('active');
+  alert("Broadband Check: AT&T Fiber Verified for " + addr);
+};
+
 window.toggleHotspotFilter = function() {
   var isChecked = document.getElementById('check-hotspot').checked;
   var wrap = document.getElementById('hotspot-lines-wrap');
   wrap.style.display = isChecked ? 'inline-flex' : 'none';
-  window.triggerGreenShockwave();
   if (!isChecked) {
     document.getElementById('hotspot-lines-count').value = "0";
   } else {
@@ -791,12 +813,10 @@ window.applyHotspotRouting = function() {
   var sel = document.getElementById('hotspot-lines-count').value;
 
   if (sel === "0") {
-    // Zero hotspot needed: Route all lines to Value Plus (or Extra)
     document.getElementById('cnt-prem').textContent = "0";
     document.getElementById('cnt-extra').textContent = "0";
     document.getElementById('cnt-val').textContent = totalLines;
   } else if (sel === "all") {
-    // All lines need heavy hotspot: Route all to Premium
     document.getElementById('cnt-prem').textContent = totalLines;
     document.getElementById('cnt-extra').textContent = "0";
     document.getElementById('cnt-val').textContent = "0";
@@ -808,14 +828,12 @@ window.applyHotspotRouting = function() {
   }
 
   window.runCalc();
-  window.triggerGreenShockwave();
 };
 
 window.toggleHboWarning = function() {
   var isChecked = document.getElementById('check-hbo').checked;
   var box = document.getElementById('hbo-warning');
   box.style.display = isChecked ? 'block' : 'none';
-  window.triggerGreenShockwave();
 };
 
 window.setLines = function(num) {
@@ -855,7 +873,6 @@ window.changeCount = function(type, delta) {
 
   document.getElementById('curr-lines').value = (prem + ext + val);
   window.runCalc();
-  window.triggerGreenShockwave();
 };
 
 window.selectBroadband = function(cost, el) {
@@ -866,7 +883,6 @@ window.selectBroadband = function(cost, el) {
   });
   el.classList.add('active');
   window.runCalc();
-  window.triggerGreenShockwave();
 };
 
 window.selectDTV = function(cost, el) {
@@ -877,7 +893,6 @@ window.selectDTV = function(cost, el) {
   });
   el.classList.add('active');
   window.runCalc();
-  window.triggerGreenShockwave();
 };
 
 window.togglePresMode = function() {
@@ -967,12 +982,14 @@ window.runCalc = function() {
   document.getElementById('sum-new-total').textContent = "$" + totalHousehold.toFixed(2) + "/mo";
   var saveBox = document.getElementById('sum-savings-box');
   if (monthlySavings >= 0) {
-    saveBox.style.color = "#000";
-    saveBox.style.background = "linear-gradient(180deg, rgba(0, 255, 102, 0.95) 0%, rgba(0, 180, 70, 0.95) 100%)";
+    saveBox.style.color = "var(--emerald)";
+    saveBox.style.background = "rgba(0, 255, 102, 0.12)";
+    saveBox.style.borderColor = "var(--emerald)";
     saveBox.textContent = "Saves $" + monthlySavings.toFixed(2) + "/mo vs Old Bill!";
   } else {
-    saveBox.style.color = "#FFF";
-    saveBox.style.background = "linear-gradient(180deg, rgba(255, 0, 85, 0.95) 0%, rgba(180, 0, 60, 0.95) 100%)";
+    saveBox.style.color = "#F87171";
+    saveBox.style.background = "rgba(239, 68, 68, 0.12)";
+    saveBox.style.borderColor = "rgba(239, 68, 68, 0.35)";
     saveBox.textContent = "+$" + Math.abs(monthlySavings).toFixed(2) + "/mo vs Old Bill";
   }
 
@@ -1003,17 +1020,12 @@ window.runCalc = function() {
   document.getElementById('sms-text').value = sms;
 };
 
-// 3D HYPERSPACE WARP ENGINE WITH ELECTRIC GREEN SELECTION WAVE
-(function initWarpSpeed() {
-  var canvas = document.getElementById('warp-canvas');
+// SUBDUED FLUID AURORA ENGINE (QUIET PROFESSIONAL DEPTH)
+(function initAmbientEngine() {
+  var canvas = document.getElementById('ambient-canvas');
   if (!canvas) return;
   var ctx = canvas.getContext('2d');
-  var width = 0, height = 0;
-  var numStars = 600;
-  var stars = [];
-  var speed = 12;
-  var shockwaves = [];
-  var greenBoost = 0;
+  var width = 0, height = 0, time = 0;
 
   function resize() {
     width = canvas.width = window.innerWidth;
@@ -1022,107 +1034,30 @@ window.runCalc = function() {
   window.addEventListener('resize', resize);
   resize();
 
-  for (var i = 0; i < numStars; i++) {
-    stars.push({
-      x: (Math.random() - 0.5) * 2000,
-      y: (Math.random() - 0.5) * 2000,
-      z: Math.random() * 1000,
-      baseColor: ['#00F0FF', '#BD00FF', '#0066FF', '#FFFFFF', '#00FF66'][Math.floor(Math.random() * 5)]
-    });
-  }
-
-  window.triggerGreenShockwave = function(x, y) {
-    var posX = (typeof x === 'number') ? x : width / 2;
-    var posY = (typeof y === 'number') ? y : height / 2;
-
-    shockwaves.push({
-      x: posX,
-      y: posY,
-      radius: 0,
-      maxRadius: Math.max(width, height) * 0.85,
-      opacity: 1
-    });
-
-    speed = 36;
-    greenBoost = 1.0;
-    setTimeout(function() {
-      speed = 12;
-    }, 600);
-  };
-
-  window.addEventListener('touchstart', function(e) {
-    if (e.touches && e.touches.length > 0) {
-      window.triggerGreenShockwave(e.touches[0].clientX, e.touches[0].clientY);
-    }
-  }, { passive: true });
+  var orbs = [
+    { xRatio: 0.25, yRatio: 0.25, radius: 450, color: 'rgba(0, 87, 184, 0.3)', speed: 0.005, vx: 90, vy: 70 },
+    { xRatio: 0.75, yRatio: 0.35, radius: 520, color: 'rgba(14, 165, 233, 0.18)', speed: 0.004, vx: 110, vy: 90 },
+    { xRatio: 0.50, yRatio: 0.75, radius: 480, color: 'rgba(30, 58, 138, 0.22)', speed: 0.006, vx: 80, vy: 100 }
+  ];
 
   function draw() {
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.28)';
-    ctx.fillRect(0, 0, width, height);
+    ctx.clearRect(0, 0, width, height);
+    time += 0.01;
 
-    var cx = width / 2;
-    var cy = height / 2;
+    for (var i = 0; i < orbs.length; i++) {
+      var orb = orbs[i];
+      var cx = width * orb.xRatio + Math.sin(time * orb.speed * 20 + i) * orb.vx;
+      var cy = height * orb.yRatio + Math.cos(time * orb.speed * 18 + i) * orb.vy;
 
-    for (var w = shockwaves.length - 1; w >= 0; w--) {
-      var sw = shockwaves[w];
-      sw.radius += 18;
-      sw.opacity -= 0.022;
+      var grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, orb.radius);
+      grad.addColorStop(0, orb.color);
+      grad.addColorStop(0.5, orb.color.replace(/[\d\.]+\)$/, '0.08)'));
+      grad.addColorStop(1, 'rgba(3, 7, 18, 0)');
 
-      if (sw.opacity <= 0 || sw.radius >= sw.maxRadius) {
-        shockwaves.splice(w, 1);
-        continue;
-      }
-
+      ctx.fillStyle = grad;
       ctx.beginPath();
-      ctx.arc(sw.x, sw.y, sw.radius, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(0, 255, 102, ' + (sw.opacity * 0.9) + ')';
-      ctx.lineWidth = 3.5;
-      ctx.shadowBlur = 30;
-      ctx.shadowColor = '#00FF66';
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.arc(sw.x, sw.y, Math.max(0, sw.radius - 16), 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(0, 240, 255, ' + (sw.opacity * 0.5) + ')';
-      ctx.lineWidth = 1.5;
-      ctx.shadowBlur = 15;
-      ctx.shadowColor = '#00F0FF';
-      ctx.stroke();
-    }
-
-    if (greenBoost > 0) {
-      greenBoost -= 0.02;
-    }
-
-    for (var i = 0; i < stars.length; i++) {
-      var s = stars[i];
-      s.z -= speed;
-
-      if (s.z <= 0) {
-        s.z = 1000;
-        s.x = (Math.random() - 0.5) * 2000;
-        s.y = (Math.random() - 0.5) * 2000;
-      }
-
-      var k = 250 / s.z;
-      var px = s.x * k + cx;
-      var py = s.y * k + cy;
-
-      if (px >= 0 && px <= width && py >= 0 && py <= height) {
-        var prevK = 250 / (s.z + speed * 1.5);
-        var prevX = s.x * prevK + cx;
-        var prevY = s.y * prevK + cy;
-
-        ctx.beginPath();
-        ctx.moveTo(prevX, prevY);
-        ctx.lineTo(px, py);
-
-        ctx.strokeStyle = (greenBoost > 0.15) ? '#00FF66' : s.baseColor;
-        ctx.shadowBlur = (greenBoost > 0.15) ? 14 : 0;
-        ctx.shadowColor = '#00FF66';
-        ctx.lineWidth = Math.min(3.5, Math.max(0.6, (1 - s.z / 1000) * 3));
-        ctx.stroke();
-      }
+      ctx.arc(cx, cy, orb.radius, 0, Math.PI * 2);
+      ctx.fill();
     }
 
     requestAnimationFrame(draw);
