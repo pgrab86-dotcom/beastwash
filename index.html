@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>AT&T Warp Engine • elitererate.com</title>
+<title>AT&T Executive Solutions Studio • elitererate.com</title>
 
 <!-- iOS PWA Standalone Meta Tags -->
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -54,7 +54,7 @@
   .app-container {
     max-width: 940px;
     margin: 0 auto;
-    background: rgba(10, 10, 20, 0.72);
+    background: rgba(10, 10, 20, 0.76);
     -webkit-backdrop-filter: blur(40px) saturate(200%);
     backdrop-filter: blur(40px) saturate(200%);
     border-radius: 28px;
@@ -63,7 +63,7 @@
     box-shadow: 0 0 80px rgba(0, 240, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.25);
   }
 
-  /* NEON PRISM LIVING BORDER */
+  /* NEON PRISM BORDER */
   .app-container::before {
     content: '';
     position: absolute;
@@ -81,7 +81,7 @@
     100% { background-position: 0% 50%; }
   }
 
-  /* EXECUTIVE WARP HEADER */
+  /* HEADER */
   .header {
     background: linear-gradient(180deg, rgba(20, 25, 45, 0.9) 0%, rgba(10, 10, 25, 0.6) 100%);
     padding: 16px 24px;
@@ -134,7 +134,7 @@
 
   /* SECTIONS */
   .section-card {
-    background: rgba(20, 25, 45, 0.4);
+    background: rgba(20, 25, 45, 0.45);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 18px;
     margin: 14px 20px;
@@ -292,6 +292,35 @@
   .btn-circle:active { transform: scale(0.88); background: rgba(0, 240, 255, 0.3); }
   .counter-val { font-size: 16px; font-weight: 900; color: var(--warp-cyan); min-width: 22px; text-align: center; text-shadow: 0 0 15px rgba(0, 240, 255, 0.8); }
 
+  /* FEATURE FILTER CHECKBOX BOX */
+  .filter-box {
+    background: rgba(15, 20, 35, 0.6);
+    border: 1px solid rgba(0, 240, 255, 0.25);
+    border-radius: 14px;
+    padding: 12px 16px;
+    margin-bottom: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  .filter-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #FFF;
+    cursor: pointer;
+  }
+  .filter-item input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    accent-color: var(--warp-cyan);
+    cursor: pointer;
+  }
+
   /* CALLOUT BANNER */
   .callout-box {
     background: rgba(255, 0, 85, 0.1);
@@ -304,6 +333,18 @@
     box-shadow: 0 0 25px rgba(255, 0, 85, 0.2);
   }
   .callout-box b { color: #FF6699; text-shadow: 0 0 10px rgba(255, 0, 85, 0.6); }
+
+  .warning-box {
+    background: rgba(255, 184, 0, 0.12);
+    border: 1px solid var(--warp-gold);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    font-size: 8.5px;
+    line-height: 1.45;
+    box-shadow: 0 0 20px rgba(255, 184, 0, 0.25);
+  }
+  .warning-box b { color: var(--warp-gold); text-shadow: 0 0 8px rgba(255, 184, 0, 0.5); }
 
   /* EXECUTIVE SUMMARY */
   .summary-card {
@@ -467,6 +508,34 @@
     <div class="sec-header">
       <div class="sec-title">📱 3. Restructure & Wireless Line Mix</div>
       <div class="pool-pill" id="wireless-pool">Wireless Base: $130.00/mo</div>
+    </div>
+
+    <!-- NEEDS ASSESSMENT & FEATURE FILTER BOX (HOTSPOT & HBO MAX) -->
+    <div class="filter-box">
+      <label class="filter-item">
+        <input type="checkbox" id="check-hotspot" onchange="window.toggleHotspotFilter();">
+        <span>📶 Needs Hotspot Data</span>
+      </label>
+
+      <div id="hotspot-lines-wrap" style="display:none; align-items:center; gap:6px;">
+        <span style="font-size:8px; color:#94A3B8; text-transform:uppercase;">Lines Requiring Hotspot:</span>
+        <select id="hotspot-lines-count" style="padding:4px 8px; border-radius:8px; background:#000; color:#FFF; border:1px solid var(--warp-cyan); font-weight:700;" onchange="window.applyHotspotRouting();">
+          <option value="0">0 Lines (Extra/Value Tier)</option>
+          <option value="1" selected>1 Line (Primary Prem 60GB)</option>
+          <option value="2">2 Lines (2x Prem 60GB)</option>
+          <option value="3">3 Lines (3x Prem 60GB)</option>
+          <option value="all">All Lines (Heavy Tethering)</option>
+        </select>
+      </div>
+
+      <label class="filter-item">
+        <input type="checkbox" id="check-hbo" onchange="window.toggleHboWarning();">
+        <span>🎬 Currently Uses Included HBO / Max Perk</span>
+      </label>
+    </div>
+
+    <div class="warning-box" id="hbo-warning" style="display:none;">
+      <b>⚠️ Legacy HBO Max Grandfathered Account:</b> Customer actively uses free Max ($16.99/mo retail value). Rerating to Wireless 2.0 (Premium) removes free Max access. New plan must save at least <b>$17.00/mo</b> to break even if they re-subscribe to Max separately!
     </div>
 
     <div class="callout-box" id="fn-callout" style="display:none;">
@@ -704,11 +773,66 @@ var rates = {
   10: { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40.99 }
 };
 
+window.toggleHotspotFilter = function() {
+  var isChecked = document.getElementById('check-hotspot').checked;
+  var wrap = document.getElementById('hotspot-lines-wrap');
+  wrap.style.display = isChecked ? 'inline-flex' : 'none';
+  window.triggerGreenShockwave();
+  if (!isChecked) {
+    document.getElementById('hotspot-lines-count').value = "0";
+  } else {
+    document.getElementById('hotspot-lines-count').value = "1";
+  }
+  window.applyHotspotRouting();
+};
+
+window.applyHotspotRouting = function() {
+  var totalLines = parseInt(document.getElementById('curr-lines').value, 10) || 4;
+  var sel = document.getElementById('hotspot-lines-count').value;
+
+  if (sel === "0") {
+    // Zero hotspot needed: Route all lines to Value Plus (or Extra)
+    document.getElementById('cnt-prem').textContent = "0";
+    document.getElementById('cnt-extra').textContent = "0";
+    document.getElementById('cnt-val').textContent = totalLines;
+  } else if (sel === "all") {
+    // All lines need heavy hotspot: Route all to Premium
+    document.getElementById('cnt-prem').textContent = totalLines;
+    document.getElementById('cnt-extra').textContent = "0";
+    document.getElementById('cnt-val').textContent = "0";
+  } else {
+    var count = Math.min(totalLines, parseInt(sel, 10));
+    document.getElementById('cnt-prem').textContent = count;
+    document.getElementById('cnt-extra').textContent = "0";
+    document.getElementById('cnt-val').textContent = Math.max(0, totalLines - count);
+  }
+
+  window.runCalc();
+  window.triggerGreenShockwave();
+};
+
+window.toggleHboWarning = function() {
+  var isChecked = document.getElementById('check-hbo').checked;
+  var box = document.getElementById('hbo-warning');
+  box.style.display = isChecked ? 'block' : 'none';
+  window.triggerGreenShockwave();
+};
+
 window.setLines = function(num) {
   var n = parseInt(num, 10);
-  document.getElementById('cnt-prem').textContent = "1";
-  document.getElementById('cnt-extra').textContent = "0";
-  document.getElementById('cnt-val').textContent = (n > 1) ? (n - 1) : 0;
+  var isHotspot = document.getElementById('check-hotspot').checked;
+  var hotspotLines = document.getElementById('hotspot-lines-count').value;
+
+  if (isHotspot && hotspotLines === "0") {
+    document.getElementById('cnt-prem').textContent = "0";
+    document.getElementById('cnt-extra').textContent = "0";
+    document.getElementById('cnt-val').textContent = n;
+  } else {
+    document.getElementById('cnt-prem').textContent = "1";
+    document.getElementById('cnt-extra').textContent = "0";
+    document.getElementById('cnt-val').textContent = (n > 1) ? (n - 1) : 0;
+  }
+
   window.runCalc();
 };
 
@@ -907,7 +1031,6 @@ window.runCalc = function() {
     });
   }
 
-  // Trigger electric green shockwave on selection
   window.triggerGreenShockwave = function(x, y) {
     var posX = (typeof x === 'number') ? x : width / 2;
     var posY = (typeof y === 'number') ? y : height / 2;
@@ -927,7 +1050,6 @@ window.runCalc = function() {
     }, 600);
   };
 
-  // Touch burst for general screen taps
   window.addEventListener('touchstart', function(e) {
     if (e.touches && e.touches.length > 0) {
       window.triggerGreenShockwave(e.touches[0].clientX, e.touches[0].clientY);
@@ -941,7 +1063,6 @@ window.runCalc = function() {
     var cx = width / 2;
     var cy = height / 2;
 
-    // Render Laser-Green Shockwaves
     for (var w = shockwaves.length - 1; w >= 0; w--) {
       var sw = shockwaves[w];
       sw.radius += 18;
@@ -960,7 +1081,6 @@ window.runCalc = function() {
       ctx.shadowColor = '#00FF66';
       ctx.stroke();
 
-      // Outer secondary wave ring
       ctx.beginPath();
       ctx.arc(sw.x, sw.y, Math.max(0, sw.radius - 16), 0, Math.PI * 2);
       ctx.strokeStyle = 'rgba(0, 240, 255, ' + (sw.opacity * 0.5) + ')';
