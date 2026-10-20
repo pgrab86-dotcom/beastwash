@@ -638,6 +638,8 @@
       </p>
     </div>
     <div class="header-actions">
+      <button type="button" class="btn" style="background:rgba(255,255,255,0.06);" onclick="window.shareQuoteURL()">🔗 Share</button>
+      <button type="button" class="btn" style="background:rgba(255,255,255,0.06);" onclick="window.resetToNextCustomer()">🔄 Reset</button>
       <button type="button" class="btn btn-pres" id="pres-btn" onclick="window.togglePresMode();">👁️ Customer View: OFF</button>
       <button type="button" class="btn btn-print" onclick="window.print()">🖨️ Print Matrix</button>
     </div>
@@ -648,7 +650,7 @@
     <div class="addr-row-top">
       <div class="addr-title">📍 Broadband Pre-Check</div>
       <div class="addr-inputs">
-        <input type="text" id="addr-field" class="addr-input" placeholder="1463 Round Lake Rd Greenwood IN..." value="1463 Round Lake Rd Greenwood IN">
+        <input type="text" id="addr-field" class="addr-input" placeholder="1463 Round Lake Rd Greenwood IN..." value="1463 Round Lake Rd Greenwood IN" oninput="window.autoSaveState();">
       </div>
       <button type="button" class="btn" style="background:rgba(0, 87, 184, 0.4); border-color:#38BDF8; color:#FFF;" onclick="window.copyAddress()">📋 Copy Address</button>
     </div>
@@ -670,9 +672,10 @@
     <div class="sec-header">
       <div class="sec-title">🎯 1. Consultation Scope</div>
     </div>
-    <div class="grid-4">
+    <div class="grid-5">
       <div class="pill-option active" id="scope-hw" onclick="window.toggleScope(this);"><div class="pill-title">📱 Hardware Upgrade</div></div>
       <div class="pill-option active" id="scope-add" onclick="window.toggleScope(this);"><div class="pill-title">➕ Add New Line</div></div>
+      <div class="pill-option" id="scope-switch" onclick="window.toggleScope(this);"><div class="pill-title">🔄 Switcher Port-In</div></div>
       <div class="pill-option" id="scope-bb" onclick="window.toggleScope(this);"><div class="pill-title">🌐 AT&amp;T Fiber / Air</div></div>
       <div class="pill-option" id="scope-tv" onclick="window.toggleScope(this);"><div class="pill-title">📺 DIRECTV Revision</div></div>
     </div>
@@ -793,6 +796,44 @@
           Standard pricing active. Screen for Employer, Credit Union, or Education discounts.
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2.5: COMPETITOR CONTRACT PAYOFF & SWITCHER CREDITS (CONDITIONAL) -->
+  <div class="section-card" id="sec-switcher" style="display:none;">
+    <div class="sec-header">
+      <div class="sec-title">🔄 2B. Competitor Device Payoff &amp; Switcher Credits</div>
+      <div class="pool-pill" id="switcher-pool-badge">Payoff Payout: $0</div>
+    </div>
+    <div class="grid-3">
+      <div class="control-group">
+        <label>Competitor Source Carrier</label>
+        <select id="switch-carrier" onchange="window.runCalc();">
+          <option value="verizon" selected>Verizon Wireless</option>
+          <option value="tmobile">T-Mobile</option>
+          <option value="xfinity">Xfinity Mobile</option>
+          <option value="spectrum">Spectrum Mobile</option>
+          <option value="other">Other Competitor</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label>Porting Line Count (Reimbursement Eligible)</label>
+        <select id="switch-line-count" onchange="window.runCalc();">
+          <option value="1">1 Line Porting In</option>
+          <option value="2" selected>2 Lines Porting In</option>
+          <option value="3">3 Lines Porting In</option>
+          <option value="4">4 Lines Porting In</option>
+          <option value="5">5 Lines Porting In</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label>Total Competitor Device Balances Owed ($)</label>
+        <input type="number" id="switch-balance-owed" value="1200.00" step="50" oninput="window.runCalc();">
+      </div>
+    </div>
+    <div class="callout-box" style="margin-top:10px; background:rgba(0, 168, 232, 0.1); border-color:#0284C7;">
+      <b>💰 Switcher Payoff Structure:</b> Up to <b>$800.00 per ported line</b> reimbursed via Virtual Visa/Prepaid Card. Customer submits final carrier bill online within 60 days of activation. Physical device turn-in is not required.
+      <div id="switch-summary-line" style="margin-top:4px; font-weight:700; color:#38BDF8;">Reimbursement Card Total: $1,200.00</div>
     </div>
   </div>
 
@@ -1062,7 +1103,7 @@
     </div>
   </div>
 
-  <!-- SECTION 6: EXECUTIVE SUMMARY & DEPARTURE -->
+  <!-- SECTION 6: EXECUTIVE SUMMARY, HARDWARE & REGULATORY DEPARTURE -->
   <div class="section-card summary-card">
     <div class="sec-header">
       <div class="sec-title">📊 6. Executive Summary &amp; Out-The-Door Quote</div>
@@ -1075,6 +1116,35 @@
       </div>
       <div class="sum-savings" id="sum-savings-box">
         Saves $50.00/mo vs Old Bill!
+      </div>
+    </div>
+
+    <!-- TRADE-IN PROMOTIONAL CREDITS MODULE (#2) -->
+    <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:12px; margin-top:14px;">
+      <div style="font-size:9px; font-weight:800; color:#38BDF8; text-transform:uppercase; margin-bottom:8px;">🏷️ Device Trade-In &amp; Promotional Credits (36-Month Bill Credits)</div>
+      <div class="grid-2">
+        <div class="control-group">
+          <label>Trade-In Promo Tier</label>
+          <select id="trade-promo-tier" onchange="window.runCalc();">
+            <option value="0">Tier 0: No Trade-In / Standard Installment ($0 credit)</option>
+            <option value="27.78" selected>Tier 1: $1,000 Off Tier ($230+ Trade Value • -$27.78/mo)</option>
+            <option value="23.06">Tier 2: $830 Off Tier ($130–$229 Trade Value • -$23.06/mo)</option>
+            <option value="9.72">Tier 3: $350 Off Tier ($35–$129 Trade Value • -$9.72/mo)</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label>Lines Receiving Trade-In Credit</label>
+          <select id="trade-lines-count" onchange="window.runCalc();">
+            <option value="0">0 Trade-Ins</option>
+            <option value="1">1 Trade-In Line</option>
+            <option value="2">2 Trade-In Lines</option>
+            <option value="3">3 Trade-In Lines</option>
+            <option value="4">4 Trade-In Lines</option>
+          </select>
+        </div>
+      </div>
+      <div class="warning-box" id="trade-disqualify-warning" style="display:none; margin-top:8px; margin-bottom:0;">
+        <b>⚠️ Value Plus Disqualification:</b> Value Plus 2.0 lines are excluded from $830/$1,000 national trade credits. Upgrading lines must be placed on 🐇 Extra or 🐆 Premium to capture the credit!
       </div>
     </div>
 
@@ -1094,7 +1164,7 @@
     <div class="grid-2" style="margin-top:14px;">
       <div class="control-group">
         <label>Upgrading Phone Count</label>
-        <select id="upgrade-count" onchange="window.runCalc();">
+        <select id="upgrade-count" onchange="window.syncUpgradeLines(this.value);">
           <option value="0">0 Phones Upgrading</option>
           <option value="1">1 Phone Upgrading</option>
           <option value="2">2 Phones Upgrading</option>
@@ -1226,20 +1296,28 @@ window.fallbackCopyText = function(text) {
 window.toggleAddrTag = function(id) {
   var el = document.getElementById(id);
   if (el) el.classList.toggle('active');
+  window.autoSaveState();
 };
 
 window.toggleScope = function(el) {
   el.classList.toggle('active');
   window.updateConditionalSections();
+  window.autoSaveState();
 };
 
 window.updateConditionalSections = function() {
   var hasBB = document.getElementById('scope-bb').classList.contains('active');
   var hasTV = document.getElementById('scope-tv').classList.contains('active');
+  var hasSwitch = document.getElementById('scope-switch').classList.contains('active');
 
   var secBroadband = document.getElementById('sec-broadband');
   var wrapBB = document.getElementById('wrap-bb-options');
   var wrapTV = document.getElementById('wrap-tv-options');
+  var secSwitcher = document.getElementById('sec-switcher');
+
+  if (secSwitcher) {
+    secSwitcher.style.display = hasSwitch ? 'block' : 'none';
+  }
 
   if (hasBB || hasTV) {
     secBroadband.style.display = 'block';
@@ -1253,6 +1331,15 @@ window.updateConditionalSections = function() {
     window.dtvCost = 0;
   }
 
+  window.runCalc();
+};
+
+window.syncUpgradeLines = function(val) {
+  var count = parseInt(val, 10) || 0;
+  var tradeSelect = document.getElementById('trade-lines-count');
+  if (tradeSelect) {
+    tradeSelect.value = count.toString();
+  }
   window.runCalc();
 };
 
@@ -1297,6 +1384,7 @@ window.toggleHboWarning = function() {
   var isChecked = document.getElementById('check-hbo').checked;
   var box = document.getElementById('hbo-warning');
   box.style.display = isChecked ? 'block' : 'none';
+  window.autoSaveState();
 };
 
 window.setLines = function(num) {
@@ -1398,6 +1486,146 @@ window.selectRecommendedPlan = function(idx) {
   }
 
   window.runCalc();
+};
+
+/* PERSISTENCE & URL STATE ENGINE (#4 & #5) */
+window.autoSaveState = function() {
+  var state = {
+    b: document.getElementById('curr-total').value,
+    l: document.getElementById('curr-lines').value,
+    p: document.getElementById('cnt-prem').textContent,
+    e: document.getElementById('cnt-extra').textContent,
+    v: document.getElementById('cnt-val').textContent,
+    w: document.getElementById('curr-watches').value,
+    t: document.getElementById('curr-tablets').value,
+    d: document.getElementById('curr-discount').value,
+    ap: document.getElementById('curr-autopay').value,
+    awp: document.getElementById('audit-watch-paid').checked,
+    awu: document.getElementById('audit-watch-unused').checked,
+    atp: document.getElementById('audit-tab-paid').checked,
+    atu: document.getElementById('audit-tab-unused').checked,
+    hs: document.getElementById('check-hotspot').checked,
+    hsc: document.getElementById('hotspot-lines-count').value,
+    hbo: document.getElementById('check-hbo').checked,
+    nua: document.getElementById('addon-nua').value,
+    tb: document.getElementById('addon-turbo').value,
+    pa1: document.getElementById('addon-pa1').value,
+    pa4: document.getElementById('addon-pa4').value,
+    htp: document.getElementById('addon-htp').value,
+    nw: document.getElementById('addon-watches').value,
+    nt: document.getElementById('addon-tablets').value,
+    aip: document.getElementById('aip-cart-val').value,
+    meta: document.getElementById('aip-meta-select').value,
+    tpt: document.getElementById('trade-promo-tier').value,
+    tlc: document.getElementById('trade-lines-count').value,
+    upc: document.getElementById('upgrade-count').value,
+    upv: document.getElementById('upgrade-val').value,
+    wf: document.getElementById('check-waived-fees').checked,
+    shw: document.getElementById('scope-hw').classList.contains('active'),
+    sadd: document.getElementById('scope-add').classList.contains('active'),
+    ssw: document.getElementById('scope-switch').classList.contains('active'),
+    sbb: document.getElementById('scope-bb').classList.contains('active'),
+    stv: document.getElementById('scope-tv').classList.contains('active'),
+    swcar: document.getElementById('switch-carrier').value,
+    swlc: document.getElementById('switch-line-count').value,
+    swbal: document.getElementById('switch-balance-owed').value,
+    bbc: window.broadbandCost,
+    dtvc: window.dtvCost
+  };
+  localStorage.setItem('att_quote_state', JSON.stringify(state));
+};
+
+window.shareQuoteURL = function() {
+  window.autoSaveState();
+  var saved = localStorage.getItem('att_quote_state');
+  if (!saved) return;
+  var encoded = encodeURIComponent(saved);
+  var fullURL = window.location.origin + window.location.pathname + "#q=" + encoded;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(fullURL).then(function() {
+      alert("Quote URL copied to clipboard! Share directly with a peer or manager.");
+    });
+  } else {
+    window.fallbackCopyText(fullURL);
+  }
+};
+
+window.resetToNextCustomer = function() {
+  localStorage.removeItem('att_quote_state');
+  window.location.hash = "";
+  window.location.reload();
+};
+
+window.restoreState = function() {
+  var rawData = null;
+  if (window.location.hash && window.location.hash.indexOf("#q=") === 0) {
+    try {
+      rawData = decodeURIComponent(window.location.hash.substring(3));
+    } catch(err) {}
+  }
+  if (!rawData) {
+    rawData = localStorage.getItem('att_quote_state');
+  }
+  if (!rawData) return;
+
+  try {
+    var s = JSON.parse(rawData);
+    if (s.b) document.getElementById('curr-total').value = s.b;
+    if (s.l) document.getElementById('curr-lines').value = s.l;
+    if (s.p) document.getElementById('cnt-prem').textContent = s.p;
+    if (s.e) document.getElementById('cnt-extra').textContent = s.e;
+    if (s.v) document.getElementById('cnt-val').textContent = s.v;
+    if (s.w) document.getElementById('curr-watches').value = s.w;
+    if (s.t) document.getElementById('curr-tablets').value = s.t;
+    if (s.d) document.getElementById('curr-discount').value = s.d;
+    if (s.ap) document.getElementById('curr-autopay').value = s.ap;
+    if (s.awp !== undefined) document.getElementById('audit-watch-paid').checked = s.awp;
+    if (s.awu !== undefined) document.getElementById('audit-watch-unused').checked = s.awu;
+    if (s.atp !== undefined) document.getElementById('audit-tab-paid').checked = s.atp;
+    if (s.atu !== undefined) document.getElementById('audit-tab-unused').checked = s.atu;
+    if (s.hs !== undefined) {
+      document.getElementById('check-hotspot').checked = s.hs;
+      document.getElementById('hotspot-lines-wrap').style.display = s.hs ? 'inline-flex' : 'none';
+    }
+    if (s.hsc) document.getElementById('hotspot-lines-count').value = s.hsc;
+    if (s.hbo !== undefined) {
+      document.getElementById('check-hbo').checked = s.hbo;
+      document.getElementById('hbo-warning').style.display = s.hbo ? 'block' : 'none';
+    }
+    if (s.nua) document.getElementById('addon-nua').value = s.nua;
+    if (s.tb) document.getElementById('addon-turbo').value = s.tb;
+    if (s.pa1) document.getElementById('addon-pa1').value = s.pa1;
+    if (s.pa4) document.getElementById('addon-pa4').value = s.pa4;
+    if (s.htp) document.getElementById('addon-htp').value = s.htp;
+    if (s.nw) document.getElementById('addon-watches').value = s.nw;
+    if (s.nt) document.getElementById('addon-tablets').value = s.nt;
+    if (s.aip) document.getElementById('aip-cart-val').value = s.aip;
+    if (s.meta) document.getElementById('aip-meta-select').value = s.meta;
+    if (s.tpt) document.getElementById('trade-promo-tier').value = s.tpt;
+    if (s.tlc) document.getElementById('trade-lines-count').value = s.tlc;
+    if (s.upc) document.getElementById('upgrade-count').value = s.upc;
+    if (s.upv) document.getElementById('upgrade-val').value = s.upv;
+    if (s.wf !== undefined) document.getElementById('check-waived-fees').checked = s.wf;
+
+    // Scope restoration
+    var setScope = function(id, state) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      if (state) el.classList.add('active'); else el.classList.remove('active');
+    };
+    if (s.shw !== undefined) setScope('scope-hw', s.shw);
+    if (s.sadd !== undefined) setScope('scope-add', s.sadd);
+    if (s.ssw !== undefined) setScope('scope-switch', s.ssw);
+    if (s.sbb !== undefined) setScope('scope-bb', s.sbb);
+    if (s.stv !== undefined) setScope('scope-tv', s.stv);
+
+    if (s.swcar) document.getElementById('switch-carrier').value = s.swcar;
+    if (s.swlc) document.getElementById('switch-line-count').value = s.swlc;
+    if (s.swbal) document.getElementById('switch-balance-owed').value = s.swbal;
+
+    window.broadbandCost = s.bbc || 0;
+    window.dtvCost = s.dtvc || 0;
+  } catch(e) {}
 };
 
 window.runCalc = function() {
@@ -1556,10 +1784,39 @@ window.runCalc = function() {
   var activeTablets = tabUnused ? 0 : currentTablets;
   var existingConnectedCost = Number(((activeWatches * 10.99) + (activeTablets * 20.99)).toFixed(2));
 
-  var totalDrawdowns = nuaCost + turboCost + totalProtectionCost + targetWatchCost + targetTabletCost + monthlyAipCharge + window.broadbandCost + window.dtvCost;
+  // #2 Trade-In Promo Logic & Value Plus Disqualification Warning
+  var tradeCreditPerMonth = parseFloat(document.getElementById('trade-promo-tier').value) || 0;
+  var tradeLines = parseInt(document.getElementById('trade-lines-count').value, 10) || 0;
+  var upCount = parseInt(document.getElementById('upgrade-count').value, 10) || 0;
+  var upVal = parseFloat(document.getElementById('upgrade-val').value) || 1000.00;
+  var grossDeviceMonthly = Number(((upCount * upVal) / 36).toFixed(2));
+
+  var eligibleHigherTierLines = premCount + extCount;
+  var isDisqualified = (tradeCreditPerMonth >= 23.00 && tradeLines > eligibleHigherTierLines);
+  var disqWarning = document.getElementById('trade-disqualify-warning');
+  if (disqWarning) {
+    disqWarning.style.display = isDisqualified ? 'block' : 'none';
+  }
+
+  var effectiveTradeCredit = isDisqualified ? 0 : Number((tradeCreditPerMonth * tradeLines).toFixed(2));
+  var netDeviceMonthlyCost = Math.max(0, Number((grossDeviceMonthly - effectiveTradeCredit).toFixed(2)));
+
+  // #3 Competitor Switcher Buyout Engine Calculations
+  var switchLines = parseInt(document.getElementById('switch-line-count').value, 10) || 0;
+  var switchBalOwed = parseFloat(document.getElementById('switch-balance-owed').value) || 0;
+  var maxBuyoutReimbursement = switchLines * 800.00;
+  var actualBuyoutPayout = Math.min(switchBalOwed, maxBuyoutReimbursement);
+  var switchSummaryLine = document.getElementById('switch-summary-line');
+  var switchPoolBadge = document.getElementById('switcher-pool-badge');
+  if (switchSummaryLine && switchPoolBadge) {
+    switchSummaryLine.textContent = "Reimbursement Card Total: $" + actualBuyoutPayout.toFixed(2) + " (" + switchLines + " lines @ max $800/line)";
+    switchPoolBadge.textContent = "Payoff Payout: $" + actualBuyoutPayout.toFixed(2);
+  }
+
+  var totalDrawdowns = nuaCost + turboCost + totalProtectionCost + targetWatchCost + targetTabletCost + monthlyAipCharge + netDeviceMonthlyCost + window.broadbandCost + window.dtvCost;
   var remainingPotBalance = Number((window.startingPool - totalDrawdowns).toFixed(2));
 
-  var totalWireless = wirelessPlanTotal + nuaCost + turboCost + totalProtectionCost + targetWatchCost + targetTabletCost + monthlyAipCharge + existingConnectedCost;
+  var totalWireless = wirelessPlanTotal + nuaCost + turboCost + totalProtectionCost + targetWatchCost + targetTabletCost + monthlyAipCharge + netDeviceMonthlyCost + existingConnectedCost;
   var totalHousehold = totalWireless + window.broadbandCost + window.dtvCost;
 
   var monthlySavings = Number((rawCurrentBill - totalHousehold).toFixed(2));
@@ -1581,7 +1838,7 @@ window.runCalc = function() {
 
   document.getElementById('wireless-pool').textContent = "Wireless Base: $" + wirelessPlanTotal.toFixed(2) + "/mo";
   document.getElementById('pool-badge-broadband').textContent = "Drawdown: $" + (window.broadbandCost + window.dtvCost).toFixed(2) + "/mo";
-  document.getElementById('pool-badge-devices').textContent = "Drawdown: $" + (totalProtectionCost + targetWatchCost + targetTabletCost + monthlyAipCharge).toFixed(2) + "/mo";
+  document.getElementById('pool-badge-devices').textContent = "Drawdown: $" + (totalProtectionCost + targetWatchCost + targetTabletCost + monthlyAipCharge + netDeviceMonthlyCost).toFixed(2) + "/mo";
 
   document.getElementById('sum-new-total').textContent = "$" + totalHousehold.toFixed(2) + "/mo";
   var saveBox = document.getElementById('sum-savings-box');
@@ -1598,8 +1855,6 @@ window.runCalc = function() {
   }
 
   // Register Due Today
-  var upCount = parseInt(document.getElementById('upgrade-count').value, 10) || 0;
-  var upVal = parseFloat(document.getElementById('upgrade-val').value) || 1000.00;
   var feesWaived = document.getElementById('check-waived-fees').checked;
   var feePerPhone = feesWaived ? 0.00 : 35.00;
   var deviceTaxPerPhone = upVal * 0.07;
@@ -1628,6 +1883,10 @@ window.runCalc = function() {
   if (valCount > 0) planParts.push(valCount + "x Value");
   sms += planParts.join(", ") + ")";
   
+  if (tradeLines > 0 && effectiveTradeCredit > 0) {
+    sms += " + " + tradeLines + "x Device Trade Credits applied";
+  }
+
   var protectParts = [];
   if (pa1Cost > 0) protectParts.push("PA1 ($" + pa1Cost.toFixed(2) + ")");
   if (pa4Cost > 0) protectParts.push("PA4+ Multi ($50)");
@@ -1640,12 +1899,15 @@ window.runCalc = function() {
     sms += " + Connected: " + totalW + " Watches, " + totalT + " Tablets";
   }
   if (monthlyAipCharge > 0) sms += " + Tech Accessories ($" + monthlyAipCharge.toFixed(2) + "/mo)";
+  if (actualBuyoutPayout > 0) sms += " + Up to $" + actualBuyoutPayout.toFixed(2) + " Switcher Buyout Covered";
   sms += ".\nTotal Monthly: $" + totalHousehold.toFixed(2) + "/mo (w/ AutoPay).\n";
   if (monthlySavings > 0) sms += "Estimated Savings: $" + monthlySavings.toFixed(2) + "/mo!\n";
   if (window.broadbandCost > 0) sms += "• Includes AT&T Home Internet ($" + window.broadbandCost.toFixed(2) + "/mo)\n";
   if (totalDueAtRegister > 0) sms += "• Due Today at Register: $" + totalDueAtRegister.toFixed(2) + "\n";
   sms += "Questions? Stop in-store to finalize!";
   document.getElementById('sms-text').value = sms;
+
+  window.autoSaveState();
 };
 
 // SUBDUED FLUID AURORA ENGINE
@@ -1694,6 +1956,7 @@ window.runCalc = function() {
 })();
 
 window.onload = function() {
+  window.restoreState();
   window.updateConditionalSections();
   window.runCalc();
 };
