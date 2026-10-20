@@ -425,13 +425,6 @@
   .counter-val { font-size: 15px; font-weight: 900; color: var(--emerald); min-width: 18px; text-align: center; text-shadow: 0 0 10px var(--emerald-glow); }
 
   /* AUDIT & FILTER BOXES */
-  .audit-subcontainer {
-    background: rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 10px;
-    padding: 10px 14px;
-    margin-top: 10px;
-  }
   .filter-box {
     background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -604,9 +597,12 @@
   .pitch-bullet { margin-bottom: 6px; display: flex; align-items: flex-start; gap: 6px; }
   .pitch-bullet b { color: #38BDF8; min-width: 90px; }
 
-  /* PRESENTATION MODE OVERRIDES */
+  /* PRESENTATION MODE OVERRIDES - FULL JARGON KILLER */
   body.presentation-mode .rep-only { display: none !important; }
   body.presentation-mode .cust-only { display: block !important; }
+  body.presentation-mode span.cust-only { display: inline !important; }
+  body.presentation-mode .waterfall-reinvest-bar { display: none !important; }
+  body.presentation-mode .pool-pill { display: none !important; }
   .cust-only { display: none; }
 
   iframe[title*="Netlify"], #netlify-cdp-loader, [data-netlify-deploy-drawer] { display: none !important; }
@@ -647,8 +643,8 @@
     </div>
   </div>
 
-  <!-- INTERNET ADDRESS PRE-CHECK BAR -->
-  <div class="address-precheck-bar">
+  <!-- INTERNET ADDRESS PRE-CHECK BAR (REP ONLY) -->
+  <div class="address-precheck-bar rep-only">
     <div class="addr-row-top">
       <div class="addr-title">📍 Broadband Pre-Check</div>
       <div class="addr-inputs">
@@ -682,10 +678,13 @@
     </div>
   </div>
 
-  <!-- SECTION 2: CURRENT ACCOUNT BASELINE & LEAK AUDIT -->
+  <!-- SECTION 2: CURRENT ACCOUNT BASELINE -->
   <div class="section-card">
     <div class="sec-header">
-      <div class="sec-title">📋 2. Current Account Baseline &amp; Leak Audit</div>
+      <div class="sec-title">
+        <span class="rep-only">📋 2. Current Account Baseline &amp; Leak Audit</span>
+        <span class="cust-only">📋 2. Current Account Details</span>
+      </div>
     </div>
     <div class="grid-5">
       <div class="control-group">
@@ -745,7 +744,8 @@
       </label>
       <label class="filter-item">
         <input type="checkbox" id="audit-watch-unused" onchange="window.runCalc();">
-        <span style="color:#FCA5A5;">❌ Watch Inactive / Sits in Drawer? (Harvest +$10.99/mo)</span>
+        <span class="rep-only" style="color:#FCA5A5;">❌ Watch Inactive / Sits in Drawer? (Harvest +$10.99/mo)</span>
+        <span class="cust-only" style="color:#FCA5A5;">❌ Line Inactive / No Longer Needed</span>
       </label>
       <div style="width:1px; height:18px; background:rgba(255,255,255,0.15);"></div>
       <label class="filter-item">
@@ -754,7 +754,8 @@
       </label>
       <label class="filter-item">
         <input type="checkbox" id="audit-tab-unused" onchange="window.runCalc();">
-        <span style="color:#FCA5A5;">❌ Tablet Inactive / Sits in Drawer? (Harvest +$20.99/mo)</span>
+        <span class="rep-only" style="color:#FCA5A5;">❌ Tablet Inactive / Sits in Drawer? (Harvest +$20.99/mo)</span>
+        <span class="cust-only" style="color:#FCA5A5;">❌ Line Inactive / No Longer Needed</span>
       </label>
     </div>
 
@@ -786,7 +787,7 @@
           </optgroup>
         </select>
       </div>
-      <div class="control-group">
+      <div class="control-group rep-only">
         <label>Verified FAN Micro-Callout</label>
         <div id="fan-proof-callout" style="padding:9px 12px; border-radius:9px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); font-size:8px; color:#94A3B8; font-weight:600;">
           Standard pricing active. Screen for Employer, Credit Union, or Education discounts.
@@ -795,10 +796,13 @@
     </div>
   </div>
 
-  <!-- SECTION 3: PLAN RECOMMENDATIONS & REINVESTMENT POT ORIGIN (WATERFALL STEP 3) -->
+  <!-- SECTION 3: PLAN RECOMMENDATIONS -->
   <div class="section-card">
     <div class="sec-header">
-      <div class="sec-title">🎯 3. Recommended Wireless Configuration &amp; Starting Pot</div>
+      <div class="sec-title">
+        <span class="rep-only">🎯 3. Recommended Wireless Configuration &amp; Starting Pot</span>
+        <span class="cust-only">🎯 3. Recommended Wireless Solutions</span>
+      </div>
       <div class="pool-pill" id="wireless-pool">Wireless Base: $130.00/mo</div>
     </div>
 
@@ -820,13 +824,13 @@
         </select>
       </div>
 
-      <label class="filter-item">
+      <label class="filter-item rep-only">
         <input type="checkbox" id="check-hbo" onchange="window.toggleHboWarning();">
         <span>🎬 Currently Uses Included HBO / Max Perk</span>
       </label>
     </div>
 
-    <div class="warning-box" id="hbo-warning" style="display:none;">
+    <div class="warning-box rep-only" id="hbo-warning" style="display:none;">
       <b>⚠️ Legacy HBO Max Grandfathered Account:</b> Customer actively uses free Max ($16.99/mo retail value). Rerating to Wireless 2.0 (Premium) removes free Max access. New plan must save at least <b>$17.00/mo</b> to break even if they re-subscribe to Max separately!
     </div>
 
@@ -834,9 +838,10 @@
       <b>🚨 FirstNet Priority Network Active:</b> Dedicated Band 14/13 spectrum reserved for First Responders. Always-On preemption + family multi-line rates with 10% Value / 15% Extra / 20% Premium appreciation.
     </div>
 
-    <!-- RECOMMENDED PLAN CARDS: CLICKING ANY CARD SETS THE BASELINE -->
+    <!-- RECOMMENDED PLAN CARDS -->
     <div style="font-size:8px; font-weight:700; color:#94A3B8; text-transform:uppercase; margin-bottom:4px;">
-      Tap a plan below to lock in the starting savings pot:
+      <span class="rep-only">Tap a plan below to lock in the starting savings pot:</span>
+      <span class="cust-only">Tap a plan combination to select your rate structure:</span>
     </div>
     <div class="recommendations-grid" id="plan-cards-container"></div>
 
@@ -869,7 +874,7 @@
       <div class="counter-row">
         <div class="counter-info">
           <div class="counter-title">🐢 Value Plus 2.0</div>
-          <div class="counter-desc">Standard 5G Data • No Hotspot • Max Bill Drop for Add-Ons</div>
+          <div class="counter-desc">Standard 5G Data • Core Unlimited Network Access</div>
         </div>
         <div class="counter-controls">
           <div class="btn-circle" onclick="window.changeCount('val', -1)">-</div>
@@ -900,8 +905,8 @@
     </div>
   </div>
 
-  <!-- FLOATING WATERFALL REINVESTMENT BAR -->
-  <div class="waterfall-reinvest-bar">
+  <!-- FLOATING WATERFALL REINVESTMENT BAR (REP ONLY) -->
+  <div class="waterfall-reinvest-bar rep-only">
     <div class="wf-status">
       <div class="wf-label">Active Reinvestment Pool</div>
       <div class="wf-tier-name" id="wf-active-tier">Allocated from: 🐆 1x Prem + 🐢 3x Value</div>
@@ -914,7 +919,10 @@
   <!-- SECTION 4: HOME BROADBAND & VIDEO (CONDITIONAL: HIDDEN UNLESS SCOPE TOGGLED) -->
   <div class="section-card" id="sec-broadband" style="display:none;">
     <div class="sec-header">
-      <div class="sec-title">🌐 4. Home Broadband &amp; Video Drawdown</div>
+      <div class="sec-title">
+        <span class="rep-only">🌐 4. Home Broadband &amp; Video Drawdown</span>
+        <span class="cust-only">🌐 4. Home Internet &amp; Entertainment</span>
+      </div>
       <div class="pool-pill" id="pool-badge-broadband">Drawdown: $0/mo</div>
     </div>
 
@@ -968,11 +976,14 @@
   <!-- SECTION 5: PROTECTION, TECH & ACCESSORY INSTALLMENTS (AIP) -->
   <div class="section-card">
     <div class="sec-header">
-      <div class="sec-title">🛡️ 5. Protection, Connected Tech &amp; AIP Financing Drawdown</div>
+      <div class="sec-title">
+        <span class="rep-only">🛡️ 5. Protection, Connected Tech &amp; AIP Financing Drawdown</span>
+        <span class="cust-only">🛡️ 5. Device Protection &amp; Connected Tech</span>
+      </div>
       <div class="pool-pill" id="pool-badge-devices">Drawdown: $0/mo</div>
     </div>
 
-    <!-- RESTRUCTURED PROTECTION SUITE: PA1 (1-2), PA4 (4+ MULTI), HTP (SEPARATE CATEGORY) WITH PITCH MODALS -->
+    <!-- RESTRUCTURED PROTECTION SUITE -->
     <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:12px; margin-bottom:12px;">
       <div style="font-size:9px; font-weight:800; color:#38BDF8; text-transform:uppercase; margin-bottom:8px;">🛡️ Device &amp; Whole-Home Protection Suite</div>
       <div class="grid-3">
@@ -1028,7 +1039,7 @@
     <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:12px;">
       <div style="font-size:9px; font-weight:800; color:#FBBF24; text-transform:uppercase; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
         <span>🛍️ 12-Month Accessory Installment Plan (AIP)</span>
-        <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+        <label class="rep-only" style="display:flex; align-items:center; gap:6px; cursor:pointer;">
           <input type="checkbox" id="check-aip-eligible" checked onchange="window.runCalc();" style="accent-color:var(--emerald);">
           <span style="font-size:8px; color:#FFF;">Account AIP Eligible ($75 Min)</span>
         </label>
@@ -1071,7 +1082,7 @@
     <div class="due-box">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
         <div class="due-title">🏷️ Due Today at Register (Existing Account Upgrades)</div>
-        <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+        <label class="rep-only" style="display:flex; align-items:center; gap:6px; cursor:pointer;">
           <input type="checkbox" id="check-waived-fees" onchange="window.runCalc();" style="accent-color:var(--emerald);">
           <span style="font-size:8px; font-weight:800; color:var(--emerald);">🎉 Waived Upgrade Fees? (-$35/phone)</span>
         </label>
@@ -1120,7 +1131,7 @@
 <script>
 window.broadbandCost = 0;
 window.dtvCost = 0;
-window.selectedPlanIndex = 1; // Default to Smart Mix
+window.selectedPlanIndex = 1;
 window.startingPool = 50.00;
 
 var rates = {
@@ -1400,7 +1411,6 @@ window.runCalc = function() {
   var currentWatches = parseInt(document.getElementById('curr-watches').value, 10) || 0;
   var currentTablets = parseInt(document.getElementById('curr-tablets').value, 10) || 0;
 
-  // Connected Devices Leak Audit
   var watchUnused = document.getElementById('audit-watch-unused').checked;
   var tabUnused = document.getElementById('audit-tab-unused').checked;
 
@@ -1414,7 +1424,6 @@ window.runCalc = function() {
   var isFan = discountSel.indexOf('fan') === 0;
   var apMethod = document.getElementById('curr-autopay').value;
 
-  // Contextual Micro-Callout
   var proofCallout = document.getElementById('fan-proof-callout');
   if (discountSel === 'fan_forum') proofCallout.textContent = "✔ FORUM Credit Union: Member Debit Card, Mobile Banking app, or check accepted.";
   else if (discountSel === 'fan_imcu') proofCallout.textContent = "✔ IMCU: Member Card or State of Indiana affiliation screenshot accepted.";
@@ -1466,25 +1475,29 @@ window.runCalc = function() {
   var planOptions = [
     {
       title: "🐢 All Value Plus 2.0",
-      tag: "Max Headroom",
+      repTag: "Max Headroom",
+      custTag: "Economical Choice",
       cost: Number((totalLines * valRate).toFixed(2)),
-      desc: totalLines + " Lines on Core 5G Unlimited. Maximum surplus for attachments."
+      desc: totalLines + " Lines on Core 5G Unlimited. Reliable everyday connectivity."
     },
     {
       title: "🐆 1x Prem + 🐢 " + Math.max(0, totalLines - 1) + "x Value",
-      tag: "Smart Mix • Rep Favorite",
+      repTag: "Smart Mix • Rep Favorite",
+      custTag: "Popular Family Mix",
       cost: Number((premRate + Math.max(0, totalLines - 1) * valRate).toFixed(2)),
       desc: "Primary on Unl. Priority (60GB Hotspot), remaining lines on Value Plus."
     },
     {
       title: "🐆 2x Prem + 🐢 " + Math.max(0, totalLines - 2) + "x Value",
-      tag: "Balanced Family Mix",
+      repTag: "Balanced Family Mix",
+      custTag: "Balanced Priority",
       cost: Number(( (totalLines >= 2 ? 2 * premRate : premRate) + Math.max(0, totalLines - 2) * valRate ).toFixed(2)),
-      desc: "2 Primary accounts on Unlimited Priority, secondary lines on Value Plus."
+      desc: "2 Primary lines on Unlimited Priority, secondary lines on Value Plus."
     },
     {
       title: "🐆 " + totalLines + "x Premium 2.0",
-      tag: "All-Cheetah Unlimited",
+      repTag: "All-Cheetah Unlimited",
+      custTag: "Maximum Performance",
       cost: Number((totalLines * premRate).toFixed(2)),
       desc: "Unlimited Priority Data & 60GB Hotspot across all " + totalLines + " lines."
     }
@@ -1503,7 +1516,10 @@ window.runCalc = function() {
     cardDiv.setAttribute('onclick', 'window.selectRecommendedPlan(' + c + ')');
     cardDiv.innerHTML =
       '<div>' +
-        '<div class="rec-tag">' + p.tag + '</div>' +
+        '<div class="rec-tag">' +
+          '<span class="rep-only">' + p.repTag + '</span>' +
+          '<span class="cust-only">' + p.custTag + '</span>' +
+        '</div>' +
         '<div class="rec-title">' + p.title + '</div>' +
         '<div class="rec-price">$' + p.cost.toFixed(2) + '/mo</div>' +
         '<div class="rec-savings-tag">' + (cardSavings >= 0 ? 'Saves $' + cardSavings.toFixed(2) + '/mo' : '+$' + Math.abs(cardSavings).toFixed(2) + '/mo') + '</div>' +
@@ -1512,7 +1528,6 @@ window.runCalc = function() {
     cardsContainer.appendChild(cardDiv);
   }
 
-  // Active Plan Chosen defines starting pool
   var chosenCard = planOptions[window.selectedPlanIndex] || planOptions[1];
   window.startingPool = Math.max(0, Number((adjustedBaseline - chosenCard.cost).toFixed(2)));
 
@@ -1522,7 +1537,6 @@ window.runCalc = function() {
   var turboVal = document.getElementById('addon-turbo').value;
   var turboCost = (turboVal === 'all') ? totalLines * 7 : (parseInt(turboVal, 10) || 0) * 7;
   
-  // Independent Protection Suite Calculations
   var pa1Cost = parseFloat(document.getElementById('addon-pa1').value) || 0;
   var pa4Cost = parseFloat(document.getElementById('addon-pa4').value) || 0;
   var htpCost = parseFloat(document.getElementById('addon-htp').value) || 0;
@@ -1531,7 +1545,6 @@ window.runCalc = function() {
   var targetWatchCost = parseFloat(document.getElementById('addon-watches').value) || 0;
   var targetTabletCost = parseFloat(document.getElementById('addon-tablets').value) || 0;
 
-  // AIP Financing Math ($75 Minimum / 12 Months)
   var aipEligible = document.getElementById('check-aip-eligible').checked;
   var aipCartInput = parseFloat(document.getElementById('aip-cart-val').value) || 0;
   var aipMetaPrice = parseFloat(document.getElementById('aip-meta-select').value) || 0;
@@ -1539,12 +1552,10 @@ window.runCalc = function() {
   var monthlyAipCharge = (totalAipCart >= 75) ? Number((totalAipCart / 12).toFixed(2)) : 0;
   var aipSalesTaxDue = Number((totalAipCart * 0.07).toFixed(2));
 
-  // Remaining active existing connected lines
   var activeWatches = watchUnused ? 0 : currentWatches;
   var activeTablets = tabUnused ? 0 : currentTablets;
   var existingConnectedCost = Number(((activeWatches * 10.99) + (activeTablets * 20.99)).toFixed(2));
 
-  // Waterfall Drawdowns
   var totalDrawdowns = nuaCost + turboCost + totalProtectionCost + targetWatchCost + targetTabletCost + monthlyAipCharge + window.broadbandCost + window.dtvCost;
   var remainingPotBalance = Number((window.startingPool - totalDrawdowns).toFixed(2));
 
