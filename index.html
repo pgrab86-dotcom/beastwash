@@ -89,19 +89,24 @@
   .header p { margin: 2px 0 0 0; font-size: 8.5px; color: #94A3B8; font-weight: 500; }
   .header-actions { display: flex; gap: 8px; align-items: center; z-index: 2; }
 
-  /* ADDRESS PRE-CHECK BANNER */
+  /* ADDRESS PRE-CHECK BAR */
   .address-precheck-bar {
-    background: rgba(3, 7, 18, 0.65);
+    background: rgba(3, 7, 18, 0.7);
     border-bottom: 1px solid var(--glass-border);
-    padding: 12px 22px;
+    padding: 14px 22px;
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .addr-row-top {
+    display: flex;
     justify-content: space-between;
-    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
   }
   .addr-title {
-    font-size: 9px;
+    font-size: 9.5px;
     font-weight: 800;
     color: #38BDF8;
     text-transform: uppercase;
@@ -114,22 +119,30 @@
     display: flex;
     gap: 8px;
     flex: 1;
-    max-width: 420px;
+    min-width: 280px;
   }
   .addr-input {
     width: 100%;
-    padding: 8px 12px;
+    padding: 9px 12px;
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 8px;
-    background: rgba(15, 23, 42, 0.7);
+    background: rgba(15, 23, 42, 0.8);
     color: #FFF;
     font-size: 10px;
     font-weight: 600;
   }
   .addr-input:focus { outline: none; border-color: #38BDF8; }
+  
+  .addr-row-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
   .addr-tags { display: flex; gap: 6px; }
   .tag-btn {
-    padding: 5px 10px;
+    padding: 6px 12px;
     border-radius: 6px;
     font-size: 8.5px;
     font-weight: 800;
@@ -145,6 +158,23 @@
     color: var(--emerald);
     box-shadow: 0 0 12px var(--emerald-glow);
   }
+  .link-actions { display: flex; gap: 8px; }
+  .btn-link-action {
+    background: rgba(0, 87, 184, 0.25);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    color: #38BDF8;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 8.5px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s;
+  }
+  .btn-link-action:hover { background: rgba(0, 87, 184, 0.4); border-color: #38BDF8; color: #FFF; }
 
   /* GLASS SECTION CARDS */
   .section-card {
@@ -155,6 +185,7 @@
     padding: 14px 18px;
     box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
     position: relative;
+    transition: all 0.3s ease;
   }
 
   .sec-header {
@@ -437,16 +468,25 @@
     </div>
   </div>
 
-  <!-- INTERNET ADDRESS PRE-CHECK BAR (REPLACED REDUNDANT SPEED LEGEND) -->
+  <!-- INTERNET ADDRESS PRE-CHECK BAR WITH COPY & DIRECT VERIFICATION LINKS -->
   <div class="address-precheck-bar">
-    <div class="addr-title">📍 Broadband Pre-Check</div>
-    <div class="addr-inputs">
-      <input type="text" id="addr-field" class="addr-input" placeholder="Customer Street Address & Zip..." onkeydown="if(event.key==='Enter') window.checkBroadband();">
+    <div class="addr-row-top">
+      <div class="addr-title">📍 Broadband Pre-Check</div>
+      <div class="addr-inputs">
+        <input type="text" id="addr-field" class="addr-input" placeholder="1463 Round Lake Rd Greenwood IN..." value="1463 Round Lake Rd Greenwood IN">
+      </div>
+      <button type="button" class="btn" style="background:rgba(0, 87, 184, 0.4); border-color:#38BDF8; color:#FFF;" onclick="window.copyAddress()">📋 Copy Address</button>
     </div>
-    <div class="addr-tags">
-      <div class="tag-btn active" id="tag-fiber" onclick="window.toggleAddrTag('tag-fiber')">💎 Fiber</div>
-      <div class="tag-btn" id="tag-air" onclick="window.toggleAddrTag('tag-air')">📡 Internet Air</div>
-      <div class="tag-btn" id="tag-copper" onclick="window.toggleAddrTag('tag-copper')">🔌 Copper Mig.</div>
+    <div class="addr-row-actions">
+      <div class="addr-tags">
+        <div class="tag-btn active" id="tag-fiber" onclick="window.toggleAddrTag('tag-fiber')">💎 Fiber</div>
+        <div class="tag-btn" id="tag-air" onclick="window.toggleAddrTag('tag-air')">📡 Internet Air</div>
+        <div class="tag-btn" id="tag-copper" onclick="window.toggleAddrTag('tag-copper')">🔌 Copper Mig.</div>
+      </div>
+      <div class="link-actions">
+        <a href="https://www.att.com/buy/broadband/overview.html" target="_blank" class="btn-link-action">🌐 AT&amp;T Availability Check ↗</a>
+        <a href="https://broadbandmap.fcc.gov/" target="_blank" class="btn-link-action">📡 FCC National Map ↗</a>
+      </div>
     </div>
   </div>
 
@@ -456,10 +496,10 @@
       <div class="sec-title">🎯 1. Consultation Scope</div>
     </div>
     <div class="grid-4">
-      <div class="pill-option active" onclick="this.classList.toggle('active');"><div class="pill-title">📱 Hardware Upgrade</div></div>
-      <div class="pill-option active" onclick="this.classList.toggle('active');"><div class="pill-title">➕ Add New Line</div></div>
-      <div class="pill-option" onclick="this.classList.toggle('active');"><div class="pill-title">🌐 AT&T Fiber / Air</div></div>
-      <div class="pill-option" onclick="this.classList.toggle('active');"><div class="pill-title">📺 DIRECTV Stream</div></div>
+      <div class="pill-option active" id="scope-hw" onclick="window.toggleScope(this);"><div class="pill-title">📱 Hardware Upgrade</div></div>
+      <div class="pill-option active" id="scope-add" onclick="window.toggleScope(this);"><div class="pill-title">➕ Add New Line</div></div>
+      <div class="pill-option" id="scope-bb" onclick="window.toggleScope(this);"><div class="pill-title">🌐 AT&amp;T Fiber / Air</div></div>
+      <div class="pill-option" id="scope-tv" onclick="window.toggleScope(this);"><div class="pill-title">📺 DIRECTV Revision</div></div>
     </div>
   </div>
 
@@ -493,8 +533,8 @@
         <select id="curr-discount" onchange="window.runCalc();">
           <option value="fan">Signature (Corp / Union FAN)</option>
           <option value="apprec">Appreciation (Mil/Teach/RN: 10/15/20%)</option>
-          <option value="firstnet">FirstNet & Family (Band 14/13 Priority)</option>
-          <option value="fiber">AT&T Fiber Convergence (20% Off)</option>
+          <option value="firstnet">FirstNet &amp; Family (Band 14/13 Priority)</option>
+          <option value="fiber">AT&amp;T Fiber Convergence (20% Off)</option>
           <option value="none">Standard Consumer (No FAN)</option>
         </select>
       </div>
@@ -512,7 +552,7 @@
   <!-- SECTION 3: RESTRUCTURE & SERVICE SOLUTIONS -->
   <div class="section-card">
     <div class="sec-header">
-      <div class="sec-title">📱 3. Restructure & Wireless Line Mix</div>
+      <div class="sec-title">📱 3. Restructure &amp; Wireless Line Mix</div>
       <div class="pool-pill" id="wireless-pool">Wireless Base: $130.00/mo</div>
     </div>
 
@@ -605,52 +645,56 @@
     </div>
   </div>
 
-  <!-- SECTION 4: HOME BROADBAND & VIDEO -->
-  <div class="section-card">
+  <!-- SECTION 4: HOME BROADBAND & VIDEO (CONDITIONAL: HIDDEN UNLESS SCOPE TOGGLED) -->
+  <div class="section-card" id="sec-broadband" style="display:none;">
     <div class="sec-header">
-      <div class="sec-title">🌐 4. Home Broadband & Video</div>
+      <div class="sec-title">🌐 4. Home Broadband &amp; Video</div>
       <div class="pool-pill" id="pool-badge-broadband">Pool: +$50.00/mo</div>
     </div>
 
-    <div style="font-size:8px; font-weight:700; color:#94A3B8; text-transform:uppercase; margin-bottom:8px;">Option A: Home Internet Solutions</div>
-    <div class="grid-4" style="margin-bottom:14px;">
-      <div class="pill-option active" id="bb-none" onclick="window.selectBroadband(0, this)">
-        <div class="pill-title">None</div>
-        <div class="pill-price">$0</div>
-        <div class="pill-sub">Keep Provider</div>
-      </div>
-      <div class="pill-option" id="bb-air" onclick="window.selectBroadband(35, this)">
-        <div class="pill-title">Internet Air</div>
-        <div class="pill-price">$35/mo</div>
-        <div class="pill-sub">5G Home w/ AP</div>
-      </div>
-      <div class="pill-option" id="bb-f300" onclick="window.selectBroadband(35, this)">
-        <div class="pill-title">Fiber 300M</div>
-        <div class="pill-price">$35/mo</div>
-        <div class="pill-sub">Converged Rate</div>
-      </div>
-      <div class="pill-option" id="bb-f500" onclick="window.selectBroadband(45, this)">
-        <div class="pill-title">Fiber 500M</div>
-        <div class="pill-price">$45/mo</div>
-        <div class="pill-sub">Converged Rate</div>
+    <div id="wrap-bb-options" style="display:none; margin-bottom:14px;">
+      <div style="font-size:8px; font-weight:700; color:#94A3B8; text-transform:uppercase; margin-bottom:8px;">Option A: Home Internet Solutions</div>
+      <div class="grid-4">
+        <div class="pill-option active" id="bb-none" onclick="window.selectBroadband(0, this)">
+          <div class="pill-title">None</div>
+          <div class="pill-price">$0</div>
+          <div class="pill-sub">Keep Provider</div>
+        </div>
+        <div class="pill-option" id="bb-air" onclick="window.selectBroadband(35, this)">
+          <div class="pill-title">Internet Air</div>
+          <div class="pill-price">$35/mo</div>
+          <div class="pill-sub">5G Home w/ AP</div>
+        </div>
+        <div class="pill-option" id="bb-f300" onclick="window.selectBroadband(35, this)">
+          <div class="pill-title">Fiber 300M</div>
+          <div class="pill-price">$35/mo</div>
+          <div class="pill-sub">Converged Rate</div>
+        </div>
+        <div class="pill-option" id="bb-f500" onclick="window.selectBroadband(45, this)">
+          <div class="pill-title">Fiber 500M</div>
+          <div class="pill-price">$45/mo</div>
+          <div class="pill-sub">Converged Rate</div>
+        </div>
       </div>
     </div>
 
-    <div style="font-size:8px; font-weight:700; color:#94A3B8; text-transform:uppercase; margin-bottom:8px;">Option B: DIRECTV via Internet Revision</div>
-    <div class="grid-3">
-      <div class="pill-option active" id="dtv-none" onclick="window.selectDTV(0, this)">
-        <div class="pill-title">No TV</div>
-        <div class="pill-price">$0</div>
-      </div>
-      <div class="pill-option" id="dtv-ent" onclick="window.selectDTV(69.99, this)">
-        <div class="pill-title">Entertainment</div>
-        <div class="pill-price">$69.99/mo</div>
-        <div class="pill-sub">Gemini Included</div>
-      </div>
-      <div class="pill-option" id="dtv-choice" onclick="window.selectDTV(89.99, this)">
-        <div class="pill-title">Choice</div>
-        <div class="pill-price">$89.99/mo</div>
-        <div class="pill-sub">Regional Sports</div>
+    <div id="wrap-tv-options" style="display:none;">
+      <div style="font-size:8px; font-weight:700; color:#94A3B8; text-transform:uppercase; margin-bottom:8px;">Option B: DIRECTV via Internet Revision</div>
+      <div class="grid-3">
+        <div class="pill-option active" id="dtv-none" onclick="window.selectDTV(0, this)">
+          <div class="pill-title">No TV</div>
+          <div class="pill-price">$0</div>
+        </div>
+        <div class="pill-option" id="dtv-ent" onclick="window.selectDTV(69.99, this)">
+          <div class="pill-title">Entertainment</div>
+          <div class="pill-price">$69.99/mo</div>
+          <div class="pill-sub">Gemini Included</div>
+        </div>
+        <div class="pill-option" id="dtv-choice" onclick="window.selectDTV(89.99, this)">
+          <div class="pill-title">Choice</div>
+          <div class="pill-price">$89.99/mo</div>
+          <div class="pill-sub">Regional Sports</div>
+        </div>
       </div>
     </div>
   </div>
@@ -658,7 +702,7 @@
   <!-- SECTION 5: PROTECTION & CONNECTED DEVICES -->
   <div class="section-card">
     <div class="sec-header">
-      <div class="sec-title">🛡️ 5. Protection & Connected Tech</div>
+      <div class="sec-title">🛡️ 5. Protection &amp; Connected Tech</div>
       <div class="pool-pill" id="pool-badge-devices">Pool: +$50.00/mo</div>
     </div>
 
@@ -670,7 +714,7 @@
           <option value="17">1 Device Protect Advantage ($17/mo)</option>
           <option value="34">2 Devices Protect Advantage ($34/mo)</option>
           <option value="50">Protect Advantage 4+ Family ($50/mo)</option>
-          <option value="25">AT&T HomeTech Protection ($25/mo)</option>
+          <option value="25">AT&amp;T HomeTech Protection ($25/mo)</option>
         </select>
       </div>
       <div class="control-group">
@@ -706,7 +750,7 @@
   <!-- SECTION 6: EXECUTIVE SUMMARY & DEPARTURE -->
   <div class="section-card summary-card">
     <div class="sec-header">
-      <div class="sec-title">📊 6. Executive Summary & Out-The-Door Quote</div>
+      <div class="sec-title">📊 6. Executive Summary &amp; Out-The-Door Quote</div>
     </div>
 
     <div class="summary-grid">
@@ -747,7 +791,7 @@
     </div>
 
     <div class="checklist rep-only">
-      <div style="font-weight:800; color:#FBBF24; text-transform:uppercase;">📝 OPUS ORDER CHECKLIST & AUDIT LOG</div>
+      <div style="font-weight:800; color:#FBBF24; text-transform:uppercase;">📝 OPUS ORDER CHECKLIST &amp; AUDIT LOG</div>
       <div class="check-item"><span>✔</span> Verify and enroll customer in Debit/Checking AutoPay (-$10/line off base).</div>
       <div class="check-item"><span>✔</span> Confirm Employer or Union FAN discount attaches ($10/L off Premium drops to Extra price).</div>
       <div class="check-item"><span>✔</span> Verify Next Up Anytime ($10/line) on all eligible financing agreements.</div>
@@ -779,21 +823,57 @@ var rates = {
   10: { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40.99 }
 };
 
+window.copyAddress = function() {
+  var addr = document.getElementById('addr-field').value;
+  if (!addr) {
+    alert("Address field is empty.");
+    return;
+  }
+  navigator.clipboard.writeText(addr).then(function() {
+    alert("Address copied to clipboard: " + addr);
+  }).catch(function() {
+    // Fallback for older iOS webviews
+    var tempInput = document.createElement("input");
+    tempInput.value = addr;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand("copy");
+    document.body.removeChild(tempInput);
+    alert("Address copied to clipboard: " + addr);
+  });
+};
+
 window.toggleAddrTag = function(id) {
   var el = document.getElementById(id);
   if (el) el.classList.toggle('active');
 };
 
-window.checkBroadband = function() {
-  var addr = document.getElementById('addr-field').value;
-  if (!addr) {
-    alert("Please enter a street address and zip code.");
-    return;
+window.toggleScope = function(el) {
+  el.classList.toggle('active');
+  window.updateConditionalSections();
+};
+
+window.updateConditionalSections = function() {
+  var hasBB = document.getElementById('scope-bb').classList.contains('active');
+  var hasTV = document.getElementById('scope-tv').classList.contains('active');
+
+  var secBroadband = document.getElementById('sec-broadband');
+  var wrapBB = document.getElementById('wrap-bb-options');
+  var wrapTV = document.getElementById('wrap-tv-options');
+
+  if (hasBB || hasTV) {
+    secBroadband.style.display = 'block';
+    wrapBB.style.display = hasBB ? 'block' : 'none';
+    wrapTV.style.display = hasTV ? 'block' : 'none';
+  } else {
+    secBroadband.style.display = 'none';
+    wrapBB.style.display = 'none';
+    wrapTV.style.display = 'none';
+    window.broadbandCost = 0;
+    window.dtvCost = 0;
   }
-  // Visual validation state
-  document.getElementById('tag-fiber').classList.add('active');
-  document.getElementById('tag-air').classList.remove('active');
-  alert("Broadband Check: AT&T Fiber Verified for " + addr);
+
+  window.runCalc();
 };
 
 window.toggleHotspotFilter = function() {
@@ -1020,7 +1100,7 @@ window.runCalc = function() {
   document.getElementById('sms-text').value = sms;
 };
 
-// SUBDUED FLUID AURORA ENGINE (QUIET PROFESSIONAL DEPTH)
+// SUBDUED FLUID AURORA ENGINE
 (function initAmbientEngine() {
   var canvas = document.getElementById('ambient-canvas');
   if (!canvas) return;
@@ -1066,6 +1146,7 @@ window.runCalc = function() {
 })();
 
 window.onload = function() {
+  window.updateConditionalSections();
   window.runCalc();
 };
 </script>
