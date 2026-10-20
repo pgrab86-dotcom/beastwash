@@ -299,6 +299,29 @@
     box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
   }
 
+  /* PITCH QUICK BUTTONS */
+  .btn-pitch-hint {
+    background: rgba(251, 191, 36, 0.12);
+    border: 1px solid rgba(251, 191, 36, 0.4);
+    color: #FDE68A;
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 8px;
+    font-weight: 800;
+    cursor: pointer;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    margin-top: 4px;
+    transition: all 0.15s ease;
+  }
+  .btn-pitch-hint:active {
+    background: rgba(251, 191, 36, 0.25);
+    transform: scale(0.97);
+  }
+
   /* SPATIAL SELECTION TILES */
   .pill-option {
     background: rgba(255, 255, 255, 0.03);
@@ -515,6 +538,72 @@
   .check-item { display: flex; align-items: center; gap: 8px; }
   .check-item span { color: var(--emerald); font-weight: 900; text-shadow: 0 0 8px var(--emerald-glow); }
 
+  /* MODAL PITCH GUIDE OVERLAYS */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(3, 7, 18, 0.82);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .modal-card {
+    max-width: 520px;
+    width: 100%;
+    background: linear-gradient(135deg, rgba(20, 32, 55, 0.95) 0%, rgba(10, 18, 35, 0.98) 100%);
+    border: 1.5px solid rgba(56, 189, 248, 0.4);
+    border-radius: 16px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 30px rgba(56, 189, 248, 0.2);
+    overflow: hidden;
+    animation: modalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes modalPop {
+    from { opacity: 0; transform: scale(0.94); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .modal-header {
+    background: linear-gradient(180deg, rgba(30, 58, 138, 0.8) 0%, rgba(15, 23, 42, 0.8) 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 12px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .modal-title { font-size: 12px; font-weight: 800; color: #FFF; text-transform: uppercase; letter-spacing: 0.5px; }
+  .modal-close {
+    font-size: 16px;
+    font-weight: 800;
+    color: #94A3B8;
+    background: none;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px 8px;
+  }
+  .modal-close:hover { color: #FFF; }
+  .modal-body {
+    padding: 16px 18px;
+    font-size: 9.5px;
+    line-height: 1.55;
+    color: #E2E8F0;
+  }
+  .pitch-quote {
+    background: rgba(0, 0, 0, 0.35);
+    border-left: 3px solid var(--emerald);
+    padding: 10px 14px;
+    border-radius: 4px;
+    font-size: 10px;
+    color: #FFF;
+    margin: 10px 0;
+    font-style: italic;
+  }
+  .pitch-bullet { margin-bottom: 6px; display: flex; align-items: flex-start; gap: 6px; }
+  .pitch-bullet b { color: #38BDF8; min-width: 90px; }
+
   /* PRESENTATION MODE OVERRIDES */
   body.presentation-mode .rep-only { display: none !important; }
   body.presentation-mode .cust-only { display: block !important; }
@@ -527,6 +616,17 @@
 
 <!-- SUBDUED AMBIENT CANVAS -->
 <canvas id="ambient-canvas"></canvas>
+
+<!-- PITCH GUIDE MODAL OVERLAY -->
+<div class="modal-overlay" id="pitch-modal" onclick="if(event.target === this) window.closePitchModal();">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-pitch-title">Pitch Guide</div>
+      <button type="button" class="modal-close" onclick="window.closePitchModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-pitch-content"></div>
+  </div>
+</div>
 
 <div class="app-container">
   <!-- EXECUTIVE HEADER -->
@@ -872,7 +972,7 @@
       <div class="pool-pill" id="pool-badge-devices">Drawdown: $0/mo</div>
     </div>
 
-    <!-- RESTRUCTURED PROTECTION SUITE: PA1 (1-2), PA4 (4+ MULTI), HTP (SEPARATE CATEGORY) -->
+    <!-- RESTRUCTURED PROTECTION SUITE: PA1 (1-2), PA4 (4+ MULTI), HTP (SEPARATE CATEGORY) WITH PITCH MODALS -->
     <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:12px; margin-bottom:12px;">
       <div style="font-size:9px; font-weight:800; color:#38BDF8; text-transform:uppercase; margin-bottom:8px;">🛡️ Device &amp; Whole-Home Protection Suite</div>
       <div class="grid-3">
@@ -883,6 +983,7 @@
             <option value="17">1 Device ($17.00/mo)</option>
             <option value="34">2 Devices ($34.00/mo)</option>
           </select>
+          <button type="button" class="btn-pitch-hint rep-only" onclick="window.openPitchModal('pa1')">💡 Pitch PA1</button>
         </div>
         <div class="control-group">
           <label>PA4 (Protect Advantage 4+ Multi)</label>
@@ -890,6 +991,7 @@
             <option value="0" selected>None ($0/mo)</option>
             <option value="50">PA4 Multi-Device ($50.00/mo)</option>
           </select>
+          <button type="button" class="btn-pitch-hint rep-only" onclick="window.openPitchModal('pa4')">💡 Pitch PA4+</button>
         </div>
         <div class="control-group">
           <label>HTP (AT&amp;T HomeTech Protection)</label>
@@ -897,6 +999,7 @@
             <option value="0" selected>None ($0/mo)</option>
             <option value="25">HomeTech Protection ($25.00/mo)</option>
           </select>
+          <button type="button" class="btn-pitch-hint rep-only" onclick="window.openPitchModal('htp')">💡 Pitch HTP</button>
         </div>
       </div>
     </div>
@@ -1031,6 +1134,55 @@ var rates = {
   8: { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40.99 },
   9: { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40.99 },
   10: { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40.99 }
+};
+
+var pitchGuides = {
+  pa1: {
+    title: "Protect Advantage 1 (PA1 • $17/mo)",
+    quote: '"Since we freed up $50 on your plan restructure, we are keeping your phone completely protected against loss, theft, and drops—including unlimited $0 screen repairs and same-day delivery—for less than the savings we just created."',
+    bullets: [
+      { key: "Screen Repair:", val: "$0 deductible for front and back glass replacement at authorized repair shops or your doorstep." },
+      { key: "Total Loss:", val: "Next-day device replacement if lost, stolen, or completely water-damaged." },
+      { key: "ProTech Support:", val: "Live technical concierge for setup, data transfers, and app troubleshooting." },
+      { key: "Battery Health:", val: "Free replacement battery if your device health drops below 80%." }
+    ]
+  },
+  pa4: {
+    title: "Protect Advantage 4+ (PA4 • $50/mo Multi)",
+    quote: '"Instead of paying $17 for each individual phone on the account, which would run you $68 a month, we blanket all 4 of your phones under one umbrella family pack for $50 flat—plus you get up to 2 non-connected devices like laptops and tablets covered for free."',
+    bullets: [
+      { key: "Whole Account:", val: "Covers up to 4 primary cellular devices plus 2 non-connected tech items (tablets/laptops)." },
+      { key: "Pooled Claims:", val: "Shared pool of up to 8 claims in a rolling 12-month period across the family." },
+      { key: "Zero Deductible:", val: "$0 glass repairs across all eligible flagship devices." },
+      { key: "Family Savings:", val: "Saves $18/mo immediately compared to buying 4 standalone PA1 policies ($68 vs $50)." }
+    ]
+  },
+  htp: {
+    title: "AT&T HomeTech Protection (HTP • $25/mo)",
+    quote: '"This covers basically every electronic in your living room and office—smart TVs, gaming consoles, laptops, tablets, and headphones—regardless of where or when you bought them, with no receipts required."',
+    bullets: [
+      { key: "Everything Covered:", val: "Laptops, gaming consoles (PS5/Xbox/Switch), 4K TVs, home audio, tablets, and smart displays." },
+      { key: "Receipt-Free:", val: "No proof of purchase or manufacturer warranty status required to file a repair claim." },
+      { key: "Power Surge:", val: "Full replacement coverage for power surges, internal mechanical failure, and normal wear." },
+      { key: "Single Flat Fee:", val: "One $25/mo charge protects thousands in home tech assets across the entire household." }
+    ]
+  }
+};
+
+window.openPitchModal = function(type) {
+  var p = pitchGuides[type];
+  if (!p) return;
+  document.getElementById('modal-pitch-title').textContent = p.title;
+  var bHtml = '<div class="pitch-quote">' + p.quote + '</div>';
+  for (var i = 0; i < p.bullets.length; i++) {
+    bHtml += '<div class="pitch-bullet"><b>' + p.bullets[i].key + '</b><span>' + p.bullets[i].val + '</span></div>';
+  }
+  document.getElementById('modal-pitch-content').innerHTML = bHtml;
+  document.getElementById('pitch-modal').style.display = 'flex';
+};
+
+window.closePitchModal = function() {
+  document.getElementById('pitch-modal').style.display = 'none';
 };
 
 window.copyAddress = function() {
