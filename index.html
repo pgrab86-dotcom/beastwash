@@ -681,7 +681,7 @@
     </div>
   </div>
 
-  <!-- SECTION 2: CURRENT ACCOUNT BASELINE -->
+  <!-- SECTION 2: CURRENT ACCOUNT BASELINE & HARVEST AUDIT -->
   <div class="section-card">
     <div class="sec-header">
       <div class="sec-title">
@@ -739,27 +739,55 @@
       </div>
     </div>
 
-    <!-- CONNECTED HARDWARE AUDIT (GHOST LINE HARVESTING) -->
-    <div class="filter-box" style="margin-top:12px; margin-bottom:12px;">
-      <label class="filter-item">
-        <input type="checkbox" id="audit-watch-paid" onchange="window.runCalc();">
-        <span>⌚ Paid-Off Watches</span>
-      </label>
-      <label class="filter-item">
-        <input type="checkbox" id="audit-watch-unused" onchange="window.runCalc();">
-        <span class="rep-only" style="color:#FCA5A5;">❌ Watch Inactive / Sits in Drawer? (Harvest +$10.99/mo)</span>
-        <span class="cust-only" style="color:#FCA5A5;">❌ Line Inactive / No Longer Needed</span>
-      </label>
-      <div style="width:1px; height:18px; background:rgba(255,255,255,0.15);"></div>
-      <label class="filter-item">
-        <input type="checkbox" id="audit-tab-paid" onchange="window.runCalc();">
-        <span>📱 Paid-Off Tablets</span>
-      </label>
-      <label class="filter-item">
-        <input type="checkbox" id="audit-tab-unused" onchange="window.runCalc();">
-        <span class="rep-only" style="color:#FCA5A5;">❌ Tablet Inactive / Sits in Drawer? (Harvest +$20.99/mo)</span>
-        <span class="cust-only" style="color:#FCA5A5;">❌ Line Inactive / No Longer Needed</span>
-      </label>
+    <!-- CONNECTED & FEATURE AUDIT (3-COLUMN SIDE-BY-SIDE GRID) -->
+    <div class="grid-3" style="margin-top:10px; margin-bottom:12px;">
+      <!-- Watch Audit Column -->
+      <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:10px 12px; display:flex; flex-direction:column; gap:6px;">
+        <div style="font-size:9px; font-weight:800; color:#38BDF8; text-transform:uppercase; letter-spacing:0.5px;">⌚ Watch Lines</div>
+        <label class="filter-item">
+          <input type="checkbox" id="audit-watch-paid" onchange="window.runCalc();">
+          <span>Paid-Off / Expired</span>
+        </label>
+        <label class="filter-item">
+          <input type="checkbox" id="audit-watch-unused" onchange="window.runCalc();">
+          <span class="rep-only" style="color:#FCA5A5;">❌ Drop Inactive (+$10.99/mo)</span>
+          <span class="cust-only" style="color:#FCA5A5;">❌ Line Inactive / Remove</span>
+        </label>
+      </div>
+
+      <!-- Tablet Audit Column -->
+      <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:10px 12px; display:flex; flex-direction:column; gap:6px;">
+        <div style="font-size:9px; font-weight:800; color:#38BDF8; text-transform:uppercase; letter-spacing:0.5px;">📱 Tablet Lines</div>
+        <label class="filter-item">
+          <input type="checkbox" id="audit-tab-paid" onchange="window.runCalc();">
+          <span>Paid-Off / Expired</span>
+        </label>
+        <label class="filter-item">
+          <input type="checkbox" id="audit-tab-unused" onchange="window.runCalc();">
+          <span class="rep-only" style="color:#FCA5A5;">❌ Drop Inactive (+$20.99/mo)</span>
+          <span class="cust-only" style="color:#FCA5A5;">❌ Line Inactive / Remove</span>
+        </label>
+      </div>
+
+      <!-- Next Up Leak Harvest Column -->
+      <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:10px 12px; display:flex; flex-direction:column; gap:6px;">
+        <div style="font-size:9px; font-weight:800; color:#FBBF24; text-transform:uppercase; letter-spacing:0.5px;">🔄 Next Up Feature</div>
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:4px;">
+          <span style="font-size:8px; color:#94A3B8;">Lines Paying Next Up:</span>
+          <select id="audit-nua-count" style="padding:2px 6px; border-radius:6px; background:#000; color:#FFF; border:1px solid rgba(255,255,255,0.15); font-weight:700;" onchange="window.runCalc();">
+            <option value="0" selected>0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+        </div>
+        <label class="filter-item" style="margin-top:2px;">
+          <input type="checkbox" id="audit-nua-drop" onchange="window.runCalc();">
+          <span class="rep-only" style="color:#FCA5A5;">❌ Drop Unused Next Up</span>
+          <span class="cust-only" style="color:#FCA5A5;">❌ Remove Early Upgrade Fee</span>
+        </label>
+      </div>
     </div>
 
     <!-- DISCOUNT PROGRAM SELECTION (CATEGORIZED WITH EASTSIDE CU FANS) -->
@@ -837,7 +865,7 @@
     </div>
   </div>
 
-  <!-- SECTION 3: PLAN RECOMMENDATIONS -->
+  <!-- SECTION 3: PLAN RECOMMENDATIONS (NEW 2.0 HOTSPOT SPECIFICATIONS) -->
   <div class="section-card">
     <div class="sec-header">
       <div class="sec-title">
@@ -855,13 +883,13 @@
       </label>
 
       <div id="hotspot-lines-wrap" style="display:none; align-items:center; gap:6px;">
-        <span style="font-size:8px; color:#94A3B8; text-transform:uppercase;">Lines Requiring Hotspot:</span>
+        <span style="font-size:8px; color:#94A3B8; text-transform:uppercase;">Lines Requiring Heavy Hotspot:</span>
         <select id="hotspot-lines-count" style="padding:4px 8px; border-radius:8px; background:#000; color:#FFF; border:1px solid var(--emerald); font-weight:700;" onchange="window.applyHotspotRouting();">
-          <option value="0">0 Lines (Extra/Value Tier)</option>
-          <option value="1" selected>1 Line (Primary Prem 60GB)</option>
-          <option value="2">2 Lines (2x Prem 60GB)</option>
-          <option value="3">3 Lines (3x Prem 60GB)</option>
-          <option value="all">All Lines (Heavy Tethering)</option>
+          <option value="0">0 Lines (Value Plus 3GB Baseline)</option>
+          <option value="1" selected>1 Line (Primary Prem 100GB)</option>
+          <option value="2">2 Lines (2x Prem 100GB)</option>
+          <option value="3">3 Lines (3x Prem 100GB)</option>
+          <option value="all">All Lines (100GB/Line Max Tethering)</option>
         </select>
       </div>
 
@@ -891,7 +919,7 @@
       <div class="counter-row">
         <div class="counter-info">
           <div class="counter-title">🐆 Unlimited Premium 2.0</div>
-          <div class="counter-desc">Unlimited Priority Data (QCI-8) • 60GB Hotspot • 4K UHD Streaming</div>
+          <div class="counter-desc">Unlimited Priority Data (QCI-8) • 100GB Hotspot • 4K UHD Streaming</div>
         </div>
         <div class="counter-controls">
           <div class="btn-circle" onclick="window.changeCount('prem', -1)">-</div>
@@ -903,7 +931,7 @@
       <div class="counter-row">
         <div class="counter-info">
           <div class="counter-title">🐇 Unlimited Extra 2.0</div>
-          <div class="counter-desc">75GB Priority Data (QCI-8) • 30GB Mobile Hotspot • HD Streaming</div>
+          <div class="counter-desc">100GB Priority Data (QCI-8) • 50GB Mobile Hotspot • SD Streaming</div>
         </div>
         <div class="counter-controls">
           <div class="btn-circle" onclick="window.changeCount('extra', -1)">-</div>
@@ -915,33 +943,13 @@
       <div class="counter-row">
         <div class="counter-info">
           <div class="counter-title">🐢 Value Plus 2.0</div>
-          <div class="counter-desc">Standard 5G Data • Core Unlimited Network Access</div>
+          <div class="counter-desc">Standard 5G Data • 3GB Mobile Hotspot • Core Unlimited Access</div>
         </div>
         <div class="counter-controls">
           <div class="btn-circle" onclick="window.changeCount('val', -1)">-</div>
           <div class="counter-val" id="cnt-val">3</div>
           <div class="btn-circle" onclick="window.changeCount('val', 1)">+</div>
         </div>
-      </div>
-    </div>
-
-    <div class="grid-2" style="margin-top:10px;">
-      <div class="control-group">
-        <label>Next Up Anytime ($10/L)</label>
-        <select id="addon-nua" onchange="window.runCalc();">
-          <option value="0">0 Lines (+$0/mo)</option>
-          <option value="1">1 Line (+$10/mo)</option>
-          <option value="2">2 Lines (+$20/mo)</option>
-          <option value="all">All Lines ($10/line)</option>
-        </select>
-      </div>
-      <div class="control-group">
-        <label>🚀 Turbo Speed Boost ($7/L)</label>
-        <select id="addon-turbo" onchange="window.runCalc();">
-          <option value="0">Standard Speed (+$0/mo)</option>
-          <option value="1">1 Line Turbo (+$7/mo)</option>
-          <option value="all">All Lines Turbo ($7/L)</option>
-        </select>
       </div>
     </div>
   </div>
@@ -1014,7 +1022,7 @@
     </div>
   </div>
 
-  <!-- SECTION 5: PROTECTION, TECH & ACCESSORY INSTALLMENTS (AIP) -->
+  <!-- SECTION 5: PROTECTION, COMMISSION ACCELERATOR, TECH & AIP FINANCING -->
   <div class="section-card">
     <div class="sec-header">
       <div class="sec-title">
@@ -1024,7 +1032,7 @@
       <div class="pool-pill" id="pool-badge-devices">Drawdown: $0/mo</div>
     </div>
 
-    <!-- RESTRUCTURED PROTECTION SUITE -->
+    <!-- PROTECTION SUITE -->
     <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:12px; margin-bottom:12px;">
       <div style="font-size:9px; font-weight:800; color:#38BDF8; text-transform:uppercase; margin-bottom:8px;">🛡️ Device &amp; Whole-Home Protection Suite</div>
       <div class="grid-3">
@@ -1052,6 +1060,51 @@
             <option value="25">HomeTech Protection ($25.00/mo)</option>
           </select>
           <button type="button" class="btn-pitch-hint rep-only" onclick="window.openPitchModal('htp')">💡 Pitch HTP</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- REP-ONLY COMMISSION ACCELERATOR ZONE -->
+    <div class="rep-only" style="background:linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(6, 78, 59, 0.25) 100%); border:1.5px solid rgba(16, 185, 129, 0.4); border-radius:12px; padding:12px; margin-bottom:12px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <div style="font-size:9.5px; font-weight:800; color:#34D399; text-transform:uppercase; letter-spacing:0.5px;">🚀 Commission Booster Zone (Rep View Only)</div>
+        <div id="spiff-total-badge" style="background:rgba(16, 185, 129, 0.3); border:1px solid #10B981; color:#A7F3D0; padding:2px 8px; border-radius:12px; font-size:8px; font-weight:800;">Spiff Potential: $0</div>
+      </div>
+
+      <div class="grid-2">
+        <!-- AT&T Personal Cloud Unlimited Card -->
+        <div style="background:rgba(0,0,0,0.35); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:10px; display:flex; flex-direction:column; gap:4px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:9px; font-weight:800; color:#FFF;">☁️ Personal Cloud Unlimited</span>
+            <span style="color:#FBBF24; font-size:8px; font-weight:800; background:rgba(251, 191, 36, 0.15); padding:1px 6px; border-radius:4px;">+$15 Spiff</span>
+          </div>
+          <label class="filter-item" style="margin-top:2px;">
+            <input type="checkbox" id="addon-cloud" onchange="window.runCalc();">
+            <span style="font-size:8.5px; color:#E2E8F0;">Attach Cloud ($9.99/mo)</span>
+          </label>
+          <div style="font-size:7.5px; color:#94A3B8; line-height:1.3; margin-top:2px;">
+            💡 <b>Pitch Tip:</b> <i>"Instead of hitting a 2TB wall on Apple/Google and paying $20/mo, this gives you true unlimited storage across iOS and Android, billed right on your AT&T statement."</i>
+          </div>
+        </div>
+
+        <!-- Turbo Speed Boost Card -->
+        <div style="background:rgba(0,0,0,0.35); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:10px; display:flex; flex-direction:column; gap:4px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:9px; font-weight:800; color:#FFF;">⚡ Turbo Speed Boost</span>
+            <span style="color:#38BDF8; font-size:8px; font-weight:800; background:rgba(56, 189, 248, 0.15); padding:1px 6px; border-radius:4px;">Fast-Lane QCI</span>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:6px; margin-top:2px;">
+            <span style="font-size:8px; color:#94A3B8;">Lines Boosted:</span>
+            <select id="addon-turbo" style="padding:3px 6px; border-radius:6px; background:#000; color:#FFF; border:1px solid rgba(255,255,255,0.15); font-weight:700;" onchange="window.runCalc();">
+              <option value="0" selected>0 Lines ($0/mo)</option>
+              <option value="1">1 Line ($7.00/mo)</option>
+              <option value="2">2 Lines ($14.00/mo)</option>
+              <option value="all">All Voice Lines ($7/L)</option>
+            </select>
+          </div>
+          <div style="font-size:7.5px; color:#94A3B8; line-height:1.3; margin-top:2px;">
+            💡 <b>Pitch Tip:</b> <i>"Cuts through network gridlock at concerts, sporting events, and downtown rush hour with dedicated fast-lane data priority."</i>
+          </div>
         </div>
       </div>
     </div>
@@ -1488,7 +1541,7 @@ window.selectRecommendedPlan = function(idx) {
   window.runCalc();
 };
 
-/* PERSISTENCE & URL STATE ENGINE (#4 & #5) */
+/* PERSISTENCE & URL STATE ENGINE */
 window.autoSaveState = function() {
   var state = {
     b: document.getElementById('curr-total').value,
@@ -1504,11 +1557,13 @@ window.autoSaveState = function() {
     awu: document.getElementById('audit-watch-unused').checked,
     atp: document.getElementById('audit-tab-paid').checked,
     atu: document.getElementById('audit-tab-unused').checked,
+    nuac: document.getElementById('audit-nua-count').value,
+    nuad: document.getElementById('audit-nua-drop').checked,
     hs: document.getElementById('check-hotspot').checked,
     hsc: document.getElementById('hotspot-lines-count').value,
     hbo: document.getElementById('check-hbo').checked,
-    nua: document.getElementById('addon-nua').value,
     tb: document.getElementById('addon-turbo').value,
+    cld: document.getElementById('addon-cloud') ? document.getElementById('addon-cloud').checked : false,
     pa1: document.getElementById('addon-pa1').value,
     pa4: document.getElementById('addon-pa4').value,
     htp: document.getElementById('addon-htp').value,
@@ -1583,6 +1638,8 @@ window.restoreState = function() {
     if (s.awu !== undefined) document.getElementById('audit-watch-unused').checked = s.awu;
     if (s.atp !== undefined) document.getElementById('audit-tab-paid').checked = s.atp;
     if (s.atu !== undefined) document.getElementById('audit-tab-unused').checked = s.atu;
+    if (s.nuac) document.getElementById('audit-nua-count').value = s.nuac;
+    if (s.nuad !== undefined) document.getElementById('audit-nua-drop').checked = s.nuad;
     if (s.hs !== undefined) {
       document.getElementById('check-hotspot').checked = s.hs;
       document.getElementById('hotspot-lines-wrap').style.display = s.hs ? 'inline-flex' : 'none';
@@ -1592,8 +1649,8 @@ window.restoreState = function() {
       document.getElementById('check-hbo').checked = s.hbo;
       document.getElementById('hbo-warning').style.display = s.hbo ? 'block' : 'none';
     }
-    if (s.nua) document.getElementById('addon-nua').value = s.nua;
     if (s.tb) document.getElementById('addon-turbo').value = s.tb;
+    if (s.cld !== undefined && document.getElementById('addon-cloud')) document.getElementById('addon-cloud').checked = s.cld;
     if (s.pa1) document.getElementById('addon-pa1').value = s.pa1;
     if (s.pa4) document.getElementById('addon-pa4').value = s.pa4;
     if (s.htp) document.getElementById('addon-htp').value = s.htp;
@@ -1607,7 +1664,6 @@ window.restoreState = function() {
     if (s.upv) document.getElementById('upgrade-val').value = s.upv;
     if (s.wf !== undefined) document.getElementById('check-waived-fees').checked = s.wf;
 
-    // Scope restoration
     var setScope = function(id, state) {
       var el = document.getElementById(id);
       if (!el) return;
@@ -1642,9 +1698,15 @@ window.runCalc = function() {
   var watchUnused = document.getElementById('audit-watch-unused').checked;
   var tabUnused = document.getElementById('audit-tab-unused').checked;
 
+  // Next Up Leak Harvesting Calculation
+  var nuaCount = parseInt(document.getElementById('audit-nua-count').value, 10) || 0;
+  var nuaDrop = document.getElementById('audit-nua-drop').checked;
+  var nuaHarvestDollars = (nuaDrop && nuaCount > 0) ? (nuaCount * 10.00) : 0;
+
   var harvestedDollars = 0;
   if (watchUnused && currentWatches > 0) harvestedDollars += (currentWatches * 10.99);
   if (tabUnused && currentTablets > 0) harvestedDollars += (currentTablets * 20.99);
+  harvestedDollars += nuaHarvestDollars;
 
   var adjustedBaseline = rawCurrentBill + harvestedDollars;
 
@@ -1699,35 +1761,35 @@ window.runCalc = function() {
 
   var wirelessPlanTotal = Number(((premCount * premRate) + (extCount * extRate) + (valCount * valRate)).toFixed(2));
 
-  // Build the 4 Recommended Plan Cards dynamically (Section 3)
+  // Build the 4 Recommended Plan Cards dynamically (Updated 2.0 Specifications)
   var planOptions = [
     {
       title: "🐢 All Value Plus 2.0",
       repTag: "Max Headroom",
       custTag: "Economical Choice",
       cost: Number((totalLines * valRate).toFixed(2)),
-      desc: totalLines + " Lines on Core 5G Unlimited. Reliable everyday connectivity."
+      desc: totalLines + " Lines on Core 5G Unlimited with 3GB hotspot per line."
     },
     {
       title: "🐆 1x Prem + 🐢 " + Math.max(0, totalLines - 1) + "x Value",
       repTag: "Smart Mix • Rep Favorite",
       custTag: "Popular Family Mix",
       cost: Number((premRate + Math.max(0, totalLines - 1) * valRate).toFixed(2)),
-      desc: "Primary on Unl. Priority (60GB Hotspot), remaining lines on Value Plus."
+      desc: "Primary on Unl. Priority (100GB Hotspot), remaining lines on Value Plus (3GB)."
     },
     {
       title: "🐆 2x Prem + 🐢 " + Math.max(0, totalLines - 2) + "x Value",
       repTag: "Balanced Family Mix",
       custTag: "Balanced Priority",
       cost: Number(( (totalLines >= 2 ? 2 * premRate : premRate) + Math.max(0, totalLines - 2) * valRate ).toFixed(2)),
-      desc: "2 Primary lines on Unlimited Priority, secondary lines on Value Plus."
+      desc: "2 Primary lines on Unlimited Priority (100GB Hotspot), secondary on Value Plus (3GB)."
     },
     {
       title: "🐆 " + totalLines + "x Premium 2.0",
       repTag: "All-Cheetah Unlimited",
       custTag: "Maximum Performance",
       cost: Number((totalLines * premRate).toFixed(2)),
-      desc: "Unlimited Priority Data & 60GB Hotspot across all " + totalLines + " lines."
+      desc: "Unlimited Priority Data & 100GB Hotspot per line across all " + totalLines + " lines."
     }
   ];
 
@@ -1759,12 +1821,21 @@ window.runCalc = function() {
   var chosenCard = planOptions[window.selectedPlanIndex] || planOptions[1];
   window.startingPool = Math.max(0, Number((adjustedBaseline - chosenCard.cost).toFixed(2)));
 
-  // Add-ons
-  var nuaVal = document.getElementById('addon-nua').value;
-  var nuaCost = (nuaVal === 'all') ? totalLines * 10 : (parseInt(nuaVal, 10) || 0) * 10;
+  // Commission Booster Zone Logic
+  var cloudAttached = document.getElementById('addon-cloud') ? document.getElementById('addon-cloud').checked : false;
+  var cloudCost = cloudAttached ? 9.99 : 0.00;
+
   var turboVal = document.getElementById('addon-turbo').value;
-  var turboCost = (turboVal === 'all') ? totalLines * 7 : (parseInt(turboVal, 10) || 0) * 7;
-  
+  var turboCost = (turboVal === 'all') ? totalLines * 7.00 : (parseInt(turboVal, 10) || 0) * 7.00;
+
+  var totalSpiff = 0;
+  if (cloudAttached) totalSpiff += 15;
+  var spiffBadge = document.getElementById('spiff-total-badge');
+  if (spiffBadge) {
+    spiffBadge.textContent = "Spiff Potential: $" + totalSpiff;
+  }
+
+  // Protection Suite
   var pa1Cost = parseFloat(document.getElementById('addon-pa1').value) || 0;
   var pa4Cost = parseFloat(document.getElementById('addon-pa4').value) || 0;
   var htpCost = parseFloat(document.getElementById('addon-htp').value) || 0;
@@ -1784,7 +1855,7 @@ window.runCalc = function() {
   var activeTablets = tabUnused ? 0 : currentTablets;
   var existingConnectedCost = Number(((activeWatches * 10.99) + (activeTablets * 20.99)).toFixed(2));
 
-  // #2 Trade-In Promo Logic & Value Plus Disqualification Warning
+  // Trade-In Promo Logic & Disqualification Warning
   var tradeCreditPerMonth = parseFloat(document.getElementById('trade-promo-tier').value) || 0;
   var tradeLines = parseInt(document.getElementById('trade-lines-count').value, 10) || 0;
   var upCount = parseInt(document.getElementById('upgrade-count').value, 10) || 0;
@@ -1801,7 +1872,7 @@ window.runCalc = function() {
   var effectiveTradeCredit = isDisqualified ? 0 : Number((tradeCreditPerMonth * tradeLines).toFixed(2));
   var netDeviceMonthlyCost = Math.max(0, Number((grossDeviceMonthly - effectiveTradeCredit).toFixed(2)));
 
-  // #3 Competitor Switcher Buyout Engine Calculations
+  // Competitor Switcher Buyout Engine Calculations
   var switchLines = parseInt(document.getElementById('switch-line-count').value, 10) || 0;
   var switchBalOwed = parseFloat(document.getElementById('switch-balance-owed').value) || 0;
   var maxBuyoutReimbursement = switchLines * 800.00;
@@ -1813,10 +1884,10 @@ window.runCalc = function() {
     switchPoolBadge.textContent = "Payoff Payout: $" + actualBuyoutPayout.toFixed(2);
   }
 
-  var totalDrawdowns = nuaCost + turboCost + totalProtectionCost + targetWatchCost + targetTabletCost + monthlyAipCharge + netDeviceMonthlyCost + window.broadbandCost + window.dtvCost;
+  var totalDrawdowns = turboCost + cloudCost + totalProtectionCost + targetWatchCost + targetTabletCost + monthlyAipCharge + netDeviceMonthlyCost + window.broadbandCost + window.dtvCost;
   var remainingPotBalance = Number((window.startingPool - totalDrawdowns).toFixed(2));
 
-  var totalWireless = wirelessPlanTotal + nuaCost + turboCost + totalProtectionCost + targetWatchCost + targetTabletCost + monthlyAipCharge + netDeviceMonthlyCost + existingConnectedCost;
+  var totalWireless = wirelessPlanTotal + turboCost + cloudCost + totalProtectionCost + targetWatchCost + targetTabletCost + monthlyAipCharge + netDeviceMonthlyCost + existingConnectedCost;
   var totalHousehold = totalWireless + window.broadbandCost + window.dtvCost;
 
   var monthlySavings = Number((rawCurrentBill - totalHousehold).toFixed(2));
@@ -1838,7 +1909,7 @@ window.runCalc = function() {
 
   document.getElementById('wireless-pool').textContent = "Wireless Base: $" + wirelessPlanTotal.toFixed(2) + "/mo";
   document.getElementById('pool-badge-broadband').textContent = "Drawdown: $" + (window.broadbandCost + window.dtvCost).toFixed(2) + "/mo";
-  document.getElementById('pool-badge-devices').textContent = "Drawdown: $" + (totalProtectionCost + targetWatchCost + targetTabletCost + monthlyAipCharge + netDeviceMonthlyCost).toFixed(2) + "/mo";
+  document.getElementById('pool-badge-devices').textContent = "Drawdown: $" + (totalProtectionCost + targetWatchCost + targetTabletCost + monthlyAipCharge + netDeviceMonthlyCost + turboCost + cloudCost).toFixed(2) + "/mo";
 
   document.getElementById('sum-new-total').textContent = "$" + totalHousehold.toFixed(2) + "/mo";
   var saveBox = document.getElementById('sum-savings-box');
@@ -1892,6 +1963,9 @@ window.runCalc = function() {
   if (pa4Cost > 0) protectParts.push("PA4+ Multi ($50)");
   if (htpCost > 0) protectParts.push("HomeTech ($25)");
   if (protectParts.length > 0) sms += " + " + protectParts.join(" & ");
+
+  if (cloudAttached) sms += " + Personal Cloud Unlimited ($9.99/mo)";
+  if (turboCost > 0) sms += " + Turbo Speed Boost ($" + turboCost.toFixed(2) + "/mo)";
 
   if (existingConnectedCost > 0 || targetWatchCost > 0 || targetTabletCost > 0) {
     var totalW = activeWatches + (targetWatchCost > 0 ? 1 : 0);
