@@ -545,7 +545,7 @@
     padding: 16px;
   }
   .modal-card {
-    max-width: 520px;
+    max-width: 540px;
     width: 100%;
     background: linear-gradient(135deg, rgba(20, 32, 55, 0.95) 0%, rgba(10, 18, 35, 0.98) 100%);
     border: 1.5px solid rgba(56, 189, 248, 0.4);
@@ -583,6 +583,8 @@
     font-size: 9.5px;
     line-height: 1.55;
     color: #E2E8F0;
+    max-height: 75vh;
+    overflow-y: auto;
   }
   .pitch-quote {
     background: rgba(0, 0, 0, 0.35);
@@ -595,7 +597,7 @@
     font-style: italic;
   }
   .pitch-bullet { margin-bottom: 6px; display: flex; align-items: flex-start; gap: 6px; }
-  .pitch-bullet b { color: #38BDF8; min-width: 90px; }
+  .pitch-bullet b { color: #38BDF8; min-width: 100px; }
 
   /* PRESENTATION MODE OVERRIDES - FULL JARGON KILLER */
   body.presentation-mode .rep-only { display: none !important; }
@@ -617,7 +619,7 @@
 <div class="modal-overlay" id="pitch-modal" onclick="if(event.target === this) window.closePitchModal();">
   <div class="modal-card">
     <div class="modal-header">
-      <div class="modal-title" id="modal-pitch-title">Pitch Guide</div>
+      <div class="modal-title" id="modal-pitch-title">Channel &amp; Offer Guide</div>
       <button type="button" class="modal-close" onclick="window.closePitchModal()">✕</button>
     </div>
     <div class="modal-body" id="modal-pitch-content"></div>
@@ -790,7 +792,7 @@
       </div>
     </div>
 
-    <!-- DISCOUNT PROGRAM SELECTION (CATEGORIZED WITH EASTSIDE CU FANS) -->
+    <!-- REWORKED OPUS-COMPLIANT DISCOUNT SELECTION -->
     <div class="grid-2">
       <div class="control-group">
         <label>Discount Profile / Signature Organization</label>
@@ -798,30 +800,26 @@
           <optgroup label="Standard Consumer">
             <option value="none" selected>Standard Consumer (No FAN)</option>
           </optgroup>
-          <optgroup label="Special Programs">
-            <option value="apprec">Appreciation (Mil/Vet/FirstNet/Teach/RN: 10/15/20%)</option>
-            <option value="firstnet">FirstNet &amp; Family (Band 14/13 Priority)</option>
+          <optgroup label="Appreciation Programs (25% Off)">
+            <option value="apprec_mil">Military &amp; Veterans (25% Off)</option>
+            <option value="firstnet">FirstNet Primary (Band 14 Priority + 25% Off Family)</option>
+            <option value="apprec_first">First Responders / Law Enforcement / EMS (25% Off)</option>
+            <option value="apprec_edu">Teachers (K-12, College/University Faculty • 25% Off)</option>
+            <option value="apprec_med">Nurses &amp; Physicians (RN, LPN, MD, DO • 25% Off)</option>
             <option value="fiber">AT&amp;T Fiber Convergence (20% Off Wireless)</option>
           </optgroup>
-          <optgroup label="Eastside Indy Credit Union FANs ($10/L off Premium)">
-            <option value="fan_forum">💳 FORUM Credit Union (E. Washington Corridor)</option>
-            <option value="fan_imcu">💳 Indiana Members CU - IMCU (Mitthoeffer / State)</option>
-            <option value="fan_everwise">💳 Everwise Credit Union - Former TCU (Post Rd)</option>
-            <option value="fan_fcfcu">💳 Financial Center First CU - FCFCU (Lawrence / DFAS)</option>
-            <option value="fan_kemba">💳 Kemba / Family Horizons / Harvester Financial</option>
-          </optgroup>
-          <optgroup label="Universal Signature Qualification Paths">
-            <option value="fan_uber">🚗 Rideshare / Delivery (Uber / Uber Eats Active Driver Profile)</option>
-            <option value="fan_edu">🎓 Higher Education / Alumni (.edu Email or Alumni Card)</option>
-            <option value="fan_union">🏛️ Labor Union / Trade (Union Plus / AFL-CIO / Teamsters)</option>
-            <option value="fan_corp">🏢 Corporate Employer FAN (Verified via Paystub)</option>
+          <optgroup label="Active Signature Paths ($10/L Off Premium)">
+            <option value="fan_union">🏛️ Labor Union (Union Plus / AFL-CIO / Teamsters)</option>
+            <option value="fan_corp">🏢 Corporate Employer FAN (Work Email / Paystub)</option>
+            <option value="fan_edu">🎓 Higher Education (College Student / Faculty / Alumni)</option>
+            <option value="fan_gig">🚗 Gig Economy (Uber / Lyft Active Driver Profile)</option>
           </optgroup>
         </select>
       </div>
       <div class="control-group rep-only">
-        <label>Verified FAN Micro-Callout</label>
+        <label>Verification Standard / FAST Alternative</label>
         <div id="fan-proof-callout" style="padding:9px 12px; border-radius:9px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); font-size:8px; color:#94A3B8; font-weight:600;">
-          Standard pricing active. Screen for Employer, Credit Union, or Education discounts.
+          Standard pricing active. Screen for Employer, Union, Education, or Appreciation discounts.
         </div>
       </div>
     </div>
@@ -1001,22 +999,96 @@
       </div>
     </div>
 
+    <!-- ROBUST DIRECTV BUILDER SUITE -->
     <div id="wrap-tv-options" style="display:none;">
-      <div style="font-size:8px; font-weight:700; color:#94A3B8; text-transform:uppercase; margin-bottom:8px;">Option B: DIRECTV via Internet Revision</div>
-      <div class="grid-3">
+      <div style="font-size:9px; font-weight:800; color:#38BDF8; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;">
+        Option B: DIRECTV via Internet Custom Builder (1 Gemini Box Included)
+      </div>
+
+      <!-- Core Base Packages -->
+      <div class="grid-3" style="margin-bottom:12px;">
         <div class="pill-option active" id="dtv-none" onclick="window.selectDTV(0, this)">
           <div class="pill-title">No TV</div>
           <div class="pill-price">$0</div>
+          <div class="pill-sub">Keep Current / Stream</div>
         </div>
-        <div class="pill-option" id="dtv-ent" onclick="window.selectDTV(69.99, this)">
-          <div class="pill-title">Entertainment</div>
-          <div class="pill-price">$69.99/mo</div>
-          <div class="pill-sub">Gemini Included</div>
+
+        <div class="pill-option" id="dtv-ent" onclick="window.selectDTV(79.99, this)">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="pill-title">Entertainment</span>
+            <button type="button" class="btn-pitch-hint" style="margin:0; padding:1px 5px;" onclick="event.stopPropagation(); window.openPitchModal('dtv_ent');">💡 Channels</button>
+          </div>
+          <div class="pill-price">$79.99/mo</div>
+          <div class="pill-sub">$69.99 pkg + $10 Gemini Box • No RSN</div>
         </div>
-        <div class="pill-option" id="dtv-choice" onclick="window.selectDTV(89.99, this)">
-          <div class="pill-title">Choice</div>
-          <div class="pill-price">$89.99/mo</div>
-          <div class="pill-sub">Regional Sports</div>
+
+        <div class="pill-option" id="dtv-choice" onclick="window.selectDTV(121.98, this)">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="pill-title">Choice (Sports)</span>
+            <button type="button" class="btn-pitch-hint" style="margin:0; padding:1px 5px;" onclick="event.stopPropagation(); window.openPitchModal('dtv_choice');">💡 RSN &amp; Locals</button>
+          </div>
+          <div class="pill-price">$121.98/mo</div>
+          <div class="pill-sub">$89.99 pkg + $10 Box + $21.99 RSN Fee</div>
+        </div>
+      </div>
+
+      <!-- DIRECTV Add-On & International Dropdown Matrix -->
+      <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:12px; display:flex; flex-direction:column; gap:10px;">
+        <div class="grid-2">
+          <!-- Disney+ / Hulu Bundle Selection -->
+          <div class="control-group">
+            <label>Disney+ &amp; Hulu Bundle Status</label>
+            <select id="dtv-disney-select" onchange="window.runCalc();">
+              <option value="0" selected>Included (With Ads • $0.00/mo)</option>
+              <option value="9.00">Premium Ad-Free Upgrade (+$9.00/mo)</option>
+              <option value="none">Decline / Not Needed ($0.00/mo)</option>
+            </select>
+          </div>
+
+          <!-- Premium Movie & Entertainment Networks -->
+          <div class="control-group">
+            <label>Premium Networks (3 Mos Free Promos)</label>
+            <select id="dtv-premiums-select" onchange="window.runCalc();">
+              <option value="0" selected>None / Base Package Only ($0)</option>
+              <option value="18.49">HBO Max Standard (+$18.49/mo)</option>
+              <option value="13.99">Paramount+ with SHOWTIME (+$13.99/mo)</option>
+              <option value="11.99">Starz (+$11.99/mo)</option>
+              <option value="10.99">Cinemax (+$10.99/mo)</option>
+              <option value="7.99">MGM+ (+$7.99/mo)</option>
+              <option value="9.99">Movies Extra Pack + Peacock Premium (+$9.99/mo)</option>
+              <option value="55.00">Complete 5-Star Premium Suite (+$55.00/mo)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <!-- Sports Add-On Packs -->
+          <div class="control-group">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
+              <label style="margin:0;">Sports Specialty Add-Ons</label>
+              <button type="button" class="btn-pitch-hint" style="margin:0; padding:1px 5px;" onclick="window.previewSportsPack();">💡 Sports Lineup</button>
+            </div>
+            <select id="dtv-sports-select" onchange="window.runCalc();">
+              <option value="0" selected>None ($0/mo)</option>
+              <option value="14.99">DIRECTV Sports Pack (+$14.99/mo • RedZone &amp; Out-of-Market RSNs)</option>
+              <option value="4.99">Deportes 4-Channel Pack (+$4.99/mo • TUDN/ESPN/FOX)</option>
+            </select>
+          </div>
+
+          <!-- International & Native Language Packs -->
+          <div class="control-group">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
+              <label style="margin:0;">International Language Packs</label>
+              <button type="button" class="btn-pitch-hint" style="margin:0; padding:1px 5px;" onclick="window.previewIntlPack();">💡 Channel Roster</button>
+            </div>
+            <select id="dtv-intl-select" onchange="window.runCalc();">
+              <option value="0" selected>None ($0/mo)</option>
+              <option value="15.00">Español Add-On (+$15.00/mo • 55+ Spanish Channels)</option>
+              <option value="20.00">Vietnamese Direct (+$20.00/mo • 9 Channels)</option>
+              <option value="30.00">Korean Direct (+$30.00/mo • 10 Channels)</option>
+              <option value="20.00">Brazilian Globo (+$20.00/mo • TV Globo)</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
@@ -1109,22 +1181,22 @@
       </div>
     </div>
 
-    <!-- CONNECTED HARDWARE ATTACH -->
+    <!-- CONNECTED HARDWARE ATTACH (DYNAMIC PROMO GATED BY PREMIUM) -->
     <div class="grid-2" style="margin-bottom:12px;">
       <div class="control-group">
-        <label>⌚ Add New Smartwatches</label>
+        <label id="lbl-addon-watches">⌚ Add New Smartwatches</label>
         <select id="addon-watches" onchange="window.runCalc();">
-          <option value="0">0 Watches Added</option>
-          <option value="5.50">1 Watch (50% Off Promo @ $5.50/mo)</option>
-          <option value="16.49">2 Watches ($16.49/mo)</option>
+          <option value="0" selected>0 Watches Added</option>
+          <option value="1">1 Watch</option>
+          <option value="2">2 Watches</option>
         </select>
       </div>
       <div class="control-group">
-        <label>📱 Add New Tablets</label>
+        <label id="lbl-addon-tablets">📱 Add New Tablets</label>
         <select id="addon-tablets" onchange="window.runCalc();">
-          <option value="0">0 Tablets Added</option>
-          <option value="10.50">1 Tablet (50% Off Promo @ $10.50/mo)</option>
-          <option value="31.49">2 Tablets ($31.49/mo)</option>
+          <option value="0" selected>0 Tablets Added</option>
+          <option value="1">1 Tablet</option>
+          <option value="2">2 Tablets</option>
         </select>
       </div>
     </div>
@@ -1238,14 +1310,14 @@
     <div class="checklist rep-only">
       <div style="font-weight:800; color:#FBBF24; text-transform:uppercase;">📝 OPUS ORDER CHECKLIST &amp; AUDIT LOG</div>
       <div class="check-item"><span>✔</span> Verify and enroll customer in Debit/Checking AutoPay (-$10/line off base).</div>
-      <div class="check-item"><span>✔</span> Confirm Verified Signature or Eastside Credit Union FAN attaches to account.</div>
-      <div class="check-item"><span>✔</span> Verify Next Up Anytime ($10/line) on all eligible financing agreements.</div>
+      <div class="check-item"><span>✔</span> Confirm Verified Signature or Appreciation discount attaches to account.</div>
+      <div class="check-item"><span>✔</span> Screen connected hardware (50% access discount requires at least 1 Premium PL line).</div>
       <div class="check-item"><span>✔</span> Confirm 7% IN sales tax collected at register for equipment and AIP financing.</div>
     </div>
 
     <div class="control-group" style="margin-top:14px;">
       <label>📱 Instant Customer SMS Quote</label>
-      <textarea id="sms-text" style="width:100%; height:70px; background:rgba(0,0,0,0.4); border:1px solid rgba(255, 255, 255, 0.12); color:#E2E8F0; border-radius:10px; padding:10px; font-family:inherit; resize:none;" readonly></textarea>
+      <textarea id="sms-text" style="width:100%; height:85px; background:rgba(0,0,0,0.4); border:1px solid rgba(255, 255, 255, 0.12); color:#E2E8F0; border-radius:10px; padding:10px; font-family:inherit; resize:none;" readonly></textarea>
       <button type="button" class="btn" style="margin-top:8px; width:100%; background:rgba(0,87,184,0.35); border-color:#0284C7;" onclick="window.copySMS()">📋 Copy Text for Customer</button>
     </div>
   </div>
@@ -1300,6 +1372,76 @@ var pitchGuides = {
       { key: "Power Surge:", val: "Full replacement coverage for power surges, internal mechanical failure, and normal wear." },
       { key: "Single Flat Fee:", val: "One $25/mo charge protects thousands in home tech assets across the entire household." }
     ]
+  },
+  dtv_ent: {
+    title: "DIRECTV Entertainment Lineup (90+ Channels • $79.99/mo)",
+    quote: '"Includes all your primary Indianapolis local channels, news, and family favorites, with 1 Gemini streaming box and unlimited cloud DVR—with zero regional sports fees."',
+    bullets: [
+      { key: "Indianapolis Locals:", val: "WRTV 6 (ABC), WTTV 4 (CBS), WTHR 13 (NBC), WXIN 59 (FOX), WISH 8 (CW), WFYI (PBS)." },
+      { key: "Core Sports:", val: "ESPN, ESPN2, FS1, MotorTrend (Excludes local RSNs & FanDuel Sports Indiana)." },
+      { key: "Popular Cable:", val: "TNT, TBS, USA, HGTV, Food Network, Disney, Nickelodeon, Discovery, CNN, Fox News." },
+      { key: "Hardware & Cloud:", val: "1 Gemini Box included ($10/mo value) with voice Google Assistant remote + Unlimited Cloud DVR." }
+    ]
+  },
+  dtv_choice: {
+    title: "DIRECTV Choice Lineup (125+ Channels • $121.98/mo w/ RSN)",
+    quote: '"The definitive home for Indiana sports fans. Covers Pacers games, college conference networks, and local broadcast games with zero blackout headaches."',
+    bullets: [
+      { key: "Regional Sports (RSN):", val: "FanDuel Sports Network Indiana (Pacers), FanDuel Midwest/Extra, Marquee Sports Net (Cubs)." },
+      { key: "College Networks:", val: "Big Ten Network (BTN), SEC Network, ACC Network (ACCN)." },
+      { key: "Pro Sports Nets:", val: "MLB Network, NBA TV, Tennis Channel, Golf Channel, FS1, ESPN, ESPN2." },
+      { key: "Indianapolis Locals:", val: "Full locals suite: WRTV 6 (ABC), WTTV 4 (CBS), WTHR 13 (NBC), WXIN 59 (FOX), WISH 8 (CW)." },
+      { key: "Price Breakdown:", val: "$89.99 Choice Base + $10.00 Gemini Box + $21.99 Regional Sports Fee = $121.98/mo total." }
+    ]
+  },
+  dtv_sports_pack: {
+    title: "DIRECTV Sports Pack ($14.99/mo • 1st Month Free)",
+    quote: '"Over 40 regional sports networks across the nation, plus NFL RedZone, CBS Sports Network, and outdoor channels for serious sports fans."',
+    bullets: [
+      { key: "NFL RedZone:", val: "Every touchdown from every Sunday afternoon game live." },
+      { key: "Out-of-Market RSNs:", val: "YES Network, NESN, NBC Sports Bay Area/Chicago, Altitude, SportsNet Pittsburgh." },
+      { key: "College & Specialty:", val: "CBS Sports Network, ESPN Goal Line, Next Level Sports, Outdoor Channel, Pursuit." }
+    ]
+  },
+  dtv_deportes: {
+    title: "Deportes 4-Channel Spanish Sports Pack ($4.99/mo)",
+    quote: '"Targeted Spanish-language sports coverage for Liga MX, UEFA Champions League, and South American soccer tournaments."',
+    bullets: [
+      { key: "Included Channels:", val: "TUDN, ESPN Deportes, FOX Deportes, TyC Sports." },
+      { key: "Coverage:", val: "Live Liga MX, Copa Libertadores, international friendlies, and boxing analysis." }
+    ]
+  },
+  dtv_espanol: {
+    title: "Español Base Add-On ($15.00/mo • 55+ Channels)",
+    quote: '"Comprehensive Spanish news, novelas, and entertainment suite for bilingual households."',
+    bullets: [
+      { key: "Core Networks:", val: "Univision, Telemundo, Discovery en Español, Estrella TV, Cinelatino." },
+      { key: "News & Entertainment:", val: "CNN en Español, Sony Cine, Mega TV, TeleCentro, TVV, Peru Magico." },
+      { key: "Sports Included:", val: "TUDN, Fox Deportes, ESPN Deportes, TyC Sports." }
+    ]
+  },
+  dtv_vietnamese: {
+    title: "Vietnamese Direct ($20.00/mo • 9 Channels)",
+    quote: '"Premier native-language Vietnamese broadcast and digital entertainment channels."',
+    bullets: [
+      { key: "Included Lineup:", val: "SBTN, VIETV, Vietface TV, S Channel, Film24H, Vien Thao TV, VGN, Tviet Network, HONVIETV." },
+      { key: "Features:", val: "24/7 native Vietnamese news, variety programs, musical specials, and cultural programming." }
+    ]
+  },
+  dtv_korean: {
+    title: "Korean Direct ($30.00/mo • 10 Channels)",
+    quote: '"Top Seoul broadcast networks, news channels, and K-drama entertainment in Korean."',
+    bullets: [
+      { key: "Major Networks:", val: "SBS (Seoul Broadcasting System), SBS Plus, MBC Every1, KBS America." },
+      { key: "News & Lifestyle:", val: "YTN (24hr News), MBN, EBS (Educational), TAN TV, CTS, Arirang TV." }
+    ]
+  },
+  dtv_brazilian: {
+    title: "Brazilian Globo ($20.00/mo)",
+    quote: '"Direct native Portuguese broadcast stream from Brazil."',
+    bullets: [
+      { key: "Included Lineup:", val: "TV Globo (Novelas, Jornal Nacional, and entertainment) & Premiere FC matches." }
+    ]
   }
 };
 
@@ -1317,6 +1459,25 @@ window.openPitchModal = function(type) {
 
 window.closePitchModal = function() {
   document.getElementById('pitch-modal').style.display = 'none';
+};
+
+window.previewSportsPack = function() {
+  var sel = document.getElementById('dtv-sports-select').value;
+  if (sel === "4.99") window.openPitchModal('dtv_deportes');
+  else window.openPitchModal('dtv_sports_pack');
+};
+
+window.previewIntlPack = function() {
+  var sel = document.getElementById('dtv-intl-select').value;
+  if (sel === "20.00") {
+    var txt = document.getElementById('dtv-intl-select').options[document.getElementById('dtv-intl-select').selectedIndex].text;
+    if (txt.indexOf('Brazilian') !== -1) window.openPitchModal('dtv_brazilian');
+    else window.openPitchModal('dtv_vietnamese');
+  } else if (sel === "30.00") {
+    window.openPitchModal('dtv_korean');
+  } else {
+    window.openPitchModal('dtv_espanol');
+  }
 };
 
 window.copyAddress = function() {
@@ -1585,7 +1746,11 @@ window.autoSaveState = function() {
     swlc: document.getElementById('switch-line-count').value,
     swbal: document.getElementById('switch-balance-owed').value,
     bbc: window.broadbandCost,
-    dtvc: window.dtvCost
+    dtvc: window.dtvCost,
+    dtvDis: document.getElementById('dtv-disney-select') ? document.getElementById('dtv-disney-select').value : "0",
+    dtvPrem: document.getElementById('dtv-premiums-select') ? document.getElementById('dtv-premiums-select').value : "0",
+    dtvSprt: document.getElementById('dtv-sports-select') ? document.getElementById('dtv-sports-select').value : "0",
+    dtvIntl: document.getElementById('dtv-intl-select') ? document.getElementById('dtv-intl-select').value : "0"
   };
   localStorage.setItem('att_quote_state', JSON.stringify(state));
 };
@@ -1681,6 +1846,11 @@ window.restoreState = function() {
 
     window.broadbandCost = s.bbc || 0;
     window.dtvCost = s.dtvc || 0;
+
+    if (s.dtvDis && document.getElementById('dtv-disney-select')) document.getElementById('dtv-disney-select').value = s.dtvDis;
+    if (s.dtvPrem && document.getElementById('dtv-premiums-select')) document.getElementById('dtv-premiums-select').value = s.dtvPrem;
+    if (s.dtvSprt && document.getElementById('dtv-sports-select')) document.getElementById('dtv-sports-select').value = s.dtvSprt;
+    if (s.dtvIntl && document.getElementById('dtv-intl-select')) document.getElementById('dtv-intl-select').value = s.dtvIntl;
   } catch(e) {}
 };
 
@@ -1711,20 +1881,26 @@ window.runCalc = function() {
   var adjustedBaseline = rawCurrentBill + harvestedDollars;
 
   var discountSel = document.getElementById('curr-discount').value;
-  var isFan = discountSel.indexOf('fan') === 0;
+  var isFan = (discountSel.indexOf('fan_') === 0);
+  var isApprec = (discountSel.indexOf('apprec_') === 0 || discountSel === 'firstnet');
   var apMethod = document.getElementById('curr-autopay').value;
 
   var proofCallout = document.getElementById('fan-proof-callout');
-  if (discountSel === 'fan_forum') proofCallout.textContent = "✔ FORUM Credit Union: Member Debit Card, Mobile Banking app, or check accepted.";
-  else if (discountSel === 'fan_imcu') proofCallout.textContent = "✔ IMCU: Member Card or State of Indiana affiliation screenshot accepted.";
-  else if (discountSel === 'fan_everwise') proofCallout.textContent = "✔ Everwise (TCU): Member Card or Teacher / School district credential.";
-  else if (discountSel === 'fan_fcfcu') proofCallout.textContent = "✔ FCFCU: Member Card, DFAS / Military statement accepted.";
-  else if (discountSel === 'fan_kemba') proofCallout.textContent = "✔ Kemba / Family Horizons / Harvester: Debit card or account statement accepted.";
-  else if (discountSel === 'fan_uber') proofCallout.textContent = "✔ Uber: Screenshot of live Driver profile in app (no paystub needed).";
-  else if (discountSel === 'fan_edu') proofCallout.textContent = "✔ Higher Ed: Active .edu email address or official Alumni Association card.";
-  else if (discountSel === 'fan_union') proofCallout.textContent = "✔ Union Plus: AFL-CIO, Teamsters, or municipal dues deduction on paystub.";
-  else if (discountSel === 'fan_corp') proofCallout.textContent = "✔ Corporate: Recent paystub or work email verification via att.com/signature.";
-  else proofCallout.textContent = "Standard pricing active. Screen for Employer, Credit Union, or Education discounts.";
+  if (discountSel === 'fan_union') {
+    proofCallout.textContent = "✔ Union Plus: AFL-CIO, Teamsters, or municipal union dues line item on current paystub.";
+  } else if (discountSel === 'fan_corp') {
+    proofCallout.textContent = "✔ Corporate: Validate via att.com/verification/signaturehub or submit paystub at att.com/dep.";
+  } else if (discountSel === 'fan_edu') {
+    proofCallout.textContent = "✔ Higher Ed: Active .edu email enrollment, current student ID, or official Alumni card.";
+  } else if (discountSel === 'fan_gig') {
+    proofCallout.textContent = "✔ Gig Economy: Active driver profile screen in Uber/Lyft driver app showing active status.";
+  } else if (isApprec) {
+    proofCallout.textContent = "✔ Appreciation (25% Off): DD-214/Vet ID, State Teaching License, or State Medical License required.";
+  } else if (discountSel === 'fiber') {
+    proofCallout.textContent = "✔ 20% Fiber Convergence: Standalone account billing address must match AT&T Fiber service address.";
+  } else {
+    proofCallout.textContent = "Standard pricing active. Screen for Employer, Union, Education, or Appreciation discounts.";
+  }
 
   var fnCallout = document.getElementById('fn-callout');
   if (fnCallout) {
@@ -1749,10 +1925,10 @@ window.runCalc = function() {
 
   if (isFan) {
     premRate = (apMethod === 'none') ? tierData.noApExt : (tierData.fanPrem + (apMethod === 'credit' ? 5 : 0));
-  } else if (discountSel === 'apprec' || discountSel === 'firstnet') {
-    premRate = +(premRate * 0.80).toFixed(2);
-    extRate = +(extRate * 0.85).toFixed(2);
-    valRate = +(valRate * 0.90).toFixed(2);
+  } else if (isApprec) {
+    premRate = +(premRate * 0.75).toFixed(2);
+    extRate = +(extRate * 0.75).toFixed(2);
+    valRate = +(valRate * 0.75).toFixed(2);
   } else if (discountSel === 'fiber') {
     premRate = +(premRate * 0.80).toFixed(2);
     extRate = +(extRate * 0.80).toFixed(2);
@@ -1841,9 +2017,41 @@ window.runCalc = function() {
   var htpCost = parseFloat(document.getElementById('addon-htp').value) || 0;
   var totalProtectionCost = pa1Cost + pa4Cost + htpCost;
 
-  var targetWatchCost = parseFloat(document.getElementById('addon-watches').value) || 0;
-  var targetTabletCost = parseFloat(document.getElementById('addon-tablets').value) || 0;
+  // Dynamic Connected Hardware 50% Promo (Strict Premium 2.0 Gate)
+  var hasPremLine = (premCount > 0);
+  var watchSelect = document.getElementById('addon-watches');
+  var tabletSelect = document.getElementById('addon-tablets');
+  var numWatchesAdded = parseInt(watchSelect.value, 10) || 0;
+  var numTabletsAdded = parseInt(tabletSelect.value, 10) || 0;
 
+  var watchRate1 = hasPremLine ? 5.50 : 10.99;
+  var watchRate2 = 10.99;
+  var tabletRate1 = hasPremLine ? 10.50 : 20.99;
+  var tabletRate2 = 20.99;
+
+  watchSelect.options[1].text = hasPremLine 
+    ? "1 Watch (50% Off Promo @ $5.50/mo)" 
+    : "1 Watch (Standard Rate @ $10.99/mo)";
+  watchSelect.options[2].text = hasPremLine 
+    ? "2 Watches ($16.49/mo • 1 Promo + 1 Std)" 
+    : "2 Watches ($21.98/mo • Standard Rates)";
+
+  tabletSelect.options[1].text = hasPremLine 
+    ? "1 Tablet (50% Off Promo @ $10.50/mo)" 
+    : "1 Tablet (Standard Rate @ $20.99/mo)";
+  tabletSelect.options[2].text = hasPremLine 
+    ? "2 Tablets ($31.49/mo • 1 Promo + 1 Std)" 
+    : "2 Tablets ($41.98/mo • Standard Rates)";
+
+  var targetWatchCost = 0;
+  if (numWatchesAdded === 1) targetWatchCost = watchRate1;
+  else if (numWatchesAdded === 2) targetWatchCost = watchRate1 + watchRate2;
+
+  var targetTabletCost = 0;
+  if (numTabletsAdded === 1) targetTabletCost = tabletRate1;
+  else if (numTabletsAdded === 2) targetTabletCost = tabletRate1 + tabletRate2;
+
+  // AIP Financing
   var aipEligible = document.getElementById('check-aip-eligible').checked;
   var aipCartInput = parseFloat(document.getElementById('aip-cart-val').value) || 0;
   var aipMetaPrice = parseFloat(document.getElementById('aip-meta-select').value) || 0;
@@ -1884,11 +2092,35 @@ window.runCalc = function() {
     switchPoolBadge.textContent = "Payoff Payout: $" + actualBuyoutPayout.toFixed(2);
   }
 
-  var totalDrawdowns = turboCost + cloudCost + totalProtectionCost + targetWatchCost + targetTabletCost + monthlyAipCharge + netDeviceMonthlyCost + window.broadbandCost + window.dtvCost;
+  // Robust DIRECTV Add-on & International Calculations
+  var dtvDisneyCost = 0;
+  var dtvPremiumsCost = 0;
+  var dtvSportsCost = 0;
+  var dtvIntlCost = 0;
+
+  if (window.dtvCost > 0) {
+    if (document.getElementById('dtv-disney-select') && document.getElementById('dtv-disney-select').value === "9.00") {
+      dtvDisneyCost = 9.00;
+    }
+    if (document.getElementById('dtv-premiums-select')) {
+      dtvPremiumsCost = parseFloat(document.getElementById('dtv-premiums-select').value) || 0;
+    }
+    if (document.getElementById('dtv-sports-select')) {
+      dtvSportsCost = parseFloat(document.getElementById('dtv-sports-select').value) || 0;
+    }
+    if (document.getElementById('dtv-intl-select')) {
+      dtvIntlCost = parseFloat(document.getElementById('dtv-intl-select').value) || 0;
+    }
+  }
+
+  var totalDtvAddons = dtvDisneyCost + dtvPremiumsCost + dtvSportsCost + dtvIntlCost;
+  var totalDtvMonthly = (window.dtvCost > 0) ? Number((window.dtvCost + totalDtvAddons).toFixed(2)) : 0;
+
+  var totalDrawdowns = turboCost + cloudCost + totalProtectionCost + targetWatchCost + targetTabletCost + monthlyAipCharge + netDeviceMonthlyCost + window.broadbandCost + totalDtvMonthly;
   var remainingPotBalance = Number((window.startingPool - totalDrawdowns).toFixed(2));
 
   var totalWireless = wirelessPlanTotal + turboCost + cloudCost + totalProtectionCost + targetWatchCost + targetTabletCost + monthlyAipCharge + netDeviceMonthlyCost + existingConnectedCost;
-  var totalHousehold = totalWireless + window.broadbandCost + window.dtvCost;
+  var totalHousehold = totalWireless + window.broadbandCost + totalDtvMonthly;
 
   var monthlySavings = Number((rawCurrentBill - totalHousehold).toFixed(2));
 
@@ -1908,7 +2140,7 @@ window.runCalc = function() {
   }
 
   document.getElementById('wireless-pool').textContent = "Wireless Base: $" + wirelessPlanTotal.toFixed(2) + "/mo";
-  document.getElementById('pool-badge-broadband').textContent = "Drawdown: $" + (window.broadbandCost + window.dtvCost).toFixed(2) + "/mo";
+  document.getElementById('pool-badge-broadband').textContent = "Drawdown: $" + (window.broadbandCost + totalDtvMonthly).toFixed(2) + "/mo";
   document.getElementById('pool-badge-devices').textContent = "Drawdown: $" + (totalProtectionCost + targetWatchCost + targetTabletCost + monthlyAipCharge + netDeviceMonthlyCost + turboCost + cloudCost).toFixed(2) + "/mo";
 
   document.getElementById('sum-new-total').textContent = "$" + totalHousehold.toFixed(2) + "/mo";
@@ -1946,7 +2178,7 @@ window.runCalc = function() {
     breakdownBox.textContent = "*Estimates 7% IN sales tax on retail device value + upgrade fees + AIP sales tax.";
   }
 
-  // Customer SMS
+  // Customer SMS Builder
   var sms = "AT&T Quote: " + totalLines + " Voice Lines (";
   var planParts = [];
   if (premCount > 0) planParts.push(premCount + "x Premium");
@@ -1968,12 +2200,28 @@ window.runCalc = function() {
   if (turboCost > 0) sms += " + Turbo Speed Boost ($" + turboCost.toFixed(2) + "/mo)";
 
   if (existingConnectedCost > 0 || targetWatchCost > 0 || targetTabletCost > 0) {
-    var totalW = activeWatches + (targetWatchCost > 0 ? 1 : 0);
-    var totalT = activeTablets + (targetTabletCost > 0 ? 1 : 0);
+    var totalW = activeWatches + numWatchesAdded;
+    var totalT = activeTablets + numTabletsAdded;
     sms += " + Connected: " + totalW + " Watches, " + totalT + " Tablets";
   }
   if (monthlyAipCharge > 0) sms += " + Tech Accessories ($" + monthlyAipCharge.toFixed(2) + "/mo)";
-  if (actualBuyoutPayout > 0) sms += " + Up to $" + actualBuyoutPayout.toFixed(2) + " Switcher Buyout Covered";
+
+  // Dynamic Switcher Payoff Messaging
+  var hasSwitcherScope = document.getElementById('scope-switch').classList.contains('active');
+  if (hasSwitcherScope && actualBuyoutPayout > 0) {
+    sms += "\n• Switcher Credit: Up to $800.00/line device payoff ($" + actualBuyoutPayout.toFixed(2) + " covered for " + switchLines + " line" + (switchLines > 1 ? "s" : "") + " via Virtual Visa card).";
+  }
+
+  // Dynamic DIRECTV Suite Messaging
+  if (totalDtvMonthly > 0) {
+    var dtvName = (window.dtvCost > 100) ? "DIRECTV Choice w/ RSN & Gemini Box" : "DIRECTV Entertainment w/ Gemini Box";
+    sms += "\n• Includes " + dtvName + " ($" + window.dtvCost.toFixed(2) + "/mo)";
+    if (dtvDisneyCost > 0) sms += "\n  + Disney+/Hulu Ad-Free Upgrade (+$9/mo)";
+    if (dtvPremiumsCost > 0) sms += "\n  + Premium Network Add-on (+$" + dtvPremiumsCost.toFixed(2) + "/mo)";
+    if (dtvSportsCost > 0) sms += "\n  + Sports Pack Add-on (+$" + dtvSportsCost.toFixed(2) + "/mo)";
+    if (dtvIntlCost > 0) sms += "\n  + International Language Pack (+$" + dtvIntlCost.toFixed(2) + "/mo)";
+  }
+
   sms += ".\nTotal Monthly: $" + totalHousehold.toFixed(2) + "/mo (w/ AutoPay).\n";
   if (monthlySavings > 0) sms += "Estimated Savings: $" + monthlySavings.toFixed(2) + "/mo!\n";
   if (window.broadbandCost > 0) sms += "• Includes AT&T Home Internet ($" + window.broadbandCost.toFixed(2) + "/mo)\n";
