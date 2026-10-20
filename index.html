@@ -49,11 +49,11 @@
     height: 100vh;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.55;
+    opacity: 0.6;
   }
 
   .app-container {
-    max-width: 920px;
+    max-width: 940px;
     margin: 0 auto;
     background: rgba(10, 16, 30, 0.88);
     -webkit-backdrop-filter: blur(40px);
@@ -213,6 +213,37 @@
     font-weight: 800;
   }
 
+  /* STICKY WATERFALL REINVESTMENT BAR */
+  .waterfall-reinvest-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(10, 16, 30, 0.92) 100%);
+    -webkit-backdrop-filter: blur(25px);
+    backdrop-filter: blur(25px);
+    border-top: 1px solid rgba(0, 255, 102, 0.4);
+    border-bottom: 1.5px solid var(--emerald);
+    padding: 10px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 255, 102, 0.15);
+  }
+  .wf-status { display: flex; flex-direction: column; gap: 2px; }
+  .wf-label { font-size: 8px; font-weight: 800; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.5px; }
+  .wf-tier-name { font-size: 11px; font-weight: 800; color: #FFF; }
+  .wf-pot-display {
+    padding: 6px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: -0.3px;
+    text-align: right;
+    transition: all 0.25s ease;
+  }
+
   /* BUTTONS & CONTROLS */
   .btn {
     background: rgba(255, 255, 255, 0.08);
@@ -268,7 +299,7 @@
     box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
   }
 
-  /* SPATIAL SELECTION TILES: TURNS GREEN ON SELECTION */
+  /* SPATIAL SELECTION TILES */
   .pill-option {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -294,6 +325,47 @@
   .pill-title { font-size: 10px; font-weight: 800; color: #FFF; }
   .pill-price { font-size: 14px; font-weight: 900; color: #38BDF8; margin: 4px 0 2px 0; }
   .pill-sub { font-size: 7.5px; color: #94A3B8; font-weight: 500; }
+
+  /* RECOMMENDED PLAN CARDS GRID (WATERFALL STEP 3) */
+  .recommendations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+  }
+  .rec-card {
+    background: linear-gradient(135deg, rgba(20, 30, 50, 0.7) 0%, rgba(10, 16, 30, 0.8) 100%);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+    padding: 14px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  .rec-card:hover {
+    border-color: rgba(0, 255, 102, 0.5);
+    transform: translateY(-2px);
+  }
+  .rec-card.selected-plan {
+    border: 2px solid var(--emerald) !important;
+    background: linear-gradient(135deg, rgba(6, 78, 59, 0.4) 0%, rgba(10, 16, 30, 0.9) 100%) !important;
+    box-shadow: 0 0 25px var(--emerald-glow), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  }
+  .rec-tag {
+    font-size: 8px;
+    font-weight: 800;
+    color: #94A3B8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .rec-title { font-size: 11.5px; font-weight: 800; color: #FFF; margin-bottom: 6px; }
+  .rec-price { font-size: 18px; font-weight: 900; color: var(--emerald); margin-bottom: 2px; }
+  .rec-savings-tag { font-size: 9.5px; font-weight: 800; color: #4ADE80; margin-bottom: 8px; }
+  .rec-desc { font-size: 8px; color: #CBD5E1; line-height: 1.35; }
 
   /* PRECISION LINE COUNTER */
   .counter-row {
@@ -465,7 +537,7 @@
         <span class="cust-only">AT&amp;T Customized Plan Solutions</span>
       </h1>
       <p>
-        <span class="rep-only">PORTFOLIO OPTIMIZATION • LIVE MARGIN ALLOCATION • OPUS RECONCILIATION</span>
+        <span class="rep-only">DOWNWARD WATERFALL ARBITRAGE • REINVESTMENT POT POOLING • OPUS AUDIT</span>
         <span class="cust-only">TAILORED MULTI-LINE SAVINGS &amp; HOME BROADBAND BREAKDOWN</span>
       </p>
     </div>
@@ -506,1269 +578,14 @@
       <div class="pill-option active" id="scope-hw" onclick="window.toggleScope(this);"><div class="pill-title">📱 Hardware Upgrade</div></div>
       <div class="pill-option active" id="scope-add" onclick="window.toggleScope(this);"><div class="pill-title">➕ Add New Line</div></div>
       <div class="pill-option" id="scope-bb" onclick="window.toggleScope(this);"><div class="pill-title">🌐 AT&amp;T Fiber / Air</div></div>
-      <div class="pill-option" id="scope-tv" onclick="window.toggleScope(this);"><div class="pill-title">📺 DIRECTV Stream</div></div>
-    </div>
-  </div>
-
-  <!-- SECTION 2: CURRENT ACCOUNT BASELINE (AUDIT & REINVESTMENT HARVESTER) -->
-  <div class="section-card">
-    <div class="sec-header">
-      <div class="sec-title">📋 2. Current Account Baseline &amp; Leak Audit</div>
-    </div>
-    <div class="grid-5">
-      <div class="control-group">
-        <label>Current Plan Total ($)</label>
-        <input type="number" id="curr-total" value="180.00" step="0.01" oninput="window.runCalc();">
-      </div>
-      <div class="control-group">
-        <label>Voice Lines</label>
-        <select id="curr-lines" onchange="window.setLines(this.value);">
-          <option value="1">1 Line Account</option>
-          <option value="2">2 Lines Account</option>
-          <option value="3">3 Lines Account</option>
-          <option value="4" selected>4 Lines Account</option>
-          <option value="5">5 Lines Account</option>
-          <option value="6">6 Lines Account</option>
-          <option value="7">7 Lines Account</option>
-          <option value="8">8 Lines Account</option>
-          <option value="9">9 Lines Account</option>
-          <option value="10">10 Lines Account (Max)</option>
-        </select>
-      </div>
-      <div class="control-group">
-        <label>Current Watches</label>
-        <select id="curr-watches" onchange="window.updateConnectedAudit();">
-          <option value="0" selected>0 Watches</option>
-          <option value="1">1 Watch ($10.99/mo)</option>
-          <option value="2">2 Watches ($21.98/mo)</option>
-          <option value="3">3 Watches ($32.97/mo)</option>
-          <option value="4">4 Watches ($43.96/mo)</option>
-        </select>
-      </div>
-      <div class="control-group">
-        <label>Current Tablets</label>
-        <select id="curr-tablets" onchange="window.updateConnectedAudit();">
-          <option value="0" selected>0 Tablets</option>
-          <option value="1">1 Tablet ($20.99/mo)</option>
-          <option value="2">2 Tablets ($41.98/mo)</option>
-          <option value="3">3 Tablets ($62.97/mo)</option>
-          <option value="4">4 Tablets ($83.96/mo)</option>
-        </select>
-      </div>
-      <div class="control-group">
-        <label>Discount Profile / FAN</label>
-        <select id="curr-discount" onchange="window.runCalc();">
-          <optgroup label="Standard Consumer">
-            <option value="none">Standard Consumer (No FAN)</option>
-          </optgroup>
-          <optgroup label="Eastside Indy Credit Union FANs ($10/L off Prem)">
-            <option value="fan">💳 FORUM Credit Union (E. Washington)</option>
-            <option value="fan">💳 Indiana Members CU - IMCU (Mitthoeffer)</option>
-            <option value="fan">💳 Everwise Credit Union (Post Rd)</option>
-            <option value="fan">💳 Financial Center First CU (FCFCU)</option>
-            <option value="fan">💳 Kemba / Family Horizons / Harvester</option>
-          </optgroup>
-          <optgroup label="Universal Signature Paths ($10/L off Prem)">
-            <option value="fan">🚗 Uber / Uber Eats Active Driver Profile</option>
-            <option value="fan">🎓 College / University Alumni (.edu)</option>
-            <option value="fan">🏛️ Labor Union (Union Plus / AFL-CIO / CWA)</option>
-            <option value="fan">💼 Verified Corporate Employer FAN</option>
-          </optgroup>
-          <optgroup label="Specialized Programs">
-            <option value="apprec">25% Appreciation (Mil/Vet/FirstNet/RN/MD/Teach)</option>
-            <option value="fiber">AT&amp;T Fiber Convergence (20% Off)</option>
-            <option value="firstnet">FirstNet &amp; Family (Band 14/13 Priority)</option>
-          </optgroup>
-        </select>
-      </div>
-    </div>
-
-    <!-- CONNECTED HARDWARE AUDIT & INACTIVE LINE HARVESTING -->
-    <div class="audit-subcontainer" id="connected-audit-box" style="display:none;">
-      <div style="font-size:9px; font-weight:800; color:#FBBF24; text-transform:uppercase; margin-bottom:6px;">🔍 Connected Device Usage Audit (Find Inactive Money)</div>
-      <div class="grid-2">
-        <div id="wrap-watch-audit" style="display:none;">
-          <label class="filter-item">
-            <input type="checkbox" id="check-watch-paid" onchange="window.runCalc();">
-            <span>Watch(es) Paid Off / Out of Contract?</span>
-          </label>
-          <label class="filter-item" style="margin-top:4px;">
-            <input type="checkbox" id="check-watch-unused" onchange="window.runCalc();">
-            <span style="color:#FCA5A5;">Line Not in Use / Sits in Drawer? (Harvest +$10.99/mo)</span>
-          </label>
-        </div>
-        <div id="wrap-tablet-audit" style="display:none;">
-          <label class="filter-item">
-            <input type="checkbox" id="check-tablet-paid" onchange="window.runCalc();">
-            <span>Tablet(es) Paid Off / Out of Contract?</span>
-          </label>
-          <label class="filter-item" style="margin-top:4px;">
-            <input type="checkbox" id="check-tablet-unused" onchange="window.runCalc();">
-            <span style="color:#FCA5A5;">Line Not in Use / Sits in Drawer? (Harvest +$20.99/mo)</span>
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <div class="grid-2" style="margin-top:10px;">
-      <div class="control-group">
-        <label>AutoPay Method</label>
-        <select id="curr-autopay" onchange="window.runCalc();">
-          <option value="debit">Checking / Debit ($10/L off)</option>
-          <option value="credit">Credit Card ($5/L off)</option>
-          <option value="none">No AutoPay</option>
-        </select>
-      </div>
-      <div class="control-group">
-        <label>Account Type / Segment</label>
-        <select id="curr-segment" onchange="window.runCalc();">
-          <option value="consumer" selected>Consumer Wireless (CRU/IRU)</option>
-          <option value="firstnet">FirstNet Subscriber Paid</option>
-          <option value="business">AT&amp;T Business (SMB)</option>
-        </select>
-      </div>
-    </div>
-  </div>
-
-  <!-- SECTION 3: RESTRUCTURE & SERVICE SOLUTIONS -->
-  <div class="section-card">
-    <div class="sec-header">
-      <div class="sec-title">📱 3. Restructure &amp; Wireless Line Mix</div>
-      <div class="pool-pill" id="wireless-pool">Wireless Base: $130.00/mo</div>
-    </div>
-
-    <!-- NEEDS ASSESSMENT & FEATURE FILTER BOX (HOTSPOT & HBO MAX) -->
-    <div class="filter-box">
-      <label class="filter-item">
-        <input type="checkbox" id="check-hotspot" onchange="window.toggleHotspotFilter();">
-        <span>📶 Needs Hotspot Data</span>
-      </label>
-
-      <div id="hotspot-lines-wrap" style="display:none; align-items:center; gap:6px;">
-        <span style="font-size:8px; color:#94A3B8; text-transform:uppercase;">Lines Requiring Hotspot:</span>
-        <select id="hotspot-lines-count" style="padding:4px 8px; border-radius:8px; background:#000; color:#FFF; border:1px solid var(--emerald); font-weight:700;" onchange="window.applyHotspotRouting();">
-          <option value="0">0 Lines (Extra/Value Tier)</option>
-          <option value="1" selected>1 Line (Primary Prem 60GB)</option>
-          <option value="2">2 Lines (2x Prem 60GB)</option>
-          <option value="3">3 Lines (3x Prem 60GB)</option>
-          <option value="all">All Lines (Heavy Tethering)</option>
-        </select>
-      </div>
-
-      <label class="filter-item">
-        <input type="checkbox" id="check-hbo" onchange="window.toggleHboWarning();">
-        <span>🎬 Currently Uses Included HBO / Max Perk</span>
-      </label>
-    </div>
-
-    <div class="warning-box" id="hbo-warning" style="display:none;">
-      <b>⚠️ Legacy HBO Max Grandfathered Account:</b> Customer actively uses free Max ($16.99/mo retail value). Rerating to Wireless 2.0 (Premium) removes free Max access. New plan must save at least <b>$17.00/mo</b> to break even if they re-subscribe to Max separately!
-    </div>
-
-    <div class="callout-box" id="fn-callout" style="display:none;">
-      <b>🚨 FirstNet Priority Network Active:</b> Dedicated Band 14/13 spectrum reserved for First Responders. Always-On preemption + family multi-line rates with 10% Value / 15% Extra / 20% Premium appreciation.
-    </div>
-
-    <div class="counter-row">
-      <div class="counter-info">
-        <div class="counter-title">🐆 Unlimited Premium 2.0</div>
-        <div class="counter-desc">Unlimited Priority Data (QCI-8) • 60GB Hotspot • 4K UHD Streaming</div>
-      </div>
-      <div class="counter-controls">
-        <div class="btn-circle" onclick="window.changeCount('prem', -1)">-</div>
-        <div class="counter-val" id="cnt-prem">1</div>
-        <div class="btn-circle" onclick="window.changeCount('prem', 1)">+</div>
-      </div>
-    </div>
-
-    <div class="counter-row">
-      <div class="counter-info">
-        <div class="counter-title">🐇 Unlimited Extra 2.0</div>
-        <div class="counter-desc">75GB Priority Data (QCI-8) • 30GB Mobile Hotspot • HD Streaming</div>
-      </div>
-      <div class="counter-controls">
-        <div class="btn-circle" onclick="window.changeCount('extra', -1)">-</div>
-        <div class="counter-val" id="cnt-extra">0</div>
-        <div class="btn-circle" onclick="window.changeCount('extra', 1)">+</div>
-      </div>
-    </div>
-
-    <div class="counter-row">
-      <div class="counter-info">
-        <div class="counter-title">🐢 Value Plus 2.0</div>
-        <div class="counter-desc">Standard 5G Data • No Hotspot • Max Bill Drop for Add-Ons</div>
-      </div>
-      <div class="counter-controls">
-        <div class="btn-circle" onclick="window.changeCount('val', -1)">-</div>
-        <div class="counter-val" id="cnt-val">3</div>
-        <div class="btn-circle" onclick="window.changeCount('val', 1)">+</div>
-      </div>
-    </div>
-
-    <div class="grid-2" style="margin-top:12px;">
-      <div class="control-group">
-        <label>Next Up Anytime ($10/L)</label>
-        <select id="addon-nua" onchange="window.runCalc();">
-          <option value="0">0 Lines (+$0/mo)</option>
-          <option value="1">1 Line (+$10/mo)</option>
-          <option value="2">2 Lines (+$20/mo)</option>
-          <option value="all">All Lines ($10/line)</option>
-        </select>
-      </div>
-      <div class="control-group">
-        <label>🚀 Turbo Speed Boost ($7/L)</label>
-        <select id="addon-turbo" onchange="window.runCalc();">
-          <option value="0">Standard Speed (+$0/mo)</option>
-          <option value="1">1 Line Turbo (+$7/mo)</option>
-          <option value="all">All Lines Turbo ($7/L)</option>
-        </select>
-      </div>
-    </div>
-  </div>
-
-  <!-- SECTION 4: HOME BROADBAND & VIDEO (CONDITIONAL: HIDDEN UNLESS SCOPE TOGGLED) -->
-  <div class="section-card" id="sec-broadband" style="display:none;">
-    <div class="sec-header">
-      <div class="sec-title">🌐 4. Home Broadband &amp; Video</div>
-      <div class="pool-pill" id="pool-badge-broadband">Pool: +$50.00/mo</div>
-    </div>
-
-    <div id="wrap-bb-options" style="display:none; margin-bottom:14px;">
-      <div style="font-size:8px; font-weight:700; color:#94A3B8; text-transform:uppercase; margin-bottom:8px;">Option A: Home Internet Solutions</div>
-      <div class="grid-4">
-        <div class="pill-option active" id="bb-none" onclick="window.selectBroadband(0, this)">
-          <div class="pill-title">None</div>
-          <div class="pill-price">$0</div>
-          <div class="pill-sub">Keep Provider</div>
-        </div>
-        <div class="pill-option" id="bb-air" onclick="window.selectBroadband(35, this)">
-          <div class="pill-title">Internet Air</div>
-          <div class="pill-price">$35/mo</div>
-          <div class="pill-sub">5G Home w/ AP</div>
-        </div>
-        <div class="pill-option" id="bb-f300" onclick="window.selectBroadband(35, this)">
-          <div class="pill-title">Fiber 300M</div>
-          <div class="pill-price">$35/mo</div>
-          <div class="pill-sub">Converged Rate</div>
-        </div>
-        <div class="pill-option" id="bb-f500" onclick="window.selectBroadband(45, this)">
-          <div class="pill-title">Fiber 500M</div>
-          <div class="pill-price">$45/mo</div>
-          <div class="pill-sub">Converged Rate</div>
-        </div>
-      </div>
-    </div>
-
-    <div id="wrap-tv-options" style="display:none;">
-      <div style="font-size:8px; font-weight:700; color:#94A3B8; text-transform:uppercase; margin-bottom:8px;">Option B: DIRECTV via Internet Revision</div>
-      <div class="grid-3">
-        <div class="pill-option active" id="dtv-none" onclick="window.selectDTV(0, this)">
-          <div class="pill-title">No TV</div>
-          <div class="pill-price">$0</div>
-        </div>
-        <div class="pill-option" id="dtv-ent" onclick="window.selectDTV(69.99, this)">
-          <div class="pill-title">Entertainment</div>
-          <div class="pill-price">$69.99/mo</div>
-          <div class="pill-sub">Gemini Included</div>
-        </div>
-        <div class="pill-option" id="dtv-choice" onclick="window.selectDTV(89.99, this)">
-          <div class="pill-title">Choice</div>
-          <div class="pill-price">$89.99/mo</div>
-          <div class="pill-sub">Regional Sports</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SECTION 5: PROTECTION, CONNECTED TECH & AIP FINANCING -->
-  <div class="section-card">
-    <div class="sec-header">
-      <div class="sec-title">🛡️ 5. Protection, Connected Tech &amp; AIP Financing</div>
-      <div class="pool-pill" id="pool-badge-devices">Pool: +$50.00/mo</div>
-    </div>
-
-    <div class="grid-3" style="margin-bottom:12px;">
-      <div class="control-group">
-        <label>Device Protection</label>
-        <select id="addon-pa" onchange="window.runCalc();">
-          <option value="0">None (+$0/mo)</option>
-          <option value="17">1 Device Protect Advantage ($17/mo)</option>
-          <option value="34">2 Devices Protect Advantage ($34/mo)</option>
-          <option value="50">Protect Advantage 4+ Family ($50/mo)</option>
-          <option value="25">AT&amp;T HomeTech Protection ($25/mo)</option>
-        </select>
-      </div>
-      <div class="control-group">
-        <label>⌚ Add Watch Line ($5.50 / $10.99)</label>
-        <select id="addon-watches" onchange="window.runCalc();">
-          <option value="0">0 Watches Added</option>
-          <option value="5.50">1 Watch (50% Off Promo @ $5.50/mo)</option>
-          <option value="16.49">2 Watches ($16.49/mo)</option>
-        </select>
-      </div>
-      <div class="control-group">
-        <label>📱 Add Tablet Line ($10.50 / $20.99)</label>
-        <select id="addon-tablets" onchange="window.runCalc();">
-          <option value="0">0 Tablets Added</option>
-          <option value="10.50">1 Tablet (50% Off Promo @ $10.50/mo)</option>
-          <option value="31.49">2 Tablets ($31.49/mo)</option>
-        </select>
-      </div>
-    </div>
-
-    <!-- AIP ACCESSORY INSTALLMENT MODULE -->
-    <div class="audit-subcontainer" style="margin-top:8px;">
-      <div style="font-size:9.5px; font-weight:800; color:var(--emerald); text-transform:uppercase; margin-bottom:8px;">🛍️ Accessory Installment Plan (AIP - 12 Months Bill-To-Account)</div>
-      <div class="grid-3">
-        <div class="control-group">
-          <label>AIP Eligibility</label>
-          <label class="filter-item" style="padding-top:4px;">
-            <input type="checkbox" id="check-aip-eligible" checked onchange="window.runCalc();">
-            <span>Customer AIP Eligible ($75 Min)</span>
-          </label>
-        </div>
-        <div class="control-group">
-          <label>Total Accessory Cart Value ($)</label>
-          <input type="number" id="aip-cart-val" value="0.00" step="5.00" placeholder="e.g. 150.00" oninput="window.runCalc();">
-        </div>
-        <div class="control-group">
-          <label>Ray-Ban Meta Smart Glasses</label>
-          <select id="addon-meta" onchange="window.runCalc();">
-            <option value="0">None ($0/mo)</option>
-            <option value="24.92">Standard Wayfarer ($299 / +$24.92/mo)</option>
-            <option value="31.58">Transitions Lens ($379 / +$31.58/mo)</option>
-          </select>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SECTION 6: EXECUTIVE SUMMARY & DEPARTURE -->
-  <div class="section-card summary-card">
-    <div class="sec-header">
-      <div class="sec-title">📊 6. Executive Summary &amp; Out-The-Door Quote</div>
-    </div>
-
-    <div class="summary-grid">
-      <div class="sum-left">
-        <div class="sum-label">New Total Household Bill (w/ AutoPay)</div>
-        <div class="sum-total" id="sum-new-total">$130.00</div>
-      </div>
-      <div class="sum-savings" id="sum-savings-box">
-        Saves $50.00/mo vs Old Bill!
-      </div>
-    </div>
-
-    <!-- REGISTER DUE TODAY & WAIVED FEES BUTTON -->
-    <div class="due-box">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-        <div class="due-title">🏷️ Due Today at Register (Existing Account Upgrades)</div>
-        <label class="filter-item" style="font-size:9px; background:rgba(255,255,255,0.06); padding:4px 10px; border-radius:6px; border:1px solid rgba(255,255,255,0.15);">
-          <input type="checkbox" id="check-waive-fees" onchange="window.runCalc();">
-          <span style="color:#FDE68A;">🎉 Waive Upgrade Fees? (-$35/device)</span>
-        </label>
-      </div>
-      <div class="due-amt" id="due-today-amt">No hardware upgrades selected ($0 due today).</div>
-      <div class="due-sub" id="due-today-breakdown">*Estimates 7% IN sales tax on retail hardware &amp; AIP cart + $35 upgrade fee per device.</div>
-    </div>
-
-    <div class="grid-2" style="margin-top:14px;">
-      <div class="control-group">
-        <label>Upgrading Phone Count</label>
-        <select id="upgrade-count" onchange="window.runCalc();">
-          <option value="0">0 Phones Upgrading</option>
-          <option value="1">1 Phone Upgrading</option>
-          <option value="2">2 Phones Upgrading</option>
-          <option value="3">3 Phones Upgrading</option>
-          <option value="4">4 Phones Upgrading</option>
-        </select>
-      </div>
-      <div class="control-group">
-        <label>Average Retail Phone Value</label>
-        <select id="upgrade-val" onchange="window.runCalc();">
-          <option value="1000">$1,000 (iPhone 16 / S24 / Pixel 9)</option>
-          <option value="1200">$1,200 (iPhone 16 Pro Max / S24 Ultra)</option>
-          <option value="800">$800 (Base Tier Flagship)</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="checklist rep-only">
-      <div style="font-weight:800; color:#FBBF24; text-transform:uppercase;">📝 OPUS ORDER CHECKLIST &amp; AUDIT LOG</div>
-      <div class="check-item"><span>✔</span> Verify and enroll customer in Debit/Checking AutoPay (-$10/line off base).</div>
-      <div class="check-item"><span>✔</span> Confirm Employer, Union, or Credit Union FAN attaches ($10/L off Premium drops to Extra price).</div>
-      <div class="check-item"><span>✔</span> Verify Next Up Anytime ($10/line) on all eligible financing agreements.</div>
-      <div class="check-item"><span>✔</span> Confirm 7% IN sales tax collected at register for all upgraded equipment &amp; AIP cart.</div>
-    </div>
-
-    <div class="control-group" style="margin-top:14px;">
-      <label>📱 Instant Customer SMS Quote</label>
-      <textarea id="sms-text" style="width:100%; height:70px; background:rgba(0,0,0,0.4); border:1px solid rgba(255, 255, 255, 0.12); color:#E2E8F0; border-radius:10px; padding:10px; font-family:inherit; resize:none;" readonly></textarea>
-      <button type="button" class="btn" style="margin-top:8px; width:100%; background:rgba(0,87,184,0.35); border-color:#0284C7;" onclick="window.copySMS()">📋 Copy Text for Customer</button>
-    </div>
-  </div>
-</div>
-
-<script>
-window.broadbandCost = 0;
-window.dtvCost = 0;
-
-var rates = {
-  1: { prem: 90, ext: 70, val: 50, fanPrem: 80, noApPrem: 100, noApExt: 80, noApVal: 60 },
-  2: { prem: 80, ext: 60, val: 45, fanPrem: 70, noApPrem: 90, noApExt: 70, noApVal: 55 },
-  3: { prem: 65, ext: 50, val: 35, fanPrem: 50, noApPrem: 75, noApExt: 60, noApVal: 45 },
-  4: { prem: 50, ext: 40, val: 30, fanPrem: 40, noApPrem: 60, noApExt: 50, noApVal: 40 },
-  5: { prem: 40, ext: 35, val: 30.99, fanPrem: 30, noApPrem: 50, noApExt: 45, noApVal: 40.99 },
-  6: { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40.99 },
-  7: { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40.99 },
-  8: { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40.99 },
-  9: { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40.99 },
-  10: { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40.99 }
-};
-
-window.copyAddress = function() {
-  var addr = document.getElementById('addr-field').value;
-  if (!addr) {
-    alert("Address field is empty.");
-    return;
-  }
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(addr).then(function() {
-      alert("Address copied to clipboard: " + addr);
-    }).catch(function() {
-      window.fallbackCopyText(addr);
-    });
-  } else {
-    window.fallbackCopyText(addr);
-  }
-};
-
-window.fallbackCopyText = function(text) {
-  var tempInput = document.createElement("input");
-  tempInput.value = text;
-  document.body.appendChild(tempInput);
-  tempInput.select();
-  document.execCommand("copy");
-  document.body.removeChild(tempInput);
-  alert("Address copied to clipboard: " + text);
-};
-
-window.toggleAddrTag = function(id) {
-  var el = document.getElementById(id);
-  if (el) el.classList.toggle('active');
-};
-
-window.toggleScope = function(el) {
-  el.classList.toggle('active');
-  window.updateConditionalSections();
-};
-
-window.updateConditionalSections = function() {
-  var hasBB = document.getElementById('scope-bb').classList.contains('active');
-  var hasTV = document.getElementById('scope-tv').classList.contains('active');
-
-  var secBroadband = document.getElementById('sec-broadband');
-  var wrapBB = document.getElementById('wrap-bb-options');
-  var wrapTV = document.getElementById('wrap-tv-options');
-
-  if (hasBB || hasTV) {
-    secBroadband.style.display = 'block';
-    wrapBB.style.display = hasBB ? 'block' : 'none';
-    wrapTV.style.display = hasTV ? 'block' : 'none';
-  } else {
-    secBroadband.style.display = 'none';
-    wrapBB.style.display = 'none';
-    wrapTV.style.display = 'none';
-    window.broadbandCost = 0;
-    window.dtvCost = 0;
-  }
-
-  window.runCalc();
-};
-
-window.updateConnectedAudit = function() {
-  var wCount = parseInt(document.getElementById('curr-watches').value, 10) || 0;
-  var tCount = parseInt(document.getElementById('curr-tablets').value, 10) || 0;
-  var box = document.getElementById('connected-audit-box');
-  var wrapW = document.getElementById('wrap-watch-audit');
-  var wrapT = document.getElementById('wrap-tablet-audit');
-
-  if (wCount > 0 || tCount > 0) {
-    box.style.display = 'block';
-    wrapW.style.display = (wCount > 0) ? 'block' : 'none';
-    wrapT.style.display = (tCount > 0) ? 'block' : 'none';
-  } else {
-    box.style.display = 'none';
-    document.getElementById('check-watch-unused').checked = false;
-    document.getElementById('check-tablet-unused').checked = false;
-  }
-
-  window.runCalc();
-};
-
-window.toggleHotspotFilter = function() {
-  var isChecked = document.getElementById('check-hotspot').checked;
-  var wrap = document.getElementById('hotspot-lines-wrap');
-  wrap.style.display = isChecked ? 'inline-flex' : 'none';
-  if (!isChecked) {
-    document.getElementById('hotspot-lines-count').value = "0";
-  } else {
-    document.getElementById('hotspot-lines-count').value = "1";
-  }
-  window.applyHotspotRouting();
-};
-
-window.applyHotspotRouting = function() {
-  var totalLines = parseInt(document.getElementById('curr-lines').value, 10) || 4;
-  var sel = document.getElementById('hotspot-lines-count').value;
-
-  if (sel === "0") {
-    document.getElementById('cnt-prem').textContent = "0";
-    document.getElementById('cnt-extra').textContent = "0";
-    document.getElementById('cnt-val').textContent = totalLines;
-  } else if (sel === "all") {
-    document.getElementById('cnt-prem').textContent = totalLines;
-    document.getElementById('cnt-extra').textContent = "0";
-    document.getElementById('cnt-val').textContent = "0";
-  } else {
-    var count = Math.min(totalLines, parseInt(sel, 10));
-    document.getElementById('cnt-prem').textContent = count;
-    document.getElementById('cnt-extra').textContent = "0";
-    document.getElementById('cnt-val').textContent = Math.max(0, totalLines - count);
-  }
-
-  window.runCalc();
-};
-
-window.toggleHboWarning = function() {
-  var isChecked = document.getElementById('check-hbo').checked;
-  var box = document.getElementById('hbo-warning');
-  box.style.display = isChecked ? 'block' : 'none';
-};
-
-window.setLines = function(num) {
-  var n = parseInt(num, 10);
-  var isHotspot = document.getElementById('check-hotspot').checked;
-  var hotspotLines = document.getElementById('hotspot-lines-count').value;
-
-  if (isHotspot && hotspotLines === "0") {
-    document.getElementById('cnt-prem').textContent = "0";
-    document.getElementById('cnt-extra').textContent = "0";
-    document.getElementById('cnt-val').textContent = n;
-  } else {
-    document.getElementById('cnt-prem').textContent = "1";
-    document.getElementById('cnt-extra').textContent = "0";
-    document.getElementById('cnt-val').textContent = (n > 1) ? (n - 1) : 0;
-  }
-
-  window.runCalc();
-};
-
-window.changeCount = function(type, delta) {
-  var prem = parseInt(document.getElementById('cnt-prem').textContent, 10);
-  var ext = parseInt(document.getElementById('cnt-extra').textContent, 10);
-  var val = parseInt(document.getElementById('cnt-val').textContent, 10);
-
-  if (type === 'prem') prem = Math.max(0, prem + delta);
-  if (type === 'extra') ext = Math.max(0, ext + delta);
-  if (type === 'val') val = Math.max(0, val + delta);
-
-  var total = prem + ext + val;
-  if (total > 10) return;
-  if (total === 0) prem = 1;
-
-  document.getElementById('cnt-prem').textContent = prem;
-  document.getElementById('cnt-extra').textContent = ext;
-  document.getElementById('cnt-val').textContent = val;
-
-  document.getElementById('curr-lines').value = (prem + ext + val);
-  window.runCalc();
-};
-
-window.selectBroadband = function(cost, el) {
-  window.broadbandCost = cost;
-  ['bb-none', 'bb-air', 'bb-f300', 'bb-f500'].forEach(function(id) {
-    var item = document.getElementById(id);
-    if (item) item.classList.remove('active');
-  });
-  el.classList.add('active');
-  window.runCalc();
-};
-
-window.selectDTV = function(cost, el) {
-  window.dtvCost = cost;
-  ['dtv-none', 'dtv-ent', 'dtv-choice'].forEach(function(id) {
-    var item = document.getElementById(id);
-    if (item) item.classList.remove('active');
-  });
-  el.classList.add('active');
-  window.runCalc();
-};
-
-window.togglePresMode = function() {
-  document.body.classList.toggle('presentation-mode');
-  var isPres = document.body.classList.contains('presentation-mode');
-  var btn = document.getElementById('pres-btn');
-  if (btn) {
-    btn.classList.toggle('active', isPres);
-    btn.innerHTML = isPres ? '👁️ Customer View: ON' : '👁️ Customer View: OFF';
-  }
-};
-
-window.copySMS = function() {
-  var t = document.getElementById('sms-text');
-  t.select();
-  document.execCommand('copy');
-  alert("Customer Quote Copied!");
-};
-
-window.runCalc = function() {
-  var rawCurrentBill = parseFloat(document.getElementById('curr-total').value) || 180.00;
-  var premCount = parseInt(document.getElementById('cnt-prem').textContent, 10) || 0;
-  var extCount = parseInt(document.getElementById('cnt-extra').textContent, 10) || 0;
-  var valCount = parseInt(document.getElementById('cnt-val').textContent, 10) || 0;
-  var totalLines = premCount + extCount + valCount;
-  if (totalLines < 1) totalLines = 1;
-
-  // Harvest unused connected lines directly into savings pool
-  var wCount = parseInt(document.getElementById('curr-watches').value, 10) || 0;
-  var tCount = parseInt(document.getElementById('curr-tablets').value, 10) || 0;
-  var isWatchUnused = document.getElementById('check-watch-unused').checked;
-  var isTabletUnused = document.getElementById('check-tablet-unused').checked;
-
-  var harvestedDollars = 0;
-  if (isWatchUnused && wCount > 0) harvestedDollars += (wCount * 10.99);
-  if (isTabletUnused && tCount > 0) harvestedDollars += (tCount * 20.99);
-
-  var totalInput = rawCurrentBill + harvestedDollars;
-
-  var discount = document.getElementById('curr-discount').value;
-  var apMethod = document.getElementById('curr-autopay').value;
-
-  var fnCallout = document.getElementById('fn-callout');
-  if (fnCallout) {
-    fnCallout.style.display = (discount === 'firstnet') ? 'block' : 'none';
-  }
-
-  var tierData = rates[Math.min(totalLines, 10)] || rates[4];
-
-  var premRate = tierData.prem;
-  var extRate = tierData.ext;
-  var valRate = tierData.val;
-
-  if (apMethod === 'none') {
-    premRate = tierData.noApPrem;
-    extRate = tierData.noApExt;
-    valRate = tierData.noApVal;
-  } else if (apMethod === 'credit') {
-    premRate += 5;
-    extRate += 5;
-    valRate += 5;
-  }
-
-  if (discount === 'fan') {
-    premRate = (apMethod === 'none') ? tierData.noApExt : (tierData.fanPrem + (apMethod === 'credit' ? 5 : 0));
-  } else if (discount === 'apprec' || discount === 'firstnet') {
-    premRate = +(premRate * 0.80).toFixed(2);
-    extRate = +(extRate * 0.85).toFixed(2);
-    valRate = +(valRate * 0.90).toFixed(2);
-  } else if (discount === 'fiber') {
-    premRate = +(premRate * 0.80).toFixed(2);
-    extRate = +(extRate * 0.80).toFixed(2);
-    valRate = +(valRate * 0.80).toFixed(2);
-  }
-
-  var wirelessPlanTotal = Number(((premCount * premRate) + (extCount * extRate) + (valCount * valRate)).toFixed(2));
-
-  // Add-ons
-  var nuaVal = document.getElementById('addon-nua').value;
-  var nuaCost = (nuaVal === 'all') ? totalLines * 10 : (parseInt(nuaVal, 10) || 0) * 10;
-  var turboVal = document.getElementById('addon-turbo').value;
-  var turboCost = (turboVal === 'all') ? totalLines * 7 : (parseInt(turboVal, 10) || 0) * 7;
-  var paCost = parseFloat(document.getElementById('addon-pa').value) || 0;
-  var targetWatchCost = parseFloat(document.getElementById('addon-watches').value) || 0;
-  var targetTabletCost = parseFloat(document.getElementById('addon-tablets').value) || 0;
-  var metaCost = parseFloat(document.getElementById('addon-meta').value) || 0;
-
-  // AIP Calculation (Divided over 12 months)
-  var isAipEligible = document.getElementById('check-aip-eligible').checked;
-  var rawAipCart = parseFloat(document.getElementById('aip-cart-val').value) || 0;
-  var aipMonthly = (isAipEligible && rawAipCart >= 75) ? Number((rawAipCart / 12).toFixed(2)) : 0;
-
-  // Remaining active existing connected lines
-  var activeWatches = isWatchUnused ? 0 : wCount;
-  var activeTablets = isTabletUnused ? 0 : tCount;
-  var existingConnectedCost = Number(((activeWatches * 10.99) + (activeTablets * 20.99)).toFixed(2));
-
-  var totalWireless = wirelessPlanTotal + nuaCost + turboCost + paCost + targetWatchCost + targetTabletCost + metaCost + aipMonthly + existingConnectedCost;
-  var totalHousehold = totalWireless + window.broadbandCost + window.dtvCost;
-
-  var monthlySavings = Number((rawCurrentBill - totalHousehold).toFixed(2));
-  var wirelessOnlySavings = Math.max(0, Number((totalInput - wirelessPlanTotal).toFixed(2)));
-
-  // UI Updates
-  document.getElementById('wireless-pool').textContent = "Wireless Base: $" + wirelessPlanTotal.toFixed(2) + "/mo";
-  document.getElementById('pool-badge-broadband').textContent = "Pool: +$" + wirelessOnlySavings.toFixed(2) + "/mo";
-  document.getElementById('pool-badge-devices').textContent = "Pool: +$" + wirelessOnlySavings.toFixed(2) + "/mo";
-
-  document.getElementById('sum-new-total').textContent = "$" + totalHousehold.toFixed(2) + "/mo";
-  var saveBox = document.getElementById('sum-savings-box');
-  if (monthlySavings >= 0) {
-    saveBox.style.color = "var(--emerald)";
-    saveBox.style.background = "rgba(0, 255, 102, 0.12)";
-    saveBox.style.borderColor = "var(--emerald)";
-    saveBox.textContent = "Saves $" + monthlySavings.toFixed(2) + "/mo vs Old Bill!";
-  } else {
-    saveBox.style.color = "#F87171";
-    saveBox.style.background = "rgba(239, 68, 68, 0.12)";
-    saveBox.style.borderColor = "rgba(239, 68, 68, 0.35)";
-    saveBox.textContent = "+$" + Math.abs(monthlySavings).toFixed(2) + "/mo vs Old Bill";
-  }
-
-  // Register Due Today (Indiana 7% Tax on Phones & AIP Cart + $35 Upgrade Fee)
-  var upCount = parseInt(document.getElementById('upgrade-count').value, 10) || 0;
-  var upVal = parseFloat(document.getElementById('upgrade-val').value) || 1000.00;
-  var feesWaived = document.getElementById('check-waive-fees').checked;
-  var dueBox = document.getElementById('due-today-amt');
-  var breakdownBox = document.getElementById('due-today-breakdown');
-
-  var phoneTax = upCount * (upVal * 0.07);
-  var aipTax = isAipEligible ? (rawAipCart * 0.07) : 0;
-  var metaTax = (metaCost > 0) ? (metaCost > 30 ? 379 * 0.07 : 299 * 0.07) : 0;
-  var upgradeFees = feesWaived ? 0 : (upCount * 35.00);
-
-  var totalDueToday = phoneTax + aipTax + metaTax + upgradeFees;
-
-  if (totalDueToday > 0 || upCount > 0) {
-    dueBox.textContent = "$" + totalDueToday.toFixed(2) + " Total Due at Register Today";
-    var bText = "Includes: $" + phoneTax.toFixed(2) + " Phone Tax (7%)";
-    if (aipTax > 0 || metaTax > 0) bText += " + $" + (aipTax + metaTax).toFixed(2) + " Accessory Tax (7%)";
-    if (feesWaived && upCount > 0) bText += " + Upgrade Fees WAIVED ($0 vs $" + (upCount * 35) + ")";
-    else if (upgradeFees > 0) bText += " + $" + upgradeFees.toFixed(2) + " Upgrade Fees ($35/device)";
-    breakdownBox.textContent = bText;
-  } else {
-    dueBox.textContent = "No hardware upgrades or accessory financing selected ($0 due today).";
-    breakdownBox.textContent = "*Estimates 7% IN sales tax on retail hardware & AIP cart + $35 upgrade fee per device.";
-  }
-
-  // Customer SMS
-  var sms = "AT&T Quote: " + totalLines + " Voice Lines (";
-  var planParts = [];
-  if (premCount > 0) planParts.push(premCount + "x Premium");
-  if (extCount > 0) planParts.push(extCount + "x Extra");
-  if (valCount > 0) planParts.push(valCount + "x Value");
-  sms += planParts.join(", ") + ")";
-  if (wCount > 0 || tCount > 0```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>AT&T Executive Solutions Studio • elitererate.com</title>
-
-<!-- iOS PWA Standalone Meta Tags -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Solutions Studio">
-<meta name="theme-color" content="#030712">
-<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)' viewBox='0 0 180 180'><rect width='180' height='180' rx='40' fill='%230057B8'/><text x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' font-size='95'>🐆</text></svg>">
-
-<style>
-  @page { size: letter landscape; margin: 0.2in; }
-  * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-  
-  :root {
-    --att-blue: #0057B8;
-    --emerald: #00FF66;
-    --emerald-glow: rgba(0, 255, 102, 0.35);
-    --glass-bg: rgba(15, 23, 42, 0.75);
-    --glass-border: rgba(255, 255, 255, 0.1);
-  }
-
-  body {
-    margin: 0;
-    padding: 16px;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, sans-serif;
-    color: #F8FAFC;
-    background: #030712;
-    min-height: 100vh;
-    font-size: 9.5px;
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-    position: relative;
-    user-select: none;
-    -webkit-user-select: none;
-  }
-
-  /* SUBDUED ATMOSPHERIC BACKDROP CANVAS */
-  #ambient-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 0;
-    pointer-events: none;
-    opacity: 0.6;
-  }
-
-  .app-container {
-    max-width: 920px;
-    margin: 0 auto;
-    background: rgba(10, 16, 30, 0.85);
-    -webkit-backdrop-filter: blur(40px);
-    backdrop-filter: blur(40px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 20px;
-    box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-    overflow: hidden;
-    position: relative;
-    z-index: 2;
-  }
-
-  /* EXECUTIVE HEADER */
-  .header {
-    background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(10, 16, 30, 0.85) 100%);
-    padding: 16px 22px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--glass-border);
-    position: relative;
-  }
-  .header h1 {
-    margin: 0;
-    font-size: 15px;
-    font-weight: 800;
-    letter-spacing: -0.2px;
-    color: #FFF;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .header p { margin: 2px 0 0 0; font-size: 8.5px; color: #94A3B8; font-weight: 500; }
-  .header-actions { display: flex; gap: 8px; align-items: center; z-index: 2; }
-
-  /* ADDRESS PRE-CHECK BAR */
-  .address-precheck-bar {
-    background: rgba(3, 7, 18, 0.7);
-    border-bottom: 1px solid var(--glass-border);
-    padding: 14px 22px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .addr-row-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  .addr-title {
-    font-size: 9.5px;
-    font-weight: 800;
-    color: #38BDF8;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .addr-inputs {
-    display: flex;
-    gap: 8px;
-    flex: 1;
-    min-width: 280px;
-  }
-  .addr-input {
-    width: 100%;
-    padding: 9px 12px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 8px;
-    background: rgba(15, 23, 42, 0.8);
-    color: #FFF;
-    font-size: 10px;
-    font-weight: 600;
-  }
-  .addr-input:focus { outline: none; border-color: #38BDF8; }
-  
-  .addr-row-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  .addr-tags { display: flex; gap: 6px; }
-  .tag-btn {
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 8.5px;
-    font-weight: 800;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    color: #CBD5E1;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .tag-btn.active {
-    background: rgba(0, 255, 102, 0.18);
-    border-color: var(--emerald);
-    color: var(--emerald);
-    box-shadow: 0 0 12px var(--emerald-glow);
-  }
-  .link-actions { display: flex; gap: 8px; }
-  .btn-link-action {
-    background: rgba(0, 87, 184, 0.25);
-    border: 1px solid rgba(56, 189, 248, 0.4);
-    color: #38BDF8;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 8.5px;
-    font-weight: 700;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    transition: all 0.2s;
-  }
-  .btn-link-action:hover { background: rgba(0, 87, 184, 0.4); border-color: #38BDF8; color: #FFF; }
-
-  /* GLASS SECTION CARDS */
-  .section-card {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 14px;
-    margin: 12px 18px;
-    padding: 14px 18px;
-    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-    position: relative;
-    transition: all 0.3s ease;
-  }
-
-  .sec-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-  }
-  .sec-title {
-    font-size: 11px;
-    font-weight: 800;
-    color: #FFF;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-  }
-  .pool-pill {
-    background: rgba(0, 87, 184, 0.25);
-    border: 1px solid rgba(56, 189, 248, 0.4);
-    color: #38BDF8;
-    padding: 3px 12px;
-    border-radius: 20px;
-    font-size: 9px;
-    font-weight: 800;
-  }
-
-  /* BUTTONS & CONTROLS */
-  .btn {
-    background: rgba(255, 255, 255, 0.08);
-    color: #FFF;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 8px;
-    padding: 7px 14px;
-    font-size: 9.5px;
-    font-weight: 700;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    transition: all 0.2s;
-    -webkit-appearance: none;
-  }
-  .btn:active { transform: scale(0.97); }
-  .btn-print { background: rgba(255, 255, 255, 0.06); }
-  .btn-pres {
-    background: rgba(0, 87, 184, 0.25);
-    border-color: rgba(56, 189, 248, 0.4);
-    color: #38BDF8;
-  }
-  .btn-pres.active {
-    background: rgba(245, 158, 11, 0.2);
-    border-color: #F59E0B;
-    color: #FBBF24;
-    box-shadow: 0 0 18px rgba(245, 158, 11, 0.35);
-  }
-
-  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
-  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
-  .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; }
-  .grid-5 { display: grid; grid-template-columns: repeat(auto-fit, minmax(105px, 1fr)); gap: 10px; }
-
-  .control-group { display: flex; flex-direction: column; gap: 4px; }
-  .control-group label { font-size: 8px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.5px; }
-  
-  .control-group input, .control-group select {
-    padding: 9px 12px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 9px;
-    background: rgba(10, 16, 30, 0.7);
-    color: #FFF;
-    font-size: 11px;
-    font-weight: 600;
-    transition: all 0.2s;
-  }
-  .control-group input:focus, .control-group select:focus {
-    outline: none;
-    border-color: #38BDF8;
-    box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
-  }
-
-  /* SPATIAL SELECTION TILES: TURNS GREEN ON SELECTION */
-  .pill-option {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    padding: 12px 10px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .pill-option:hover {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.16);
-  }
-  .pill-option.active {
-    background: linear-gradient(180deg, rgba(0, 255, 102, 0.18) 0%, rgba(6, 78, 59, 0.25) 100%) !important;
-    border: 1.5px solid var(--emerald) !important;
-    box-shadow: 0 0 20px var(--emerald-glow), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
-  }
-  .pill-option.active .pill-price {
-    color: var(--emerald) !important;
-    text-shadow: 0 0 10px rgba(0, 255, 102, 0.5) !important;
-  }
-  .pill-title { font-size: 10px; font-weight: 800; color: #FFF; }
-  .pill-price { font-size: 14px; font-weight: 900; color: #38BDF8; margin: 4px 0 2px 0; }
-  .pill-sub { font-size: 7.5px; color: #94A3B8; font-weight: 500; }
-
-  /* PRECISION LINE COUNTER */
-  .counter-row {
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    padding: 12px 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-  }
-  .counter-info { display: flex; flex-direction: column; gap: 2px; }
-  .counter-title { font-size: 11px; font-weight: 800; color: #FFF; display: flex; align-items: center; gap: 6px; }
-  .counter-desc { font-size: 8px; color: #94A3B8; }
-  
-  .counter-controls { display: flex; align-items: center; gap: 12px; }
-  .btn-circle {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: #FFF;
-    font-size: 15px;
-    font-weight: 800;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-  .btn-circle:active { transform: scale(0.9); }
-  .counter-val { font-size: 15px; font-weight: 900; color: var(--emerald); min-width: 18px; text-align: center; text-shadow: 0 0 10px var(--emerald-glow); }
-
-  /* FEATURE FILTER CHECKBOX BOX */
-  .filter-box {
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 12px 16px;
-    margin-bottom: 12px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-    align-items: center;
-  }
-  .filter-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 9.5px;
-    font-weight: 700;
-    color: #FFF;
-    cursor: pointer;
-  }
-  .filter-item input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
-    accent-color: var(--emerald);
-    cursor: pointer;
-  }
-
-  /* CALLOUT BANNER */
-  .callout-box {
-    background: rgba(239, 68, 68, 0.1);
-    border: 1px solid rgba(239, 68, 68, 0.35);
-    border-radius: 10px;
-    padding: 10px 14px;
-    margin-bottom: 12px;
-    font-size: 8.5px;
-    line-height: 1.45;
-  }
-  .callout-box b { color: #FCA5A5; }
-
-  .warning-box {
-    background: rgba(255, 184, 0, 0.1);
-    border: 1px solid rgba(255, 184, 0, 0.4);
-    border-radius: 10px;
-    padding: 10px 14px;
-    margin-bottom: 12px;
-    font-size: 8.5px;
-    line-height: 1.45;
-  }
-  .warning-box b { color: #FBBF24; }
-
-  /* EXECUTIVE SUMMARY */
-  .summary-card {
-    background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(10, 16, 30, 0.98) 100%);
-    border: 1.5px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  }
-  .summary-grid {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 14px;
-  }
-  .sum-left { display: flex; flex-direction: column; gap: 2px; }
-  .sum-label { font-size: 8.5px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.5px; }
-  .sum-total { font-size: 36px; font-weight: 900; color: #FFF; letter-spacing: -1px; }
-  .sum-savings {
-    background: rgba(0, 255, 102, 0.12);
-    border: 1.5px solid var(--emerald);
-    color: var(--emerald);
-    padding: 9px 18px;
-    border-radius: 12px;
-    font-size: 13.5px;
-    font-weight: 900;
-    text-align: right;
-    box-shadow: 0 0 20px var(--emerald-glow);
-  }
-
-  /* REGISTER DUE TODAY */
-  .due-box {
-    background: rgba(0, 0, 0, 0.35);
-    border: 1px dashed rgba(255, 255, 255, 0.15);
-    border-radius: 10px;
-    padding: 12px 14px;
-    margin-top: 14px;
-  }
-  .due-title { font-size: 9.5px; font-weight: 800; color: #FBBF24; text-transform: uppercase; margin-bottom: 3px; }
-  .due-amt { font-size: 15px; font-weight: 900; color: #FFF; margin-bottom: 2px; }
-  .due-sub { font-size: 7.5px; color: #94A3B8; }
-
-  /* OPUS CHECKLIST */
-  .checklist {
-    background: rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 10px;
-    padding: 12px 16px;
-    margin-top: 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-    font-size: 8.5px;
-    color: #CBD5E1;
-  }
-  .check-item { display: flex; align-items: center; gap: 8px; }
-  .check-item span { color: var(--emerald); font-weight: 900; text-shadow: 0 0 8px var(--emerald-glow); }
-
-  /* PRESENTATION MODE OVERRIDES */
-  body.presentation-mode .rep-only { display: none !important; }
-  body.presentation-mode .cust-only { display: block !important; }
-  .cust-only { display: none; }
-
-  iframe[title*="Netlify"], #netlify-cdp-loader, [data-netlify-deploy-drawer] { display: none !important; }
-</style>
-</head>
-<body>
-
-<!-- SUBDUED AMBIENT CANVAS -->
-<canvas id="ambient-canvas"></canvas>
-
-<div class="app-container">
-  <!-- EXECUTIVE HEADER -->
-  <div class="header">
-    <div>
-      <h1>
-        <span class="rep-only">AT&T Executive Solutions Studio</span>
-        <span class="cust-only">AT&T Customized Plan Solutions</span>
-      </h1>
-      <p>
-        <span class="rep-only">PORTFOLIO OPTIMIZATION • LIVE MARGIN ALLOCATION • OPUS RECONCILIATION</span>
-        <span class="cust-only">TAILORED MULTI-LINE SAVINGS & HOME BROADBAND BREAKDOWN</span>
-      </p>
-    </div>
-    <div class="header-actions">
-      <button type="button" class="btn btn-pres" id="pres-btn" onclick="window.togglePresMode();">👁️ Customer View: OFF</button>
-      <button type="button" class="btn btn-print" onclick="window.print()">🖨️ Print Matrix</button>
-    </div>
-  </div>
-
-  <!-- INTERNET ADDRESS PRE-CHECK BAR WITH COPY & DIRECT VERIFICATION LINKS -->
-  <div class="address-precheck-bar">
-    <div class="addr-row-top">
-      <div class="addr-title">📍 Broadband Pre-Check</div>
-      <div class="addr-inputs">
-        <input type="text" id="addr-field" class="addr-input" placeholder="1463 Round Lake Rd Greenwood IN..." value="1463 Round Lake Rd Greenwood IN">
-      </div>
-      <button type="button" class="btn" style="background:rgba(0, 87, 184, 0.4); border-color:#38BDF8; color:#FFF;" onclick="window.copyAddress()">📋 Copy Address</button>
-    </div>
-    <div class="addr-row-actions">
-      <div class="addr-tags">
-        <div class="tag-btn active" id="tag-fiber" onclick="window.toggleAddrTag('tag-fiber')">💎 Fiber</div>
-        <div class="tag-btn" id="tag-air" onclick="window.toggleAddrTag('tag-air')">📡 Internet Air</div>
-        <div class="tag-btn" id="tag-copper" onclick="window.toggleAddrTag('tag-copper')">🔌 Copper Mig.</div>
-      </div>
-      <div class="link-actions">
-        <a href="[https://www.att.com/buy/broadband/overview.html](https://www.att.com/buy/broadband/overview.html)" target="_blank" class="btn-link-action">🌐 AT&amp;T Availability Check ↗</a>
-        <a href="[https://broadbandmap.fcc.gov/](https://broadbandmap.fcc.gov/)" target="_blank" class="btn-link-action">📡 FCC National Map ↗</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- SECTION 1: CONSULTATION SCOPE -->
-  <div class="section-card">
-    <div class="sec-header">
-      <div class="sec-title">🎯 1. Consultation Scope</div>
-    </div>
-    <div class="grid-4">
-      <div class="pill-option active" id="scope-hw" onclick="window.toggleScope(this);"><div class="pill-title">📱 Hardware Upgrade</div></div>
-      <div class="pill-option active" id="scope-add" onclick="window.toggleScope(this);"><div class="pill-title">➕ Add New Line</div></div>
-      <div class="pill-option" id="scope-bb" onclick="window.toggleScope(this);"><div class="pill-title">🌐 AT&amp;T Fiber / Air</div></div>
       <div class="pill-option" id="scope-tv" onclick="window.toggleScope(this);"><div class="pill-title">📺 DIRECTV Revision</div></div>
     </div>
   </div>
 
-  <!-- SECTION 2: CURRENT ACCOUNT BASELINE (CONNECTED AUDIT & REGIONAL DISCOUNTS) -->
+  <!-- SECTION 2: CURRENT ACCOUNT BASELINE & LEAK AUDIT -->
   <div class="section-card">
     <div class="sec-header">
-      <div class="sec-title">📋 2. Current Account Baseline & Connected Audit</div>
+      <div class="sec-title">📋 2. Current Account Baseline &amp; Leak Audit</div>
     </div>
     <div class="grid-5">
       <div class="control-group">
@@ -1828,7 +645,7 @@ window.runCalc = function() {
       </label>
       <label class="filter-item">
         <input type="checkbox" id="audit-watch-unused" onchange="window.runCalc();">
-        <span style="color:#FCA5A5;">❌ Watch Inactive / Not In Use?</span>
+        <span style="color:#FCA5A5;">❌ Watch Inactive / Sits in Drawer? (Harvest +$10.99/mo)</span>
       </label>
       <div style="width:1px; height:18px; background:rgba(255,255,255,0.15);"></div>
       <label class="filter-item">
@@ -1837,7 +654,7 @@ window.runCalc = function() {
       </label>
       <label class="filter-item">
         <input type="checkbox" id="audit-tab-unused" onchange="window.runCalc();">
-        <span style="color:#FCA5A5;">❌ Tablet Inactive / Not In Use?</span>
+        <span style="color:#FCA5A5;">❌ Tablet Inactive / Sits in Drawer? (Harvest +$20.99/mo)</span>
       </label>
     </div>
 
@@ -1872,16 +689,16 @@ window.runCalc = function() {
       <div class="control-group">
         <label>Verified FAN Micro-Callout</label>
         <div id="fan-proof-callout" style="padding:9px 12px; border-radius:9px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); font-size:8px; color:#94A3B8; font-weight:600;">
-          Select a discount program above to display proof requirements.
+          Standard pricing active. Screen for Employer, Credit Union, or Education discounts.
         </div>
       </div>
     </div>
   </div>
 
-  <!-- SECTION 3: RESTRUCTURE & SERVICE SOLUTIONS -->
+  <!-- SECTION 3: PLAN RECOMMENDATIONS & REINVESTMENT POT ORIGIN (WATERFALL STEP 3) -->
   <div class="section-card">
     <div class="sec-header">
-      <div class="sec-title">📱 3. Restructure &amp; Wireless Line Mix</div>
+      <div class="sec-title">🎯 3. Recommended Wireless Configuration &amp; Starting Pot</div>
       <div class="pool-pill" id="wireless-pool">Wireless Base: $130.00/mo</div>
     </div>
 
@@ -1917,43 +734,52 @@ window.runCalc = function() {
       <b>🚨 FirstNet Priority Network Active:</b> Dedicated Band 14/13 spectrum reserved for First Responders. Always-On preemption + family multi-line rates with 10% Value / 15% Extra / 20% Premium appreciation.
     </div>
 
-    <div class="counter-row">
-      <div class="counter-info">
-        <div class="counter-title">🐆 Unlimited Premium 2.0</div>
-        <div class="counter-desc">Unlimited Priority Data (QCI-8) • 60GB Hotspot • 4K UHD Streaming</div>
+    <!-- RECOMMENDED PLAN CARDS: CLICKING ANY CARD SETS THE BASELINE -->
+    <div style="font-size:8px; font-weight:700; color:#94A3B8; text-transform:uppercase; margin-bottom:4px;">
+      Tap a plan below to lock in the starting savings pot:
+    </div>
+    <div class="recommendations-grid" id="plan-cards-container"></div>
+
+    <!-- LINE MIX STEPPERS -->
+    <div style="margin-top:14px;">
+      <div class="counter-row">
+        <div class="counter-info">
+          <div class="counter-title">🐆 Unlimited Premium 2.0</div>
+          <div class="counter-desc">Unlimited Priority Data (QCI-8) • 60GB Hotspot • 4K UHD Streaming</div>
+        </div>
+        <div class="counter-controls">
+          <div class="btn-circle" onclick="window.changeCount('prem', -1)">-</div>
+          <div class="counter-val" id="cnt-prem">1</div>
+          <div class="btn-circle" onclick="window.changeCount('prem', 1)">+</div>
+        </div>
       </div>
-      <div class="counter-controls">
-        <div class="btn-circle" onclick="window.changeCount('prem', -1)">-</div>
-        <div class="counter-val" id="cnt-prem">1</div>
-        <div class="btn-circle" onclick="window.changeCount('prem', 1)">+</div>
+
+      <div class="counter-row">
+        <div class="counter-info">
+          <div class="counter-title">🐇 Unlimited Extra 2.0</div>
+          <div class="counter-desc">75GB Priority Data (QCI-8) • 30GB Mobile Hotspot • HD Streaming</div>
+        </div>
+        <div class="counter-controls">
+          <div class="btn-circle" onclick="window.changeCount('extra', -1)">-</div>
+          <div class="counter-val" id="cnt-extra">0</div>
+          <div class="btn-circle" onclick="window.changeCount('extra', 1)">+</div>
+        </div>
+      </div>
+
+      <div class="counter-row">
+        <div class="counter-info">
+          <div class="counter-title">🐢 Value Plus 2.0</div>
+          <div class="counter-desc">Standard 5G Data • No Hotspot • Max Bill Drop for Add-Ons</div>
+        </div>
+        <div class="counter-controls">
+          <div class="btn-circle" onclick="window.changeCount('val', -1)">-</div>
+          <div class="counter-val" id="cnt-val">3</div>
+          <div class="btn-circle" onclick="window.changeCount('val', 1)">+</div>
+        </div>
       </div>
     </div>
 
-    <div class="counter-row">
-      <div class="counter-info">
-        <div class="counter-title">🐇 Unlimited Extra 2.0</div>
-        <div class="counter-desc">75GB Priority Data (QCI-8) • 30GB Mobile Hotspot • HD Streaming</div>
-      </div>
-      <div class="counter-controls">
-        <div class="btn-circle" onclick="window.changeCount('extra', -1)">-</div>
-        <div class="counter-val" id="cnt-extra">0</div>
-        <div class="btn-circle" onclick="window.changeCount('extra', 1)">+</div>
-      </div>
-    </div>
-
-    <div class="counter-row">
-      <div class="counter-info">
-        <div class="counter-title">🐢 Value Plus 2.0</div>
-        <div class="counter-desc">Standard 5G Data • No Hotspot • Max Bill Drop for Add-Ons</div>
-      </div>
-      <div class="counter-controls">
-        <div class="btn-circle" onclick="window.changeCount('val', -1)">-</div>
-        <div class="counter-val" id="cnt-val">3</div>
-        <div class="btn-circle" onclick="window.changeCount('val', 1)">+</div>
-      </div>
-    </div>
-
-    <div class="grid-2" style="margin-top:12px;">
+    <div class="grid-2" style="margin-top:10px;">
       <div class="control-group">
         <label>Next Up Anytime ($10/L)</label>
         <select id="addon-nua" onchange="window.runCalc();">
@@ -1974,11 +800,22 @@ window.runCalc = function() {
     </div>
   </div>
 
+  <!-- FLOATING WATERFALL REINVESTMENT BAR -->
+  <div class="waterfall-reinvest-bar">
+    <div class="wf-status">
+      <div class="wf-label">Active Reinvestment Pool</div>
+      <div class="wf-tier-name" id="wf-active-tier">Allocated from: 🐆 1x Prem + 🐢 3x Value</div>
+    </div>
+    <div class="wf-pot-display" id="wf-pot-badge" style="background:rgba(0, 255, 102, 0.15); border:1.5px solid var(--emerald); color:var(--emerald);">
+      Starting Pot: +$50.00/mo
+    </div>
+  </div>
+
   <!-- SECTION 4: HOME BROADBAND & VIDEO (CONDITIONAL: HIDDEN UNLESS SCOPE TOGGLED) -->
   <div class="section-card" id="sec-broadband" style="display:none;">
     <div class="sec-header">
-      <div class="sec-title">🌐 4. Home Broadband &amp; Video</div>
-      <div class="pool-pill" id="pool-badge-broadband">Pool: +$50.00/mo</div>
+      <div class="sec-title">🌐 4. Home Broadband &amp; Video Drawdown</div>
+      <div class="pool-pill" id="pool-badge-broadband">Drawdown: $0/mo</div>
     </div>
 
     <div id="wrap-bb-options" style="display:none; margin-bottom:14px;">
@@ -2031,8 +868,8 @@ window.runCalc = function() {
   <!-- SECTION 5: PROTECTION, TECH & ACCESSORY INSTALLMENTS (AIP) -->
   <div class="section-card">
     <div class="sec-header">
-      <div class="sec-title">🛡️ 5. Protection, Connected Tech &amp; AIP Financing</div>
-      <div class="pool-pill" id="pool-badge-devices">Pool: +$50.00/mo</div>
+      <div class="sec-title">🛡️ 5. Protection, Connected Tech &amp; AIP Financing Drawdown</div>
+      <div class="pool-pill" id="pool-badge-devices">Drawdown: $0/mo</div>
     </div>
 
     <div class="grid-3" style="margin-bottom:12px;">
@@ -2160,6 +997,8 @@ window.runCalc = function() {
 <script>
 window.broadbandCost = 0;
 window.dtvCost = 0;
+window.selectedPlanIndex = 1; // Default to Smart Mix
+window.startingPool = 50.00;
 
 var rates = {
   1: { prem: 90, ext: 70, val: 50, fanPrem: 80, noApPrem: 100, noApExt: 80, noApVal: 60 },
@@ -2254,15 +1093,18 @@ window.applyHotspotRouting = function() {
     document.getElementById('cnt-prem').textContent = "0";
     document.getElementById('cnt-extra').textContent = "0";
     document.getElementById('cnt-val').textContent = totalLines;
+    window.selectedPlanIndex = 0;
   } else if (sel === "all") {
     document.getElementById('cnt-prem').textContent = totalLines;
     document.getElementById('cnt-extra').textContent = "0";
     document.getElementById('cnt-val').textContent = "0";
+    window.selectedPlanIndex = 3;
   } else {
     var count = Math.min(totalLines, parseInt(sel, 10));
     document.getElementById('cnt-prem').textContent = count;
     document.getElementById('cnt-extra').textContent = "0";
     document.getElementById('cnt-val').textContent = Math.max(0, totalLines - count);
+    window.selectedPlanIndex = 1;
   }
 
   window.runCalc();
@@ -2350,8 +1192,37 @@ window.copySMS = function() {
   alert("Customer Quote Copied!");
 };
 
+window.selectRecommendedPlan = function(idx) {
+  window.selectedPlanIndex = idx;
+  var totalLines = parseInt(document.getElementById('curr-lines').value, 10) || 4;
+
+  if (idx === 0) {
+    // All Value Plus
+    document.getElementById('cnt-prem').textContent = "0";
+    document.getElementById('cnt-extra').textContent = "0";
+    document.getElementById('cnt-val').textContent = totalLines;
+  } else if (idx === 1) {
+    // Smart Mix: 1 Prem + rest Value
+    document.getElementById('cnt-prem').textContent = "1";
+    document.getElementById('cnt-extra').textContent = "0";
+    document.getElementById('cnt-val').textContent = Math.max(0, totalLines - 1);
+  } else if (idx === 2) {
+    // Balanced: 2 Prem + rest Value (or Extra)
+    document.getElementById('cnt-prem').textContent = totalLines >= 2 ? "2" : "1";
+    document.getElementById('cnt-extra').textContent = "0";
+    document.getElementById('cnt-val').textContent = Math.max(0, totalLines - (totalLines >= 2 ? 2 : 1));
+  } else if (idx === 3) {
+    // All Premium
+    document.getElementById('cnt-prem').textContent = totalLines;
+    document.getElementById('cnt-extra').textContent = "0";
+    document.getElementById('cnt-val').textContent = "0";
+  }
+
+  window.runCalc();
+};
+
 window.runCalc = function() {
-  var totalInput = parseFloat(document.getElementById('curr-total').value) || 180.00;
+  var rawCurrentBill = parseFloat(document.getElementById('curr-total').value) || 180.00;
   var premCount = parseInt(document.getElementById('cnt-prem').textContent, 10) || 0;
   var extCount = parseInt(document.getElementById('cnt-extra').textContent, 10) || 0;
   var valCount = parseInt(document.getElementById('cnt-val').textContent, 10) || 0;
@@ -2361,15 +1232,21 @@ window.runCalc = function() {
   var currentWatches = parseInt(document.getElementById('curr-watches').value, 10) || 0;
   var currentTablets = parseInt(document.getElementById('curr-tablets').value, 10) || 0;
 
-  // Connected Device Auditing Levers
+  // Connected Devices Leak Audit
   var watchUnused = document.getElementById('audit-watch-unused').checked;
   var tabUnused = document.getElementById('audit-tab-unused').checked;
+
+  var harvestedDollars = 0;
+  if (watchUnused && currentWatches > 0) harvestedDollars += (currentWatches * 10.99);
+  if (tabUnused && currentTablets > 0) harvestedDollars += (currentTablets * 20.99);
+
+  var adjustedBaseline = rawCurrentBill + harvestedDollars;
 
   var discountSel = document.getElementById('curr-discount').value;
   var isFan = discountSel.indexOf('fan') === 0;
   var apMethod = document.getElementById('curr-autopay').value;
 
-  // Contextual micro-callout updates
+  // Contextual Micro-Callout
   var proofCallout = document.getElementById('fan-proof-callout');
   if (discountSel === 'fan_forum') proofCallout.textContent = "✔ FORUM Credit Union: Member Debit Card, Mobile Banking app, or check accepted.";
   else if (discountSel === 'fan_imcu') proofCallout.textContent = "✔ IMCU: Member Card or State of Indiana affiliation screenshot accepted.";
@@ -2379,7 +1256,7 @@ window.runCalc = function() {
   else if (discountSel === 'fan_uber') proofCallout.textContent = "✔ Uber: Screenshot of live Driver profile in app (no paystub needed).";
   else if (discountSel === 'fan_edu') proofCallout.textContent = "✔ Higher Ed: Active .edu email address or official Alumni Association card.";
   else if (discountSel === 'fan_union') proofCallout.textContent = "✔ Union Plus: AFL-CIO, Teamsters, or municipal dues deduction on paystub.";
-  else if (discountSel === 'fan_corp') proofCallout.textContent = "✔ Corporate: Recent paystub or work email verification via [att.com/signature](https://att.com/signature).";
+  else if (discountSel === 'fan_corp') proofCallout.textContent = "✔ Corporate: Recent paystub or work email verification via att.com/signature.";
   else proofCallout.textContent = "Standard pricing active. Screen for Employer, Credit Union, or Education discounts.";
 
   var fnCallout = document.getElementById('fn-callout');
@@ -2417,13 +1294,66 @@ window.runCalc = function() {
 
   var wirelessPlanTotal = Number(((premCount * premRate) + (extCount * extRate) + (valCount * valRate)).toFixed(2));
 
-  // Add-ons & Connected devices
+  // Build the 4 Recommended Plan Cards dynamically (Section 3)
+  var planOptions = [
+    {
+      title: "🐢 All Value Plus 2.0",
+      tag: "Max Headroom",
+      cost: Number((totalLines * valRate).toFixed(2)),
+      desc: totalLines + " Lines on Core 5G Unlimited. Maximum surplus for attachments."
+    },
+    {
+      title: "🐆 1x Prem + 🐢 " + Math.max(0, totalLines - 1) + "x Value",
+      tag: "Smart Mix • Rep Favorite",
+      cost: Number((premRate + Math.max(0, totalLines - 1) * valRate).toFixed(2)),
+      desc: "Primary on Unl. Priority (60GB Hotspot), remaining lines on Value Plus."
+    },
+    {
+      title: "🐆 2x Prem + 🐢 " + Math.max(0, totalLines - 2) + "x Value",
+      tag: "Balanced Family Mix",
+      cost: Number(( (totalLines >= 2 ? 2 * premRate : premRate) + Math.max(0, totalLines - 2) * valRate ).toFixed(2)),
+      desc: "2 Primary accounts on Unlimited Priority, secondary lines on Value Plus."
+    },
+    {
+      title: "🐆 " + totalLines + "x Premium 2.0",
+      tag: "All-Cheetah Unlimited",
+      cost: Number((totalLines * premRate).toFixed(2)),
+      desc: "Unlimited Priority Data & 60GB Hotspot across all " + totalLines + " lines."
+    }
+  ];
+
+  var cardsContainer = document.getElementById('plan-cards-container');
+  cardsContainer.innerHTML = '';
+
+  for (var c = 0; c < planOptions.length; c++) {
+    var p = planOptions[c];
+    var cardSavings = Number((adjustedBaseline - p.cost).toFixed(2));
+    var isSelected = (c === window.selectedPlanIndex);
+
+    var cardDiv = document.createElement('div');
+    cardDiv.className = 'rec-card' + (isSelected ? ' selected-plan' : '');
+    cardDiv.setAttribute('onclick', 'window.selectRecommendedPlan(' + c + ')');
+    cardDiv.innerHTML =
+      '<div>' +
+        '<div class="rec-tag">' + p.tag + '</div>' +
+        '<div class="rec-title">' + p.title + '</div>' +
+        '<div class="rec-price">$' + p.cost.toFixed(2) + '/mo</div>' +
+        '<div class="rec-savings-tag">' + (cardSavings >= 0 ? 'Saves $' + cardSavings.toFixed(2) + '/mo' : '+$' + Math.abs(cardSavings).toFixed(2) + '/mo') + '</div>' +
+      '</div>' +
+      '<div class="rec-desc">' + p.desc + '</div>';
+    cardsContainer.appendChild(cardDiv);
+  }
+
+  // Active Plan Chosen defines starting pool
+  var chosenCard = planOptions[window.selectedPlanIndex] || planOptions[1];
+  window.startingPool = Math.max(0, Number((adjustedBaseline - chosenCard.cost).toFixed(2)));
+
+  // Add-ons
   var nuaVal = document.getElementById('addon-nua').value;
   var nuaCost = (nuaVal === 'all') ? totalLines * 10 : (parseInt(nuaVal, 10) || 0) * 10;
   var turboVal = document.getElementById('addon-turbo').value;
   var turboCost = (turboVal === 'all') ? totalLines * 7 : (parseInt(turboVal, 10) || 0) * 7;
   var paCost = parseFloat(document.getElementById('addon-pa').value) || 0;
-  
   var targetWatchCost = parseFloat(document.getElementById('addon-watches').value) || 0;
   var targetTabletCost = parseFloat(document.getElementById('addon-tablets').value) || 0;
 
@@ -2435,21 +1365,38 @@ window.runCalc = function() {
   var monthlyAipCharge = (totalAipCart >= 75) ? Number((totalAipCart / 12).toFixed(2)) : 0;
   var aipSalesTaxDue = Number((totalAipCart * 0.07).toFixed(2));
 
-  // Connected Devices Audit: Subtract unused lines from current baseline to harvest margin
-  var existingWatchesRetained = watchUnused ? 0 : currentWatches;
-  var existingTabletsRetained = tabUnused ? 0 : currentTablets;
-  var existingConnectedCost = Number(((existingWatchesRetained * 10.99) + (existingTabletsRetained * 20.99)).toFixed(2));
+  // Remaining active existing connected lines
+  var activeWatches = watchUnused ? 0 : currentWatches;
+  var activeTablets = tabUnused ? 0 : currentTablets;
+  var existingConnectedCost = Number(((activeWatches * 10.99) + (activeTablets * 20.99)).toFixed(2));
+
+  // Waterfall Drawdowns
+  var totalDrawdowns = nuaCost + turboCost + paCost + targetWatchCost + targetTabletCost + monthlyAipCharge + window.broadbandCost + window.dtvCost;
+  var remainingPotBalance = Number((window.startingPool - totalDrawdowns).toFixed(2));
 
   var totalWireless = wirelessPlanTotal + nuaCost + turboCost + paCost + targetWatchCost + targetTabletCost + monthlyAipCharge + existingConnectedCost;
   var totalHousehold = totalWireless + window.broadbandCost + window.dtvCost;
 
-  var monthlySavings = Number((totalInput - totalHousehold).toFixed(2));
-  var wirelessOnlySavings = Math.max(0, Number((totalInput - wirelessPlanTotal).toFixed(2)));
+  var monthlySavings = Number((rawCurrentBill - totalHousehold).toFixed(2));
 
-  // UI Updates
+  // UI Updates: Waterfall Reinvestment Bar
+  document.getElementById('wf-active-tier').textContent = "Allocated from: " + chosenCard.title;
+  var potBadge = document.getElementById('wf-pot-badge');
+  if (remainingPotBalance >= 0) {
+    potBadge.style.color = "var(--emerald)";
+    potBadge.style.borderColor = "var(--emerald)";
+    potBadge.style.background = "rgba(0, 255, 102, 0.15)";
+    potBadge.textContent = "Pot Balance: +$" + remainingPotBalance.toFixed(2) + "/mo";
+  } else {
+    potBadge.style.color = "#F87171";
+    potBadge.style.borderColor = "#F87171";
+    potBadge.style.background = "rgba(239, 68, 68, 0.15)";
+    potBadge.textContent = "Budget Step-Up: +$" + Math.abs(remainingPotBalance).toFixed(2) + "/mo";
+  }
+
   document.getElementById('wireless-pool').textContent = "Wireless Base: $" + wirelessPlanTotal.toFixed(2) + "/mo";
-  document.getElementById('pool-badge-broadband').textContent = "Pool: +$" + wirelessOnlySavings.toFixed(2) + "/mo";
-  document.getElementById('pool-badge-devices').textContent = "Pool: +$" + wirelessOnlySavings.toFixed(2) + "/mo";
+  document.getElementById('pool-badge-broadband').textContent = "Drawdown: $" + (window.broadbandCost + window.dtvCost).toFixed(2) + "/mo";
+  document.getElementById('pool-badge-devices').textContent = "Drawdown: $" + (paCost + targetWatchCost + targetTabletCost + monthlyAipCharge).toFixed(2) + "/mo";
 
   document.getElementById('sum-new-total').textContent = "$" + totalHousehold.toFixed(2) + "/mo";
   var saveBox = document.getElementById('sum-savings-box');
@@ -2465,7 +1412,7 @@ window.runCalc = function() {
     saveBox.textContent = "+$" + Math.abs(monthlySavings).toFixed(2) + "/mo vs Old Bill";
   }
 
-  // Register Due Today (Indiana 7% Tax + Waived Upgrade Fees Toggle + AIP Tax)
+  // Register Due Today
   var upCount = parseInt(document.getElementById('upgrade-count').value, 10) || 0;
   var upVal = parseFloat(document.getElementById('upgrade-val').value) || 1000.00;
   var feesWaived = document.getElementById('check-waived-fees').checked;
@@ -2496,8 +1443,8 @@ window.runCalc = function() {
   if (valCount > 0) planParts.push(valCount + "x Value");
   sms += planParts.join(", ") + ")";
   if (existingConnectedCost > 0 || targetWatchCost > 0 || targetTabletCost > 0) {
-    var totalW = existingWatchesRetained + (targetWatchCost > 0 ? 1 : 0);
-    var totalT = existingTabletsRetained + (targetTabletCost > 0 ? 1 : 0);
+    var totalW = activeWatches + (targetWatchCost > 0 ? 1 : 0);
+    var totalT = activeTablets + (targetTabletCost > 0 ? 1 : 0);
     sms += " + Connected: " + totalW + " Watches, " + totalT + " Tablets";
   }
   if (monthlyAipCharge > 0) sms += " + Tech Accessories ($" + monthlyAipCharge.toFixed(2) + "/mo)";
