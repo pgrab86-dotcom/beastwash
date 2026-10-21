@@ -40,7 +40,6 @@
     -webkit-user-select: none;
   }
 
-  /* SUBDUED ATMOSPHERIC CANVAS */
   #ambient-canvas {
     position: fixed;
     top: 0;
@@ -66,7 +65,6 @@
     z-index: 2;
   }
 
-  /* EXECUTIVE HEADER */
   .header {
     background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(10, 16, 30, 0.85) 100%);
     padding: 16px 22px;
@@ -88,7 +86,27 @@
   .header p { margin: 2px 0 0 0; font-size: 8.5px; color: #94A3B8; font-weight: 500; }
   .header-actions { display: flex; gap: 8px; align-items: center; z-index: 2; }
 
-  /* ADDRESS PRE-CHECK BAR */
+  .mode-switch-btn {
+    background: rgba(0, 87, 184, 0.28);
+    border: 1.5px solid #38BDF8;
+    color: #FFF;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 9px;
+    font-weight: 800;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+  }
+  .mode-switch-btn.business {
+    background: rgba(245, 158, 11, 0.22);
+    border-color: #F59E0B;
+    color: #FBBF24;
+    box-shadow: 0 0 16px rgba(245, 158, 11, 0.3);
+  }
+
   .address-precheck-bar {
     background: rgba(3, 7, 18, 0.7);
     border-bottom: 1px solid var(--glass-border);
@@ -175,7 +193,6 @@
   }
   .btn-link-action:hover { background: rgba(0, 87, 184, 0.4); border-color: #38BDF8; color: #FFF; }
 
-  /* GLASS SECTION CARDS */
   .section-card {
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
@@ -213,7 +230,6 @@
     font-weight: 800;
   }
 
-  /* STICKY WATERFALL REINVESTMENT BAR */
   .waterfall-reinvest-bar {
     position: sticky;
     top: 0;
@@ -244,7 +260,6 @@
     transition: all 0.25s ease;
   }
 
-  /* BUTTONS & CONTROLS */
   .btn {
     background: rgba(255, 255, 255, 0.08);
     color: #FFF;
@@ -299,7 +314,6 @@
     box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
   }
 
-  /* PITCH QUICK BUTTONS */
   .btn-pitch-hint {
     background: rgba(251, 191, 36, 0.12);
     border: 1px solid rgba(251, 191, 36, 0.4);
@@ -322,7 +336,6 @@
     transform: scale(0.97);
   }
 
-  /* SPATIAL SELECTION TILES */
   .pill-option {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -349,7 +362,6 @@
   .pill-price { font-size: 14px; font-weight: 900; color: #38BDF8; margin: 4px 0 2px 0; }
   .pill-sub { font-size: 7.5px; color: #94A3B8; font-weight: 500; }
 
-  /* RECOMMENDED PLAN CARDS */
   .recommendations-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
@@ -390,7 +402,6 @@
   .rec-savings-tag { font-size: 9.5px; font-weight: 800; color: #4ADE80; margin-bottom: 8px; }
   .rec-desc { font-size: 8px; color: #CBD5E1; line-height: 1.35; }
 
-  /* PRECISION LINE COUNTER */
   .counter-row {
     background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -424,7 +435,6 @@
   .btn-circle:active { transform: scale(0.9); }
   .counter-val { font-size: 15px; font-weight: 900; color: var(--emerald); min-width: 18px; text-align: center; text-shadow: 0 0 10px var(--emerald-glow); }
 
-  /* AUDIT & FILTER BOXES */
   .filter-box {
     background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -452,7 +462,6 @@
     cursor: pointer;
   }
 
-  /* CALLOUT BANNER */
   .callout-box {
     background: rgba(239, 68, 68, 0.1);
     border: 1px solid rgba(239, 68, 68, 0.35);
@@ -475,7 +484,6 @@
   }
   .warning-box b { color: #FBBF24; }
 
-  /* EXECUTIVE SUMMARY */
   .summary-card {
     background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(10, 16, 30, 0.98) 100%);
     border: 1.5px solid rgba(255, 255, 255, 0.15);
@@ -503,7 +511,6 @@
     box-shadow: 0 0 20px var(--emerald-glow);
   }
 
-  /* REGISTER DUE TODAY */
   .due-box {
     background: rgba(0, 0, 0, 0.35);
     border: 1px dashed rgba(255, 255, 255, 0.15);
@@ -515,7 +522,6 @@
   .due-amt { font-size: 15px; font-weight: 900; color: #FFF; margin-bottom: 2px; }
   .due-sub { font-size: 7.5px; color: #94A3B8; }
 
-  /* OPUS CHECKLIST */
   .checklist {
     background: rgba(0, 0, 0, 0.25);
     border: 1px solid rgba(255, 255, 255, 0.06);
@@ -531,7 +537,6 @@
   .check-item { display: flex; align-items: center; gap: 8px; }
   .check-item span { color: var(--emerald); font-weight: 900; text-shadow: 0 0 8px var(--emerald-glow); }
 
-  /* MODAL PITCH GUIDE OVERLAYS */
   .modal-overlay {
     position: fixed;
     inset: 0;
@@ -599,7 +604,6 @@
   .pitch-bullet { margin-bottom: 6px; display: flex; align-items: flex-start; gap: 6px; }
   .pitch-bullet b { color: #38BDF8; min-width: 100px; }
 
-  /* PRESENTATION MODE OVERRIDES - FULL JARGON KILLER */
   body.presentation-mode .rep-only { display: none !important; }
   body.presentation-mode .cust-only { display: block !important; }
   body.presentation-mode span.cust-only { display: inline !important; }
@@ -612,10 +616,8 @@
 </head>
 <body>
 
-<!-- SUBDUED AMBIENT CANVAS -->
 <canvas id="ambient-canvas"></canvas>
 
-<!-- PITCH GUIDE MODAL OVERLAY -->
 <div class="modal-overlay" id="pitch-modal" onclick="if(event.target === this) window.closePitchModal();">
   <div class="modal-card">
     <div class="modal-header">
@@ -627,19 +629,20 @@
 </div>
 
 <div class="app-container">
-  <!-- EXECUTIVE HEADER -->
+  <!-- EXECUTIVE HEADER WITH CONSUMER / BUSINESS CRU DUAL-ENGINE SWITCHER -->
   <div class="header">
     <div>
       <h1>
-        <span class="rep-only">AT&amp;T Executive Solutions Studio</span>
-        <span class="cust-only">AT&amp;T Customized Plan Solutions</span>
+        <span class="rep-only" id="hdr-title-rep">AT&amp;T Executive Solutions Studio</span>
+        <span class="cust-only" id="hdr-title-cust">AT&amp;T Customized Plan Solutions</span>
       </h1>
       <p>
-        <span class="rep-only">DOWNWARD WATERFALL ARBITRAGE • REINVESTMENT POT POOLING • OPUS AUDIT</span>
-        <span class="cust-only">TAILORED MULTI-LINE SAVINGS &amp; HOME BROADBAND BREAKDOWN</span>
+        <span class="rep-only" id="hdr-sub-rep">DOWNWARD WATERFALL ARBITRAGE • REINVESTMENT POT POOLING • OPUS AUDIT</span>
+        <span class="cust-only" id="hdr-sub-cust">TAILORED MULTI-LINE SAVINGS &amp; HOME BROADBAND BREAKDOWN</span>
       </p>
     </div>
     <div class="header-actions">
+      <button type="button" class="mode-switch-btn" id="mode-btn" onclick="window.toggleAccountSegment();">👤 Consumer View</button>
       <button type="button" class="btn" style="background:rgba(255,255,255,0.06);" onclick="window.shareQuoteURL()">🔗 Share</button>
       <button type="button" class="btn" style="background:rgba(255,255,255,0.06);" onclick="window.resetToNextCustomer()">🔄 Reset</button>
       <button type="button" class="btn btn-pres" id="pres-btn" onclick="window.togglePresMode();">👁️ Customer View: OFF</button>
@@ -647,13 +650,13 @@
     </div>
   </div>
 
-  <!-- INTERNET ADDRESS PRE-CHECK BAR (REP ONLY) -->
+  <!-- BROADBAND PRE-CHECK BAR (CLEAN PLACEHOLDER, NO PERSONAL ADDRESS SILHOUETTES) -->
   <div class="address-precheck-bar rep-only">
     <div class="addr-row-top">
-      <div class="addr-title">📍 Broadband Pre-Check</div>
+      <div class="addr-title" id="lbl-bb-check">📍 Broadband Pre-Check</div>
       <div class="addr-inputs">
         <input type="text" id="addr-field" class="addr-input" placeholder="Enter customer street address, city, state..." value="" oninput="window.autoSaveState();">
-</div>
+      </div>
       <button type="button" class="btn" style="background:rgba(0, 87, 184, 0.4); border-color:#38BDF8; color:#FFF;" onclick="window.copyAddress()">📋 Copy Address</button>
     </div>
     <div class="addr-row-actions">
@@ -678,7 +681,7 @@
       <div class="pill-option active" id="scope-hw" onclick="window.toggleScope(this);"><div class="pill-title">📱 Hardware Upgrade</div></div>
       <div class="pill-option active" id="scope-add" onclick="window.toggleScope(this);"><div class="pill-title">➕ Add New Line</div></div>
       <div class="pill-option" id="scope-switch" onclick="window.toggleScope(this);"><div class="pill-title">🔄 Switcher Port-In</div></div>
-      <div class="pill-option" id="scope-bb" onclick="window.toggleScope(this);"><div class="pill-title">🌐 AT&amp;T Fiber / Air</div></div>
+      <div class="pill-option" id="scope-bb" onclick="window.toggleScope(this);"><div class="pill-title" id="lbl-scope-bb">🌐 AT&amp;T Fiber / Air</div></div>
       <div class="pill-option" id="scope-tv" onclick="window.toggleScope(this);"><div class="pill-title">📺 DIRECTV Revision</div></div>
     </div>
   </div>
@@ -712,7 +715,7 @@
         </select>
       </div>
       <div class="control-group">
-        <label>Current Smartwatches</label>
+        <label id="lbl-curr-watches">Current Smartwatches</label>
         <select id="curr-watches" onchange="window.runCalc();">
           <option value="0" selected>0 Watches</option>
           <option value="1">1 Watch ($10.99/mo)</option>
@@ -722,7 +725,7 @@
         </select>
       </div>
       <div class="control-group">
-        <label>Current Tablets</label>
+        <label id="lbl-curr-tablets">Current Tablets</label>
         <select id="curr-tablets" onchange="window.runCalc();">
           <option value="0" selected>0 Tablets</option>
           <option value="1">1 Tablet ($20.99/mo)</option>
@@ -741,9 +744,8 @@
       </div>
     </div>
 
-    <!-- CONNECTED & FEATURE AUDIT (3-COLUMN SIDE-BY-SIDE GRID) -->
+    <!-- 3-COLUMN SIDE-BY-SIDE AUDIT GRID (CLEAN SPACE SAVING) -->
     <div class="grid-3" style="margin-top:10px; margin-bottom:12px;">
-      <!-- Watch Audit Column -->
       <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:10px 12px; display:flex; flex-direction:column; gap:6px;">
         <div style="font-size:9px; font-weight:800; color:#38BDF8; text-transform:uppercase; letter-spacing:0.5px;">⌚ Watch Lines</div>
         <label class="filter-item">
@@ -752,12 +754,11 @@
         </label>
         <label class="filter-item">
           <input type="checkbox" id="audit-watch-unused" onchange="window.runCalc();">
-          <span class="rep-only" style="color:#FCA5A5;">❌ Drop Inactive (+$10.99/mo)</span>
+          <span class="rep-only" id="lbl-audit-watch" style="color:#FCA5A5;">❌ Drop Inactive (+$10.99/mo)</span>
           <span class="cust-only" style="color:#FCA5A5;">❌ Line Inactive / Remove</span>
         </label>
       </div>
 
-      <!-- Tablet Audit Column -->
       <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:10px 12px; display:flex; flex-direction:column; gap:6px;">
         <div style="font-size:9px; font-weight:800; color:#38BDF8; text-transform:uppercase; letter-spacing:0.5px;">📱 Tablet Lines</div>
         <label class="filter-item">
@@ -766,12 +767,11 @@
         </label>
         <label class="filter-item">
           <input type="checkbox" id="audit-tab-unused" onchange="window.runCalc();">
-          <span class="rep-only" style="color:#FCA5A5;">❌ Drop Inactive (+$20.99/mo)</span>
+          <span class="rep-only" id="lbl-audit-tab" style="color:#FCA5A5;">❌ Drop Inactive (+$20.99/mo)</span>
           <span class="cust-only" style="color:#FCA5A5;">❌ Line Inactive / Remove</span>
         </label>
       </div>
 
-      <!-- Next Up Leak Harvest Column -->
       <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:10px 12px; display:flex; flex-direction:column; gap:6px;">
         <div style="font-size:9px; font-weight:800; color:#FBBF24; text-transform:uppercase; letter-spacing:0.5px;">🔄 Next Up Feature</div>
         <div style="display:flex; align-items:center; justify-content:space-between; gap:4px;">
@@ -792,40 +792,22 @@
       </div>
     </div>
 
-    <!-- REWORKED OPUS-COMPLIANT DISCOUNT SELECTION -->
+    <!-- DYNAMIC DISCOUNT & AFFILIATION PROFILE -->
     <div class="grid-2">
       <div class="control-group">
-        <label>Discount Profile / Signature Organization</label>
-        <select id="curr-discount" onchange="window.runCalc();">
-          <optgroup label="Standard Consumer">
-            <option value="none" selected>Standard Consumer (No FAN)</option>
-          </optgroup>
-          <optgroup label="Appreciation Programs (25% Off)">
-            <option value="apprec_mil">Military &amp; Veterans (25% Off)</option>
-            <option value="firstnet">FirstNet Primary (Band 14 Priority + 25% Off Family)</option>
-            <option value="apprec_first">First Responders / Law Enforcement / EMS (25% Off)</option>
-            <option value="apprec_edu">Teachers (K-12, College/University Faculty • 25% Off)</option>
-            <option value="apprec_med">Nurses &amp; Physicians (RN, LPN, MD, DO • 25% Off)</option>
-            <option value="fiber">AT&amp;T Fiber Convergence (20% Off Wireless)</option>
-          </optgroup>
-          <optgroup label="Active Signature Paths ($10/L Off Premium)">
-            <option value="fan_union">🏛️ Labor Union (Union Plus / AFL-CIO / Teamsters)</option>
-            <option value="fan_corp">🏢 Corporate Employer FAN (Work Email / Paystub)</option>
-            <option value="fan_edu">🎓 Higher Education (College Student / Faculty / Alumni)</option>
-            <option value="fan_gig">🚗 Gig Economy (Uber / Lyft Active Driver Profile)</option>
-          </optgroup>
-        </select>
+        <label id="lbl-discount-title">Discount Profile / Organization</label>
+        <select id="curr-discount" onchange="window.runCalc();"></select>
       </div>
       <div class="control-group rep-only">
-        <label>Verification Standard / FAST Alternative</label>
+        <label>Verification Standard / Validation Portal</label>
         <div id="fan-proof-callout" style="padding:9px 12px; border-radius:9px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); font-size:8px; color:#94A3B8; font-weight:600;">
-          Standard pricing active. Screen for Employer, Union, Education, or Appreciation discounts.
+          Standard pricing active.
         </div>
       </div>
     </div>
   </div>
 
-  <!-- SECTION 2.5: COMPETITOR CONTRACT PAYOFF & SWITCHER CREDITS (CONDITIONAL) -->
+  <!-- SECTION 2.5: SWITCHER CREDITS & COMPETITOR PAYOFF -->
   <div class="section-card" id="sec-switcher" style="display:none;">
     <div class="sec-header">
       <div class="sec-title">🔄 2B. Competitor Device Payoff &amp; Switcher Credits</div>
@@ -863,35 +845,35 @@
     </div>
   </div>
 
-  <!-- SECTION 3: PLAN RECOMMENDATIONS (NEW 2.0 HOTSPOT SPECIFICATIONS) -->
+  <!-- SECTION 3: PLAN RECOMMENDATIONS (DYNAMIC SEGMENT MAPPING) -->
   <div class="section-card">
     <div class="sec-header">
       <div class="sec-title">
-        <span class="rep-only">🎯 3. Recommended Wireless Configuration &amp; Starting Pot</span>
-        <span class="cust-only">🎯 3. Recommended Wireless Solutions</span>
+        <span class="rep-only" id="lbl-sec3-rep">🎯 3. Recommended Wireless Configuration &amp; Starting Pot</span>
+        <span class="cust-only" id="lbl-sec3-cust">🎯 3. Recommended Wireless Solutions</span>
       </div>
       <div class="pool-pill" id="wireless-pool">Wireless Base: $130.00/mo</div>
     </div>
 
-    <!-- NEEDS ASSESSMENT & FEATURE FILTER BOX (HOTSPOT & HBO MAX) -->
+    <!-- NEEDS ASSESSMENT & FEATURE FILTER BOX -->
     <div class="filter-box">
       <label class="filter-item">
         <input type="checkbox" id="check-hotspot" onchange="window.toggleHotspotFilter();">
-        <span>📶 Needs Hotspot Data</span>
+        <span id="lbl-hotspot-check">📶 Needs Hotspot Data</span>
       </label>
 
       <div id="hotspot-lines-wrap" style="display:none; align-items:center; gap:6px;">
         <span style="font-size:8px; color:#94A3B8; text-transform:uppercase;">Lines Requiring Heavy Hotspot:</span>
         <select id="hotspot-lines-count" style="padding:4px 8px; border-radius:8px; background:#000; color:#FFF; border:1px solid var(--emerald); font-weight:700;" onchange="window.applyHotspotRouting();">
-          <option value="0">0 Lines (Value Plus 3GB Baseline)</option>
-          <option value="1" selected>1 Line (Primary Prem 100GB)</option>
-          <option value="2">2 Lines (2x Prem 100GB)</option>
-          <option value="3">3 Lines (3x Prem 100GB)</option>
-          <option value="all">All Lines (100GB/Line Max Tethering)</option>
+          <option value="0">0 Lines (Base 3GB-5GB)</option>
+          <option value="1" selected>1 Line (Primary Top Tier)</option>
+          <option value="2">2 Lines (2x Top Tier)</option>
+          <option value="3">3 Lines (3x Top Tier)</option>
+          <option value="all">All Lines (Max Tethering)</option>
         </select>
       </div>
 
-      <label class="filter-item rep-only">
+      <label class="filter-item rep-only" id="wrap-check-hbo">
         <input type="checkbox" id="check-hbo" onchange="window.toggleHboWarning();">
         <span>🎬 Currently Uses Included HBO / Max Perk</span>
       </label>
@@ -902,22 +884,21 @@
     </div>
 
     <div class="callout-box" id="fn-callout" style="display:none;">
-      <b>🚨 FirstNet Priority Network Active:</b> Dedicated Band 14/13 spectrum reserved for First Responders. Always-On preemption + family multi-line rates with 10% Value / 15% Extra / 20% Premium appreciation.
+      <b>🚨 FirstNet Priority Network Active:</b> Dedicated Band 14/13 spectrum reserved for First Responders. Always-On preemption + family multi-line rates with appreciation discounts.
     </div>
 
-    <!-- RECOMMENDED PLAN CARDS -->
     <div style="font-size:8px; font-weight:700; color:#94A3B8; text-transform:uppercase; margin-bottom:4px;">
       <span class="rep-only">Tap a plan below to lock in the starting savings pot:</span>
       <span class="cust-only">Tap a plan combination to select your rate structure:</span>
     </div>
     <div class="recommendations-grid" id="plan-cards-container"></div>
 
-    <!-- LINE MIX STEPPERS -->
+    <!-- DYNAMIC LINE STEPPERS (CONSUMER VS BUSINESS) -->
     <div style="margin-top:14px;">
       <div class="counter-row">
         <div class="counter-info">
-          <div class="counter-title">🐆 Unlimited Premium 2.0</div>
-          <div class="counter-desc">Unlimited Priority Data (QCI-8) • 100GB Hotspot • 4K UHD Streaming</div>
+          <div class="counter-title" id="stepper-title-t1">🐆 Unlimited Premium 2.0</div>
+          <div class="counter-desc" id="stepper-desc-t1">Unlimited Priority Data (QCI-8) • 100GB Hotspot • 4K UHD Streaming</div>
         </div>
         <div class="counter-controls">
           <div class="btn-circle" onclick="window.changeCount('prem', -1)">-</div>
@@ -928,8 +909,8 @@
 
       <div class="counter-row">
         <div class="counter-info">
-          <div class="counter-title">🐇 Unlimited Extra 2.0</div>
-          <div class="counter-desc">100GB Priority Data (QCI-8) • 50GB Mobile Hotspot • SD Streaming</div>
+          <div class="counter-title" id="stepper-title-t2">🐇 Unlimited Extra 2.0</div>
+          <div class="counter-desc" id="stepper-desc-t2">100GB Priority Data (QCI-8) • 50GB Mobile Hotspot • SD Streaming</div>
         </div>
         <div class="counter-controls">
           <div class="btn-circle" onclick="window.changeCount('extra', -1)">-</div>
@@ -940,8 +921,8 @@
 
       <div class="counter-row">
         <div class="counter-info">
-          <div class="counter-title">🐢 Value Plus 2.0</div>
-          <div class="counter-desc">Standard 5G Data • 3GB Mobile Hotspot • Core Unlimited Access</div>
+          <div class="counter-title" id="stepper-title-t3">🐢 Value Plus 2.0</div>
+          <div class="counter-desc" id="stepper-desc-t3">Standard 5G Data • 3GB Mobile Hotspot • Core Unlimited Access</div>
         </div>
         <div class="counter-controls">
           <div class="btn-circle" onclick="window.changeCount('val', -1)">-</div>
@@ -952,60 +933,38 @@
     </div>
   </div>
 
-  <!-- FLOATING WATERFALL REINVESTMENT BAR (REP ONLY) -->
+  <!-- FLOATING WATERFALL REINVESTMENT BAR -->
   <div class="waterfall-reinvest-bar rep-only">
     <div class="wf-status">
       <div class="wf-label">Active Reinvestment Pool</div>
-      <div class="wf-tier-name" id="wf-active-tier">Allocated from: 🐆 1x Prem + 🐢 3x Value</div>
+      <div class="wf-tier-name" id="wf-active-tier">Allocated from: Smart Mix</div>
     </div>
     <div class="wf-pot-display" id="wf-pot-badge" style="background:rgba(0, 255, 102, 0.15); border:1.5px solid var(--emerald); color:var(--emerald);">
       Starting Pot: +$50.00/mo
     </div>
   </div>
 
-  <!-- SECTION 4: HOME BROADBAND & VIDEO (CONDITIONAL: HIDDEN UNLESS SCOPE TOGGLED) -->
+  <!-- SECTION 4: BROADBAND & VIDEO -->
   <div class="section-card" id="sec-broadband" style="display:none;">
     <div class="sec-header">
       <div class="sec-title">
-        <span class="rep-only">🌐 4. Home Broadband &amp; Video Drawdown</span>
-        <span class="cust-only">🌐 4. Home Internet &amp; Entertainment</span>
+        <span class="rep-only">🌐 4. Home / Business Broadband &amp; Video Drawdown</span>
+        <span class="cust-only">🌐 4. Broadband &amp; Entertainment</span>
       </div>
       <div class="pool-pill" id="pool-badge-broadband">Drawdown: $0/mo</div>
     </div>
 
     <div id="wrap-bb-options" style="display:none; margin-bottom:14px;">
-      <div style="font-size:8px; font-weight:700; color:#94A3B8; text-transform:uppercase; margin-bottom:8px;">Option A: Home Internet Solutions</div>
-      <div class="grid-4">
-        <div class="pill-option active" id="bb-none" onclick="window.selectBroadband(0, this)">
-          <div class="pill-title">None</div>
-          <div class="pill-price">$0</div>
-          <div class="pill-sub">Keep Provider</div>
-        </div>
-        <div class="pill-option" id="bb-air" onclick="window.selectBroadband(35, this)">
-          <div class="pill-title">Internet Air</div>
-          <div class="pill-price">$35/mo</div>
-          <div class="pill-sub">5G Home w/ AP</div>
-        </div>
-        <div class="pill-option" id="bb-f300" onclick="window.selectBroadband(35, this)">
-          <div class="pill-title">Fiber 300M</div>
-          <div class="pill-price">$35/mo</div>
-          <div class="pill-sub">Converged Rate</div>
-        </div>
-        <div class="pill-option" id="bb-f500" onclick="window.selectBroadband(45, this)">
-          <div class="pill-title">Fiber 500M</div>
-          <div class="pill-price">$45/mo</div>
-          <div class="pill-sub">Converged Rate</div>
-        </div>
-      </div>
+      <div style="font-size:8px; font-weight:700; color:#94A3B8; text-transform:uppercase; margin-bottom:8px;" id="lbl-bb-tier-hdr">Option A: Broadband Solutions</div>
+      <div class="grid-4" id="bb-tiles-container"></div>
     </div>
 
-    <!-- ROBUST DIRECTV BUILDER SUITE -->
+    <!-- DIRECTV via Internet Builder -->
     <div id="wrap-tv-options" style="display:none;">
       <div style="font-size:9px; font-weight:800; color:#38BDF8; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;">
         Option B: DIRECTV via Internet Custom Builder (1 Gemini Box Included)
       </div>
 
-      <!-- Core Base Packages -->
       <div class="grid-3" style="margin-bottom:12px;">
         <div class="pill-option active" id="dtv-none" onclick="window.selectDTV(0, this)">
           <div class="pill-title">No TV</div>
@@ -1032,10 +991,8 @@
         </div>
       </div>
 
-      <!-- DIRECTV Add-On & International Dropdown Matrix -->
       <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:12px; display:flex; flex-direction:column; gap:10px;">
         <div class="grid-2">
-          <!-- Disney+ / Hulu Bundle Selection -->
           <div class="control-group">
             <label>Disney+ &amp; Hulu Bundle Status</label>
             <select id="dtv-disney-select" onchange="window.runCalc();">
@@ -1045,7 +1002,6 @@
             </select>
           </div>
 
-          <!-- Premium Movie & Entertainment Networks -->
           <div class="control-group">
             <label>Premium Networks (3 Mos Free Promos)</label>
             <select id="dtv-premiums-select" onchange="window.runCalc();">
@@ -1062,7 +1018,6 @@
         </div>
 
         <div class="grid-2">
-          <!-- Sports Add-On Packs -->
           <div class="control-group">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
               <label style="margin:0;">Sports Specialty Add-Ons</label>
@@ -1075,7 +1030,6 @@
             </select>
           </div>
 
-          <!-- International & Native Language Packs -->
           <div class="control-group">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
               <label style="margin:0;">International Language Packs</label>
@@ -1094,11 +1048,11 @@
     </div>
   </div>
 
-  <!-- SECTION 5: PROTECTION, COMMISSION ACCELERATOR, TECH & AIP FINANCING -->
+  <!-- SECTION 5: PROTECTION, COMMISSION ACCELERATOR, CONNECTED TECH & AIP -->
   <div class="section-card">
     <div class="sec-header">
       <div class="sec-title">
-        <span class="rep-only">🛡️ 5. Protection, Connected Tech &amp; AIP Financing Drawdown</span>
+        <span class="rep-only">🛡️ 5. Protection, Connected Tech &amp; Hardware Drawdown</span>
         <span class="cust-only">🛡️ 5. Device Protection &amp; Connected Tech</span>
       </div>
       <div class="pool-pill" id="pool-badge-devices">Drawdown: $0/mo</div>
@@ -1106,7 +1060,7 @@
 
     <!-- PROTECTION SUITE -->
     <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:12px; margin-bottom:12px;">
-      <div style="font-size:9px; font-weight:800; color:#38BDF8; text-transform:uppercase; margin-bottom:8px;">🛡️ Device &amp; Whole-Home Protection Suite</div>
+      <div style="font-size:9px; font-weight:800; color:#38BDF8; text-transform:uppercase; margin-bottom:8px;">🛡️ Device &amp; Account Protection Suite</div>
       <div class="grid-3">
         <div class="control-group">
           <label>PA1 (Protect Advantage 1)</label>
@@ -1118,7 +1072,7 @@
           <button type="button" class="btn-pitch-hint rep-only" onclick="window.openPitchModal('pa1')">💡 Pitch PA1</button>
         </div>
         <div class="control-group">
-          <label>PA4 (Protect Advantage 4+ Multi)</label>
+          <label id="lbl-pa4">PA4 (Protect Advantage 4+ Multi)</label>
           <select id="addon-pa4" onchange="window.runCalc();">
             <option value="0" selected>None ($0/mo)</option>
             <option value="50">PA4 Multi-Device ($50.00/mo)</option>
@@ -1126,7 +1080,7 @@
           <button type="button" class="btn-pitch-hint rep-only" onclick="window.openPitchModal('pa4')">💡 Pitch PA4+</button>
         </div>
         <div class="control-group">
-          <label>HTP (AT&amp;T HomeTech Protection)</label>
+          <label id="lbl-htp">HTP / Business Tech Support</label>
           <select id="addon-htp" onchange="window.runCalc();">
             <option value="0" selected>None ($0/mo)</option>
             <option value="25">HomeTech Protection ($25.00/mo)</option>
@@ -1139,27 +1093,25 @@
     <!-- REP-ONLY COMMISSION ACCELERATOR ZONE -->
     <div class="rep-only" style="background:linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(6, 78, 59, 0.25) 100%); border:1.5px solid rgba(16, 185, 129, 0.4); border-radius:12px; padding:12px; margin-bottom:12px;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-        <div style="font-size:9.5px; font-weight:800; color:#34D399; text-transform:uppercase; letter-spacing:0.5px;">🚀 Commission Booster Zone (Rep View Only)</div>
+        <div style="font-size:9.5px; font-weight:800; color:#34D399; text-transform:uppercase; letter-spacing:0.5px;" id="lbl-comm-title">🚀 Commission Booster Zone (Rep View Only)</div>
         <div id="spiff-total-badge" style="background:rgba(16, 185, 129, 0.3); border:1px solid #10B981; color:#A7F3D0; padding:2px 8px; border-radius:12px; font-size:8px; font-weight:800;">Spiff Potential: $0</div>
       </div>
 
       <div class="grid-2">
-        <!-- AT&T Personal Cloud Unlimited Card -->
         <div style="background:rgba(0,0,0,0.35); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:10px; display:flex; flex-direction:column; gap:4px;">
           <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span style="font-size:9px; font-weight:800; color:#FFF;">☁️ Personal Cloud Unlimited</span>
+            <span style="font-size:9px; font-weight:800; color:#FFF;" id="lbl-cloud-title">☁️ Personal Cloud Unlimited</span>
             <span style="color:#FBBF24; font-size:8px; font-weight:800; background:rgba(251, 191, 36, 0.15); padding:1px 6px; border-radius:4px;">+$15 Spiff</span>
           </div>
           <label class="filter-item" style="margin-top:2px;">
             <input type="checkbox" id="addon-cloud" onchange="window.runCalc();">
-            <span style="font-size:8.5px; color:#E2E8F0;">Attach Cloud ($9.99/mo)</span>
+            <span style="font-size:8.5px; color:#E2E8F0;" id="lbl-cloud-chk">Attach Cloud ($9.99/mo)</span>
           </label>
-          <div style="font-size:7.5px; color:#94A3B8; line-height:1.3; margin-top:2px;">
-            💡 <b>Pitch Tip:</b> <i>"Instead of hitting a 2TB wall on Apple/Google and paying $20/mo, this gives you true unlimited storage across iOS and Android, billed right on your AT&T statement."</i>
+          <div style="font-size:7.5px; color:#94A3B8; line-height:1.3; margin-top:2px;" id="lbl-cloud-pitch">
+            💡 <b>Pitch Tip:</b> <i>"Unlimited storage across iOS and Android, billed right on the monthly statement."</i>
           </div>
         </div>
 
-        <!-- Turbo Speed Boost Card -->
         <div style="background:rgba(0,0,0,0.35); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:10px; display:flex; flex-direction:column; gap:4px;">
           <div style="display:flex; justify-content:space-between; align-items:center;">
             <span style="font-size:9px; font-weight:800; color:#FFF;">⚡ Turbo Speed Boost</span>
@@ -1175,13 +1127,13 @@
             </select>
           </div>
           <div style="font-size:7.5px; color:#94A3B8; line-height:1.3; margin-top:2px;">
-            💡 <b>Pitch Tip:</b> <i>"Cuts through network gridlock at concerts, sporting events, and downtown rush hour with dedicated fast-lane data priority."</i>
+            💡 <b>Pitch Tip:</b> <i>"Cuts through network gridlock at concerts and events with dedicated fast-lane data priority."</i>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- CONNECTED HARDWARE ATTACH (DYNAMIC PROMO GATED BY PREMIUM) -->
+    <!-- CONNECTED HARDWARE ATTACH -->
     <div class="grid-2" style="margin-bottom:12px;">
       <div class="control-group">
         <label id="lbl-addon-watches">⌚ Add New Smartwatches</label>
@@ -1201,13 +1153,13 @@
       </div>
     </div>
 
-    <!-- DEDICATED AIP & RAY-BAN META SMART WEARABLE SUITE -->
+    <!-- AIP & SMART WEARABLES -->
     <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:12px;">
       <div style="font-size:9px; font-weight:800; color:#FBBF24; text-transform:uppercase; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
-        <span>🛍️ 12-Month Accessory Installment Plan (AIP)</span>
+        <span id="lbl-aip-title">🛍️ 12-Month Accessory Installment Plan (AIP)</span>
         <label class="rep-only" style="display:flex; align-items:center; gap:6px; cursor:pointer;">
           <input type="checkbox" id="check-aip-eligible" checked onchange="window.runCalc();" style="accent-color:var(--emerald);">
-          <span style="font-size:8px; color:#FFF;">Account AIP Eligible ($75 Min)</span>
+          <span style="font-size:8px; color:#FFF;">Account Eligible ($75 Min)</span>
         </label>
       </div>
 
@@ -1228,7 +1180,7 @@
     </div>
   </div>
 
-  <!-- SECTION 6: EXECUTIVE SUMMARY, HARDWARE & REGULATORY DEPARTURE -->
+  <!-- SECTION 6: EXECUTIVE SUMMARY & OUT-THE-DOOR QUOTE -->
   <div class="section-card summary-card">
     <div class="sec-header">
       <div class="sec-title">📊 6. Executive Summary &amp; Out-The-Door Quote</div>
@@ -1236,7 +1188,7 @@
 
     <div class="summary-grid">
       <div class="sum-left">
-        <div class="sum-label">New Total Household Bill (w/ AutoPay)</div>
+        <div class="sum-label" id="lbl-sum-bill-title">New Total Household Bill (w/ AutoPay)</div>
         <div class="sum-total" id="sum-new-total">$130.00</div>
       </div>
       <div class="sum-savings" id="sum-savings-box">
@@ -1244,7 +1196,7 @@
       </div>
     </div>
 
-    <!-- TRADE-IN PROMOTIONAL CREDITS MODULE (#2) -->
+    <!-- TRADE-IN PROMOTIONS MODULE -->
     <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:12px; margin-top:14px;">
       <div style="font-size:9px; font-weight:800; color:#38BDF8; text-transform:uppercase; margin-bottom:8px;">🏷️ Device Trade-In &amp; Promotional Credits (36-Month Bill Credits)</div>
       <div class="grid-2">
@@ -1269,17 +1221,17 @@
         </div>
       </div>
       <div class="warning-box" id="trade-disqualify-warning" style="display:none; margin-top:8px; margin-bottom:0;">
-        <b>⚠️ Value Plus Disqualification:</b> Value Plus 2.0 lines are excluded from $830/$1,000 national trade credits. Upgrading lines must be placed on 🐇 Extra or 🐆 Premium to capture the credit!
+        <b>⚠️ Entry Tier Disqualification:</b> Value Plus lines are excluded from $830/$1,000 national trade credits. Lines must be placed on higher tiers to capture the full credit.
       </div>
     </div>
 
-    <!-- DUE TODAY AT REGISTER (INDIANA 7% TAX + $35 FEE + WAIVED TOGGLE) -->
+    <!-- DUE TODAY AT REGISTER -->
     <div class="due-box">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-        <div class="due-title">🏷️ Due Today at Register (Existing Account Upgrades)</div>
+        <div class="due-title" id="lbl-due-title">🏷️ Due Today at Register (Existing Account Upgrades)</div>
         <label class="rep-only" style="display:flex; align-items:center; gap:6px; cursor:pointer;">
           <input type="checkbox" id="check-waived-fees" onchange="window.runCalc();" style="accent-color:var(--emerald);">
-          <span style="font-size:8px; font-weight:800; color:var(--emerald);">🎉 Waived Upgrade Fees? (-$35/phone)</span>
+          <span style="font-size:8px; font-weight:800; color:var(--emerald);" id="lbl-waived-fees">🎉 Waived Upgrade Fees? (-$35/phone)</span>
         </label>
       </div>
       <div class="due-amt" id="due-today-amt">No hardware upgrades selected ($0 due today).</div>
@@ -1309,27 +1261,29 @@
 
     <div class="checklist rep-only">
       <div style="font-weight:800; color:#FBBF24; text-transform:uppercase;">📝 OPUS ORDER CHECKLIST &amp; AUDIT LOG</div>
-      <div class="check-item"><span>✔</span> Verify and enroll customer in Debit/Checking AutoPay (-$10/line off base).</div>
-      <div class="check-item"><span>✔</span> Confirm Verified Signature or Appreciation discount attaches to account.</div>
-      <div class="check-item"><span>✔</span> Screen connected hardware (50% access discount requires at least 1 Premium PL line).</div>
-      <div class="check-item"><span>✔</span> Confirm 7% IN sales tax collected at register for equipment and AIP financing.</div>
+      <div class="check-item"><span id="chk-ap-bullet">✔</span> Verify and enroll account in AutoPay / Paperless Billing (-$10/line off base).</div>
+      <div class="check-item"><span id="chk-fan-bullet">✔</span> Confirm discount organization, FAN, or CRU tax exemption attaches properly.</div>
+      <div class="check-item"><span id="chk-conn-bullet">✔</span> Screen connected hardware eligibility and rate plan compatibility.</div>
+      <div class="check-item"><span id="chk-tax-bullet">✔</span> Confirm equipment sales taxes and upgrade fees collected or billed to account.</div>
     </div>
 
     <div class="control-group" style="margin-top:14px;">
       <label>📱 Instant Customer SMS Quote</label>
-      <textarea id="sms-text" style="width:100%; height:85px; background:rgba(0,0,0,0.4); border:1px solid rgba(255, 255, 255, 0.12); color:#E2E8F0; border-radius:10px; padding:10px; font-family:inherit; resize:none;" readonly></textarea>
+      <textarea id="sms-text" style="width:100%; height:90px; background:rgba(0,0,0,0.4); border:1px solid rgba(255, 255, 255, 0.12); color:#E2E8F0; border-radius:10px; padding:10px; font-family:inherit; resize:none;" readonly></textarea>
       <button type="button" class="btn" style="margin-top:8px; width:100%; background:rgba(0,87,184,0.35); border-color:#0284C7;" onclick="window.copySMS()">📋 Copy Text for Customer</button>
     </div>
   </div>
 </div>
 
 <script>
+window.accountSegment = "consumer"; // "consumer" or "business"
 window.broadbandCost = 0;
 window.dtvCost = 0;
 window.selectedPlanIndex = 1;
 window.startingPool = 50.00;
 
-var rates = {
+// Consumer Rate Card
+var consumerRates = {
   1: { prem: 90, ext: 70, val: 50, fanPrem: 80, noApPrem: 100, noApExt: 80, noApVal: 60 },
   2: { prem: 80, ext: 60, val: 45, fanPrem: 70, noApPrem: 90, noApExt: 70, noApVal: 55 },
   3: { prem: 65, ext: 50, val: 35, fanPrem: 50, noApPrem: 75, noApExt: 60, noApVal: 45 },
@@ -1340,6 +1294,20 @@ var rates = {
   8: { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40.99 },
   9: { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40.99 },
   10: { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40.99 }
+};
+
+// Business CRU Rate Card (Business Elite, Extra, Starter)
+var businessRates = {
+  1: { prem: 85, ext: 75, val: 65, fanPrem: 75, noApPrem: 95, noApExt: 85, noApVal: 75 },
+  2: { prem: 75, ext: 65, val: 55, fanPrem: 65, noApPrem: 85, noApExt: 75, noApVal: 65 },
+  3: { prem: 60, ext: 50, val: 40, fanPrem: 50, noApPrem: 70, noApExt: 60, noApVal: 50 },
+  4: { prem: 50, ext: 40, val: 35, fanPrem: 40, noApPrem: 60, noApExt: 50, noApVal: 45 },
+  5: { prem: 45, ext: 35, val: 30, fanPrem: 35, noApPrem: 55, noApExt: 45, noApVal: 40 },
+  6: { prem: 40, ext: 35, val: 30, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40 },
+  7: { prem: 40, ext: 35, val: 30, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40 },
+  8: { prem: 40, ext: 35, val: 30, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40 },
+  9: { prem: 40, ext: 35, val: 30, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40 },
+  10: { prem: 40, ext: 35, val: 30, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40 }
 };
 
 var pitchGuides = {
@@ -1642,10 +1610,8 @@ window.changeCount = function(type, delta) {
 
 window.selectBroadband = function(cost, el) {
   window.broadbandCost = cost;
-  ['bb-none', 'bb-air', 'bb-f300', 'bb-f500'].forEach(function(id) {
-    var item = document.getElementById(id);
-    if (item) item.classList.remove('active');
-  });
+  var items = document.querySelectorAll('#bb-tiles-container .pill-option');
+  items.forEach(function(item) { item.classList.remove('active'); });
   el.classList.add('active');
   window.runCalc();
 };
@@ -1681,30 +1647,181 @@ window.selectRecommendedPlan = function(idx) {
   window.selectedPlanIndex = idx;
   var totalLines = parseInt(document.getElementById('curr-lines').value, 10) || 4;
 
-  if (idx === 0) {
-    document.getElementById('cnt-prem').textContent = "0";
-    document.getElementById('cnt-extra').textContent = "0";
-    document.getElementById('cnt-val').textContent = totalLines;
-  } else if (idx === 1) {
-    document.getElementById('cnt-prem').textContent = "1";
-    document.getElementById('cnt-extra').textContent = "0";
-    document.getElementById('cnt-val').textContent = Math.max(0, totalLines - 1);
-  } else if (idx === 2) {
-    document.getElementById('cnt-prem').textContent = totalLines >= 2 ? "2" : "1";
-    document.getElementById('cnt-extra').textContent = "0";
-    document.getElementById('cnt-val').textContent = Math.max(0, totalLines - (totalLines >= 2 ? 2 : 1));
-  } else if (idx === 3) {
-    document.getElementById('cnt-prem').textContent = totalLines;
-    document.getElementById('cnt-extra').textContent = "0";
-    document.getElementById('cnt-val').textContent = "0";
+  if (totalLines === 1) {
+    if (idx === 0 || idx === 1) {
+      document.getElementById('cnt-prem').textContent = "0";
+      document.getElementById('cnt-extra').textContent = "0";
+      document.getElementById('cnt-val').textContent = "1";
+    } else if (idx === 2) {
+      document.getElementById('cnt-prem').textContent = "0";
+      document.getElementById('cnt-extra').textContent = "1";
+      document.getElementById('cnt-val').textContent = "0";
+    } else if (idx === 3) {
+      document.getElementById('cnt-prem').textContent = "1";
+      document.getElementById('cnt-extra').textContent = "0";
+      document.getElementById('cnt-val').textContent = "0";
+    }
+  } else {
+    if (idx === 0) {
+      document.getElementById('cnt-prem').textContent = "0";
+      document.getElementById('cnt-extra').textContent = "0";
+      document.getElementById('cnt-val').textContent = totalLines;
+    } else if (idx === 1) {
+      document.getElementById('cnt-prem').textContent = "1";
+      document.getElementById('cnt-extra').textContent = "0";
+      document.getElementById('cnt-val').textContent = Math.max(0, totalLines - 1);
+    } else if (idx === 2) {
+      var pCount = totalLines >= 3 ? 2 : 1;
+      var eCount = totalLines >= 3 ? (totalLines - 2) : 1;
+      document.getElementById('cnt-prem').textContent = pCount;
+      document.getElementById('cnt-extra').textContent = eCount;
+      document.getElementById('cnt-val').textContent = "0";
+    } else if (idx === 3) {
+      document.getElementById('cnt-prem').textContent = totalLines;
+      document.getElementById('cnt-extra').textContent = "0";
+      document.getElementById('cnt-val').textContent = "0";
+    }
   }
 
   window.runCalc();
 };
 
+/* SEGMENT SWITCHER (CONSUMER <-> BUSINESS CRU) */
+window.toggleAccountSegment = function() {
+  window.accountSegment = (window.accountSegment === "consumer") ? "business" : "consumer";
+  window.syncSegmentUI();
+  window.runCalc();
+  window.autoSaveState();
+};
+
+window.syncSegmentUI = function() {
+  var isBiz = (window.accountSegment === "business");
+  var btn = document.getElementById('mode-btn');
+
+  if (isBiz) {
+    btn.className = "mode-switch-btn business";
+    btn.innerHTML = "🏢 Business CRU Mode";
+    document.getElementById('hdr-title-rep').textContent = "AT&T Business CRU Solutions Studio";
+    document.getElementById('hdr-title-cust').textContent = "AT&T Corporate Business Plan Solutions";
+    document.getElementById('hdr-sub-rep').textContent = "FAST-TRACK QCI-6 PRIORITY • CRU ARBITRAGE • OPUS BUSINESS AUDIT";
+    document.getElementById('hdr-sub-cust').textContent = "TAILORED CORPORATE WIRELESS & BUSINESS BROADBAND SOLUTIONS";
+    document.getElementById('lbl-scope-bb').textContent = "🌐 AT&T Business Fiber";
+    document.getElementById('lbl-curr-watches').textContent = "Business Smartwatches ($10/mo)";
+    document.getElementById('lbl-curr-tablets').textContent = "Business Tablets ($20/mo)";
+    document.getElementById('lbl-audit-watch').textContent = "❌ Drop Inactive (+$10.00/mo)";
+    document.getElementById('lbl-audit-tab').textContent = "❌ Drop Inactive (+$20.00/mo)";
+    document.getElementById('lbl-discount-title').textContent = "Corporate Program / CRU Structure";
+    document.getElementById('stepper-title-t1').textContent = "🦅 Business Elite";
+    document.getElementById('stepper-desc-t1').textContent = "Unlimited Fast-Track Priority (QCI-6) • 200GB Hotspot • 4K UHD";
+    document.getElementById('stepper-title-t2').textContent = "🐇 Business Extra";
+    document.getElementById('stepper-desc-t2').textContent = "100GB Priority Data (QCI-7) • 50GB Mobile Hotspot • SD Streaming";
+    document.getElementById('stepper-title-t3').textContent = "🐢 Business Starter";
+    document.getElementById('stepper-desc-t3').textContent = "Standard 5G Data • 5GB Mobile Hotspot • Standard Network Access";
+    document.getElementById('wrap-check-hbo').style.display = "none";
+    document.getElementById('lbl-cloud-title').textContent = "💼 Office@Hand Voice Integration";
+    document.getElementById('lbl-cloud-chk').textContent = "Attach Cloud PBX ($15.00/mo)";
+    document.getElementById('lbl-cloud-pitch').innerHTML = "💡 <b>Pitch Tip:</b> <i>'Routes business phone calls directly to mobile with enterprise IVR & auto-attendant.'</i>";
+    document.getElementById('lbl-aip-title').textContent = "🛍️ 12-Month Hardware & Wearable Installment";
+    document.getElementById('lbl-sum-bill-title').textContent = "New Corporate CRU Monthly Total (w/ AutoPay)";
+    document.getElementById('lbl-due-title').textContent = "🏷️ Due Today at Register or Billed to Account (BTA)";
+    document.getElementById('lbl-bb-tier-hdr').textContent = "Option A: AT&T Business Fiber Solutions";
+
+    // Business Discount Dropdown
+    var discSel = document.getElementById('curr-discount');
+    discSel.innerHTML = 
+      '<optgroup label="Standard Commercial">' +
+        '<option value="biz_std" selected>Standard Corporate CRU (No FAN)</option>' +
+      '</optgroup>' +
+      '<optgroup label="Corporate Agreements">' +
+        '<option value="biz_evp">EVP / Corporate Volume Agreement ($10/L off Elite)</option>' +
+        '<option value="biz_fn">FirstNet Agency-Paid Primary (Band 14 Dedicated)</option>' +
+        '<option value="biz_health">Healthcare &amp; Clinic CRU Volume Discount</option>' +
+      '</optgroup>';
+
+    // Business Broadband Container
+    document.getElementById('bb-tiles-container').innerHTML = 
+      '<div class="pill-option active" id="bb-none" onclick="window.selectBroadband(0, this)">' +
+        '<div class="pill-title">None</div><div class="pill-price">$0</div><div class="pill-sub">Keep Current</div>' +
+      '</div>' +
+      '<div class="pill-option" id="bb-biz-air" onclick="window.selectBroadband(45, this)">' +
+        '<div class="pill-title">Business Air</div><div class="pill-price">$45/mo</div><div class="pill-sub">5G Failover / AP</div>' +
+      '</div>' +
+      '<div class="pill-option" id="bb-bf300" onclick="window.selectBroadband(65, this)">' +
+        '<div class="pill-title">Biz Fiber 300M</div><div class="pill-price">$65/mo</div><div class="pill-sub">Static IP Ready</div>' +
+      '</div>' +
+      '<div class="pill-option" id="bb-bf1000" onclick="window.selectBroadband(95, this)">' +
+        '<div class="pill-title">Biz Fiber 1G</div><div class="pill-price">$95/mo</div><div class="pill-sub">Max Bandwidth</div>' +
+      '</div>';
+  } else {
+    btn.className = "mode-switch-btn";
+    btn.innerHTML = "👤 Consumer View";
+    document.getElementById('hdr-title-rep').textContent = "AT&T Executive Solutions Studio";
+    document.getElementById('hdr-title-cust').textContent = "AT&T Customized Plan Solutions";
+    document.getElementById('hdr-sub-rep').textContent = "DOWNWARD WATERFALL ARBITRAGE • REINVESTMENT POT POOLING • OPUS AUDIT";
+    document.getElementById('hdr-sub-cust').textContent = "TAILORED MULTI-LINE SAVINGS & HOME BROADBAND BREAKDOWN";
+    document.getElementById('lbl-scope-bb').textContent = "🌐 AT&T Fiber / Air";
+    document.getElementById('lbl-curr-watches').textContent = "Current Smartwatches";
+    document.getElementById('lbl-curr-tablets').textContent = "Current Tablets";
+    document.getElementById('lbl-audit-watch').textContent = "❌ Drop Inactive (+$10.99/mo)";
+    document.getElementById('lbl-audit-tab').textContent = "❌ Drop Inactive (+$20.99/mo)";
+    document.getElementById('lbl-discount-title').textContent = "Discount Profile / Organization";
+    document.getElementById('stepper-title-t1').textContent = "🐆 Unlimited Premium 2.0";
+    document.getElementById('stepper-desc-t1').textContent = "Unlimited Priority Data (QCI-8) • 100GB Hotspot • 4K UHD Streaming";
+    document.getElementById('stepper-title-t2').textContent = "🐇 Unlimited Extra 2.0";
+    document.getElementById('stepper-desc-t2').textContent = "100GB Priority Data (QCI-8) • 50GB Mobile Hotspot • SD Streaming";
+    document.getElementById('stepper-title-t3').textContent = "🐢 Value Plus 2.0";
+    document.getElementById('stepper-desc-t3').textContent = "Standard 5G Data • 3GB Mobile Hotspot • Core Unlimited Access";
+    document.getElementById('wrap-check-hbo').style.display = "flex";
+    document.getElementById('lbl-cloud-title').textContent = "☁️ Personal Cloud Unlimited";
+    document.getElementById('lbl-cloud-chk').textContent = "Attach Cloud ($9.99/mo)";
+    document.getElementById('lbl-cloud-pitch').innerHTML = "💡 <b>Pitch Tip:</b> <i>'Unlimited storage across iOS and Android, billed right on the monthly statement.'</i>";
+    document.getElementById('lbl-aip-title').textContent = "🛍️ 12-Month Accessory Installment Plan (AIP)";
+    document.getElementById('lbl-sum-bill-title').textContent = "New Total Household Bill (w/ AutoPay)";
+    document.getElementById('lbl-due-title').textContent = "🏷️ Due Today at Register (Existing Account Upgrades)";
+    document.getElementById('lbl-bb-tier-hdr').textContent = "Option A: Home Internet Solutions";
+
+    // Consumer Discount Dropdown
+    var discSel = document.getElementById('curr-discount');
+    discSel.innerHTML = 
+      '<optgroup label="Standard Consumer">' +
+        '<option value="none" selected>Standard Consumer (No FAN)</option>' +
+      '</optgroup>' +
+      '<optgroup label="Appreciation Programs (25% Off)">' +
+        '<option value="apprec_mil">Military &amp; Veterans (25% Off)</option>' +
+        '<option value="firstnet">FirstNet Primary (Band 14 Priority + 25% Off Family)</option>' +
+        '<option value="apprec_first">First Responders / Law Enforcement / EMS (25% Off)</option>' +
+        '<option value="apprec_edu">Teachers (K-12, College/University Faculty • 25% Off)</option>' +
+        '<option value="apprec_med">Nurses &amp; Physicians (RN, LPN, MD, DO • 25% Off)</option>' +
+        '<option value="fiber">AT&amp;T Fiber Convergence (20% Off Wireless)</option>' +
+      '</optgroup>' +
+      '<optgroup label="Active Signature Paths ($10/L Off Premium)">' +
+        '<option value="fan_union">🏛️ Labor Union (Union Plus / AFL-CIO / Teamsters)</option>' +
+        '<option value="fan_corp">🏢 Corporate Employer FAN (Work Email / Paystub)</option>' +
+        '<option value="fan_edu">🎓 Higher Education (College Student / Faculty / Alumni)</option>' +
+        '<option value="fan_gig">🚗 Gig Economy (Uber / Lyft Active Driver Profile)</option>' +
+      '</optgroup>';
+
+    // Consumer Broadband Container
+    document.getElementById('bb-tiles-container').innerHTML = 
+      '<div class="pill-option active" id="bb-none" onclick="window.selectBroadband(0, this)">' +
+        '<div class="pill-title">None</div><div class="pill-price">$0</div><div class="pill-sub">Keep Provider</div>' +
+      '</div>' +
+      '<div class="pill-option" id="bb-air" onclick="window.selectBroadband(35, this)">' +
+        '<div class="pill-title">Internet Air</div><div class="pill-price">$35/mo</div><div class="pill-sub">5G Home w/ AP</div>' +
+      '</div>' +
+      '<div class="pill-option" id="bb-f300" onclick="window.selectBroadband(35, this)">' +
+        '<div class="pill-title">Fiber 300M</div><div class="pill-price">$35/mo</div><div class="pill-sub">Converged Rate</div>' +
+      '</div>' +
+      '<div class="pill-option" id="bb-f500" onclick="window.selectBroadband(45, this)">' +
+        '<div class="pill-title">Fiber 500M</div><div class="pill-price">$45/mo</div><div class="pill-sub">Converged Rate</div>' +
+      '</div>';
+  }
+};
+
 /* PERSISTENCE & URL STATE ENGINE */
 window.autoSaveState = function() {
   var state = {
+    seg: window.accountSegment,
     b: document.getElementById('curr-total').value,
     l: document.getElementById('curr-lines').value,
     p: document.getElementById('cnt-prem').textContent,
@@ -1786,10 +1903,16 @@ window.restoreState = function() {
   if (!rawData) {
     rawData = localStorage.getItem('att_quote_state');
   }
-  if (!rawData) return;
+  if (!rawData) {
+    window.syncSegmentUI();
+    return;
+  }
 
   try {
     var s = JSON.parse(rawData);
+    if (s.seg) window.accountSegment = s.seg;
+    window.syncSegmentUI();
+
     if (s.b) document.getElementById('curr-total').value = s.b;
     if (s.l) document.getElementById('curr-lines').value = s.l;
     if (s.p) document.getElementById('cnt-prem').textContent = s.p;
@@ -1855,6 +1978,7 @@ window.restoreState = function() {
 };
 
 window.runCalc = function() {
+  var isBiz = (window.accountSegment === "business");
   var rawCurrentBill = parseFloat(document.getElementById('curr-total').value) || 180.00;
   var premCount = parseInt(document.getElementById('cnt-prem').textContent, 10) || 0;
   var extCount = parseInt(document.getElementById('cnt-extra').textContent, 10) || 0;
@@ -1868,46 +1992,62 @@ window.runCalc = function() {
   var watchUnused = document.getElementById('audit-watch-unused').checked;
   var tabUnused = document.getElementById('audit-tab-unused').checked;
 
-  // Next Up Leak Harvesting Calculation
   var nuaCount = parseInt(document.getElementById('audit-nua-count').value, 10) || 0;
   var nuaDrop = document.getElementById('audit-nua-drop').checked;
   var nuaHarvestDollars = (nuaDrop && nuaCount > 0) ? (nuaCount * 10.00) : 0;
 
+  var watchRateHarvest = isBiz ? 10.00 : 10.99;
+  var tabRateHarvest = isBiz ? 20.00 : 20.99;
+
   var harvestedDollars = 0;
-  if (watchUnused && currentWatches > 0) harvestedDollars += (currentWatches * 10.99);
-  if (tabUnused && currentTablets > 0) harvestedDollars += (currentTablets * 20.99);
+  if (watchUnused && currentWatches > 0) harvestedDollars += (currentWatches * watchRateHarvest);
+  if (tabUnused && currentTablets > 0) harvestedDollars += (currentTablets * tabRateHarvest);
   harvestedDollars += nuaHarvestDollars;
 
   var adjustedBaseline = rawCurrentBill + harvestedDollars;
 
   var discountSel = document.getElementById('curr-discount').value;
-  var isFan = (discountSel.indexOf('fan_') === 0);
-  var isApprec = (discountSel.indexOf('apprec_') === 0 || discountSel === 'firstnet');
+  var isFan = (!isBiz && discountSel.indexOf('fan_') === 0) || (isBiz && discountSel === 'biz_evp');
+  var isApprec = (!isBiz && (discountSel.indexOf('apprec_') === 0 || discountSel === 'firstnet')) || (isBiz && discountSel === 'biz_fn');
   var apMethod = document.getElementById('curr-autopay').value;
 
   var proofCallout = document.getElementById('fan-proof-callout');
-  if (discountSel === 'fan_union') {
-    proofCallout.textContent = "✔ Union Plus: AFL-CIO, Teamsters, or municipal union dues line item on current paystub.";
-  } else if (discountSel === 'fan_corp') {
-    proofCallout.textContent = "✔ Corporate: Validate via att.com/verification/signaturehub or submit paystub at att.com/dep.";
-  } else if (discountSel === 'fan_edu') {
-    proofCallout.textContent = "✔ Higher Ed: Active .edu email enrollment, current student ID, or official Alumni card.";
-  } else if (discountSel === 'fan_gig') {
-    proofCallout.textContent = "✔ Gig Economy: Active driver profile screen in Uber/Lyft driver app showing active status.";
-  } else if (isApprec) {
-    proofCallout.textContent = "✔ Appreciation (25% Off): DD-214/Vet ID, State Teaching License, or State Medical License required.";
-  } else if (discountSel === 'fiber') {
-    proofCallout.textContent = "✔ 20% Fiber Convergence: Standalone account billing address must match AT&T Fiber service address.";
+  if (isBiz) {
+    if (discountSel === 'biz_evp') {
+      proofCallout.textContent = "✔ EVP Agreement: Corporate tax ID / federal EIN validated in OPUS Business portal.";
+    } else if (discountSel === 'biz_fn') {
+      proofCallout.textContent = "✔ FirstNet Agency-Paid: Agency agreement verification via FirstNet Central.";
+    } else if (discountSel === 'biz_health') {
+      proofCallout.textContent = "✔ Medical / Healthcare CRU: Clinic registration or medical group billing agreement.";
+    } else {
+      proofCallout.textContent = "Standard Commercial CRU: EIN / W-9 or business formation filing active.";
+    }
   } else {
-    proofCallout.textContent = "Standard pricing active. Screen for Employer, Union, Education, or Appreciation discounts.";
+    if (discountSel === 'fan_union') {
+      proofCallout.textContent = "✔ Union Plus: AFL-CIO, Teamsters, or municipal union dues line item on current paystub.";
+    } else if (discountSel === 'fan_corp') {
+      proofCallout.textContent = "✔ Corporate: Validate via att.com/verification/signaturehub or submit paystub at att.com/dep.";
+    } else if (discountSel === 'fan_edu') {
+      proofCallout.textContent = "✔ Higher Ed: Active .edu email enrollment, current student ID, or official Alumni card.";
+    } else if (discountSel === 'fan_gig') {
+      proofCallout.textContent = "✔ Gig Economy: Active driver profile screen in Uber/Lyft driver app showing active status.";
+    } else if (isApprec) {
+      proofCallout.textContent = "✔ Appreciation (25% Off): DD-214/Vet ID, State Teaching License, or State Medical License required.";
+    } else if (discountSel === 'fiber') {
+      proofCallout.textContent = "✔ 20% Fiber Convergence: Standalone account billing address must match AT&T Fiber service address.";
+    } else {
+      proofCallout.textContent = "Standard pricing active. Screen for Employer, Union, Education, or Appreciation discounts.";
+    }
   }
 
   var fnCallout = document.getElementById('fn-callout');
   if (fnCallout) {
-    fnCallout.style.display = (discountSel === 'firstnet') ? 'block' : 'none';
+    fnCallout.style.display = (discountSel === 'firstnet' || discountSel === 'biz_fn') ? 'block' : 'none';
   }
 
-  var tierData = rates[Math.min(totalLines, 10)] || rates[4];
+  // Active Rate Card Selection
+  var rateTable = isBiz ? businessRates : consumerRates;
+  var tierData = rateTable[Math.min(totalLines, 10)] || rateTable[4];
 
   var premRate = tierData.prem;
   var extRate = tierData.ext;
@@ -1918,13 +2058,13 @@ window.runCalc = function() {
     extRate = tierData.noApExt;
     valRate = tierData.noApVal;
   } else if (apMethod === 'credit') {
-    premRate += 5;
-    extRate += 5;
-    valRate += 5;
+    premRate += (isBiz ? 0 : 5);
+    extRate += (isBiz ? 0 : 5);
+    valRate += (isBiz ? 0 : 5);
   }
 
   if (isFan) {
-    premRate = (apMethod === 'none') ? tierData.noApExt : (tierData.fanPrem + (apMethod === 'credit' ? 5 : 0));
+    premRate = (apMethod === 'none') ? tierData.noApExt : (tierData.fanPrem + (apMethod === 'credit' && !isBiz ? 5 : 0));
   } else if (isApprec) {
     premRate = +(premRate * 0.75).toFixed(2);
     extRate = +(extRate * 0.75).toFixed(2);
@@ -1937,37 +2077,141 @@ window.runCalc = function() {
 
   var wirelessPlanTotal = Number(((premCount * premRate) + (extCount * extRate) + (valCount * valRate)).toFixed(2));
 
-  // Build the 4 Recommended Plan Cards dynamically (Updated 2.0 Specifications)
-  var planOptions = [
-    {
-      title: "🐢 All Value Plus 2.0",
-      repTag: "Max Headroom",
-      custTag: "Economical Choice",
-      cost: Number((totalLines * valRate).toFixed(2)),
-      desc: totalLines + " Lines on Core 5G Unlimited with 3GB hotspot per line."
-    },
-    {
-      title: "🐆 1x Prem + 🐢 " + Math.max(0, totalLines - 1) + "x Value",
-      repTag: "Smart Mix • Rep Favorite",
-      custTag: "Popular Family Mix",
-      cost: Number((premRate + Math.max(0, totalLines - 1) * valRate).toFixed(2)),
-      desc: "Primary on Unl. Priority (100GB Hotspot), remaining lines on Value Plus (3GB)."
-    },
-    {
-      title: "🐆 2x Prem + 🐢 " + Math.max(0, totalLines - 2) + "x Value",
-      repTag: "Balanced Family Mix",
-      custTag: "Balanced Priority",
-      cost: Number(( (totalLines >= 2 ? 2 * premRate : premRate) + Math.max(0, totalLines - 2) * valRate ).toFixed(2)),
-      desc: "2 Primary lines on Unlimited Priority (100GB Hotspot), secondary on Value Plus (3GB)."
-    },
-    {
-      title: "🐆 " + totalLines + "x Premium 2.0",
-      repTag: "All-Cheetah Unlimited",
-      custTag: "Maximum Performance",
-      cost: Number((totalLines * premRate).toFixed(2)),
-      desc: "Unlimited Priority Data & 100GB Hotspot per line across all " + totalLines + " lines."
+  // Dynamic Adaptive Plan Cards
+  var planOptions = [];
+  if (totalLines === 1) {
+    var starterRate = isBiz ? valRate : ((apMethod === 'none') ? 75 : ((apMethod === 'credit') ? 70 : 65));
+    if (!isBiz && isApprec) starterRate = +(starterRate * 0.75).toFixed(2);
+    else if (!isBiz && discountSel === 'fiber') starterRate = +(starterRate * 0.80).toFixed(2);
+
+    if (isBiz) {
+      planOptions = [
+        {
+          title: "🐢 Business Starter",
+          repTag: "Commercial Baseline",
+          custTag: "Essential Business 5G",
+          cost: valRate,
+          desc: "5GB mobile hotspot • Core unlimited commercial network access."
+        },
+        {
+          title: "🐇 Business Extra",
+          repTag: "Priority Balanced",
+          custTag: "Enhanced Productivity",
+          cost: extRate,
+          desc: "100GB Priority Data (QCI-7) • 50GB mobile hotspot • SD streaming."
+        },
+        {
+          title: "🦅 Business Elite",
+          repTag: "Fast-Track QCI-6",
+          custTag: "Executive Performance",
+          cost: premRate,
+          desc: "Unlimited Fast-Track Priority (QCI-6) • 200GB hotspot • 4K UHD streaming."
+        },
+        {
+          title: "🦅 Elite w/ Fleet Connect",
+          repTag: "Mobility Suite",
+          custTag: "Connected Workspace",
+          cost: Number((premRate + 15).toFixed(2)),
+          desc: "Business Elite tier bundled with Office@Hand commercial mobile routing."
+        }
+      ];
+    } else {
+      planOptions = [
+        {
+          title: "🐢 Value Plus 2.0",
+          repTag: "Budget Baseline",
+          custTag: "Essential Value",
+          cost: valRate,
+          desc: "Core 5G unlimited access with 3GB mobile hotspot."
+        },
+        {
+          title: "🐢 Unlimited Starter SL",
+          repTag: "Entry Multi-Tier",
+          custTag: "Everyday Unlimited",
+          cost: starterRate,
+          desc: "5GB mobile hotspot • Standard network speeds."
+        },
+        {
+          title: "🐇 Unlimited Extra 2.0",
+          repTag: "Balanced Choice",
+          custTag: "Enhanced Speed",
+          cost: extRate,
+          desc: "100GB Priority Data (QCI-8) • 50GB mobile hotspot • SD streaming."
+        },
+        {
+          title: "🐆 Unlimited Premium 2.0",
+          repTag: "Max Headroom / Unl Priority",
+          custTag: "Ultimate Performance",
+          cost: premRate,
+          desc: "Unlimited Priority Data (Never throttled on-device) • 100GB hotspot • 4K UHD."
+        }
+      ];
     }
-  ];
+  } else {
+    if (isBiz) {
+      planOptions = [
+        {
+          title: "🐢 All Business Starter",
+          repTag: "Max Headroom",
+          custTag: "Commercial Budget",
+          cost: Number((totalLines * valRate).toFixed(2)),
+          desc: totalLines + " Lines on Business Starter with 5GB mobile hotspot per line."
+        },
+        {
+          title: "🦅 1x Elite + 🐢 " + (totalLines - 1) + "x Starter",
+          repTag: "Executive Lead Mix",
+          custTag: "Commercial Executive Mix",
+          cost: Number((premRate + (totalLines - 1) * valRate).toFixed(2)),
+          desc: "Owner/Lead on Business Elite (200GB Hotspot / QCI-6), crew on Starter (5GB)."
+        },
+        {
+          title: "🦅 " + (totalLines >= 3 ? "2" : "1") + "x Elite + 🐇 " + (totalLines >= 3 ? (totalLines - 2) : 1) + "x Extra",
+          repTag: "Field Operations Mix",
+          custTag: "Commercial High-Priority Pack",
+          cost: Number(( (totalLines >= 3 ? 2 * premRate : premRate) + (totalLines >= 3 ? (totalLines - 2) * extRate : extRate) ).toFixed(2)),
+          desc: "Priority QCI-6 & QCI-7 data across all lines (50GB–200GB hotspots)."
+        },
+        {
+          title: "🦅 " + totalLines + "x Business Elite",
+          repTag: "All-Executive Fleet",
+          custTag: "Peak Enterprise Performance",
+          cost: Number((totalLines * premRate).toFixed(2)),
+          desc: "Unlimited QCI-6 Fast-Track Priority & 200GB Hotspot per line across all " + totalLines + " lines."
+        }
+      ];
+    } else {
+      planOptions = [
+        {
+          title: "🐢 All Value Plus 2.0",
+          repTag: "Max Headroom",
+          custTag: "Economical Choice",
+          cost: Number((totalLines * valRate).toFixed(2)),
+          desc: totalLines + " Lines on Core 5G Unlimited with 3GB hotspot per line."
+        },
+        {
+          title: "🐆 1x Prem + 🐢 " + (totalLines - 1) + "x Value",
+          repTag: "Smart Mix • Rep Favorite",
+          custTag: "Popular Family Mix",
+          cost: Number((premRate + (totalLines - 1) * valRate).toFixed(2)),
+          desc: "Primary on Unl. Priority (100GB Hotspot), remaining lines on Value Plus (3GB)."
+        },
+        {
+          title: "🐆 " + (totalLines >= 3 ? "2" : "1") + "x Prem + 🐇 " + (totalLines >= 3 ? (totalLines - 2) : 1) + "x Extra",
+          repTag: "Balanced Performance Mix",
+          custTag: "Priority Data Family Pack",
+          cost: Number(( (totalLines >= 3 ? 2 * premRate : premRate) + (totalLines >= 3 ? (totalLines - 2) * extRate : extRate) ).toFixed(2)),
+          desc: "High-priority data & tethering across all lines (50GB–100GB hotspots)."
+        },
+        {
+          title: "🐆 " + totalLines + "x Premium 2.0",
+          repTag: "All-Cheetah Unlimited",
+          custTag: "Maximum Performance",
+          cost: Number((totalLines * premRate).toFixed(2)),
+          desc: "Unlimited Priority Data & 100GB Hotspot per line across all " + totalLines + " lines."
+        }
+      ];
+    }
+  }
 
   var cardsContainer = document.getElementById('plan-cards-container');
   cardsContainer.innerHTML = '';
@@ -1997,15 +2241,15 @@ window.runCalc = function() {
   var chosenCard = planOptions[window.selectedPlanIndex] || planOptions[1];
   window.startingPool = Math.max(0, Number((adjustedBaseline - chosenCard.cost).toFixed(2)));
 
-  // Commission Booster Zone Logic
+  // Commission Accelerator
   var cloudAttached = document.getElementById('addon-cloud') ? document.getElementById('addon-cloud').checked : false;
-  var cloudCost = cloudAttached ? 9.99 : 0.00;
+  var cloudCost = cloudAttached ? (isBiz ? 15.00 : 9.99) : 0.00;
 
   var turboVal = document.getElementById('addon-turbo').value;
   var turboCost = (turboVal === 'all') ? totalLines * 7.00 : (parseInt(turboVal, 10) || 0) * 7.00;
 
   var totalSpiff = 0;
-  if (cloudAttached) totalSpiff += 15;
+  if (cloudAttached) totalSpiff += (isBiz ? 25 : 15);
   var spiffBadge = document.getElementById('spiff-total-badge');
   if (spiffBadge) {
     spiffBadge.textContent = "Spiff Potential: $" + totalSpiff;
@@ -2017,31 +2261,29 @@ window.runCalc = function() {
   var htpCost = parseFloat(document.getElementById('addon-htp').value) || 0;
   var totalProtectionCost = pa1Cost + pa4Cost + htpCost;
 
-  // Dynamic Connected Hardware 50% Promo (Strict Premium 2.0 Gate)
-  var hasPremLine = (premCount > 0);
+  // Connected Hardware Rates (Gated Promo)
+  var hasTopLine = (premCount > 0);
   var watchSelect = document.getElementById('addon-watches');
   var tabletSelect = document.getElementById('addon-tablets');
   var numWatchesAdded = parseInt(watchSelect.value, 10) || 0;
   var numTabletsAdded = parseInt(tabletSelect.value, 10) || 0;
 
-  var watchRate1 = hasPremLine ? 5.50 : 10.99;
-  var watchRate2 = 10.99;
-  var tabletRate1 = hasPremLine ? 10.50 : 20.99;
-  var tabletRate2 = 20.99;
+  var watchRate1 = isBiz ? 10.00 : (hasTopLine ? 5.50 : 10.99);
+  var watchRate2 = isBiz ? 10.00 : 10.99;
+  var tabletRate1 = isBiz ? 20.00 : (hasTopLine ? 10.50 : 20.99);
+  var tabletRate2 = isBiz ? 20.00 : 20.99;
 
-  watchSelect.options[1].text = hasPremLine 
-    ? "1 Watch (50% Off Promo @ $5.50/mo)" 
-    : "1 Watch (Standard Rate @ $10.99/mo)";
-  watchSelect.options[2].text = hasPremLine 
-    ? "2 Watches ($16.49/mo • 1 Promo + 1 Std)" 
-    : "2 Watches ($21.98/mo • Standard Rates)";
-
-  tabletSelect.options[1].text = hasPremLine 
-    ? "1 Tablet (50% Off Promo @ $10.50/mo)" 
-    : "1 Tablet (Standard Rate @ $20.99/mo)";
-  tabletSelect.options[2].text = hasPremLine 
-    ? "2 Tablets ($31.49/mo • 1 Promo + 1 Std)" 
-    : "2 Tablets ($41.98/mo • Standard Rates)";
+  if (isBiz) {
+    watchSelect.options[1].text = "1 Business Watch ($10.00/mo flat)";
+    watchSelect.options[2].text = "2 Business Watches ($20.00/mo flat)";
+    tabletSelect.options[1].text = "1 Business Tablet ($20.00/mo flat)";
+    tabletSelect.options[2].text = "2 Business Tablets ($40.00/mo flat)";
+  } else {
+    watchSelect.options[1].text = hasTopLine ? "1 Watch (50% Off Promo @ $5.50/mo)" : "1 Watch (Standard Rate @ $10.99/mo)";
+    watchSelect.options[2].text = hasTopLine ? "2 Watches ($16.49/mo • 1 Promo + 1 Std)" : "2 Watches ($21.98/mo • Standard Rates)";
+    tabletSelect.options[1].text = hasTopLine ? "1 Tablet (50% Off Promo @ $10.50/mo)" : "1 Tablet (Standard Rate @ $20.99/mo)";
+    tabletSelect.options[2].text = hasTopLine ? "2 Tablets ($31.49/mo • 1 Promo + 1 Std)" : "2 Tablets ($41.98/mo • Standard Rates)";
+  }
 
   var targetWatchCost = 0;
   if (numWatchesAdded === 1) targetWatchCost = watchRate1;
@@ -2061,9 +2303,9 @@ window.runCalc = function() {
 
   var activeWatches = watchUnused ? 0 : currentWatches;
   var activeTablets = tabUnused ? 0 : currentTablets;
-  var existingConnectedCost = Number(((activeWatches * 10.99) + (activeTablets * 20.99)).toFixed(2));
+  var existingConnectedCost = Number(((activeWatches * watchRateHarvest) + (activeTablets * tabRateHarvest)).toFixed(2));
 
-  // Trade-In Promo Logic & Disqualification Warning
+  // Trade-In Promos
   var tradeCreditPerMonth = parseFloat(document.getElementById('trade-promo-tier').value) || 0;
   var tradeLines = parseInt(document.getElementById('trade-lines-count').value, 10) || 0;
   var upCount = parseInt(document.getElementById('upgrade-count').value, 10) || 0;
@@ -2071,7 +2313,7 @@ window.runCalc = function() {
   var grossDeviceMonthly = Number(((upCount * upVal) / 36).toFixed(2));
 
   var eligibleHigherTierLines = premCount + extCount;
-  var isDisqualified = (tradeCreditPerMonth >= 23.00 && tradeLines > eligibleHigherTierLines);
+  var isDisqualified = (!isBiz && tradeCreditPerMonth >= 23.00 && tradeLines > eligibleHigherTierLines);
   var disqWarning = document.getElementById('trade-disqualify-warning');
   if (disqWarning) {
     disqWarning.style.display = isDisqualified ? 'block' : 'none';
@@ -2080,7 +2322,7 @@ window.runCalc = function() {
   var effectiveTradeCredit = isDisqualified ? 0 : Number((tradeCreditPerMonth * tradeLines).toFixed(2));
   var netDeviceMonthlyCost = Math.max(0, Number((grossDeviceMonthly - effectiveTradeCredit).toFixed(2)));
 
-  // Competitor Switcher Buyout Engine Calculations
+  // Switcher Buyout Engine
   var switchLines = parseInt(document.getElementById('switch-line-count').value, 10) || 0;
   var switchBalOwed = parseFloat(document.getElementById('switch-balance-owed').value) || 0;
   var maxBuyoutReimbursement = switchLines * 800.00;
@@ -2088,11 +2330,11 @@ window.runCalc = function() {
   var switchSummaryLine = document.getElementById('switch-summary-line');
   var switchPoolBadge = document.getElementById('switcher-pool-badge');
   if (switchSummaryLine && switchPoolBadge) {
-    switchSummaryLine.textContent = "Reimbursement Card Total: $" + actualBuyoutPayout.toFixed(2) + " (" + switchLines + " lines @ max $800/line)";
+    switchSummaryLine.textContent = "Reimbursement Total: $" + actualBuyoutPayout.toFixed(2) + " (" + switchLines + " lines @ max $800/line)";
     switchPoolBadge.textContent = "Payoff Payout: $" + actualBuyoutPayout.toFixed(2);
   }
 
-  // Robust DIRECTV Add-on & International Calculations
+  // DIRECTV Suite
   var dtvDisneyCost = 0;
   var dtvPremiumsCost = 0;
   var dtvSportsCost = 0;
@@ -2168,22 +2410,26 @@ window.runCalc = function() {
   var dueBox = document.getElementById('due-today-amt');
   var breakdownBox = document.getElementById('due-today-breakdown');
   if (upCount > 0 || totalAipCart > 0) {
-    dueBox.textContent = "$" + totalDueAtRegister.toFixed(2) + " Due Today at Register";
+    dueBox.textContent = "$" + totalDueAtRegister.toFixed(2) + " Due Today (or BTA on CRU)";
     var parts = [];
     if (upCount > 0) parts.push(upCount + " phones ($" + totalDeviceTax.toFixed(2) + " tax" + (feesWaived ? " + $0 fees WAIVED" : " + $" + totalUpgradeFees.toFixed(2) + " fees") + ")");
-    if (totalAipCart > 0) parts.push("AIP Cart ($" + aipSalesTaxDue.toFixed(2) + " tax on $" + totalAipCart.toFixed(2) + ")");
+    if (totalAipCart > 0) parts.push("Accessories ($" + aipSalesTaxDue.toFixed(2) + " tax on $" + totalAipCart.toFixed(2) + ")");
     breakdownBox.textContent = "Breakdown: " + parts.join(" + ");
   } else {
     dueBox.textContent = "No hardware upgrades or accessories selected ($0 due today).";
     breakdownBox.textContent = "*Estimates 7% IN sales tax on retail device value + upgrade fees + AIP sales tax.";
   }
 
-  // Customer SMS Builder
-  var sms = "AT&T Quote: " + totalLines + " Voice Lines (";
+  // Customer SMS Quote
+  var topTierName = isBiz ? "Elite" : "Premium";
+  var midTierName = isBiz ? "Extra" : "Extra";
+  var lowTierName = isBiz ? "Starter" : "Value";
+
+  var sms = "AT&T " + (isBiz ? "Business CRU" : "") + " Quote: " + totalLines + " Voice Lines (";
   var planParts = [];
-  if (premCount > 0) planParts.push(premCount + "x Premium");
-  if (extCount > 0) planParts.push(extCount + "x Extra");
-  if (valCount > 0) planParts.push(valCount + "x Value");
+  if (premCount > 0) planParts.push(premCount + "x " + topTierName);
+  if (extCount > 0) planParts.push(extCount + "x " + midTierName);
+  if (valCount > 0) planParts.push(valCount + "x " + lowTierName);
   sms += planParts.join(", ") + ")";
   
   if (tradeLines > 0 && effectiveTradeCredit > 0) {
@@ -2193,10 +2439,10 @@ window.runCalc = function() {
   var protectParts = [];
   if (pa1Cost > 0) protectParts.push("PA1 ($" + pa1Cost.toFixed(2) + ")");
   if (pa4Cost > 0) protectParts.push("PA4+ Multi ($50)");
-  if (htpCost > 0) protectParts.push("HomeTech ($25)");
+  if (htpCost > 0) protectParts.push("Tech Protection ($25)");
   if (protectParts.length > 0) sms += " + " + protectParts.join(" & ");
 
-  if (cloudAttached) sms += " + Personal Cloud Unlimited ($9.99/mo)";
+  if (cloudAttached) sms += " + " + (isBiz ? "Office@Hand PBX ($15.00/mo)" : "Personal Cloud Unlimited ($9.99/mo)");
   if (turboCost > 0) sms += " + Turbo Speed Boost ($" + turboCost.toFixed(2) + "/mo)";
 
   if (existingConnectedCost > 0 || targetWatchCost > 0 || targetTabletCost > 0) {
@@ -2204,15 +2450,13 @@ window.runCalc = function() {
     var totalT = activeTablets + numTabletsAdded;
     sms += " + Connected: " + totalW + " Watches, " + totalT + " Tablets";
   }
-  if (monthlyAipCharge > 0) sms += " + Tech Accessories ($" + monthlyAipCharge.toFixed(2) + "/mo)";
+  if (monthlyAipCharge > 0) sms += " + Hardware/Wearables ($" + monthlyAipCharge.toFixed(2) + "/mo)";
 
-  // Dynamic Switcher Payoff Messaging
   var hasSwitcherScope = document.getElementById('scope-switch').classList.contains('active');
   if (hasSwitcherScope && actualBuyoutPayout > 0) {
     sms += "\n• Switcher Credit: Up to $800.00/line device payoff ($" + actualBuyoutPayout.toFixed(2) + " covered for " + switchLines + " line" + (switchLines > 1 ? "s" : "") + " via Virtual Visa card).";
   }
 
-  // Dynamic DIRECTV Suite Messaging
   if (totalDtvMonthly > 0) {
     var dtvName = (window.dtvCost > 100) ? "DIRECTV Choice w/ RSN & Gemini Box" : "DIRECTV Entertainment w/ Gemini Box";
     sms += "\n• Includes " + dtvName + " ($" + window.dtvCost.toFixed(2) + "/mo)";
@@ -2224,15 +2468,14 @@ window.runCalc = function() {
 
   sms += ".\nTotal Monthly: $" + totalHousehold.toFixed(2) + "/mo (w/ AutoPay).\n";
   if (monthlySavings > 0) sms += "Estimated Savings: $" + monthlySavings.toFixed(2) + "/mo!\n";
-  if (window.broadbandCost > 0) sms += "• Includes AT&T Home Internet ($" + window.broadbandCost.toFixed(2) + "/mo)\n";
-  if (totalDueAtRegister > 0) sms += "• Due Today at Register: $" + totalDueAtRegister.toFixed(2) + "\n";
+  if (window.broadbandCost > 0) sms += "• Includes AT&T " + (isBiz ? "Business Fiber" : "Home Internet") + " ($" + window.broadbandCost.toFixed(2) + "/mo)\n";
+  if (totalDueAtRegister > 0) sms += "• Due Today / BTA: $" + totalDueAtRegister.toFixed(2) + "\n";
   sms += "Questions? Stop in-store to finalize!";
   document.getElementById('sms-text').value = sms;
 
   window.autoSaveState();
 };
 
-// SUBDUED FLUID AURORA ENGINE
 (function initAmbientEngine() {
   var canvas = document.getElementById('ambient-canvas');
   if (!canvas) return;
