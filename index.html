@@ -8,9 +8,9 @@
 <!-- iOS PWA Standalone Meta Tags -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Solutions Studio">
-<meta name="theme-color" content="#081426">
+<meta name="theme-color" content="#F4F6F9">
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='40' fill='%230057B8'/><text x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' font-size='95'>🐆</text></svg>">
 
 <style>
@@ -19,20 +19,26 @@
   
   :root {
     --att-blue: #0057B8;
-    --att-sky: #38BDF8;
-    --emerald: #00FF66;
-    --emerald-glow: rgba(0, 255, 102, 0.4);
-    --card-bg: rgba(17, 30, 56, 0.94);
-    --card-border: rgba(56, 189, 248, 0.22);
+    --att-blue-hover: #004494;
+    --att-sky: #0284C7;
+    --emerald: #059669;
+    --emerald-bg: #ECFDF5;
+    --emerald-border: #A7F3D0;
+    --page-bg: #F4F6F9;
+    --card-bg: #FFFFFF;
+    --card-border: #CBD5E1;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #64748B;
   }
 
-  /* REFRESHED BRIGHT AT&T STUDIO PALETTE + CRISP WINDOWS CLEARTYPE TYPOGRAPHY */
+  /* CLEAN CREAM & CANVAS AT&T PALETTE + CRISP CLEARTYPE RENDERING */
   body {
     margin: 0;
     padding: 16px;
     font-family: "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-    color: #FFFFFF;
-    background: linear-gradient(180deg, #0A1931 0%, #06101E 100%);
+    color: var(--text-primary);
+    background: linear-gradient(180deg, #F8FAFC 0%, #EEF2F6 100%);
     min-height: 100vh;
     font-size: 10px;
     -webkit-font-smoothing: antialiased;
@@ -56,53 +62,51 @@
     height: 100vh;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.75;
+    opacity: 0.45;
   }
 
   .app-container {
     max-width: 960px;
     margin: 0 auto;
-    background: rgba(13, 25, 48, 0.95);
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(56, 189, 248, 0.3);
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
     border-radius: 20px;
-    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.04);
     overflow: hidden;
     position: relative;
     z-index: 2;
     transform: translateZ(0);
   }
 
-  /* HEADER */
+  /* EXECUTIVE HEADER */
   .header {
-    background: linear-gradient(180deg, rgba(16, 32, 64, 0.98) 0%, rgba(12, 24, 48, 0.92) 100%);
+    background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
     padding: 14px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     gap: 10px;
-    border-bottom: 1.5px solid var(--card-border);
+    border-bottom: 1.5px solid #E2E8F0;
   }
   .header h1 {
     margin: 0;
     font-size: 15px;
     font-weight: 800;
     letter-spacing: -0.2px;
-    color: #FFF;
+    color: #0F172A;
     display: flex;
     align-items: center;
     gap: 8px;
   }
-  .header p { margin: 2px 0 0 0; font-size: 8.5px; color: #BAE6FD; font-weight: 600; }
+  .header p { margin: 2px 0 0 0; font-size: 8.5px; color: var(--att-blue); font-weight: 700; }
   .header-actions { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; z-index: 2; }
 
   /* DUAL-SEGMENT PILL [ 👤 Consumer | 🏢 Business ] */
   .segment-switch-group {
     display: inline-flex;
-    background: rgba(6, 16, 32, 0.75);
-    border: 1.5px solid rgba(56, 189, 248, 0.35);
+    background: #EEF2F6;
+    border: 1.5px solid #CBD5E1;
     border-radius: 9px;
     padding: 2px;
     gap: 2px;
@@ -114,7 +118,7 @@
     padding: 5px 11px;
     font-size: 9px;
     font-weight: 800;
-    color: #93C5FD;
+    color: var(--text-secondary);
     cursor: pointer;
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     display: inline-flex;
@@ -124,22 +128,20 @@
   }
   .seg-btn:active { transform: scale(0.97); }
   .seg-btn.active#seg-btn-consumer {
-    background: linear-gradient(180deg, rgba(0, 87, 184, 0.9) 0%, rgba(2, 132, 199, 0.85) 100%);
-    color: #FFF;
-    border: 1px solid #7DD3FC;
-    box-shadow: 0 0 14px rgba(56, 189, 248, 0.45);
+    background: var(--att-blue);
+    color: #FFFFFF;
+    box-shadow: 0 2px 6px rgba(0, 87, 184, 0.28);
   }
   .seg-btn.active#seg-btn-business {
-    background: linear-gradient(180deg, rgba(217, 119, 6, 0.9) 0%, rgba(180, 83, 9, 0.85) 100%);
-    color: #FEF3C7;
-    border: 1px solid #FBBF24;
-    box-shadow: 0 0 14px rgba(245, 158, 11, 0.45);
+    background: #D97706;
+    color: #FFFFFF;
+    box-shadow: 0 2px 6px rgba(217, 119, 6, 0.28);
   }
 
   /* ADDRESS PRE-CHECK BAR */
   .address-precheck-bar {
-    background: rgba(8, 18, 36, 0.8);
-    border-bottom: 1px solid var(--card-border);
+    background: #F8FAFC;
+    border-bottom: 1px solid #E2E8F0;
     padding: 12px 22px;
     display: flex;
     flex-direction: column;
@@ -155,7 +157,7 @@
   .addr-title {
     font-size: 9.5px;
     font-weight: 800;
-    color: #38BDF8;
+    color: var(--att-blue);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     display: flex;
@@ -171,14 +173,14 @@
   .addr-input {
     width: 100%;
     padding: 8px 12px;
-    border: 1px solid rgba(56, 189, 248, 0.3);
+    border: 1.5px solid #CBD5E1;
     border-radius: 8px;
-    background: rgba(11, 23, 44, 0.9);
-    color: #FFF;
+    background: #FFFFFF;
+    color: var(--text-primary);
     font-size: 10.5px;
     font-weight: 600;
   }
-  .addr-input:focus { outline: none; border-color: #38BDF8; box-shadow: 0 0 12px rgba(56, 189, 248, 0.4); }
+  .addr-input:focus { outline: none; border-color: var(--att-blue); box-shadow: 0 0 0 3px rgba(0, 87, 184, 0.15); }
   
   .addr-row-actions {
     display: flex;
@@ -193,23 +195,23 @@
     border-radius: 6px;
     font-size: 8.5px;
     font-weight: 800;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: #E2E8F0;
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    color: var(--text-secondary);
     cursor: pointer;
     transition: all 0.2s;
   }
   .tag-btn.active {
-    background: rgba(0, 255, 102, 0.2);
+    background: var(--emerald-bg);
     border-color: var(--emerald);
     color: var(--emerald);
-    box-shadow: 0 0 12px var(--emerald-glow);
+    box-shadow: 0 1px 3px rgba(5, 150, 105, 0.2);
   }
   .link-actions { display: flex; gap: 8px; }
   .btn-link-action {
-    background: rgba(0, 87, 184, 0.3);
-    border: 1px solid rgba(56, 189, 248, 0.5);
-    color: #38BDF8;
+    background: #EFF6FF;
+    border: 1px solid #BFDBFE;
+    color: var(--att-blue);
     padding: 5px 12px;
     border-radius: 6px;
     font-size: 8.5px;
@@ -221,7 +223,7 @@
     gap: 5px;
     transition: all 0.2s;
   }
-  .btn-link-action:hover { background: rgba(0, 87, 184, 0.5); color: #FFF; }
+  .btn-link-action:hover { background: var(--att-blue); color: #FFF; border-color: var(--att-blue); }
 
   /* CARDS */
   .section-card {
@@ -230,7 +232,7 @@
     border-radius: 14px;
     margin: 12px 18px;
     padding: 14px 18px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
     position: relative;
     transform: translateZ(0);
   }
@@ -244,7 +246,7 @@
   .sec-title {
     font-size: 11.5px;
     font-weight: 800;
-    color: #FFF;
+    color: #0F172A;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -252,9 +254,9 @@
     letter-spacing: 0.5px;
   }
   .pool-pill {
-    background: rgba(0, 87, 184, 0.35);
-    border: 1px solid #38BDF8;
-    color: #BAE6FD;
+    background: #EFF6FF;
+    border: 1px solid #BFDBFE;
+    color: var(--att-blue);
     padding: 4px 12px;
     border-radius: 20px;
     font-size: 9.5px;
@@ -266,22 +268,22 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    background: linear-gradient(180deg, rgba(16, 30, 58, 0.98) 0%, rgba(10, 20, 42, 0.96) 100%);
-    -webkit-backdrop-filter: blur(25px);
-    backdrop-filter: blur(25px);
-    border-top: 1.5px solid rgba(0, 255, 102, 0.5);
-    border-bottom: 2px solid var(--emerald);
+    background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border-top: 2px solid var(--emerald);
+    border-bottom: 2px solid #CBD5E1;
     padding: 10px 22px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     gap: 10px;
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 255, 102, 0.2);
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.08);
   }
   .wf-status { display: flex; flex-direction: column; gap: 2px; }
-  .wf-label { font-size: 8.5px; font-weight: 800; color: #93C5FD; text-transform: uppercase; letter-spacing: 0.5px; }
-  .wf-tier-name { font-size: 11.5px; font-weight: 800; color: #FFF; }
+  .wf-label { font-size: 8.5px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  .wf-tier-name { font-size: 11.5px; font-weight: 800; color: #0F172A; }
   .wf-pot-display {
     padding: 6px 16px;
     border-radius: 10px;
@@ -293,9 +295,9 @@
   }
 
   .btn {
-    background: rgba(255, 255, 255, 0.08);
-    color: #FFF;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: #F8FAFC;
+    color: var(--text-primary);
+    border: 1px solid #CBD5E1;
     border-radius: 8px;
     padding: 7px 14px;
     font-size: 9.5px;
@@ -309,17 +311,17 @@
     -webkit-appearance: none;
   }
   .btn:active { transform: scale(0.97); }
-  .btn-print { background: rgba(255, 255, 255, 0.08); }
+  .btn-print { background: #FFFFFF; }
   .btn-pres {
-    background: rgba(0, 87, 184, 0.35);
-    border-color: #38BDF8;
-    color: #BAE6FD;
+    background: #EFF6FF;
+    border-color: #BFDBFE;
+    color: var(--att-blue);
   }
   .btn-pres.active {
-    background: rgba(245, 158, 11, 0.25);
+    background: #FEF3C7;
     border-color: #F59E0B;
-    color: #FDE68A;
-    box-shadow: 0 0 18px rgba(245, 158, 11, 0.4);
+    color: #B45309;
+    box-shadow: 0 1px 3px rgba(245, 158, 11, 0.25);
   }
 
   .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
@@ -328,28 +330,28 @@
   .grid-5 { display: grid; grid-template-columns: repeat(auto-fit, minmax(105px, 1fr)); gap: 10px; }
 
   .control-group { display: flex; flex-direction: column; gap: 4px; }
-  .control-group label { font-size: 8.5px; font-weight: 800; color: #93C5FD; text-transform: uppercase; letter-spacing: 0.5px; }
+  .control-group label { font-size: 8.5px; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
   
   .control-group input, .control-group select {
     padding: 8px 10px;
-    border: 1px solid rgba(56, 189, 248, 0.3);
+    border: 1.5px solid #CBD5E1;
     border-radius: 9px;
-    background: rgba(8, 18, 36, 0.9);
-    color: #FFF;
+    background: #FFFFFF;
+    color: var(--text-primary);
     font-size: 11px;
     font-weight: 600;
     transition: all 0.2s;
   }
   .control-group input:focus, .control-group select:focus {
     outline: none;
-    border-color: #38BDF8;
-    box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+    border-color: var(--att-blue);
+    box-shadow: 0 0 0 3px rgba(0, 87, 184, 0.15);
   }
 
   .btn-pitch-hint {
-    background: rgba(251, 191, 36, 0.16);
-    border: 1px solid #FBBF24;
-    color: #FEF3C7;
+    background: #FEF3C7;
+    border: 1px solid #FCD34D;
+    color: #92400E;
     border-radius: 6px;
     padding: 3px 8px;
     font-size: 8.5px;
@@ -366,8 +368,8 @@
   .btn-pitch-hint:active { transform: scale(0.97); }
 
   .pill-option {
-    background: rgba(10, 20, 42, 0.6);
-    border: 1px solid rgba(56, 189, 248, 0.25);
+    background: #F8FAFC;
+    border: 1.5px solid #E2E8F0;
     border-radius: 12px;
     padding: 12px 10px;
     text-align: center;
@@ -375,21 +377,20 @@
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .pill-option:hover {
-    background: rgba(14, 28, 58, 0.8);
-    border-color: #38BDF8;
+    background: #F1F5F9;
+    border-color: #CBD5E1;
   }
   .pill-option.active {
-    background: linear-gradient(180deg, rgba(0, 255, 102, 0.22) 0%, rgba(6, 78, 59, 0.35) 100%) !important;
-    border: 1.5px solid var(--emerald) !important;
-    box-shadow: 0 0 20px var(--emerald-glow), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    background: #EFF6FF !important;
+    border: 2px solid var(--att-blue) !important;
+    box-shadow: 0 3px 10px rgba(0, 87, 184, 0.15) !important;
   }
   .pill-option.active .pill-price {
-    color: var(--emerald) !important;
-    text-shadow: 0 0 10px rgba(0, 255, 102, 0.6) !important;
+    color: var(--att-blue) !important;
   }
-  .pill-title { font-size: 10.5px; font-weight: 800; color: #FFF; }
-  .pill-price { font-size: 14.5px; font-weight: 900; color: #38BDF8; margin: 4px 0 2px 0; }
-  .pill-sub { font-size: 8px; color: #BAE6FD; font-weight: 500; }
+  .pill-title { font-size: 10.5px; font-weight: 800; color: #0F172A; }
+  .pill-price { font-size: 14.5px; font-weight: 900; color: var(--att-blue); margin: 4px 0 2px 0; }
+  .pill-sub { font-size: 8px; color: var(--text-muted); font-weight: 500; }
 
   .recommendations-grid {
     display: grid;
@@ -398,8 +399,8 @@
     margin-top: 10px;
   }
   .rec-card {
-    background: linear-gradient(135deg, rgba(20, 36, 68, 0.9) 0%, rgba(13, 25, 48, 0.95) 100%);
-    border: 1.5px solid rgba(56, 189, 248, 0.25);
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
     border-radius: 14px;
     padding: 14px;
     cursor: pointer;
@@ -407,33 +408,34 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    box-shadow: 0 3px 10px rgba(15, 23, 42, 0.03);
   }
   .rec-card:hover {
-    border-color: var(--emerald);
+    border-color: var(--att-blue);
     transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 87, 184, 0.1);
   }
   .rec-card.selected-plan {
     border: 2px solid var(--emerald) !important;
-    background: linear-gradient(135deg, rgba(6, 78, 59, 0.45) 0%, rgba(13, 25, 48, 0.98) 100%) !important;
-    box-shadow: 0 0 25px var(--emerald-glow), inset 0 1px 0 rgba(255, 255, 255, 0.35) !important;
+    background: #F0FDF4 !important;
+    box-shadow: 0 6px 20px rgba(5, 150, 105, 0.12) !important;
   }
   .rec-tag {
     font-size: 8.5px;
     font-weight: 800;
-    color: #BAE6FD;
+    color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-bottom: 4px;
   }
-  .rec-title { font-size: 12px; font-weight: 800; color: #FFF; margin-bottom: 6px; }
+  .rec-title { font-size: 12px; font-weight: 800; color: #0F172A; margin-bottom: 6px; }
   .rec-price { font-size: 19px; font-weight: 900; color: var(--emerald); margin-bottom: 2px; }
-  .rec-savings-tag { font-size: 10px; font-weight: 800; color: #4ADE80; margin-bottom: 8px; }
-  .rec-desc { font-size: 8.5px; color: #E2E8F0; line-height: 1.4; }
+  .rec-savings-tag { font-size: 10px; font-weight: 800; color: var(--emerald); margin-bottom: 8px; }
+  .rec-desc { font-size: 8.5px; color: var(--text-secondary); line-height: 1.4; }
 
   .counter-row {
-    background: rgba(8, 18, 36, 0.7);
-    border: 1px solid rgba(56, 189, 248, 0.25);
+    background: #F8FAFC;
+    border: 1.5px solid #E2E8F0;
     border-radius: 12px;
     padding: 12px 16px;
     display: flex;
@@ -442,17 +444,17 @@
     margin-bottom: 8px;
   }
   .counter-info { display: flex; flex-direction: column; gap: 2px; }
-  .counter-title { font-size: 11.5px; font-weight: 800; color: #FFF; display: flex; align-items: center; gap: 6px; }
-  .counter-desc { font-size: 8.5px; color: #BAE6FD; }
+  .counter-title { font-size: 11.5px; font-weight: 800; color: #0F172A; display: flex; align-items: center; gap: 6px; }
+  .counter-desc { font-size: 8.5px; color: var(--text-muted); }
   
   .counter-controls { display: flex; align-items: center; gap: 12px; }
   .btn-circle {
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1.5px solid rgba(56, 189, 248, 0.3);
-    color: #FFF;
+    background: #FFFFFF;
+    border: 1.5px solid #CBD5E1;
+    color: #0F172A;
     font-size: 15px;
     font-weight: 800;
     display: flex;
@@ -460,13 +462,14 @@
     justify-content: center;
     cursor: pointer;
     transition: all 0.15s;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
   }
   .btn-circle:active { transform: scale(0.9); }
-  .counter-val { font-size: 16px; font-weight: 900; color: var(--emerald); min-width: 20px; text-align: center; text-shadow: 0 0 10px var(--emerald-glow); }
+  .counter-val { font-size: 16px; font-weight: 900; color: var(--emerald); min-width: 20px; text-align: center; }
 
   .filter-box {
-    background: rgba(8, 18, 36, 0.7);
-    border: 1px solid rgba(56, 189, 248, 0.25);
+    background: #F8FAFC;
+    border: 1.5px solid #E2E8F0;
     border-radius: 12px;
     padding: 12px 16px;
     margin-bottom: 12px;
@@ -481,7 +484,7 @@
     gap: 8px;
     font-size: 9.5px;
     font-weight: 700;
-    color: #FFF;
+    color: #0F172A;
     cursor: pointer;
   }
   .filter-item input[type="checkbox"] {
@@ -492,31 +495,33 @@
   }
 
   .callout-box {
-    background: rgba(239, 68, 68, 0.15);
-    border: 1px solid rgba(239, 68, 68, 0.45);
+    background: #FEF2F2;
+    border: 1.5px solid #FECACA;
     border-radius: 10px;
     padding: 10px 14px;
     margin-bottom: 12px;
     font-size: 9px;
     line-height: 1.45;
+    color: #991B1B;
   }
-  .callout-box b { color: #FCA5A5; }
+  .callout-box b { color: #7F1D1D; }
 
   .warning-box {
-    background: rgba(245, 158, 11, 0.15);
-    border: 1px solid rgba(245, 158, 11, 0.5);
+    background: #FFFBEB;
+    border: 1.5px solid #FDE68A;
     border-radius: 10px;
     padding: 10px 14px;
     margin-bottom: 12px;
     font-size: 9px;
     line-height: 1.45;
+    color: #92400E;
   }
-  .warning-box b { color: #FDE68A; }
+  .warning-box b { color: #78350F; }
 
   .summary-card {
-    background: linear-gradient(180deg, rgba(16, 32, 64, 0.98) 0%, rgba(10, 20, 42, 0.99) 100%);
-    border: 1.5px solid rgba(56, 189, 248, 0.35);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    background: #FFFFFF;
+    border: 2px solid var(--att-blue);
+    box-shadow: 0 10px 30px rgba(0, 87, 184, 0.08);
   }
   .summary-grid {
     display: flex;
@@ -526,10 +531,10 @@
     gap: 14px;
   }
   .sum-left { display: flex; flex-direction: column; gap: 2px; }
-  .sum-label { font-size: 9px; font-weight: 800; color: #BAE6FD; text-transform: uppercase; letter-spacing: 0.5px; }
-  .sum-total { font-size: 38px; font-weight: 900; color: #FFF; letter-spacing: -1px; }
+  .sum-label { font-size: 9px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  .sum-total { font-size: 38px; font-weight: 900; color: #0F172A; letter-spacing: -1px; }
   .sum-savings {
-    background: rgba(0, 255, 102, 0.15);
+    background: var(--emerald-bg);
     border: 1.5px solid var(--emerald);
     color: var(--emerald);
     padding: 9px 18px;
@@ -537,23 +542,23 @@
     font-size: 14px;
     font-weight: 900;
     text-align: right;
-    box-shadow: 0 0 20px var(--emerald-glow);
+    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.15);
   }
 
   .due-box {
-    background: rgba(8, 18, 36, 0.75);
-    border: 1px dashed rgba(56, 189, 248, 0.4);
+    background: #FFFBEB;
+    border: 1.5px dashed #F59E0B;
     border-radius: 10px;
     padding: 12px 14px;
     margin-top: 14px;
   }
-  .due-title { font-size: 10px; font-weight: 800; color: #FBBF24; text-transform: uppercase; margin-bottom: 3px; }
-  .due-amt { font-size: 15.5px; font-weight: 900; color: #FFF; margin-bottom: 2px; }
-  .due-sub { font-size: 8px; color: #BAE6FD; }
+  .due-title { font-size: 10px; font-weight: 800; color: #92400E; text-transform: uppercase; margin-bottom: 3px; }
+  .due-amt { font-size: 15.5px; font-weight: 900; color: #0F172A; margin-bottom: 2px; }
+  .due-sub { font-size: 8px; color: #B45309; }
 
   .checklist {
-    background: rgba(8, 18, 36, 0.65);
-    border: 1px solid rgba(56, 189, 248, 0.2);
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
     border-radius: 10px;
     padding: 12px 16px;
     margin-top: 14px;
@@ -561,17 +566,17 @@
     flex-direction: column;
     gap: 7px;
     font-size: 9px;
-    color: #E2E8F0;
+    color: var(--text-secondary);
   }
   .check-item { display: flex; align-items: center; gap: 8px; }
-  .check-item span { color: var(--emerald); font-weight: 900; text-shadow: 0 0 8px var(--emerald-glow); }
+  .check-item span { color: var(--emerald); font-weight: 900; }
 
   .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(4, 10, 20, 0.85);
-    -webkit-backdrop-filter: blur(16px);
-    backdrop-filter: blur(16px);
+    background: rgba(15, 23, 42, 0.5);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
     z-index: 1000;
     display: none;
     align-items: center;
@@ -581,10 +586,10 @@
   .modal-card {
     max-width: 540px;
     width: 100%;
-    background: linear-gradient(135deg, rgba(20, 36, 68, 0.98) 0%, rgba(12, 22, 44, 0.99) 100%);
-    border: 1.5px solid #38BDF8;
+    background: #FFFFFF;
+    border: 1.5px solid var(--att-blue);
     border-radius: 16px;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 30px rgba(56, 189, 248, 0.3);
+    box-shadow: 0 25px 50px rgba(15, 23, 42, 0.25);
     overflow: hidden;
     animation: modalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
@@ -593,45 +598,44 @@
     to { opacity: 1; transform: scale(1); }
   }
   .modal-header {
-    background: linear-gradient(180deg, rgba(30, 58, 138, 0.9) 0%, rgba(16, 32, 64, 0.9) 100%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    background: var(--att-blue);
     padding: 12px 18px;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-  .modal-title { font-size: 12px; font-weight: 800; color: #FFF; text-transform: uppercase; letter-spacing: 0.5px; }
+  .modal-title { font-size: 12px; font-weight: 800; color: #FFFFFF; text-transform: uppercase; letter-spacing: 0.5px; }
   .modal-close {
     font-size: 16px;
     font-weight: 800;
-    color: #93C5FD;
+    color: #FFFFFF;
     background: none;
     border: none;
     cursor: pointer;
     line-height: 1;
     padding: 4px 8px;
   }
-  .modal-close:hover { color: #FFF; }
   .modal-body {
     padding: 16px 18px;
     font-size: 9.5px;
     line-height: 1.55;
-    color: #E2E8F0;
+    color: var(--text-secondary);
     max-height: 75vh;
     overflow-y: auto;
   }
   .pitch-quote {
-    background: rgba(6, 16, 32, 0.6);
-    border-left: 3px solid var(--emerald);
+    background: #EFF6FF;
+    border-left: 3px solid var(--att-blue);
     padding: 10px 14px;
     border-radius: 4px;
     font-size: 10px;
-    color: #FFF;
+    color: var(--att-blue);
     margin: 10px 0;
     font-style: italic;
+    font-weight: 600;
   }
   .pitch-bullet { margin-bottom: 6px; display: flex; align-items: flex-start; gap: 6px; }
-  .pitch-bullet b { color: #38BDF8; min-width: 105px; }
+  .pitch-bullet b { color: #0F172A; min-width: 105px; }
 
   body.presentation-mode .rep-only { display: none !important; }
   body.presentation-mode .cust-only { display: block !important; }
@@ -676,8 +680,8 @@
         <button type="button" class="seg-btn active" id="seg-btn-consumer" onclick="window.setAccountSegment('consumer')">👤 Consumer</button>
         <button type="button" class="seg-btn" id="seg-btn-business" onclick="window.setAccountSegment('business')">🏢 Business</button>
       </div>
-      <button type="button" class="btn" style="background:rgba(255,255,255,0.08);" onclick="window.shareQuoteURL()">🔗 Share</button>
-      <button type="button" class="btn" style="background:rgba(255,255,255,0.08);" onclick="window.resetToNextCustomer()">🔄 Reset</button>
+      <button type="button" class="btn" onclick="window.shareQuoteURL()">🔗 Share</button>
+      <button type="button" class="btn" onclick="window.resetToNextCustomer()">🔄 Reset</button>
       <button type="button" class="btn btn-pres" id="pres-btn" onclick="window.togglePresMode();">👁️ Customer View: OFF</button>
       <button type="button" class="btn btn-print" onclick="window.print()">🖨️ Print Matrix</button>
     </div>
@@ -690,7 +694,7 @@
       <div class="addr-inputs">
         <input type="text" id="addr-field" class="addr-input" placeholder="Enter customer street address, city, state..." value="" oninput="window.autoSaveState();">
       </div>
-      <button type="button" class="btn" style="background:rgba(0, 87, 184, 0.4); border-color:#38BDF8; color:#FFF;" onclick="window.copyAddress()">📋 Copy Address</button>
+      <button type="button" class="btn" style="background:#EFF6FF; border-color:#BFDBFE; color:var(--att-blue);" onclick="window.copyAddress()">📋 Copy Address</button>
     </div>
     <div class="addr-row-actions">
       <div class="addr-tags">
@@ -779,37 +783,37 @@
 
     <!-- 3-COLUMN SIDE-BY-SIDE AUDIT GRID -->
     <div class="grid-3" style="margin-top:10px; margin-bottom:12px;">
-      <div style="background:rgba(8, 18, 36, 0.7); border:1px solid rgba(56, 189, 248, 0.25); border-radius:10px; padding:10px 12px; display:flex; flex-direction:column; gap:6px;">
-        <div style="font-size:9px; font-weight:800; color:#38BDF8; text-transform:uppercase; letter-spacing:0.5px;">⌚ Watch Lines</div>
+      <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:10px; padding:10px 12px; display:flex; flex-direction:column; gap:6px;">
+        <div style="font-size:9px; font-weight:800; color:var(--att-blue); text-transform:uppercase; letter-spacing:0.5px;">⌚ Watch Lines</div>
         <label class="filter-item">
           <input type="checkbox" id="audit-watch-paid" onchange="window.runCalc();">
           <span>Paid-Off / Expired</span>
         </label>
         <label class="filter-item">
           <input type="checkbox" id="audit-watch-unused" onchange="window.runCalc();">
-          <span class="rep-only" id="lbl-audit-watch" style="color:#FCA5A5;">❌ Drop Inactive (+$10.99/mo)</span>
-          <span class="cust-only" style="color:#FCA5A5;">❌ Line Inactive / Remove</span>
+          <span class="rep-only" id="lbl-audit-watch" style="color:#DC2626;">❌ Drop Inactive (+$10.99/mo)</span>
+          <span class="cust-only" style="color:#DC2626;">❌ Line Inactive / Remove</span>
         </label>
       </div>
 
-      <div style="background:rgba(8, 18, 36, 0.7); border:1px solid rgba(56, 189, 248, 0.25); border-radius:10px; padding:10px 12px; display:flex; flex-direction:column; gap:6px;">
-        <div style="font-size:9px; font-weight:800; color:#38BDF8; text-transform:uppercase; letter-spacing:0.5px;">📱 Tablet Lines</div>
+      <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:10px; padding:10px 12px; display:flex; flex-direction:column; gap:6px;">
+        <div style="font-size:9px; font-weight:800; color:var(--att-blue); text-transform:uppercase; letter-spacing:0.5px;">📱 Tablet Lines</div>
         <label class="filter-item">
           <input type="checkbox" id="audit-tab-paid" onchange="window.runCalc();">
           <span>Paid-Off / Expired</span>
         </label>
         <label class="filter-item">
           <input type="checkbox" id="audit-tab-unused" onchange="window.runCalc();">
-          <span class="rep-only" id="lbl-audit-tab" style="color:#FCA5A5;">❌ Drop Inactive (+$20.99/mo)</span>
-          <span class="cust-only" style="color:#FCA5A5;">❌ Line Inactive / Remove</span>
+          <span class="rep-only" id="lbl-audit-tab" style="color:#DC2626;">❌ Drop Inactive (+$20.99/mo)</span>
+          <span class="cust-only" style="color:#DC2626;">❌ Line Inactive / Remove</span>
         </label>
       </div>
 
-      <div style="background:rgba(8, 18, 36, 0.7); border:1px solid rgba(56, 189, 248, 0.25); border-radius:10px; padding:10px 12px; display:flex; flex-direction:column; gap:6px;">
-        <div style="font-size:9px; font-weight:800; color:#FBBF24; text-transform:uppercase; letter-spacing:0.5px;">🔄 Next Up Feature</div>
+      <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:10px; padding:10px 12px; display:flex; flex-direction:column; gap:6px;">
+        <div style="font-size:9px; font-weight:800; color:#D97706; text-transform:uppercase; letter-spacing:0.5px;">🔄 Next Up Feature</div>
         <div style="display:flex; align-items:center; justify-content:space-between; gap:4px;">
-          <span style="font-size:8px; color:#BAE6FD;">Lines Paying Next Up:</span>
-          <select id="audit-nua-count" style="padding:2px 6px; border-radius:6px; background:#000; color:#FFF; border:1px solid rgba(255,255,255,0.15); font-weight:700;" onchange="window.runCalc();">
+          <span style="font-size:8px; color:var(--text-secondary);">Lines Paying Next Up:</span>
+          <select id="audit-nua-count" style="padding:2px 6px; border-radius:6px; background:#FFF; color:#0F172A; border:1px solid #CBD5E1; font-weight:700;" onchange="window.runCalc();">
             <option value="0" selected>0</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -819,8 +823,8 @@
         </div>
         <label class="filter-item" style="margin-top:2px;">
           <input type="checkbox" id="audit-nua-drop" onchange="window.runCalc();">
-          <span class="rep-only" style="color:#FCA5A5;">❌ Drop Unused Next Up</span>
-          <span class="cust-only" style="color:#FCA5A5;">❌ Remove Early Upgrade Fee</span>
+          <span class="rep-only" style="color:#DC2626;">❌ Drop Unused Next Up</span>
+          <span class="cust-only" style="color:#DC2626;">❌ Remove Early Upgrade Fee</span>
         </label>
       </div>
     </div>
@@ -833,7 +837,7 @@
       </div>
       <div class="control-group rep-only">
         <label>Verification Standard / Validation Portal</label>
-        <div id="fan-proof-callout" style="padding:9px 12px; border-radius:9px; background:rgba(8, 18, 36, 0.85); border:1px solid rgba(56, 189, 248, 0.3); font-size:8.5px; color:#BAE6FD; font-weight:600;">
+        <div id="fan-proof-callout" style="padding:9px 12px; border-radius:9px; background:#F8FAFC; border:1px solid #CBD5E1; font-size:8.5px; color:var(--text-secondary); font-weight:600;">
           Standard pricing active.
         </div>
       </div>
@@ -872,9 +876,9 @@
         <input type="number" id="switch-balance-owed" value="1200.00" step="50" oninput="window.runCalc();">
       </div>
     </div>
-    <div class="callout-box" style="margin-top:10px; background:rgba(0, 168, 232, 0.15); border-color:#0284C7;">
+    <div class="callout-box" style="margin-top:10px; background:#EFF6FF; border-color:#BFDBFE; color:#1E40AF;">
       <b>💰 Switcher Payoff Structure:</b> Up to <b>$800.00 per ported line</b> reimbursed via Virtual Visa/Prepaid Card. Customer submits final carrier bill online within 60 days of activation. Physical device turn-in is not required.
-      <div id="switch-summary-line" style="margin-top:4px; font-weight:700; color:#38BDF8;">Reimbursement Card Total: $1,200.00</div>
+      <div id="switch-summary-line" style="margin-top:4px; font-weight:700; color:var(--att-blue);">Reimbursement Card Total: $1,200.00</div>
     </div>
   </div>
 
@@ -896,8 +900,8 @@
       </label>
 
       <div id="hotspot-lines-wrap" style="display:none; align-items:center; gap:6px;">
-        <span style="font-size:8px; color:#BAE6FD; text-transform:uppercase;">Lines Requiring Heavy Hotspot:</span>
-        <select id="hotspot-lines-count" style="padding:4px 8px; border-radius:8px; background:#000; color:#FFF; border:1px solid var(--emerald); font-weight:700;" onchange="window.applyHotspotRouting();">
+        <span style="font-size:8px; color:var(--text-secondary); text-transform:uppercase;">Lines Requiring Heavy Hotspot:</span>
+        <select id="hotspot-lines-count" style="padding:4px 8px; border-radius:8px; background:#FFF; color:#0F172A; border:1.5px solid var(--emerald); font-weight:700;" onchange="window.applyHotspotRouting();">
           <option value="0">0 Lines (Base Hotspot)</option>
           <option value="1" selected>1 Line (Primary Top Tier)</option>
           <option value="2">2 Lines (2x Top Tier)</option>
@@ -920,7 +924,7 @@
       <b>🚨 FirstNet Priority Network Active:</b> Dedicated Band 14/13 spectrum reserved for First Responders. Always-On preemption + family multi-line rates with appreciation discounts.
     </div>
 
-    <div style="font-size:8.5px; font-weight:700; color:#BAE6FD; text-transform:uppercase; margin-bottom:4px;">
+    <div style="font-size:8.5px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin-bottom:4px;">
       <span class="rep-only">Tap a plan below to lock in the starting savings pot:</span>
       <span class="cust-only">Tap a plan combination to select your rate structure:</span>
     </div>
@@ -972,7 +976,7 @@
       <div class="wf-label">Active Reinvestment Pool</div>
       <div class="wf-tier-name" id="wf-active-tier">Allocated from: Smart Mix</div>
     </div>
-    <div class="wf-pot-display" id="wf-pot-badge" style="background:rgba(0, 255, 102, 0.18); border:1.5px solid var(--emerald); color:var(--emerald);">
+    <div class="wf-pot-display" id="wf-pot-badge" style="background:var(--emerald-bg); border:1.5px solid var(--emerald); color:var(--emerald);">
       Starting Pot: +$50.00/mo
     </div>
   </div>
@@ -988,13 +992,13 @@
     </div>
 
     <div id="wrap-bb-options" style="display:none; margin-bottom:14px;">
-      <div style="font-size:8.5px; font-weight:700; color:#BAE6FD; text-transform:uppercase; margin-bottom:8px;" id="lbl-bb-tier-hdr">Option A: Broadband Solutions</div>
+      <div style="font-size:8.5px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin-bottom:8px;" id="lbl-bb-tier-hdr">Option A: Broadband Solutions</div>
       <div class="grid-4" id="bb-tiles-container"></div>
     </div>
 
     <!-- DIRECTV BUILDER -->
     <div id="wrap-tv-options" style="display:none;">
-      <div style="font-size:9.5px; font-weight:800; color:#38BDF8; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;">
+      <div style="font-size:9.5px; font-weight:800; color:var(--att-blue); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;">
         Option B: DIRECTV via Internet Custom Builder (1 Gemini Box Included)
       </div>
 
@@ -1024,7 +1028,7 @@
         </div>
       </div>
 
-      <div style="background:rgba(8, 18, 36, 0.7); border:1px solid rgba(56, 189, 248, 0.25); border-radius:12px; padding:12px; display:flex; flex-direction:column; gap:10px;">
+      <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:12px; padding:12px; display:flex; flex-direction:column; gap:10px;">
         <div class="grid-2">
           <div class="control-group">
             <label>Disney+ &amp; Hulu Bundle Status</label>
@@ -1092,8 +1096,8 @@
     </div>
 
     <!-- PROTECTION SUITE -->
-    <div style="background:rgba(8, 18, 36, 0.7); border:1px solid rgba(56, 189, 248, 0.25); border-radius:12px; padding:12px; margin-bottom:12px;">
-      <div style="font-size:9.5px; font-weight:800; color:#38BDF8; text-transform:uppercase; margin-bottom:8px;">🛡️ Device &amp; Account Protection Suite</div>
+    <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:12px; padding:12px; margin-bottom:12px;">
+      <div style="font-size:9.5px; font-weight:800; color:var(--att-blue); text-transform:uppercase; margin-bottom:8px;">🛡️ Device &amp; Account Protection Suite</div>
       <div class="grid-3">
         <div class="control-group">
           <label>PA1 (Protect Advantage 1)</label>
@@ -1124,42 +1128,42 @@
     </div>
 
     <!-- REP-ONLY COMMISSION ACCELERATOR ZONE -->
-    <div class="rep-only" style="background:linear-gradient(135deg, rgba(16, 185, 129, 0.16) 0%, rgba(6, 78, 59, 0.35) 100%); border:1.5px solid rgba(16, 185, 129, 0.5); border-radius:12px; padding:12px; margin-bottom:12px;">
+    <div class="rep-only" style="background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:12px; padding:12px; margin-bottom:12px;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-        <div style="font-size:9.5px; font-weight:800; color:#34D399; text-transform:uppercase; letter-spacing:0.5px;" id="lbl-comm-title">🚀 Commission Booster Zone (Rep View Only)</div>
-        <div id="spiff-total-badge" style="background:rgba(16, 185, 129, 0.35); border:1px solid #10B981; color:#A7F3D0; padding:2px 8px; border-radius:12px; font-size:8.5px; font-weight:800;">Spiff Potential: $0</div>
+        <div style="font-size:9.5px; font-weight:800; color:#15803D; text-transform:uppercase; letter-spacing:0.5px;" id="lbl-comm-title">🚀 Commission Booster Zone (Rep View Only)</div>
+        <div id="spiff-total-badge" style="background:#DCFCE7; border:1px solid #22C55E; color:#166534; padding:2px 8px; border-radius:12px; font-size:8.5px; font-weight:800;">Spiff Potential: $0</div>
       </div>
 
       <div class="grid-2">
-        <div style="background:rgba(8, 18, 36, 0.7); border:1px solid rgba(255,255,255,0.12); border-radius:10px; padding:10px; display:flex; flex-direction:column; gap:4px;">
+        <div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:10px; padding:10px; display:flex; flex-direction:column; gap:4px;">
           <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span style="font-size:9.5px; font-weight:800; color:#FFF;" id="lbl-cloud-title">☁️ Personal Cloud Unlimited</span>
-            <span style="color:#FBBF24; font-size:8.5px; font-weight:800; background:rgba(251, 191, 36, 0.2); padding:1px 6px; border-radius:4px;">+$15 Spiff</span>
+            <span style="font-size:9.5px; font-weight:800; color:#0F172A;" id="lbl-cloud-title">☁️ Personal Cloud Unlimited</span>
+            <span style="color:#B45309; font-size:8.5px; font-weight:800; background:#FEF3C7; padding:1px 6px; border-radius:4px;">+$15 Spiff</span>
           </div>
           <label class="filter-item" style="margin-top:2px;">
             <input type="checkbox" id="addon-cloud" onchange="window.runCalc();">
-            <span style="font-size:9px; color:#E2E8F0;" id="lbl-cloud-chk">Attach Cloud ($9.99/mo)</span>
+            <span style="font-size:9px; color:var(--text-secondary);" id="lbl-cloud-chk">Attach Cloud ($9.99/mo)</span>
           </label>
-          <div style="font-size:8px; color:#BAE6FD; line-height:1.35; margin-top:2px;" id="lbl-cloud-pitch">
+          <div style="font-size:8px; color:var(--text-muted); line-height:1.35; margin-top:2px;" id="lbl-cloud-pitch">
             💡 <b>Pitch Tip:</b> <i>"Unlimited storage across iOS and Android, billed right on the monthly statement."</i>
           </div>
         </div>
 
-        <div style="background:rgba(8, 18, 36, 0.7); border:1px solid rgba(255,255,255,0.12); border-radius:10px; padding:10px; display:flex; flex-direction:column; gap:4px;">
+        <div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:10px; padding:10px; display:flex; flex-direction:column; gap:4px;">
           <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span style="font-size:9.5px; font-weight:800; color:#FFF;">⚡ Turbo Speed Boost</span>
-            <span style="color:#38BDF8; font-size:8.5px; font-weight:800; background:rgba(56, 189, 248, 0.2); padding:1px 6px; border-radius:4px;">Fast-Lane QCI</span>
+            <span style="font-size:9.5px; font-weight:800; color:#0F172A;">⚡ Turbo Speed Boost</span>
+            <span style="color:var(--att-blue); font-size:8.5px; font-weight:800; background:#EFF6FF; padding:1px 6px; border-radius:4px;">Fast-Lane QCI</span>
           </div>
           <div style="display:flex; align-items:center; justify-content:space-between; gap:6px; margin-top:2px;">
-            <span style="font-size:8.5px; color:#BAE6FD;">Lines Boosted:</span>
-            <select id="addon-turbo" style="padding:3px 6px; border-radius:6px; background:#000; color:#FFF; border:1px solid rgba(255,255,255,0.2); font-weight:700;" onchange="window.runCalc();">
+            <span style="font-size:8.5px; color:var(--text-secondary);">Lines Boosted:</span>
+            <select id="addon-turbo" style="padding:3px 6px; border-radius:6px; background:#FFF; color:#0F172A; border:1px solid #CBD5E1; font-weight:700;" onchange="window.runCalc();">
               <option value="0" selected>0 Lines ($0/mo)</option>
               <option value="1">1 Line ($7.00/mo)</option>
               <option value="2">2 Lines ($14.00/mo)</option>
               <option value="all">All Voice Lines ($7/L)</option>
             </select>
           </div>
-          <div style="font-size:8px; color:#BAE6FD; line-height:1.35; margin-top:2px;">
+          <div style="font-size:8px; color:var(--text-muted); line-height:1.35; margin-top:2px;">
             💡 <b>Pitch Tip:</b> <i>"Cuts through network gridlock at concerts and events with dedicated fast-lane data priority."</i>
           </div>
         </div>
@@ -1187,12 +1191,12 @@
     </div>
 
     <!-- AIP & SMART WEARABLES -->
-    <div style="background:rgba(8, 18, 36, 0.7); border:1px solid rgba(56, 189, 248, 0.25); border-radius:12px; padding:12px;">
-      <div style="font-size:9.5px; font-weight:800; color:#FBBF24; text-transform:uppercase; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+    <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:12px; padding:12px;">
+      <div style="font-size:9.5px; font-weight:800; color:#B45309; text-transform:uppercase; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
         <span id="lbl-aip-title">🛍️ 12-Month Accessory Installment Plan (AIP)</span>
         <label class="rep-only" style="display:flex; align-items:center; gap:6px; cursor:pointer;">
           <input type="checkbox" id="check-aip-eligible" checked onchange="window.runCalc();" style="accent-color:var(--emerald);">
-          <span style="font-size:8px; color:#FFF;">Account Eligible ($75 Min)</span>
+          <span style="font-size:8px; color:var(--text-secondary);">Account Eligible ($75 Min)</span>
         </label>
       </div>
 
@@ -1230,8 +1234,8 @@
     </div>
 
     <!-- TRADE-IN PROMOTIONS MODULE -->
-    <div style="background:rgba(8, 18, 36, 0.7); border:1px solid rgba(56, 189, 248, 0.25); border-radius:12px; padding:12px; margin-top:14px;">
-      <div style="font-size:9.5px; font-weight:800; color:#38BDF8; text-transform:uppercase; margin-bottom:8px;">🏷️ Device Trade-In &amp; Promotional Credits (36-Month Bill Credits)</div>
+    <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:12px; padding:12px; margin-top:14px;">
+      <div style="font-size:9.5px; font-weight:800; color:var(--att-blue); text-transform:uppercase; margin-bottom:8px;">🏷️ Device Trade-In &amp; Promotional Credits (36-Month Bill Credits)</div>
       <div class="grid-2">
         <div class="control-group">
           <label>Trade-In Promo Tier</label>
@@ -1264,7 +1268,7 @@
         <div class="due-title" id="lbl-due-title">🏷️ Due Today at Register (Existing Account Upgrades)</div>
         <label class="rep-only" style="display:flex; align-items:center; gap:6px; cursor:pointer;">
           <input type="checkbox" id="check-waived-fees" onchange="window.runCalc();" style="accent-color:var(--emerald);">
-          <span style="font-size:8.5px; font-weight:800; color:var(--emerald);" id="lbl-waived-fees">🎉 Waived Upgrade Fees? (-$35/phone)</span>
+          <span style="font-size:8.5px; font-weight:800; color:#059669;" id="lbl-waived-fees">🎉 Waived Upgrade Fees? (-$35/phone)</span>
         </label>
       </div>
       <div class="due-amt" id="due-today-amt">No hardware upgrades selected ($0 due today).</div>
@@ -1293,7 +1297,7 @@
     </div>
 
     <div class="checklist rep-only">
-      <div style="font-weight:800; color:#FBBF24; text-transform:uppercase;">📝 OPUS ORDER CHECKLIST &amp; AUDIT LOG</div>
+      <div style="font-weight:800; color:#B45309; text-transform:uppercase;">📝 OPUS ORDER CHECKLIST &amp; AUDIT LOG</div>
       <div class="check-item"><span id="chk-ap-bullet">✔</span> Verify and enroll account in AutoPay / Paperless Billing (-$10/line off base).</div>
       <div class="check-item"><span id="chk-fan-bullet">✔</span> Confirm discount organization, FAN, or CRU tax exemption attaches properly.</div>
       <div class="check-item"><span id="chk-conn-bullet">✔</span> Screen connected hardware eligibility and rate plan compatibility.</div>
@@ -1302,8 +1306,8 @@
 
     <div class="control-group" style="margin-top:14px;">
       <label>📱 Instant Customer SMS Quote</label>
-      <textarea id="sms-text" style="width:100%; height:90px; background:rgba(8, 18, 36, 0.85); border:1px solid rgba(56, 189, 248, 0.35); color:#E2E8F0; border-radius:10px; padding:10px; font-family:inherit; resize:none;" readonly></textarea>
-      <button type="button" class="btn" style="margin-top:8px; width:100%; background:rgba(0,87,184,0.45); border-color:#0284C7;" onclick="window.copySMS()">📋 Copy Text for Customer</button>
+      <textarea id="sms-text" style="width:100%; height:90px; background:#F8FAFC; border:1.5px solid #CBD5E1; color:#0F172A; border-radius:10px; padding:10px; font-family:inherit; resize:none;" readonly></textarea>
+      <button type="button" class="btn" style="margin-top:8px; width:100%; background:var(--att-blue); color:#FFF; border-color:var(--att-blue);" onclick="window.copySMS()">📋 Copy Text for Customer</button>
     </div>
   </div>
 </div>
@@ -1766,7 +1770,7 @@ window.syncSegmentUI = function() {
     document.getElementById('lbl-discount-title').textContent = "Corporate Program / CRU Structure";
     document.getElementById('lbl-autopay-title').textContent = "Corporate AutoPay / Billing";
     
-    // AutoPay dropdown options for CRU (Corporate CC gets full $10/L)
+    // AutoPay dropdown options for CRU (Corporate Credit Cards get full $10/L discount)
     var apSel = document.getElementById('curr-autopay');
     apSel.innerHTML = 
       '<option value="debit" selected>ACH / Corporate Debit ($10/L off)</option>' +
@@ -2449,12 +2453,12 @@ window.runCalc = function() {
   if (remainingPotBalance >= 0) {
     potBadge.style.color = "var(--emerald)";
     potBadge.style.borderColor = "var(--emerald)";
-    potBadge.style.background = "rgba(0, 255, 102, 0.18)";
+    potBadge.style.background = "var(--emerald-bg)";
     potBadge.textContent = "Pot Balance: +$" + remainingPotBalance.toFixed(2) + "/mo";
   } else {
-    potBadge.style.color = "#F87171";
-    potBadge.style.borderColor = "#F87171";
-    potBadge.style.background = "rgba(239, 68, 68, 0.18)";
+    potBadge.style.color = "#DC2626";
+    potBadge.style.borderColor = "#DC2626";
+    potBadge.style.background = "#FEF2F2";
     potBadge.textContent = "Budget Step-Up: +$" + Math.abs(remainingPotBalance).toFixed(2) + "/mo";
   }
 
@@ -2466,13 +2470,13 @@ window.runCalc = function() {
   var saveBox = document.getElementById('sum-savings-box');
   if (monthlySavings >= 0) {
     saveBox.style.color = "var(--emerald)";
-    saveBox.style.background = "rgba(0, 255, 102, 0.15)";
+    saveBox.style.background = "var(--emerald-bg)";
     saveBox.style.borderColor = "var(--emerald)";
     saveBox.textContent = "Saves $" + monthlySavings.toFixed(2) + "/mo vs Old Bill!";
   } else {
-    saveBox.style.color = "#F87171";
-    saveBox.style.background = "rgba(239, 68, 68, 0.15)";
-    saveBox.style.borderColor = "rgba(239, 68, 68, 0.45)";
+    saveBox.style.color = "#DC2626";
+    saveBox.style.background = "#FEF2F2";
+    saveBox.style.borderColor = "#FECACA";
     saveBox.textContent = "+$" + Math.abs(monthlySavings).toFixed(2) + "/mo vs Old Bill";
   }
 
@@ -2566,11 +2570,11 @@ window.runCalc = function() {
   window.addEventListener('resize', resize);
   resize();
 
-  // Lighter cyan/royal ambient orbs
+  // Subtle clean cyan / blue ambient orbs over light background
   var orbs = [
-    { xRatio: 0.25, yRatio: 0.25, radius: 480, color: 'rgba(0, 87, 184, 0.35)', speed: 0.005, vx: 90, vy: 70 },
-    { xRatio: 0.75, yRatio: 0.35, radius: 540, color: 'rgba(56, 189, 248, 0.22)', speed: 0.004, vx: 110, vy: 90 },
-    { xRatio: 0.50, yRatio: 0.75, radius: 500, color: 'rgba(30, 64, 150, 0.28)', speed: 0.006, vx: 80, vy: 100 }
+    { xRatio: 0.25, yRatio: 0.25, radius: 480, color: 'rgba(0, 87, 184, 0.08)', speed: 0.005, vx: 90, vy: 70 },
+    { xRatio: 0.75, yRatio: 0.35, radius: 540, color: 'rgba(56, 189, 248, 0.10)', speed: 0.004, vx: 110, vy: 90 },
+    { xRatio: 0.50, yRatio: 0.75, radius: 500, color: 'rgba(147, 197, 253, 0.12)', speed: 0.006, vx: 80, vy: 100 }
   ];
 
   function draw() {
@@ -2584,8 +2588,8 @@ window.runCalc = function() {
 
       var grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, orb.radius);
       grad.addColorStop(0, orb.color);
-      grad.addColorStop(0.5, orb.color.replace(/[\d\.]+\)$/, '0.08)'));
-      grad.addColorStop(1, 'rgba(10, 25, 49, 0)');
+      grad.addColorStop(0.5, orb.color.replace(/[\d\.]+\)$/, '0.04)'));
+      grad.addColorStop(1, 'rgba(244, 246, 249, 0)');
 
       ctx.fillStyle = grad;
       ctx.beginPath();
