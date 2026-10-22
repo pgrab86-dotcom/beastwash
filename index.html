@@ -34,10 +34,19 @@
     min-height: 100vh;
     font-size: 9.5px;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
     overflow-x: hidden;
     position: relative;
     user-select: none;
     -webkit-user-select: none;
+  }
+
+  /* Desktop Scaler: Keeps text crisp and eliminates grainy Windows subpixel rendering */
+  @media (min-width: 1024px) {
+    body {
+      font-size: 11px;
+    }
   }
 
   #ambient-canvas {
@@ -67,10 +76,12 @@
 
   .header {
     background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(10, 16, 30, 0.85) 100%);
-    padding: 16px 22px;
+    padding: 14px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
     border-bottom: 1px solid var(--glass-border);
   }
   .header h1 {
@@ -84,27 +95,44 @@
     gap: 8px;
   }
   .header p { margin: 2px 0 0 0; font-size: 8.5px; color: #94A3B8; font-weight: 500; }
-  .header-actions { display: flex; gap: 8px; align-items: center; z-index: 2; }
+  .header-actions { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; z-index: 2; }
 
-  .mode-switch-btn {
-    background: rgba(0, 87, 184, 0.28);
-    border: 1.5px solid #38BDF8;
-    color: #FFF;
-    padding: 6px 12px;
-    border-radius: 8px;
+  /* DUAL-SEGMENTED SWITCHER [ 👤 Consumer | 🏢 Business ] */
+  .segment-switch-group {
+    display: inline-flex;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 9px;
+    padding: 2px;
+    gap: 2px;
+  }
+  .seg-btn {
+    background: transparent;
+    border: none;
+    border-radius: 7px;
+    padding: 5px 11px;
     font-size: 9px;
     font-weight: 800;
+    color: #94A3B8;
     cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    transition: all 0.2s;
+    gap: 5px;
+    -webkit-appearance: none;
   }
-  .mode-switch-btn.business {
-    background: rgba(245, 158, 11, 0.22);
-    border-color: #F59E0B;
-    color: #FBBF24;
-    box-shadow: 0 0 16px rgba(245, 158, 11, 0.3);
+  .seg-btn:active { transform: scale(0.97); }
+  .seg-btn.active#seg-btn-consumer {
+    background: rgba(0, 87, 184, 0.5);
+    color: #FFF;
+    border: 1px solid #38BDF8;
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+  }
+  .seg-btn.active#seg-btn-business {
+    background: rgba(245, 158, 11, 0.35);
+    color: #FDE68A;
+    border: 1px solid #F59E0B;
+    box-shadow: 0 0 14px rgba(245, 158, 11, 0.35);
   }
 
   .address-precheck-bar {
@@ -331,10 +359,7 @@
     margin-top: 4px;
     transition: all 0.15s ease;
   }
-  .btn-pitch-hint:active {
-    background: rgba(251, 191, 36, 0.25);
-    transform: scale(0.97);
-  }
+  .btn-pitch-hint:active { transform: scale(0.97); }
 
   .pill-option {
     background: rgba(255, 255, 255, 0.03);
@@ -629,7 +654,7 @@
 </div>
 
 <div class="app-container">
-  <!-- EXECUTIVE HEADER WITH CONSUMER / BUSINESS CRU DUAL-ENGINE SWITCHER -->
+  <!-- EXECUTIVE HEADER WITH CONNECTED SEGMENT SWITCHER -->
   <div class="header">
     <div>
       <h1>
@@ -642,7 +667,11 @@
       </p>
     </div>
     <div class="header-actions">
-      <button type="button" class="mode-switch-btn" id="mode-btn" onclick="window.toggleAccountSegment();">👤 Consumer View</button>
+      <!-- DUAL-SEGMENT PILL -->
+      <div class="segment-switch-group">
+        <button type="button" class="seg-btn active" id="seg-btn-consumer" onclick="window.setAccountSegment('consumer')">👤 Consumer</button>
+        <button type="button" class="seg-btn" id="seg-btn-business" onclick="window.setAccountSegment('business')">🏢 Business</button>
+      </div>
       <button type="button" class="btn" style="background:rgba(255,255,255,0.06);" onclick="window.shareQuoteURL()">🔗 Share</button>
       <button type="button" class="btn" style="background:rgba(255,255,255,0.06);" onclick="window.resetToNextCustomer()">🔄 Reset</button>
       <button type="button" class="btn btn-pres" id="pres-btn" onclick="window.togglePresMode();">👁️ Customer View: OFF</button>
@@ -650,7 +679,7 @@
     </div>
   </div>
 
-  <!-- BROADBAND PRE-CHECK BAR (CLEAN PLACEHOLDER, NO PERSONAL ADDRESS SILHOUETTES) -->
+  <!-- BROADBAND PRE-CHECK BAR (CLEAN PLACEHOLDER) -->
   <div class="address-precheck-bar rep-only">
     <div class="addr-row-top">
       <div class="addr-title" id="lbl-bb-check">📍 Broadband Pre-Check</div>
@@ -744,7 +773,7 @@
       </div>
     </div>
 
-    <!-- 3-COLUMN SIDE-BY-SIDE AUDIT GRID (CLEAN SPACE SAVING) -->
+    <!-- 3-COLUMN SIDE-BY-SIDE AUDIT GRID -->
     <div class="grid-3" style="margin-top:10px; margin-bottom:12px;">
       <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:10px 12px; display:flex; flex-direction:column; gap:6px;">
         <div style="font-size:9px; font-weight:800; color:#38BDF8; text-transform:uppercase; letter-spacing:0.5px;">⌚ Watch Lines</div>
@@ -845,7 +874,7 @@
     </div>
   </div>
 
-  <!-- SECTION 3: PLAN RECOMMENDATIONS (DYNAMIC SEGMENT MAPPING) -->
+  <!-- SECTION 3: PLAN RECOMMENDATIONS (DYNAMIC 3.0 MAPPING) -->
   <div class="section-card">
     <div class="sec-header">
       <div class="sec-title">
@@ -865,7 +894,7 @@
       <div id="hotspot-lines-wrap" style="display:none; align-items:center; gap:6px;">
         <span style="font-size:8px; color:#94A3B8; text-transform:uppercase;">Lines Requiring Heavy Hotspot:</span>
         <select id="hotspot-lines-count" style="padding:4px 8px; border-radius:8px; background:#000; color:#FFF; border:1px solid var(--emerald); font-weight:700;" onchange="window.applyHotspotRouting();">
-          <option value="0">0 Lines (Base 3GB-5GB)</option>
+          <option value="0">0 Lines (Base Hotspot)</option>
           <option value="1" selected>1 Line (Primary Top Tier)</option>
           <option value="2">2 Lines (2x Top Tier)</option>
           <option value="3">3 Lines (3x Top Tier)</option>
@@ -893,7 +922,7 @@
     </div>
     <div class="recommendations-grid" id="plan-cards-container"></div>
 
-    <!-- DYNAMIC LINE STEPPERS (CONSUMER VS BUSINESS) -->
+    <!-- DYNAMIC LINE STEPPERS (CONSUMER VS BUSINESS 3.0) -->
     <div style="margin-top:14px;">
       <div class="counter-row">
         <div class="counter-info">
@@ -1221,7 +1250,7 @@
         </div>
       </div>
       <div class="warning-box" id="trade-disqualify-warning" style="display:none; margin-top:8px; margin-bottom:0;">
-        <b>⚠️ Entry Tier Disqualification:</b> Value Plus lines are excluded from $830/$1,000 national trade credits. Lines must be placed on higher tiers to capture the full credit.
+        <b>⚠️ Entry Tier Disqualification:</b> Value Plus &amp; Business Standard lines are excluded from $830/$1,000 national trade credits. Lines must be placed on Advanced/Extra or higher to capture the full credit.
       </div>
     </div>
 
@@ -1276,7 +1305,7 @@
 </div>
 
 <script>
-window.accountSegment = "consumer"; // "consumer" or "business"
+window.accountSegment = "consumer";
 window.broadbandCost = 0;
 window.dtvCost = 0;
 window.selectedPlanIndex = 1;
@@ -1296,12 +1325,12 @@ var consumerRates = {
   10: { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40.99 }
 };
 
-// Business CRU Rate Card (Business Elite, Extra, Starter)
+// Official AT&T Business Unlimited 3.0 Rate Card (Standard 3.0, Advanced 3.0, Premium 3.0)
 var businessRates = {
-  1: { prem: 85, ext: 75, val: 65, fanPrem: 75, noApPrem: 95, noApExt: 85, noApVal: 75 },
-  2: { prem: 75, ext: 65, val: 55, fanPrem: 65, noApPrem: 85, noApExt: 75, noApVal: 65 },
-  3: { prem: 60, ext: 50, val: 40, fanPrem: 50, noApPrem: 70, noApExt: 60, noApVal: 50 },
-  4: { prem: 50, ext: 40, val: 35, fanPrem: 40, noApPrem: 60, noApExt: 50, noApVal: 45 },
+  1: { prem: 95, ext: 80, val: 60, fanPrem: 85, noApPrem: 105, noApExt: 90, noApVal: 70 },
+  2: { prem: 85, ext: 70, val: 55, fanPrem: 75, noApPrem: 95, noApExt: 80, noApVal: 65 },
+  3: { prem: 65, ext: 50, val: 45, fanPrem: 55, noApPrem: 75, noApExt: 60, noApVal: 55 },
+  4: { prem: 50, ext: 40, val: 30, fanPrem: 40, noApPrem: 60, noApExt: 50, noApVal: 40 },
   5: { prem: 45, ext: 35, val: 30, fanPrem: 35, noApPrem: 55, noApExt: 45, noApVal: 40 },
   6: { prem: 40, ext: 35, val: 30, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40 },
   7: { prem: 40, ext: 35, val: 30, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40 },
@@ -1686,11 +1715,18 @@ window.selectRecommendedPlan = function(idx) {
   window.runCalc();
 };
 
-/* SEGMENT SWITCHER WITH CLIENT-SIDE URL ROUTING (/business <-> /) */
-window.toggleAccountSegment = function() {
-  window.accountSegment = (window.accountSegment === "consumer") ? "business" : "consumer";
-  
-  if (window.accountSegment === "business") {
+/* SEGMENT SWITCHER & ROUTING (elitererate.com/ <-> elitererate.com/business) */
+window.setAccountSegment = function(seg) {
+  window.accountSegment = seg;
+
+  var btnConsumer = document.getElementById('seg-btn-consumer');
+  var btnBusiness = document.getElementById('seg-btn-business');
+  if (btnConsumer && btnBusiness) {
+    btnConsumer.classList.toggle('active', seg === 'consumer');
+    btnBusiness.classList.toggle('active', seg === 'business');
+  }
+
+  if (seg === "business") {
     if (window.location.pathname.toLowerCase() !== "/business") {
       window.history.pushState({ seg: "business" }, "", "/business");
     }
@@ -1707,34 +1743,32 @@ window.toggleAccountSegment = function() {
 
 window.addEventListener('popstate', function(e) {
   var isBizPath = (window.location.pathname.toLowerCase().indexOf('/business') !== -1);
-  window.accountSegment = isBizPath ? "business" : "consumer";
-  window.syncSegmentUI();
-  window.runCalc();
+  window.setAccountSegment(isBizPath ? "business" : "consumer");
 });
 
 window.syncSegmentUI = function() {
   var isBiz = (window.accountSegment === "business");
-  var btn = document.getElementById('mode-btn');
 
   if (isBiz) {
-    btn.className = "mode-switch-btn business";
-    btn.innerHTML = "🏢 Business CRU Mode";
     document.getElementById('hdr-title-rep').textContent = "AT&T Business CRU Solutions Studio";
     document.getElementById('hdr-title-cust').textContent = "AT&T Corporate Business Plan Solutions";
-    document.getElementById('hdr-sub-rep').textContent = "FAST-TRACK QCI-6 PRIORITY • CRU ARBITRAGE • OPUS BUSINESS AUDIT";
-    document.getElementById('hdr-sub-cust').textContent = "TAILORED CORPORATE WIRELESS & BUSINESS BROADBAND SOLUTIONS";
+    document.getElementById('hdr-sub-rep').textContent = "FAST-TRACK QCI-6 PRIORITY • 300GB-500GB HOTSPOTS • CRU OPUS AUDIT";
+    document.getElementById('hdr-sub-cust').textContent = "TAILORED CORPORATE 3.0 WIRELESS & BUSINESS BROADBAND SOLUTIONS";
     document.getElementById('lbl-scope-bb').textContent = "🌐 AT&T Business Fiber";
     document.getElementById('lbl-curr-watches').textContent = "Business Smartwatches ($10/mo)";
     document.getElementById('lbl-curr-tablets').textContent = "Business Tablets ($20/mo)";
     document.getElementById('lbl-audit-watch').textContent = "❌ Drop Inactive (+$10.00/mo)";
     document.getElementById('lbl-audit-tab').textContent = "❌ Drop Inactive (+$20.00/mo)";
     document.getElementById('lbl-discount-title').textContent = "Corporate Program / CRU Structure";
-    document.getElementById('stepper-title-t1').textContent = "🦅 Business Elite";
-    document.getElementById('stepper-desc-t1').textContent = "Unlimited Fast-Track Priority (QCI-6) • 200GB Hotspot • 4K UHD";
-    document.getElementById('stepper-title-t2').textContent = "🐇 Business Extra";
-    document.getElementById('stepper-desc-t2').textContent = "100GB Priority Data (QCI-7) • 50GB Mobile Hotspot • SD Streaming";
-    document.getElementById('stepper-title-t3').textContent = "🐢 Business Starter";
-    document.getElementById('stepper-desc-t3').textContent = "Standard 5G Data • 5GB Mobile Hotspot • Standard Network Access";
+    
+    // Updated Business Unlimited 3.0 Steppers & Hotspot Ratios
+    document.getElementById('stepper-title-t1').textContent = "🦅 Business Premium 3.0";
+    document.getElementById('stepper-desc-t1').textContent = "Unlimited Priority (QCI-6) • 300GB Hotspot • Turbo Included • 4K UHD";
+    document.getElementById('stepper-title-t2').textContent = "🐇 Business Advanced 3.0";
+    document.getElementById('stepper-desc-t2').textContent = "Unlimited Priority (QCI-7) • 100GB Hotspot • HD Video Streaming";
+    document.getElementById('stepper-title-t3').textContent = "🐢 Business Standard 3.0";
+    document.getElementById('stepper-desc-t3').textContent = "Core 5G Data • 5GB Mobile Hotspot • SD Video Streaming";
+    
     document.getElementById('wrap-check-hbo').style.display = "none";
     document.getElementById('lbl-cloud-title').textContent = "💼 Office@Hand Voice Integration";
     document.getElementById('lbl-cloud-chk').textContent = "Attach Cloud PBX ($15.00/mo)";
@@ -1750,7 +1784,7 @@ window.syncSegmentUI = function() {
         '<option value="biz_std" selected>Standard Corporate CRU (No FAN)</option>' +
       '</optgroup>' +
       '<optgroup label="Corporate Agreements">' +
-        '<option value="biz_evp">EVP / Corporate Volume Agreement ($10/L off Elite)</option>' +
+        '<option value="biz_evp">EVP / Corporate Volume Agreement ($10/L off Premium 3.0)</option>' +
         '<option value="biz_fn">FirstNet Agency-Paid Primary (Band 14 Dedicated)</option>' +
         '<option value="biz_health">Healthcare &amp; Clinic CRU Volume Discount</option>' +
       '</optgroup>';
@@ -1769,8 +1803,6 @@ window.syncSegmentUI = function() {
         '<div class="pill-title">Biz Fiber 1G</div><div class="pill-price">$95/mo</div><div class="pill-sub">Max Bandwidth</div>' +
       '</div>';
   } else {
-    btn.className = "mode-switch-btn";
-    btn.innerHTML = "👤 Consumer View";
     document.getElementById('hdr-title-rep').textContent = "AT&T Executive Solutions Studio";
     document.getElementById('hdr-title-cust').textContent = "AT&T Customized Plan Solutions";
     document.getElementById('hdr-sub-rep').textContent = "DOWNWARD WATERFALL ARBITRAGE • REINVESTMENT POT POOLING • OPUS AUDIT";
@@ -1781,12 +1813,14 @@ window.syncSegmentUI = function() {
     document.getElementById('lbl-audit-watch').textContent = "❌ Drop Inactive (+$10.99/mo)";
     document.getElementById('lbl-audit-tab').textContent = "❌ Drop Inactive (+$20.99/mo)";
     document.getElementById('lbl-discount-title').textContent = "Discount Profile / Organization";
+    
     document.getElementById('stepper-title-t1').textContent = "🐆 Unlimited Premium 2.0";
     document.getElementById('stepper-desc-t1').textContent = "Unlimited Priority Data (QCI-8) • 100GB Hotspot • 4K UHD Streaming";
     document.getElementById('stepper-title-t2').textContent = "🐇 Unlimited Extra 2.0";
     document.getElementById('stepper-desc-t2').textContent = "100GB Priority Data (QCI-8) • 50GB Mobile Hotspot • SD Streaming";
     document.getElementById('stepper-title-t3').textContent = "🐢 Value Plus 2.0";
     document.getElementById('stepper-desc-t3').textContent = "Standard 5G Data • 3GB Mobile Hotspot • Core Unlimited Access";
+    
     document.getElementById('wrap-check-hbo').style.display = "flex";
     document.getElementById('lbl-cloud-title').textContent = "☁️ Personal Cloud Unlimited";
     document.getElementById('lbl-cloud-chk').textContent = "Attach Cloud ($9.99/mo)";
@@ -1909,9 +1943,15 @@ window.resetToNextCustomer = function() {
 };
 
 window.restoreState = function() {
-  // Check URL pathname first to initialize mode
   var isBizPath = (window.location.pathname.toLowerCase().indexOf('/business') !== -1);
   window.accountSegment = isBizPath ? "business" : "consumer";
+
+  var btnConsumer = document.getElementById('seg-btn-consumer');
+  var btnBusiness = document.getElementById('seg-btn-business');
+  if (btnConsumer && btnBusiness) {
+    btnConsumer.classList.toggle('active', window.accountSegment === 'consumer');
+    btnBusiness.classList.toggle('active', window.accountSegment === 'business');
+  }
 
   var rawData = null;
   if (window.location.hash && window.location.hash.indexOf("#q=") === 0) {
@@ -1929,7 +1969,13 @@ window.restoreState = function() {
 
   try {
     var s = JSON.parse(rawData);
-    if (s.seg && !isBizPath) window.accountSegment = s.seg;
+    if (s.seg && !isBizPath) {
+      window.accountSegment = s.seg;
+      if (btnConsumer && btnBusiness) {
+        btnConsumer.classList.toggle('active', window.accountSegment === 'consumer');
+        btnBusiness.classList.toggle('active', window.accountSegment === 'business');
+      }
+    }
     window.syncSegmentUI();
 
     if (s.b) document.getElementById('curr-total').value = s.b;
@@ -2095,6 +2141,7 @@ window.runCalc = function() {
 
   var wirelessPlanTotal = Number(((premCount * premRate) + (extCount * extRate) + (valCount * valRate)).toFixed(2));
 
+  // Dynamic Adaptive Plan Cards
   var planOptions = [];
   if (totalLines === 1) {
     var starterRate = isBiz ? valRate : ((apMethod === 'none') ? 75 : ((apMethod === 'credit') ? 70 : 65));
@@ -2104,32 +2151,32 @@ window.runCalc = function() {
     if (isBiz) {
       planOptions = [
         {
-          title: "🐢 Business Starter",
+          title: "🐢 Business Standard 3.0",
           repTag: "Commercial Baseline",
           custTag: "Essential Business 5G",
           cost: valRate,
           desc: "5GB mobile hotspot • Core unlimited commercial network access."
         },
         {
-          title: "🐇 Business Extra",
-          repTag: "Priority Balanced",
+          title: "🐇 Business Advanced 3.0",
+          repTag: "100GB Hotspot",
           custTag: "Enhanced Productivity",
           cost: extRate,
-          desc: "100GB Priority Data (QCI-7) • 50GB mobile hotspot • SD streaming."
+          desc: "Unlimited Priority (QCI-7) • 100GB mobile hotspot • HD video streaming."
         },
         {
-          title: "🦅 Business Elite",
-          repTag: "Fast-Track QCI-6",
+          title: "🦅 Business Premium 3.0",
+          repTag: "300GB Hotspot / QCI-6",
           custTag: "Executive Performance",
           cost: premRate,
-          desc: "Unlimited Fast-Track Priority (QCI-6) • 200GB hotspot • 4K UHD streaming."
+          desc: "Unlimited Fast-Track Priority (QCI-6) • 300GB hotspot • Turbo Included • 4K UHD."
         },
         {
-          title: "🦅 Elite w/ Fleet Connect",
-          repTag: "Mobility Suite",
-          custTag: "Connected Workspace",
+          title: "👑 Business Ultimate 3.0",
+          repTag: "500GB / Multi-Device Included",
+          custTag: "Total Mobility Suite",
           cost: Number((premRate + 15).toFixed(2)),
-          desc: "Business Elite tier bundled with Office@Hand commercial mobile routing."
+          desc: "500GB Hotspot • Includes 1 Tablet & 1 Watch connectivity at no extra charge."
         }
       ];
     } else {
@@ -2168,32 +2215,32 @@ window.runCalc = function() {
     if (isBiz) {
       planOptions = [
         {
-          title: "🐢 All Business Starter",
+          title: "🐢 All Business Standard 3.0",
           repTag: "Max Headroom",
           custTag: "Commercial Budget",
           cost: Number((totalLines * valRate).toFixed(2)),
-          desc: totalLines + " Lines on Business Starter with 5GB mobile hotspot per line."
+          desc: totalLines + " Lines on Business Standard with 5GB mobile hotspot per line."
         },
         {
-          title: "🦅 1x Elite + 🐢 " + (totalLines - 1) + "x Starter",
+          title: "🦅 1x Prem 3.0 + 🐢 " + (totalLines - 1) + "x Standard",
           repTag: "Executive Lead Mix",
           custTag: "Commercial Executive Mix",
           cost: Number((premRate + (totalLines - 1) * valRate).toFixed(2)),
-          desc: "Owner/Lead on Business Elite (200GB Hotspot / QCI-6), crew on Starter (5GB)."
+          desc: "Lead on Business Premium 3.0 (300GB Hotspot / QCI-6), crew on Standard (5GB)."
         },
         {
-          title: "🦅 " + (totalLines >= 3 ? "2" : "1") + "x Elite + 🐇 " + (totalLines >= 3 ? (totalLines - 2) : 1) + "x Extra",
+          title: "🦅 " + (totalLines >= 3 ? "2" : "1") + "x Prem + 🐇 " + (totalLines >= 3 ? (totalLines - 2) : 1) + "x Adv",
           repTag: "Field Operations Mix",
           custTag: "Commercial High-Priority Pack",
           cost: Number(( (totalLines >= 3 ? 2 * premRate : premRate) + (totalLines >= 3 ? (totalLines - 2) * extRate : extRate) ).toFixed(2)),
-          desc: "Priority QCI-6 & QCI-7 data across all lines (50GB–200GB hotspots)."
+          desc: "Priority QCI-6 & QCI-7 data across all lines (100GB–300GB hotspots)."
         },
         {
-          title: "🦅 " + totalLines + "x Business Elite",
+          title: "🦅 " + totalLines + "x Business Premium 3.0",
           repTag: "All-Executive Fleet",
           custTag: "Peak Enterprise Performance",
           cost: Number((totalLines * premRate).toFixed(2)),
-          desc: "Unlimited QCI-6 Fast-Track Priority & 200GB Hotspot per line across all " + totalLines + " lines."
+          desc: "Unlimited QCI-6 Priority & 300GB Hotspot per line across all " + totalLines + " lines."
         }
       ];
     } else {
@@ -2428,11 +2475,11 @@ window.runCalc = function() {
     breakdownBox.textContent = "*Estimates 7% IN sales tax on retail device value + upgrade fees + AIP sales tax.";
   }
 
-  var topTierName = isBiz ? "Elite" : "Premium";
-  var midTierName = isBiz ? "Extra" : "Extra";
-  var lowTierName = isBiz ? "Starter" : "Value";
+  var topTierName = isBiz ? "Premium 3.0" : "Premium";
+  var midTierName = isBiz ? "Advanced 3.0" : "Extra";
+  var lowTierName = isBiz ? "Standard 3.0" : "Value";
 
-  var sms = "AT&T " + (isBiz ? "Business CRU" : "") + " Quote: " + totalLines + " Voice Lines (";
+  var sms = "AT&T " + (isBiz ? "Business CRU 3.0" : "") + " Quote: " + totalLines + " Voice Lines (";
   var planParts = [];
   if (premCount > 0) planParts.push(premCount + "x " + topTierName);
   if (extCount > 0) planParts.push(extCount + "x " + midTierName);
