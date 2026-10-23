@@ -31,14 +31,15 @@
     --text-muted: #64748B;
   }
 
+  /* SCALED UP TYPOGRAPHY & TOUCH TARGETS */
   body {
     margin: 0;
-    padding: 16px;
+    padding: 18px;
     font-family: "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
     color: var(--text-primary);
     background: linear-gradient(180deg, #E0F2FE 0%, #BAE6FD 50%, #93C5FD 100%);
     min-height: 100vh;
-    font-size: 10px;
+    font-size: 14px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: geometricPrecision;
@@ -48,7 +49,7 @@
 
   @media (min-width: 1024px) {
     body {
-      font-size: 11px;
+      font-size: 15.5px;
     }
   }
 
@@ -64,11 +65,11 @@
   }
 
   .app-container {
-    max-width: 960px;
+    max-width: 980px;
     margin: 0 auto;
-    background: rgba(255, 255, 255, 0.96);
-    border: 1.5px solid #60A5FA;
-    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.98);
+    border: 2px solid #60A5FA;
+    border-radius: 22px;
     box-shadow: 0 20px 50px rgba(0, 87, 184, 0.16), 0 4px 12px rgba(15, 23, 42, 0.06);
     overflow: hidden;
     position: relative;
@@ -78,152 +79,125 @@
 
   .header {
     background: linear-gradient(180deg, #FFFFFF 0%, #F0F9FF 100%);
-    padding: 14px 20px;
+    padding: 18px 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 12px;
     border-bottom: 2px solid #BFDBFE;
   }
   .header h1 {
     margin: 0;
-    font-size: 15px;
+    font-size: 19px;
     font-weight: 800;
-    letter-spacing: -0.2px;
+    letter-spacing: -0.3px;
     color: #0F172A;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
   }
-  .header p { margin: 2px 0 0 0; font-size: 8.5px; color: var(--att-blue); font-weight: 700; }
-  .header-actions { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; z-index: 2; }
+  .header p { margin: 3px 0 0 0; font-size: 11px; color: var(--att-blue); font-weight: 800; }
+  .header-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; z-index: 2; }
 
   .segment-switch-group {
     display: inline-flex;
     background: #E0F2FE;
-    border: 1.5px solid #93C5FD;
-    border-radius: 9px;
-    padding: 2px;
-    gap: 2px;
+    border: 2px solid #93C5FD;
+    border-radius: 11px;
+    padding: 3px;
+    gap: 3px;
   }
   .seg-btn {
     background: transparent;
     border: none;
-    border-radius: 7px;
-    padding: 5px 11px;
-    font-size: 9px;
+    border-radius: 8px;
+    padding: 7px 14px;
+    font-size: 12px;
     font-weight: 800;
     color: var(--text-secondary);
     cursor: pointer;
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     display: inline-flex;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
   }
+  .seg-btn:active { transform: scale(0.97); }
   .seg-btn.active#seg-btn-consumer {
     background: var(--att-blue);
     color: #FFFFFF;
-    box-shadow: 0 2px 6px rgba(0, 87, 184, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 87, 184, 0.3);
   }
   .seg-btn.active#seg-btn-business {
     background: #D97706;
     color: #FFFFFF;
-    box-shadow: 0 2px 6px rgba(217, 119, 6, 0.3);
+    box-shadow: 0 2px 8px rgba(217, 119, 6, 0.3);
   }
 
   .address-precheck-bar {
     background: #F0F9FF;
-    border-bottom: 1.5px solid #BFDBFE;
-    padding: 12px 22px;
+    border-bottom: 2px solid #BFDBFE;
+    padding: 14px 24px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
   }
   .addr-row-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 12px;
   }
   .addr-title {
-    font-size: 9.5px;
+    font-size: 12.5px;
     font-weight: 800;
     color: var(--att-blue);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
   }
-  .addr-inputs { display: flex; gap: 8px; flex: 1; min-width: 280px; }
+  .addr-inputs { display: flex; gap: 10px; flex: 1; min-width: 280px; }
   .addr-input {
     width: 100%;
-    padding: 8px 12px;
-    border: 1.5px solid #93C5FD;
-    border-radius: 8px;
+    padding: 10px 14px;
+    border: 2px solid #93C5FD;
+    border-radius: 10px;
     background: #FFFFFF;
     color: var(--text-primary);
-    font-size: 10.5px;
+    font-size: 13.5px;
     font-weight: 600;
-  }
-  .addr-row-actions { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
-  .addr-tags { display: flex; gap: 6px; }
-  .tag-btn {
-    padding: 5px 12px;
-    border-radius: 6px;
-    font-size: 8.5px;
-    font-weight: 800;
-    background: #FFFFFF;
-    border: 1px solid #93C5FD;
-    color: var(--text-secondary);
-    cursor: pointer;
-  }
-  .tag-btn.active {
-    background: #ECFDF5;
-    border-color: var(--emerald);
-    color: var(--emerald);
-  }
-  .btn-link-action {
-    background: #E0F2FE;
-    border: 1px solid #93C5FD;
-    color: var(--att-blue);
-    padding: 5px 12px;
-    border-radius: 6px;
-    font-size: 8.5px;
-    font-weight: 700;
-    cursor: pointer;
-    text-decoration: none;
   }
 
   .section-card {
     background: var(--card-bg);
-    border: 1.5px solid #BFDBFE;
-    border-radius: 14px;
-    margin: 12px 18px;
-    padding: 14px 18px;
-    box-shadow: 0 4px 14px rgba(0, 87, 184, 0.05);
+    border: 2px solid #BFDBFE;
+    border-radius: 16px;
+    margin: 14px 20px;
+    padding: 18px 22px;
+    box-shadow: 0 4px 16px rgba(0, 87, 184, 0.05);
     position: relative;
   }
-  .sec-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .sec-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
   .sec-title {
-    font-size: 11.5px;
+    font-size: 14.5px;
     font-weight: 800;
     color: #0F172A;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
   .pool-pill {
     background: #E0F2FE;
-    border: 1px solid #7DD3FC;
+    border: 1.5px solid #7DD3FC;
     color: var(--att-blue);
-    padding: 4px 12px;
+    padding: 5px 14px;
     border-radius: 20px;
-    font-size: 9.5px;
+    font-size: 12px;
     font-weight: 800;
   }
 
@@ -234,23 +208,23 @@
     background: linear-gradient(180deg, #FFFFFF 0%, #F0F9FF 100%);
     -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
-    border-top: 2px solid var(--emerald);
-    border-bottom: 2px solid #93C5FD;
-    padding: 10px 22px;
+    border-top: 2.5px solid var(--emerald);
+    border-bottom: 2.5px solid #93C5FD;
+    padding: 12px 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 10px;
-    box-shadow: 0 6px 20px rgba(0, 87, 184, 0.12);
+    gap: 12px;
+    box-shadow: 0 6px 20px rgba(0, 87, 184, 0.14);
   }
-  .wf-status { display: flex; flex-direction: column; gap: 2px; }
-  .wf-label { font-size: 8.5px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
-  .wf-tier-name { font-size: 11.5px; font-weight: 800; color: #0F172A; }
+  .wf-status { display: flex; flex-direction: column; gap: 3px; }
+  .wf-label { font-size: 10.5px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
+  .wf-tier-name { font-size: 14.5px; font-weight: 800; color: #0F172A; }
   .wf-pot-display {
-    padding: 6px 16px;
-    border-radius: 10px;
-    font-size: 14.5px;
+    padding: 8px 18px;
+    border-radius: 12px;
+    font-size: 17px;
     font-weight: 900;
     text-align: right;
   }
@@ -258,125 +232,125 @@
   .btn {
     background: #F8FAFC;
     color: var(--text-primary);
-    border: 1px solid #CBD5E1;
-    border-radius: 8px;
-    padding: 7px 14px;
-    font-size: 9.5px;
-    font-weight: 700;
+    border: 1.5px solid #CBD5E1;
+    border-radius: 10px;
+    padding: 9px 16px;
+    font-size: 12px;
+    font-weight: 800;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 8px;
   }
-  .btn-print { background: #FFFFFF; }
   .btn-pres { background: #EFF6FF; border-color: #BFDBFE; color: var(--att-blue); }
   .btn-pres.active { background: #FEF3C7; border-color: #F59E0B; color: #B45309; }
 
-  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
-  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
-  .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; }
-  .grid-5 { display: grid; grid-template-columns: repeat(auto-fit, minmax(105px, 1fr)); gap: 10px; }
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
+  .grid-5 { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; }
 
-  .control-group { display: flex; flex-direction: column; gap: 4px; }
-  .control-group label { font-size: 8.5px; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; }
+  .control-group { display: flex; flex-direction: column; gap: 6px; }
+  .control-group label { font-size: 11px; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
   .control-group input, .control-group select {
-    padding: 8px 10px;
-    border: 1.5px solid #93C5FD;
-    border-radius: 9px;
+    padding: 10px 12px;
+    border: 2px solid #93C5FD;
+    border-radius: 10px;
     background: #FFFFFF;
     color: var(--text-primary);
-    font-size: 11px;
+    font-size: 13.5px;
     font-weight: 600;
   }
 
   .pill-option {
     background: #F0F9FF;
-    border: 1.5px solid #BAE6FD;
-    border-radius: 12px;
-    padding: 12px 10px;
+    border: 2px solid #BAE6FD;
+    border-radius: 14px;
+    padding: 14px 12px;
     text-align: center;
     cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .pill-option.active {
     background: #EFF6FF !important;
-    border: 2px solid var(--att-blue) !important;
-    box-shadow: 0 3px 12px rgba(0, 87, 184, 0.2) !important;
+    border: 2.5px solid var(--att-blue) !important;
+    box-shadow: 0 4px 16px rgba(0, 87, 184, 0.22) !important;
   }
-  .pill-title { font-size: 10.5px; font-weight: 800; color: #0F172A; }
-  .pill-price { font-size: 14.5px; font-weight: 900; color: var(--att-blue); margin: 4px 0 2px 0; }
-  .pill-sub { font-size: 8px; color: var(--text-muted); font-weight: 500; }
+  .pill-title { font-size: 13px; font-weight: 800; color: #0F172A; }
+  .pill-price { font-size: 17px; font-weight: 900; color: var(--att-blue); margin: 6px 0 3px 0; }
+  .pill-sub { font-size: 10.5px; color: var(--text-muted); font-weight: 600; }
 
   .recommendations-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-    gap: 12px;
-    margin-top: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 14px;
+    margin-top: 12px;
   }
   .rec-card {
     background: #FFFFFF;
-    border: 1.5px solid #BFDBFE;
-    border-radius: 14px;
-    padding: 14px;
+    border: 2px solid #BFDBFE;
+    border-radius: 16px;
+    padding: 16px;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
   .rec-card.selected-plan {
-    border: 2px solid var(--emerald) !important;
+    border: 2.5px solid var(--emerald) !important;
     background: #F0FDF4 !important;
-    box-shadow: 0 6px 20px rgba(5, 150, 105, 0.16) !important;
+    box-shadow: 0 6px 20px rgba(5, 150, 105, 0.2) !important;
   }
-  .rec-tag { font-size: 8.5px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px; }
-  .rec-title { font-size: 12px; font-weight: 800; color: #0F172A; margin-bottom: 6px; }
-  .rec-price { font-size: 19px; font-weight: 900; color: var(--emerald); margin-bottom: 2px; }
-  .rec-savings-tag { font-size: 10px; font-weight: 800; color: var(--emerald); margin-bottom: 8px; }
-  .rec-desc { font-size: 8.5px; color: var(--text-secondary); line-height: 1.4; }
+  .rec-title { font-size: 14.5px; font-weight: 800; color: #0F172A; margin-bottom: 8px; }
+  .rec-price { font-size: 23px; font-weight: 900; color: var(--emerald); margin-bottom: 3px; }
+  .rec-savings-tag { font-size: 12px; font-weight: 800; color: var(--emerald); margin-bottom: 10px; }
+  .rec-desc { font-size: 11px; color: var(--text-secondary); line-height: 1.45; }
 
   .counter-row {
     background: #F0F9FF;
     border: 1.5px solid #BAE6FD;
-    border-radius: 12px;
-    padding: 12px 16px;
+    border-radius: 14px;
+    padding: 14px 18px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
-  .counter-title { font-size: 11.5px; font-weight: 800; color: #0F172A; }
-  .counter-desc { font-size: 8.5px; color: var(--text-muted); }
-  .counter-controls { display: flex; align-items: center; gap: 12px; }
+  .counter-title { font-size: 14px; font-weight: 800; color: #0F172A; }
+  .counter-desc { font-size: 11px; color: var(--text-muted); }
+  .counter-controls { display: flex; align-items: center; gap: 14px; }
   .btn-circle {
-    width: 32px;
-    height: 32px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     background: #FFFFFF;
-    border: 1.5px solid #93C5FD;
+    border: 2px solid #93C5FD;
     color: #0F172A;
-    font-size: 15px;
+    font-size: 20px;
     font-weight: 800;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
   }
-  .counter-val { font-size: 16px; font-weight: 900; color: var(--emerald); min-width: 20px; text-align: center; }
+  .counter-val { font-size: 20px; font-weight: 900; color: var(--emerald); min-width: 24px; text-align: center; }
 
   .filter-box {
     background: #F0F9FF;
     border: 1.5px solid #BAE6FD;
-    border-radius: 12px;
-    padding: 12px 16px;
-    margin-bottom: 12px;
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin-bottom: 14px;
     display: flex;
     flex-wrap: wrap;
-    gap: 16px;
+    gap: 18px;
     align-items: center;
   }
-  .filter-item { display: flex; align-items: center; gap: 8px; font-size: 9.5px; font-weight: 700; color: #0F172A; cursor: pointer; }
-  .callout-box { background: #FEF2F2; border: 1.5px solid #FECACA; border-radius: 10px; padding: 10px 14px; margin-bottom: 12px; font-size: 9px; color: #991B1B; }
-  .warning-box { background: #FFFBEB; border: 1.5px solid #FDE68A; border-radius: 10px; padding: 10px 14px; margin-bottom: 12px; font-size: 9px; color: #92400E; }
+  .filter-item { display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 700; color: #0F172A; cursor: pointer; }
+  .filter-item input[type="checkbox"] { width: 18px; height: 18px; }
+  .callout-box { background: #FEF2F2; border: 1.5px solid #FECACA; border-radius: 12px; padding: 12px 16px; margin-bottom: 14px; font-size: 11.5px; color: #991B1B; line-height: 1.45; }
+  .warning-box { background: #FFFBEB; border: 1.5px solid #FDE68A; border-radius: 12px; padding: 12px 16px; margin-bottom: 14px; font-size: 11.5px; color: #92400E; line-height: 1.45; }
 
   .savings-badge-yellow { background: #FEF3C7 !important; border: 2px solid #F59E0B !important; color: #B45309 !important; }
   .savings-badge-green { background: #ECFDF5 !important; border: 2px solid #10B981 !important; color: #065F46 !important; }
@@ -387,50 +361,34 @@
     font-weight: 950 !important;
   }
 
-  .summary-card { background: #FFFFFF; border: 2px solid var(--att-blue); box-shadow: 0 12px 36px rgba(0, 87, 184, 0.12); }
-  .summary-grid { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; }
-  .sum-left { display: flex; flex-direction: column; gap: 2px; }
-  .sum-label { font-size: 9px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
-  .sum-total { font-size: 38px; font-weight: 900; color: #0F172A; letter-spacing: -1px; }
-  .sum-savings { padding: 10px 20px; border-radius: 12px; font-size: 14.5px; font-weight: 900; text-align: right; }
+  .summary-card { background: #FFFFFF; border: 2.5px solid var(--att-blue); box-shadow: 0 12px 36px rgba(0, 87, 184, 0.12); }
+  .summary-grid { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .sum-left { display: flex; flex-direction: column; gap: 4px; }
+  .sum-label { font-size: 12px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  .sum-total { font-size: 44px; font-weight: 900; color: #0F172A; letter-spacing: -1.5px; }
+  .sum-savings { padding: 12px 24px; border-radius: 14px; font-size: 16px; font-weight: 900; text-align: right; }
 
-  /* HARDWARE CHECKOUT CARD */
   .checkout-line-item {
     background: #FFFFFF;
     border: 1.5px solid #BAE6FD;
-    border-radius: 10px;
-    padding: 10px 14px;
+    border-radius: 12px;
+    padding: 12px 16px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    margin-bottom: 8px;
+    gap: 8px;
+    margin-bottom: 10px;
   }
 
   .due-box {
     background: #FFFBEB;
-    border: 1.5px dashed #F59E0B;
-    border-radius: 10px;
-    padding: 12px 14px;
-    margin-top: 14px;
+    border: 2px dashed #F59E0B;
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin-top: 16px;
   }
-  .due-title { font-size: 10px; font-weight: 800; color: #92400E; text-transform: uppercase; margin-bottom: 3px; }
-  .due-amt { font-size: 16px; font-weight: 900; color: #0F172A; margin-bottom: 2px; }
-  .due-sub { font-size: 8px; color: #B45309; line-height: 1.35; }
-
-  .checklist {
-    background: #F0F9FF;
-    border: 1px solid #BAE6FD;
-    border-radius: 10px;
-    padding: 12px 16px;
-    margin-top: 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-    font-size: 9px;
-    color: var(--text-secondary);
-  }
-  .check-item { display: flex; align-items: center; gap: 8px; }
-  .check-item span { color: var(--emerald); font-weight: 900; }
+  .due-title { font-size: 12px; font-weight: 800; color: #92400E; text-transform: uppercase; margin-bottom: 4px; }
+  .due-amt { font-size: 20px; font-weight: 900; color: #0F172A; margin-bottom: 3px; }
+  .due-sub { font-size: 10.5px; color: #B45309; line-height: 1.4; }
 
   body.presentation-mode .rep-only { display: none !important; }
   body.presentation-mode .cust-only { display: block !important; }
@@ -485,12 +443,11 @@
     <div class="sec-header">
       <div class="sec-title">🎯 1. Consultation Scope</div>
     </div>
-    <div class="grid-5">
-      <div class="pill-option active" id="scope-hw" onclick="window.toggleScope(this);"><div class="pill-title">📱 Hardware Acquisition</div></div>
-      <div class="pill-option active" id="scope-add" onclick="window.toggleScope(this);"><div class="pill-title">➕ Add New Line</div></div>
-      <div class="pill-option" id="scope-switch" onclick="window.toggleScope(this);"><div class="pill-title">🔄 Switcher Port-In</div></div>
+    <div class="grid-4">
+      <div class="pill-option active" id="scope-upg" onclick="window.toggleScope(this);"><div class="pill-title">📱 Upgrade</div></div>
+      <div class="pill-option active" id="scope-add" onclick="window.toggleScope(this);"><div class="pill-title">➕ Add a Line</div></div>
       <div class="pill-option" id="scope-bb" onclick="window.toggleScope(this);"><div class="pill-title" id="lbl-scope-bb">🌐 AT&amp;T Fiber / Air</div></div>
-      <div class="pill-option" id="scope-tv" onclick="window.toggleScope(this);"><div class="pill-title">📺 DIRECTV Revision</div></div>
+      <div class="pill-option" id="scope-tv" onclick="window.toggleScope(this);"><div class="pill-title">📺 DIRECTV Stream</div></div>
     </div>
   </div>
 
@@ -501,15 +458,15 @@
       <div class="pool-pill" id="trade-pool-badge">Total Trade Credits: $0.00/mo</div>
     </div>
 
-    <div style="background:#F0F9FF; border:1.5px solid #BAE6FD; border-radius:12px; padding:12px 16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-      <label class="filter-item" style="font-size:11px; font-weight:800; color:var(--att-blue);">
-        <input type="checkbox" id="toggle-has-tradeins" checked onchange="window.toggleTradeInMaster();" style="width:18px; height:18px; accent-color:var(--att-blue);">
+    <div style="background:#F0F9FF; border:1.5px solid #BAE6FD; border-radius:14px; padding:14px 18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+      <label class="filter-item" style="font-size:13.5px; font-weight:800; color:var(--att-blue);">
+        <input type="checkbox" id="toggle-has-tradeins" checked onchange="window.toggleTradeInMaster();" style="width:20px; height:20px; accent-color:var(--att-blue);">
         <span>Trading in Devices for Promotional Bill Credits?</span>
       </label>
 
-      <div id="wrap-trade-count" style="display:inline-flex; align-items:center; gap:8px;">
-        <span style="font-size:9px; font-weight:800; color:var(--text-secondary); text-transform:uppercase;">Lines Trading In:</span>
-        <select id="trade-lines-count" style="padding:4px 10px; border-radius:8px; border:1.5px solid var(--att-blue); background:#FFF; color:#0F172A; font-weight:800;" onchange="window.renderTradeCards();">
+      <div id="wrap-trade-count" style="display:inline-flex; align-items:center; gap:10px;">
+        <span style="font-size:11px; font-weight:800; color:var(--text-secondary); text-transform:uppercase;">Lines Trading In:</span>
+        <select id="trade-lines-count" style="padding:6px 12px; border-radius:10px; border:2px solid var(--att-blue); background:#FFF; color:#0F172A; font-weight:800; font-size:13px;" onchange="window.renderTradeCards();">
           <option value="1">1 Device Trade-In</option>
           <option value="2">2 Devices Trading In</option>
           <option value="3">3 Devices Trading In</option>
@@ -518,15 +475,15 @@
       </div>
     </div>
 
-    <div id="wrap-trade-inner" style="margin-top:12px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:8px;">
-        <span style="font-size:8.5px; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Configure trade-in details per line:</span>
+    <div id="wrap-trade-inner" style="margin-top:14px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:10px;">
+        <span style="font-size:11px; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Configure trade-in details per line:</span>
         <label class="filter-item rep-only" style="color:var(--att-blue); font-weight:800;">
           <input type="checkbox" id="check-ayac-promo" onchange="window.syncAllTradeLines();" style="accent-color:var(--att-blue);">
           <span>🛡️ Active "Any Year, Any Condition" (AYAC) Promo Active</span>
         </label>
       </div>
-      <div id="trade-devices-container" style="display:flex; flex-direction:column; gap:10px;"></div>
+      <div id="trade-devices-container" style="display:flex; flex-direction:column; gap:12px;"></div>
     </div>
   </div>
 
@@ -584,23 +541,23 @@
       </div>
     </div>
 
-    <div class="grid-3" style="margin-top:10px;">
-      <div style="background:#F0F9FF; border:1px solid #BAE6FD; border-radius:10px; padding:10px 12px; display:flex; flex-direction:column; gap:6px;">
-        <div style="font-size:9px; font-weight:800; color:var(--att-blue); text-transform:uppercase;">⌚ Watch Lines</div>
+    <div class="grid-3" style="margin-top:12px;">
+      <div style="background:#F0F9FF; border:1.5px solid #BAE6FD; border-radius:12px; padding:12px 14px; display:flex; flex-direction:column; gap:8px;">
+        <div style="font-size:11px; font-weight:800; color:var(--att-blue); text-transform:uppercase;">⌚ Watch Lines</div>
         <label class="filter-item">
           <input type="checkbox" id="audit-watch-unused" onchange="window.runCalc();">
           <span style="color:#DC2626;">❌ Drop Inactive Lines</span>
         </label>
       </div>
-      <div style="background:#F0F9FF; border:1px solid #BAE6FD; border-radius:10px; padding:10px 12px; display:flex; flex-direction:column; gap:6px;">
-        <div style="font-size:9px; font-weight:800; color:var(--att-blue); text-transform:uppercase;">📱 Tablet Lines</div>
+      <div style="background:#F0F9FF; border:1.5px solid #BAE6FD; border-radius:12px; padding:12px 14px; display:flex; flex-direction:column; gap:8px;">
+        <div style="font-size:11px; font-weight:800; color:var(--att-blue); text-transform:uppercase;">📱 Tablet Lines</div>
         <label class="filter-item">
           <input type="checkbox" id="audit-tab-unused" onchange="window.runCalc();">
           <span style="color:#DC2626;">❌ Drop Inactive Lines</span>
         </label>
       </div>
-      <div style="background:#F0F9FF; border:1px solid #BAE6FD; border-radius:10px; padding:10px 12px; display:flex; flex-direction:column; gap:6px;">
-        <div style="font-size:9px; font-weight:800; color:#D97706; text-transform:uppercase;">🔄 Next Up Feature</div>
+      <div style="background:#F0F9FF; border:1.5px solid #BAE6FD; border-radius:12px; padding:12px 14px; display:flex; flex-direction:column; gap:8px;">
+        <div style="font-size:11px; font-weight:800; color:#D97706; text-transform:uppercase;">🔄 Next Up Feature</div>
         <label class="filter-item">
           <input type="checkbox" id="audit-nua-drop" onchange="window.runCalc();">
           <span style="color:#DC2626;">❌ Drop Unused Early Upgrades</span>
@@ -608,7 +565,7 @@
       </div>
     </div>
 
-    <div class="grid-2" style="margin-top:10px;">
+    <div class="grid-2" style="margin-top:12px;">
       <div class="control-group">
         <label id="lbl-discount-title">Discount Profile / Organization</label>
         <select id="curr-discount" onchange="window.runCalc();"></select>
@@ -624,7 +581,7 @@
     </div>
     <div class="recommendations-grid" id="plan-cards-container"></div>
 
-    <div style="margin-top:14px;">
+    <div style="margin-top:16px;">
       <div class="counter-row">
         <div>
           <div class="counter-title" id="stepper-title-t1">🐆 Unlimited Premium 2.0</div>
@@ -667,7 +624,7 @@
       <div class="wf-label">Active Reinvestment Pool</div>
       <div class="wf-tier-name" id="wf-active-tier">Allocated from: Smart Mix</div>
     </div>
-    <div class="wf-pot-display" id="wf-pot-badge" style="background:var(--emerald-bg); border:1.5px solid var(--emerald); color:var(--emerald);">
+    <div class="wf-pot-display" id="wf-pot-badge" style="background:var(--emerald-bg); border:2px solid var(--emerald); color:var(--emerald);">
       Starting Pot: +$50.00/mo
     </div>
   </div>
@@ -687,7 +644,7 @@
       <div class="sec-title">🛡️ 6. Protection, Connected Tech &amp; AIP Cart</div>
       <div class="pool-pill" id="pool-badge-devices">Drawdown: $0/mo</div>
     </div>
-    <div class="grid-3" style="margin-bottom:12px;">
+    <div class="grid-3" style="margin-bottom:14px;">
       <div class="control-group">
         <label>PA1 (Protect 1)</label>
         <select id="addon-pa1" onchange="window.runCalc();">
@@ -713,7 +670,7 @@
     </div>
 
     <!-- CONNECTED HARDWARE ATTACH & WATCH / TABLET INTAKE -->
-    <div class="grid-2" style="margin-bottom:12px;">
+    <div class="grid-2" style="margin-bottom:14px;">
       <div class="control-group">
         <label>⌚ Add Smartwatches</label>
         <select id="addon-watches" onchange="window.renderConnectedLedger();">
@@ -733,15 +690,15 @@
     </div>
 
     <!-- Dynamic Connected Tech Hardware Ledger -->
-    <div id="connected-hardware-container" style="display:none; flex-direction:column; gap:8px; margin-bottom:12px;"></div>
+    <div id="connected-hardware-container" style="display:none; flex-direction:column; gap:10px; margin-bottom:14px;"></div>
 
     <!-- AIP & ACCESORRIES CATCH-ALL -->
-    <div style="background:#F0F9FF; border:1px solid #BAE6FD; border-radius:12px; padding:12px;">
-      <div style="font-size:9.5px; font-weight:800; color:#B45309; text-transform:uppercase; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+    <div style="background:#F0F9FF; border:1.5px solid #BAE6FD; border-radius:14px; padding:14px;">
+      <div style="font-size:11.5px; font-weight:800; color:#B45309; text-transform:uppercase; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
         <span>🛍️ 12-Month Accessory Installment Plan (AIP) &amp; POS Catch-All</span>
-        <label style="display:flex; align-items:center; gap:6px;">
-          <input type="checkbox" id="check-aip-eligible" checked onchange="window.runCalc();" style="accent-color:var(--emerald);">
-          <span style="font-size:8px; color:var(--text-secondary);">12-Mo Financing ($75 Min)</span>
+        <label style="display:flex; align-items:center; gap:8px;">
+          <input type="checkbox" id="check-aip-eligible" checked onchange="window.runCalc();" style="accent-color:var(--emerald); width:18px; height:18px;">
+          <span style="font-size:10.5px; color:var(--text-secondary);">12-Mo Financing ($75 Min)</span>
         </label>
       </div>
       <div class="grid-2">
@@ -778,12 +735,12 @@
     </div>
 
     <!-- BILL CYCLE CUT DATE & FIRST BILL EXPECTATION ENGINE -->
-    <div style="background:#F0F9FF; border:1.5px solid #BAE6FD; border-radius:12px; padding:14px; margin-top:14px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
-        <span style="font-size:10px; font-weight:800; color:var(--att-blue); text-transform:uppercase;">
+    <div style="background:#F0F9FF; border:2px solid #BAE6FD; border-radius:14px; padding:16px; margin-top:16px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+        <span style="font-size:12px; font-weight:800; color:var(--att-blue); text-transform:uppercase;">
           📅 Bill Cycle Cut Date &amp; First Bill Expectation
         </span>
-        <span id="cycle-days-badge" style="background:#FFFFFF; border:1px solid #93C5FD; color:var(--att-blue); padding:3px 10px; border-radius:12px; font-size:8.5px; font-weight:800;">
+        <span id="cycle-days-badge" style="background:#FFFFFF; border:1.5px solid #93C5FD; color:var(--att-blue); padding:4px 12px; border-radius:14px; font-size:11px; font-weight:800;">
           Calculating...
         </span>
       </div>
@@ -821,30 +778,30 @@
         </div>
       </div>
 
-      <div style="background:#FFFFFF; border:1px solid #93C5FD; border-radius:10px; padding:12px; margin-top:10px;">
-        <div style="display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px;">
+      <div style="background:#FFFFFF; border:1.5px solid #93C5FD; border-radius:12px; padding:14px; margin-top:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:10px;">
           <div>
-            <div style="font-size:8px; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Estimated Very Next Bill Total</div>
-            <div id="first-bill-total" style="font-size:22px; font-weight:900; color:#0F172A;">$165.00</div>
+            <div style="font-size:10.5px; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Estimated Very Next Bill Total</div>
+            <div id="first-bill-total" style="font-size:26px; font-weight:900; color:#0F172A;">$165.00</div>
           </div>
           <div style="text-align:right;">
-            <div style="font-size:8px; font-weight:800; color:var(--emerald); text-transform:uppercase;">Normal Ongoing Rate (Cycle 3+)</div>
-            <div id="ongoing-bill-total" style="font-size:15px; font-weight:900; color:var(--emerald);">$130.00/mo</div>
+            <div style="font-size:10.5px; font-weight:800; color:var(--emerald); text-transform:uppercase;">Normal Ongoing Rate (Cycle 3+)</div>
+            <div id="ongoing-bill-total" style="font-size:18px; font-weight:900; color:var(--emerald);">$130.00/mo</div>
           </div>
         </div>
-        <div id="first-bill-breakdown-notes" style="font-size:8.5px; color:var(--text-secondary); line-height:1.45; margin-top:6px; border-top:1px dashed #E2E8F0; padding-top:6px;"></div>
+        <div id="first-bill-breakdown-notes" style="font-size:11px; color:var(--text-secondary); line-height:1.5; margin-top:8px; border-top:1px dashed #E2E8F0; padding-top:8px;"></div>
       </div>
     </div>
 
     <!-- LINE-BY-LINE HARDWARE ACQUISITION LEDGER -->
-    <div style="background:#F0F9FF; border:1.5px solid #BAE6FD; border-radius:12px; padding:14px; margin-top:14px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
-        <span style="font-size:10px; font-weight:800; color:var(--att-blue); text-transform:uppercase;">
+    <div style="background:#F0F9FF; border:2px solid #BAE6FD; border-radius:14px; padding:16px; margin-top:16px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+        <span style="font-size:12px; font-weight:800; color:var(--att-blue); text-transform:uppercase;">
           📱 Line-by-Line Device Acquisition Matrix (Full Catalog)
         </span>
-        <div style="display:flex; align-items:center; gap:8px;">
-          <span style="font-size:8.5px; font-weight:800; color:var(--text-secondary);">Phones Acquired:</span>
-          <select id="acquired-phone-count" style="padding:3px 8px; border-radius:6px; border:1px solid var(--att-blue); font-weight:800;" onchange="window.renderAcquiredPhoneLedger();">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font-size:11px; font-weight:800; color:var(--text-secondary);">Phones Acquired:</span>
+          <select id="acquired-phone-count" style="padding:5px 10px; border-radius:8px; border:1.5px solid var(--att-blue); font-weight:800; font-size:12px;" onchange="window.renderAcquiredPhoneLedger();">
             <option value="0">0 Phones</option>
             <option value="1">1 Phone</option>
             <option value="2">2 Phones</option>
@@ -853,26 +810,26 @@
           </select>
         </div>
       </div>
-      <div id="acquired-phones-container" style="display:flex; flex-direction:column; gap:8px;"></div>
+      <div id="acquired-phones-container" style="display:flex; flex-direction:column; gap:10px;"></div>
     </div>
 
     <!-- POINT OF SALE REGISTER DUE TODAY / BTA BANNER -->
     <div class="due-box">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
         <div class="due-title" id="lbl-due-title">🏷️ Total Due Today at Register (7% State Tax &amp; Goods)</div>
-        <label class="rep-only" style="display:flex; align-items:center; gap:6px;">
-          <input type="checkbox" id="check-waived-fees" onchange="window.runCalc();" style="accent-color:var(--emerald);">
-          <span style="font-size:8.5px; font-weight:800; color:#059669;">🎉 Waived Upgrade Fees? (-$35/phone)</span>
+        <label class="rep-only" style="display:flex; align-items:center; gap:8px;">
+          <input type="checkbox" id="check-waived-fees" onchange="window.runCalc();" style="accent-color:var(--emerald); width:18px; height:18px;">
+          <span style="font-size:11px; font-weight:800; color:#059669;">🎉 Waived Upgrade Fees? (-$35/phone)</span>
         </label>
       </div>
       <div class="due-amt" id="due-today-amt">$0.00 Due Today</div>
       <div class="due-sub" id="due-today-breakdown">Calculates exact 7% state tax on retail hardware + accessories + network fees.</div>
     </div>
 
-    <div class="control-group" style="margin-top:14px;">
-      <label>📱 Instant Customer SMS Quote</label>
-      <textarea id="sms-text" style="width:100%; height:95px; background:#F0F9FF; border:1.5px solid #BAE6FD; color:#0F172A; border-radius:10px; padding:10px; font-family:inherit; resize:none;" readonly></textarea>
-      <button type="button" class="btn" style="margin-top:8px; width:100%; background:var(--att-blue); color:#FFF; border-color:var(--att-blue);" onclick="window.copySMS()">📋 Copy Text for Customer</button>
+    <div class="control-group" style="margin-top:16px;">
+      <label style="font-size:12px;">📱 Instant Customer SMS Quote</label>
+      <textarea id="sms-text" style="width:100%; height:110px; background:#F0F9FF; border:2px solid #BAE6FD; color:#0F172A; border-radius:12px; padding:12px; font-family:inherit; font-size:12.5px; resize:none;" readonly></textarea>
+      <button type="button" class="btn" style="margin-top:10px; width:100%; background:var(--att-blue); color:#FFF; border-color:var(--att-blue); font-size:13.5px; padding:12px;" onclick="window.copySMS()">📋 Copy Text for Customer</button>
     </div>
   </div>
 </div>
@@ -909,7 +866,7 @@ var businessRates = {
   10: { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40.99 }
 };
 
-/* COMPLETE 2026 ACTIVE CATALOG (NO BASE 18 • INCLUDES DUO & FOLD 8 LINEUPS) */
+/* COMPLETE 2026 ACTIVE CATALOG */
 var acquiredDeviceCatalogHTML = `
   <optgroup label="Apple Lineup">
     <option value="1999|iPhone Duo (Foldable)" selected>iPhone Duo (Foldable • $1,999.00)</option>
@@ -932,7 +889,6 @@ var acquiredDeviceCatalogHTML = `
   </optgroup>
 `;
 
-/* CONNECTED TECH CATALOG */
 var watchCatalogHTML = `
   <option value="799|Apple Watch Ultra 3">Apple Watch Ultra 3 ($799.00)</option>
   <option value="429|Apple Watch Series 12" selected>Apple Watch Series 12 ($429.00)</option>
@@ -949,7 +905,6 @@ var tabletCatalogHTML = `
   <option value="499|Galaxy Tab S9 FE">Galaxy Tab S9 FE ($499.00)</option>
 `;
 
-/* TRADE-IN DATABASE FROM OCT 9TH GRID */
 var deviceTradeOptionsHTML = `
   <optgroup label="Tier 1 ($230+ Value • $1,000 Off Flagship)">
     <option value="230|1000|27.78|iPhone 14 Pro Max" selected>iPhone 14 Pro Max ($230 base book)</option>
@@ -1017,11 +972,11 @@ window.renderTradeCards = function() {
 
   for (var i = 1; i <= count; i++) {
     var lineCard = document.createElement('div');
-    lineCard.style = "background:#FFFFFF; border:1px solid #BAE6FD; border-radius:10px; padding:10px 14px; display:flex; flex-direction:column; gap:8px;";
+    lineCard.style = "background:#FFFFFF; border:1.5px solid #BAE6FD; border-radius:12px; padding:12px 16px; display:flex; flex-direction:column; gap:8px;";
     lineCard.innerHTML = `
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
-        <span style="font-size:9.5px; font-weight:800; color:var(--att-blue);">Line ${i} Trade-In Intake</span>
-        <span id="t-badge-${i}" style="background:#EFF6FF; border:1px solid #BFDBFE; color:var(--att-blue); padding:2px 8px; border-radius:10px; font-size:8px; font-weight:800;">Book: $230 • Tier 1 ($1,000 Off)</span>
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <span style="font-size:11.5px; font-weight:800; color:var(--att-blue);">Line ${i} Trade-In Intake</span>
+        <span id="t-badge-${i}" style="background:#EFF6FF; border:1px solid #BFDBFE; color:var(--att-blue); padding:3px 10px; border-radius:12px; font-size:10px; font-weight:800;">Book: $230 • Tier 1 ($1,000 Off)</span>
       </div>
       <div class="grid-2">
         <div class="control-group">
@@ -1030,7 +985,7 @@ window.renderTradeCards = function() {
             ${deviceTradeOptionsHTML}
           </select>
         </div>
-        <div style="display:flex; align-items:center; gap:12px; margin-top:14px;">
+        <div style="display:flex; align-items:center; gap:12px; margin-top:16px;">
           <label class="filter-item" style="color:#DC2626; font-weight:800;">
             <input type="checkbox" id="trade-damage-${i}" onchange="window.syncSingleTradeLine(${i});" style="accent-color:#DC2626;">
             <span>🔨 Physical Damage / Cracked (-50%)</span>
@@ -1079,7 +1034,7 @@ window.renderAcquiredPhoneLedger = function() {
   container.innerHTML = '';
 
   if (count === 0) {
-    container.innerHTML = '<div style="font-size:8.5px; color:var(--text-muted); font-style:italic;">No hardware acquired ($0 POS Tax).</div>';
+    container.innerHTML = '<div style="font-size:11px; color:var(--text-muted); font-style:italic;">No hardware acquired ($0 POS Tax).</div>';
     window.runCalc();
     return;
   }
@@ -1089,10 +1044,10 @@ window.renderAcquiredPhoneLedger = function() {
     lineCard.className = "checkout-line-item";
     lineCard.innerHTML = `
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-size:9px; font-weight:800; color:var(--att-blue);">Line ${i} Hardware Acquisition</span>
-        <select id="acq-type-${i}" style="padding:2px 6px; border-radius:6px; font-size:8px; border:1px solid #93C5FD; font-weight:800;" onchange="window.runCalc();">
+        <span style="font-size:11px; font-weight:800; color:var(--att-blue);">Line ${i} Hardware Acquisition</span>
+        <select id="acq-type-${i}" style="padding:4px 8px; border-radius:8px; font-size:10.5px; border:1.5px solid #93C5FD; font-weight:800;" onchange="window.runCalc();">
           <option value="upgrade" selected>Upgrade Existing</option>
-          <option value="add">➕ Add New Line</option>
+          <option value="add">➕ Add a Line</option>
         </select>
       </div>
       <div class="grid-2">
@@ -1102,8 +1057,7 @@ window.renderAcquiredPhoneLedger = function() {
             ${acquiredDeviceCatalogHTML}
           </select>
         </div>
-        <div id="acq-math-display-${i}" style="font-size:8.5px; color:var(--text-secondary); display:flex; flex-direction:column; justify-content:center; gap:2px;">
-          <!-- Rendered via runCalc -->
+        <div id="acq-math-display-${i}" style="font-size:10.5px; color:var(--text-secondary); display:flex; flex-direction:column; justify-content:center; gap:3px;">
         </div>
       </div>
     `;
@@ -1128,10 +1082,10 @@ window.renderConnectedLedger = function() {
 
   for (var w = 1; w <= wCount; w++) {
     var div = document.createElement('div');
-    div.style = "background:#FFFFFF; border:1px solid #BAE6FD; border-radius:8px; padding:8px 12px; display:flex; justify-content:space-between; align-items:center; gap:8px;";
+    div.style = "background:#FFFFFF; border:1.5px solid #BAE6FD; border-radius:10px; padding:10px 14px; display:flex; justify-content:space-between; align-items:center; gap:10px;";
     div.innerHTML = `
-      <span style="font-size:8.5px; font-weight:800; color:var(--att-blue);">Watch ${w}:</span>
-      <select id="conn-watch-${w}" style="flex:1; padding:4px; font-size:9px; border-radius:6px; border:1px solid #93C5FD;" onchange="window.runCalc();">
+      <span style="font-size:11px; font-weight:800; color:var(--att-blue);">Watch ${w}:</span>
+      <select id="conn-watch-${w}" style="flex:1; padding:6px 10px; font-size:11px; border-radius:8px; border:1.5px solid #93C5FD;" onchange="window.runCalc();">
         ${watchCatalogHTML}
       </select>
     `;
@@ -1140,116 +1094,16 @@ window.renderConnectedLedger = function() {
 
   for (var t = 1; t <= tCount; t++) {
     var divT = document.createElement('div');
-    divT.style = "background:#FFFFFF; border:1px solid #BAE6FD; border-radius:8px; padding:8px 12px; display:flex; justify-content:space-between; align-items:center; gap:8px;";
+    divT.style = "background:#FFFFFF; border:1.5px solid #BAE6FD; border-radius:10px; padding:10px 14px; display:flex; justify-content:space-between; align-items:center; gap:10px;";
     divT.innerHTML = `
-      <span style="font-size:8.5px; font-weight:800; color:var(--att-blue);">Tablet ${t}:</span>
-      <select id="conn-tablet-${t}" style="flex:1; padding:4px; font-size:9px; border-radius:6px; border:1px solid #93C5FD;" onchange="window.runCalc();">
+      <span style="font-size:11px; font-weight:800; color:var(--att-blue);">Tablet ${t}:</span>
+      <select id="conn-tablet-${t}" style="flex:1; padding:6px 10px; font-size:11px; border-radius:8px; border:1.5px solid #93C5FD;" onchange="window.runCalc();">
         ${tabletCatalogHTML}
       </select>
     `;
     container.appendChild(divT);
   }
   window.runCalc();
-};
-
-/* SCOPES, COUNTERS, MODES */
-window.toggleScope = function(el) { el.classList.toggle('active'); window.runCalc(); };
-window.setLines = function(num) {
-  var n = parseInt(num, 10);
-  document.getElementById('cnt-prem').textContent = "1";
-  document.getElementById('cnt-extra').textContent = "0";
-  document.getElementById('cnt-val').textContent = (n > 1) ? (n - 1) : 0;
-  window.runCalc();
-};
-
-window.changeCount = function(type, delta) {
-  var p = parseInt(document.getElementById('cnt-prem').textContent, 10);
-  var e = parseInt(document.getElementById('cnt-extra').textContent, 10);
-  var v = parseInt(document.getElementById('cnt-val').textContent, 10);
-  if (type === 'prem') p = Math.max(0, p + delta);
-  if (type === 'extra') e = Math.max(0, e + delta);
-  if (type === 'val') v = Math.max(0, v + delta);
-  var total = p + e + v;
-  if (total > 10) return;
-  if (total === 0) p = 1;
-  document.getElementById('cnt-prem').textContent = p;
-  document.getElementById('cnt-extra').textContent = e;
-  document.getElementById('cnt-val').textContent = v;
-  document.getElementById('curr-lines').value = (p + e + v);
-  window.runCalc();
-};
-
-window.togglePresMode = function() {
-  document.body.classList.toggle('presentation-mode');
-  var isPres = document.body.classList.contains('presentation-mode');
-  var btn = document.getElementById('pres-btn');
-  if (btn) btn.innerHTML = isPres ? '👁️ Customer View: ON' : '👁️ Customer View: OFF';
-};
-
-window.copySMS = function() {
-  var t = document.getElementById('sms-text');
-  t.select();
-  document.execCommand('copy');
-  alert("Customer Quote Copied!");
-};
-
-window.copyAddress = function() {
-  var a = document.getElementById('addr-field').value;
-  if (!a) { alert("Address is empty"); return; }
-  navigator.clipboard.writeText(a).then(function() { alert("Copied address: " + a); });
-};
-
-window.selectRecommendedPlan = function(idx) {
-  window.selectedPlanIndex = idx;
-  var totalLines = parseInt(document.getElementById('curr-lines').value, 10) || 4;
-  if (idx === 0) {
-    document.getElementById('cnt-prem').textContent = "0";
-    document.getElementById('cnt-extra').textContent = "0";
-    document.getElementById('cnt-val').textContent = totalLines;
-  } else if (idx === 1) {
-    document.getElementById('cnt-prem').textContent = "1";
-    document.getElementById('cnt-extra').textContent = "0";
-    document.getElementById('cnt-val').textContent = Math.max(0, totalLines - 1);
-  } else if (idx === 2) {
-    var pCount = totalLines >= 3 ? 2 : 1;
-    document.getElementById('cnt-prem').textContent = pCount;
-    document.getElementById('cnt-extra').textContent = totalLines - pCount;
-    document.getElementById('cnt-val').textContent = "0";
-  } else {
-    document.getElementById('cnt-prem').textContent = totalLines;
-    document.getElementById('cnt-extra').textContent = "0";
-    document.getElementById('cnt-val').textContent = "0";
-  }
-  window.runCalc();
-};
-
-window.setAccountSegment = function(seg) {
-  window.accountSegment = seg;
-  document.getElementById('seg-btn-consumer').classList.toggle('active', seg === 'consumer');
-  document.getElementById('seg-btn-business').classList.toggle('active', seg === 'business');
-  window.syncSegmentUI();
-  window.runCalc();
-};
-
-window.syncSegmentUI = function() {
-  var isBiz = (window.accountSegment === "business");
-  var discSel = document.getElementById('curr-discount');
-  if (isBiz) {
-    document.getElementById('hdr-title-rep').textContent = "AT&T Business CRU Solutions Studio";
-    discSel.innerHTML = `
-      <option value="biz_std" selected>Standard Corporate CRU (No FAN)</option>
-      <option value="biz_evp">EVP / Corporate Volume Agreement ($10/L off Premium 3.0)</option>
-      <option value="biz_fn">FirstNet Agency-Paid Primary</option>
-    `;
-  } else {
-    document.getElementById('hdr-title-rep').textContent = "AT&T Executive Solutions Studio";
-    discSel.innerHTML = `
-      <option value="none" selected>Standard Consumer (No FAN)</option>
-      <option value="fan_corp">Corporate Employer FAN ($10/L off Premium)</option>
-      <option value="apprec_mil">Military / Veteran / FirstNet (25% Off)</option>
-      <option value="fiber">AT&amp;T Fiber Convergence (20% Off)</option>
-    `;
-  }
 };
 
 /* MASTER CALCULATION AND REINVESTMENT LEDGER */
@@ -1393,8 +1247,12 @@ window.runCalc = function() {
   var watchMonthly = wCount * (isBiz ? 10 : 10.99);
   var tabMonthly = tabCount * (isBiz ? 20 : 20.99);
 
+  /* DIRECTV STREAM IF SELECTED IN SCOPE */
+  var hasTV = document.getElementById('scope-tv') && document.getElementById('scope-tv').classList.contains('active');
+  var dtvMonthly = hasTV ? 79.99 : 0;
+
   /* TOTAL ONGOING RECURRING BILL */
-  var totalHousehold = Number((wirelessBasePlanTotal + totalNetDeviceInstallments + protectTotal + watchMonthly + tabMonthly + aipMonthly).toFixed(2));
+  var totalHousehold = Number((wirelessBasePlanTotal + totalNetDeviceInstallments + protectTotal + watchMonthly + tabMonthly + aipMonthly + dtvMonthly).toFixed(2));
   var monthlySavings = Number((rawCurrentBill - totalHousehold).toFixed(2));
 
   document.getElementById('sum-new-total').textContent = `$${totalHousehold.toFixed(2)}/mo`;
@@ -1405,7 +1263,7 @@ window.runCalc = function() {
   saveBox.className = "sum-savings";
   if (monthlySavings >= 65.00) {
     saveBox.classList.add("savings-badge-gold");
-    saveBox.innerHTML = `✨ Gold Reinvestment Tier: Saves $${monthlySavings.toFixed(2)}/mo!<br><span style="font-size:10px;">(Add-A-Line Territory • Zero Bill Increase)</span>`;
+    saveBox.innerHTML = `✨ Gold Reinvestment Tier: Saves $${monthlySavings.toFixed(2)}/mo!<br><span style="font-size:12px;">(Add-A-Line Territory • Zero Bill Increase)</span>`;
   } else if (monthlySavings >= 25.00) {
     saveBox.classList.add("savings-badge-green");
     saveBox.innerHTML = `🟢 High Impact: Saves $${monthlySavings.toFixed(2)}/mo vs Old Bill!`;
@@ -1468,6 +1326,7 @@ window.runCalc = function() {
   var sms = `AT&T Quote: ${totalLines} Voice Lines. Total Monthly: $${totalHousehold.toFixed(2)}/mo (w/ AutoPay).\n`;
   if (monthlySavings > 0) sms += `• Estimated Ongoing Savings: $${monthlySavings.toFixed(2)}/mo!\n`;
   if (totalMonthlyTradeCredits > 0) sms += `• Trade-In Savings: -$${totalMonthlyTradeCredits.toFixed(2)}/mo in bill credits across ${tCount} devices.\n`;
+  if (hasTV) sms += `• Includes DIRECTV Stream ($79.99/mo).\n`;
   sms += `• First Bill Expectation: ~$${estimatedFirstBill.toFixed(2)} (includes ${daysRemaining} days proration` + (oneTimeFeesOnBill > 0 ? ` + $${oneTimeFeesOnBill} fees` : '') + `), stabilizing to $${totalHousehold.toFixed(2)}/mo.\n`;
   sms += `• Due Today at Register: $${isBiz ? '0.00 (Billed to Account)' : totalDueAtPOS.toFixed(2)}.\nQuestions? Stop in-store to finalize!`;
   document.getElementById('sms-text').value = sms;
