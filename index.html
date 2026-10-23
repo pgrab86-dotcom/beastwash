@@ -1305,7 +1305,7 @@
     </div>
   </div>
 
-  <!-- SECTION 7: EXECUTIVE SUMMARY & OUT-THE-DOOR QUOTE -->
+  <!-- SECTION 7: EXECUTIVE SUMMARY & NEXT BILL EXPECTATION ENGINE -->
   <div class="section-card summary-card">
     <div class="sec-header">
       <div class="sec-title">📊 7. Executive Summary &amp; Out-The-Door Quote</div>
@@ -1318,6 +1318,71 @@
       </div>
       <div class="sum-savings" id="sum-savings-box">
         Saves $50.00/mo vs Old Bill!
+      </div>
+    </div>
+
+    <!-- BILL CYCLE CUT DATE & FIRST BILL EXPECTATION ENGINE -->
+    <div style="background:#F0F9FF; border:1.5px solid #BAE6FD; border-radius:12px; padding:14px; margin-top:14px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+        <span style="font-size:10px; font-weight:800; color:var(--att-blue); text-transform:uppercase; letter-spacing:0.5px;">
+          📅 Bill Cycle Cut Date &amp; First Bill Expectation
+        </span>
+        <span id="cycle-days-badge" style="background:#FFFFFF; border:1px solid #93C5FD; color:var(--att-blue); padding:3px 10px; border-radius:12px; font-size:8.5px; font-weight:800;">
+          Cycle Status: Calculating...
+        </span>
+      </div>
+
+      <div class="grid-3">
+        <div class="control-group">
+          <label>Customer Bill Cycle Cut Day</label>
+          <select id="bill-cut-day" onchange="window.runCalc();">
+            <option value="1">1st of the month</option>
+            <option value="4">4th of the month</option>
+            <option value="7">7th of the month</option>
+            <option value="10">10th of the month</option>
+            <option value="13">13th of the month</option>
+            <option value="16" selected>16th of the month</option>
+            <option value="19">19th of the month</option>
+            <option value="22">22nd of the month</option>
+            <option value="25">25th of the month</option>
+            <option value="28">28th of the month</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <label>One-Time Fee Billing Handling</label>
+          <select id="fee-billing-target" onchange="window.runCalc();">
+            <option value="bill" selected>Bill to Next Invoice ($35/line)</option>
+            <option value="pos">Collected Today at Register</option>
+            <option value="waived">Authorized Waived / Credited ($0)</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <label>Trade Credit Status (Cycle 1)</label>
+          <select id="trade-credit-delay" onchange="window.runCalc();">
+            <option value="delayed" selected>Credits Pending (Takes 1-3 Cycles)</option>
+            <option value="instant">Credits Applied Instantly (Cycle 1)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- NEXT BILL EXPECTATION CARD -->
+      <div style="background:#FFFFFF; border:1px solid #93C5FD; border-radius:10px; padding:12px; margin-top:10px;">
+        <div style="display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px;">
+          <div>
+            <div style="font-size:8px; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Estimated Very Next Bill Total</div>
+            <div id="first-bill-total" style="font-size:22px; font-weight:900; color:#0F172A; letter-spacing:-0.5px;">$165.00</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:8px; font-weight:800; color:var(--emerald); text-transform:uppercase;">Normal Ongoing Rate (Cycle 3+)</div>
+            <div id="ongoing-bill-total" style="font-size:15px; font-weight:900; color:var(--emerald);">$130.00/mo</div>
+          </div>
+        </div>
+
+        <div id="first-bill-breakdown-notes" style="font-size:8.5px; color:var(--text-secondary); line-height:1.45; margin-top:6px; border-top:1px dashed #E2E8F0; padding-top:6px;">
+          <!-- Rendered via JS -->
+        </div>
       </div>
     </div>
 
@@ -1379,7 +1444,7 @@
 
     <div class="control-group" style="margin-top:14px;">
       <label>📱 Instant Customer SMS Quote</label>
-      <textarea id="sms-text" style="width:100%; height:90px; background:#F0F9FF; border:1.5px solid #BAE6FD; color:#0F172A; border-radius:10px; padding:10px; font-family:inherit; resize:none;" readonly></textarea>
+      <textarea id="sms-text" style="width:100%; height:95px; background:#F0F9FF; border:1.5px solid #BAE6FD; color:#0F172A; border-radius:10px; padding:10px; font-family:inherit; resize:none;" readonly></textarea>
       <button type="button" class="btn" style="margin-top:8px; width:100%; background:var(--att-blue); color:#FFF; border-color:var(--att-blue);" onclick="window.copySMS()">📋 Copy Text for Customer</button>
     </div>
   </div>
@@ -1413,11 +1478,11 @@ var businessRates = {
   3: { prem: 65, ext: 50, val: 45, fanPrem: 55, noApPrem: 75, noApExt: 60, noApVal: 55 },
   4: { prem: 50, ext: 40, val: 30, fanPrem: 40, noApPrem: 60, noApExt: 50, noApVal: 40 },
   5: { prem: 45, ext: 35, val: 30, fanPrem: 35, noApPrem: 55, noApExt: 45, noApVal: 40 },
-  6: { prem: 40, ext: 35, val: 30, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40 },
-  7: { prem: 40, ext: 35, val: 30, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40 },
-  8: { prem: 40, ext: 35, val: 30, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40 },
-  9: { prem: 40, ext: 35, val: 30, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40 },
-  10: { prem: 40, ext: 35, val: 30, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40 }
+  6: { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40.99 },
+  7: { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40.99 },
+  8: { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40.99 },
+  9: { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40.99 },
+  10: { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40.99 }
 };
 
 var deviceTradeOptionsHTML = `
@@ -1949,6 +2014,9 @@ window.autoSaveState = function() {
     tht: document.getElementById('toggle-has-tradeins') ? document.getElementById('toggle-has-tradeins').checked : true,
     tlc: document.getElementById('trade-lines-count') ? document.getElementById('trade-lines-count').value : "4",
     tay: document.getElementById('check-ayac-promo') ? document.getElementById('check-ayac-promo').checked : false,
+    bcd: document.getElementById('bill-cut-day') ? document.getElementById('bill-cut-day').value : "16",
+    fbt: document.getElementById('fee-billing-target') ? document.getElementById('fee-billing-target').value : "bill",
+    tcd: document.getElementById('trade-credit-delay') ? document.getElementById('trade-credit-delay').value : "delayed",
     upc: document.getElementById('upgrade-count').value,
     upv: document.getElementById('upgrade-val').value,
     wf: document.getElementById('check-waived-fees').checked,
@@ -2074,6 +2142,10 @@ window.restoreState = function() {
       document.getElementById('check-ayac-promo').checked = s.tay;
       window.syncAllTradeLines();
     }
+
+    if (s.bcd && document.getElementById('bill-cut-day')) document.getElementById('bill-cut-day').value = s.bcd;
+    if (s.fbt && document.getElementById('fee-billing-target')) document.getElementById('fee-billing-target').value = s.fbt;
+    if (s.tcd && document.getElementById('trade-credit-delay')) document.getElementById('trade-credit-delay').value = s.tcd;
 
     if (s.upc) document.getElementById('upgrade-count').value = s.upc;
     if (s.upv) document.getElementById('upgrade-val').value = s.upv;
@@ -2203,7 +2275,6 @@ window.runCalc = function() {
     tradeBadge.textContent = `Total Trade Credits: -$${totalTradeCreditPerMonth.toFixed(2)}/mo`;
   }
 
-  // Update plan requirement banner in Section 4
   var planReqBanner = document.getElementById('trade-plan-requirement-banner');
   var planReqText = document.getElementById('trade-plan-requirement-text');
   var requiredHigherTierLines = linesDemandingTier1 + linesDemandingTier2;
@@ -2399,6 +2470,69 @@ window.runCalc = function() {
     saveBox.innerHTML = `+$${Math.abs(monthlySavings).toFixed(2)}/mo vs Old Bill`;
   }
 
+  /* BILL CYCLE PRORATION & FIRST BILL EXPECTATIONS ENGINE */
+  var cutDay = parseInt(document.getElementById('bill-cut-day').value, 10) || 16;
+  var feeHandling = document.getElementById('fee-billing-target').value;
+  var tradeDelayed = document.getElementById('trade-credit-delay').value === "delayed";
+  
+  var now = new Date();
+  var today = now.getDate();
+  var daysInMonth = 30;
+
+  var daysRemaining = 0;
+  if (today <= cutDay) {
+    daysRemaining = cutDay - today;
+  } else {
+    daysRemaining = (daysInMonth - today) + cutDay;
+  }
+  var prorationRatio = Number((daysRemaining / daysInMonth).toFixed(2));
+
+  var monthlyPlanDelta = totalHousehold - rawCurrentBill;
+  var proratedAdjustment = Number((monthlyPlanDelta * prorationRatio).toFixed(2));
+
+  var feesWaivedCheck = document.getElementById('check-waived-fees').checked;
+  var oneTimeFeesOnBill = 0;
+  if (!feesWaivedCheck && feeHandling === "bill") {
+    oneTimeFeesOnBill = upCount * 35.00;
+  }
+
+  var tradeCreditImpact = (tradeDelayed && hasTradeIns) ? totalTradeCreditPerMonth : 0;
+  var estimatedFirstBill = Number((totalHousehold + proratedAdjustment + oneTimeFeesOnBill + tradeCreditImpact).toFixed(2));
+
+  var cycleBadge = document.getElementById('cycle-days-badge');
+  if (cycleBadge) {
+    cycleBadge.textContent = `${daysRemaining} Days Left in Cycle (${cutDay}th Cut)`;
+  }
+
+  var firstBillDisplay = document.getElementById('first-bill-total');
+  var ongoingBillDisplay = document.getElementById('ongoing-bill-total');
+  var breakdownNotes = document.getElementById('first-bill-breakdown-notes');
+
+  if (firstBillDisplay && ongoingBillDisplay && breakdownNotes) {
+    firstBillDisplay.textContent = `$${estimatedFirstBill.toFixed(2)}`;
+    ongoingBillDisplay.textContent = `$${totalHousehold.toFixed(2)}/mo`;
+
+    var notes = [];
+    notes.push(`• <b>Full Advance Month:</b> $${totalHousehold.toFixed(2)} (New baseline recurring plan rate).`);
+    
+    if (proratedAdjustment !== 0) {
+      var proSign = proratedAdjustment > 0 ? "+" : "-";
+      notes.push(`• <b>Proration (${daysRemaining} days):</b> ${proSign}$${Math.abs(proratedAdjustment).toFixed(2)} transition rerate difference.`);
+    }
+
+    if (oneTimeFeesOnBill > 0) {
+      notes.push(`• <b>One-Time Upgrade/Act. Fees:</b> +$${oneTimeFeesOnBill.toFixed(2)} ($35 x ${upCount} lines billed to invoice).`);
+    } else if (feesWaivedCheck || feeHandling === "waived") {
+      notes.push(`• <b>Upgrade Fees:</b> $0.00 (Waived/Promotional agreement).`);
+    }
+
+    if (tradeDelayed && totalTradeCreditPerMonth > 0) {
+      notes.push(`• <b>Trade-in Catch-Up:</b> 36-mo trade credits (-$${totalTradeCreditPerMonth.toFixed(2)}/mo) typically attach by Cycle 2 or 3, with retroactive double-credits catching up.`);
+    }
+
+    breakdownNotes.innerHTML = notes.join("<br>");
+  }
+
   /* BILL-NEUTRAL DEVICE ARBITRAGE SPOTLIGHT (IPHONE & ANDROID) */
   var arbBox = document.getElementById('device-arbitrage-box');
   var arbContainer = document.getElementById('arb-devices-container');
@@ -2407,7 +2541,6 @@ window.runCalc = function() {
   if (monthlySavings >= 10.00 || totalTradeCreditPerMonth >= 20.00) {
     arbBox.style.display = 'block';
     
-    // Calculate best Apple and Android upgrade matches
     var appleRec = "iPhone 16 (128GB)";
     var appleMath = "$0.00/mo after $1,000 promo credit (100% Bill-Neutral)";
     var androidRec = "Galaxy S25 (128GB)";
@@ -2435,12 +2568,11 @@ window.runCalc = function() {
     arbBox.style.display = 'none';
   }
 
-  var feesWaived = document.getElementById('check-waived-fees').checked;
-  var feePerPhone = feesWaived ? 0.00 : 35.00;
+  var feePerPhone = feesWaivedCheck ? 0.00 : (feeHandling === "pos" ? 35.00 : 0.00);
   var deviceTaxPerPhone = upVal * 0.07;
   var totalDeviceTax = upCount * deviceTaxPerPhone;
-  var totalUpgradeFees = upCount * feePerPhone;
-  var totalDueAtRegister = Number((totalDeviceTax + totalUpgradeFees + aipSalesTaxDue).toFixed(2));
+  var totalUpgradeFeesPOS = upCount * feePerPhone;
+  var totalDueAtRegister = Number((totalDeviceTax + totalUpgradeFeesPOS + aipSalesTaxDue).toFixed(2));
 
   var dueBox = document.getElementById('due-today-amt');
   var breakdownBox = document.getElementById('due-today-breakdown');
@@ -2449,7 +2581,7 @@ window.runCalc = function() {
       ? "$" + totalDueAtRegister.toFixed(2) + " Due Today (Eligible for BTA)"
       : "$" + totalDueAtRegister.toFixed(2) + " Due Today at Register";
     var parts = [];
-    if (upCount > 0) parts.push(upCount + " phones ($" + totalDeviceTax.toFixed(2) + " tax" + (feesWaived ? " + $0 fees WAIVED" : " + $" + totalUpgradeFees.toFixed(2) + " fees") + ")");
+    if (upCount > 0) parts.push(upCount + " phones ($" + totalDeviceTax.toFixed(2) + " tax" + (feeHandling === "pos" ? ` + $${totalUpgradeFeesPOS.toFixed(2)} fees` : " [Fees Billed to Account]") + ")");
     if (totalAipCart > 0) parts.push("Hardware ($" + aipSalesTaxDue.toFixed(2) + " tax on $" + totalAipCart.toFixed(2) + ")");
     breakdownBox.textContent = "Breakdown: " + parts.join(" + ");
   } else {
@@ -2474,6 +2606,7 @@ window.runCalc = function() {
 
   sms += ".\nTotal Monthly: $" + totalHousehold.toFixed(2) + "/mo (w/ AutoPay).\n";
   if (monthlySavings > 0) sms += "Estimated Savings: $" + monthlySavings.toFixed(2) + "/mo!\n";
+  sms += `• Next Bill Expectation: ~$${estimatedFirstBill.toFixed(2)} (includes ${daysRemaining} days proration` + (oneTimeFeesOnBill > 0 ? ` + $${oneTimeFeesOnBill} fees` : ``) + `), stabilizing to $${totalHousehold.toFixed(2)}/mo ongoing once trade credits attach.\n`;
   if (window.broadbandCost > 0) sms += "• Includes AT&T " + (isBiz ? "Business Fiber" : "Home Internet") + " ($" + window.broadbandCost.toFixed(2) + "/mo)\n";
   if (totalDueAtRegister > 0) sms += "• Due Today / BTA: $" + totalDueAtRegister.toFixed(2) + "\n";
   sms += "Questions? Stop in-store to finalize!";
