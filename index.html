@@ -1233,21 +1233,85 @@
       </div>
     </div>
 
-    <!-- TRADE-IN PROMOTIONS MODULE -->
-    <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:12px; padding:12px; margin-top:14px;">
-      <div style="font-size:9.5px; font-weight:800; color:var(--att-blue); text-transform:uppercase; margin-bottom:8px;">🏷️ Device Trade-In &amp; Promotional Credits (36-Month Bill Credits)</div>
-      <div class="grid-2">
+    <!-- TRADE-IN PROMOTIONS & LIVE VALUE SELECTOR -->
+    <div style="background:#F8FAFC; border:1.5px solid #CBD5E1; border-radius:12px; padding:12px; margin-top:14px;">
+      <div style="font-size:9.5px; font-weight:800; color:var(--att-blue); text-transform:uppercase; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+        <span>🏷️ Device Trade-In &amp; Promotional Credits (Oct 9th Grid)</span>
+        <span id="trade-book-val-badge" style="background:#EFF6FF; border:1px solid #BFDBFE; color:var(--att-blue); padding:3px 10px; border-radius:12px; font-size:8.5px; font-weight:800;">AT&amp;T Book Value: $230</span>
+      </div>
+
+      <div class="grid-3">
+        <!-- Device Quick Picker -->
         <div class="control-group">
-          <label>Trade-In Promo Tier</label>
-          <select id="trade-promo-tier" onchange="window.runCalc();">
-            <option value="0">Tier 0: No Trade-In / Standard Installment ($0 credit)</option>
-            <option value="27.78" selected>Tier 1: $1,000 Off Tier ($230+ Trade Value • -$27.78/mo)</option>
-            <option value="23.06">Tier 2: $830 Off Tier ($130–$229 Trade Value • -$23.06/mo)</option>
-            <option value="9.72">Tier 3: $350 Off Tier ($35–$129 Trade Value • -$9.72/mo)</option>
+          <label>Select Current Customer Device</label>
+          <select id="trade-device-picker" onchange="window.syncTradeDevice();">
+            <optgroup label="Tier 1 ($230+ Value • $1,000 Off Flagship)">
+              <option value="230|1000|27.78|iPhone 14 Pro Max" selected>iPhone 14 Pro Max ($230 book)</option>
+              <option value="230|1000|27.78|iPhone 15 / 15 Plus">iPhone 15 / 15 Plus ($230 book)</option>
+              <option value="260|1000|27.78|iPhone 15 Pro">iPhone 15 Pro ($260 book)</option>
+              <option value="300|1000|27.78|iPhone 15 Pro Max">iPhone 15 Pro Max ($300 book)</option>
+              <option value="320|1000|27.78|iPhone 16 / 16 Plus">iPhone 16 / 16 Plus ($320 book)</option>
+              <option value="380|1000|27.78|iPhone 16 Pro / Pro Max">iPhone 16 Pro / Pro Max ($380-$480)</option>
+              <option value="230|1000|27.78|Galaxy S24+ / S25 FE">Galaxy S24+ / S25 FE ($230 book)</option>
+              <option value="300|1000|27.78|Galaxy S24 Ultra">Galaxy S24 Ultra ($300 book)</option>
+              <option value="290|1000|27.78|Galaxy S25 / S25+">Galaxy S25 / S25+ ($290-$330)</option>
+              <option value="455|1000|27.78|Galaxy S25 Ultra / S26">Galaxy S25 Ultra / S26 ($350-$500)</option>
+              <option value="230|1000|27.78|Galaxy Z Flip7 FE / Flip7">Galaxy Z Flip7 / FE ($230-$250)</option>
+              <option value="300|1000|27.78|Galaxy Z Fold6 / Fold7">Galaxy Z Fold6 / Fold7 ($300-$480)</option>
+              <option value="350|1000|27.78|Pixel 9 Pro Fold">Pixel 9 Pro Fold ($350 book)</option>
+              <option value="290|1000|27.78|Pixel 10 / 10 Pro / XL">Pixel 10 Series ($290-$420)</option>
+            </optgroup>
+            <optgroup label="Tier 2 ($130–$229 Value • $830 Off)">
+              <option value="180|830|23.06|iPhone 14 / 14 Plus">iPhone 14 / 14 Plus ($180 book)</option>
+              <option value="195|830|23.06|iPhone 14 Pro">iPhone 14 Pro ($195 book)</option>
+              <option value="225|830|23.06|iPhone 17e">iPhone 17e ($225 book)</option>
+              <option value="130|830|23.06|Galaxy S22 Ultra / S23">Galaxy S22 Ultra / S23 ($130 book)</option>
+              <option value="150|830|23.06|Galaxy S23+ / S24 FE">Galaxy S23+ / S24 FE ($130-$150)</option>
+              <option value="160|830|23.06|Galaxy S24">Galaxy S24 ($160 book)</option>
+              <option value="190|830|23.06|Galaxy Z Flip6">Galaxy Z Flip6 ($190 book)</option>
+              <option value="210|830|23.06|Galaxy Z Fold5">Galaxy Z Fold5 ($210 book)</option>
+              <option value="150|830|23.06|Pixel 8 Pro / 9a">Pixel 8 Pro / 9a ($150 book)</option>
+              <option value="200|830|23.06|Pixel 9 / 9 Pro / XL">Pixel 9 / Pro / XL ($200-$220)</option>
+              <option value="210|830|23.06|Pixel 10a">Pixel 10a ($210 book)</option>
+            </optgroup>
+            <optgroup label="Tier 3 ($35–$129 Value • $350 Off)">
+              <option value="35|350|9.72|iPhone XR / XS / Max">iPhone XR / XS / Max ($35 book)</option>
+              <option value="55|350|9.72|iPhone 11">iPhone 11 ($55 book)</option>
+              <option value="95|350|9.72|iPhone 11 Pro / Max">iPhone 11 Pro / Max ($95 book)</option>
+              <option value="95|350|9.72|iPhone 12 / Mini / Pro">iPhone 12 / Mini / Pro ($95 book)</option>
+              <option value="115|350|9.72|iPhone 12 Pro Max">iPhone 12 Pro Max ($115 book)</option>
+              <option value="115|350|9.72|iPhone 13 / Mini">iPhone 13 / Mini ($95-$115 book)</option>
+              <option value="125|350|9.72|iPhone 13 Pro / Max">iPhone 13 Pro / Max ($125 book)</option>
+              <option value="125|350|9.72|iPhone 16e">iPhone 16e ($125 book)</option>
+              <option value="35|350|9.72|Galaxy S10 / S20 / S21">Galaxy S10 / S20 / S21 ($35 book)</option>
+              <option value="55|350|9.72|Galaxy S21+ / S22">Galaxy S21+ / S22 ($55-$60 book)</option>
+              <option value="95|350|9.72|Galaxy S22+">Galaxy S22+ ($95 book)</option>
+              <option value="70|350|9.72|Galaxy Note 20 Ultra">Galaxy Note 20 Ultra ($70 book)</option>
+              <option value="35|350|9.72|Galaxy Z Flip3 / 4 / 5">Galaxy Z Flip3 / 4 / 5 ($35-$95)</option>
+              <option value="95|350|9.72|Galaxy Z Fold3 / 4">Galaxy Z Fold3 / 4 ($95-$120)</option>
+              <option value="45|350|9.72|Pixel 6 / 7 / 7a">Pixel 6 / 7 / 7a ($35-$45)</option>
+              <option value="95|350|9.72|Pixel 7 Pro / 8a / 8">Pixel 7 Pro / 8 / 8a ($95-$110)</option>
+            </optgroup>
+            <optgroup label="Ineligible / Under $35 ($0 Promo)">
+              <option value="0|0|0|Legacy / Out of Support">iPhone 6-8 / S7-S9 / &lt;$35 ($0 Promo)</option>
+            </optgroup>
           </select>
         </div>
+
+        <!-- Matched Promo Tier Override -->
         <div class="control-group">
-          <label>Lines Receiving Trade-In Credit</label>
+          <label>Promo Credit Applied (36-Mo)</label>
+          <select id="trade-promo-tier" onchange="window.runCalc();">
+            <option value="0">Tier 0: $0 Promo Credit</option>
+            <option value="27.78" selected>Tier 1: $1,000 Off (-$27.78/mo • $230+ val)</option>
+            <option value="23.06">Tier 2: $830 Off (-$23.06/mo • $130-$229 val)</option>
+            <option value="9.72">Tier 3: $350 Off (-$9.72/mo • $35-$129 val)</option>
+          </select>
+        </div>
+
+        <!-- Trading Lines Count -->
+        <div class="control-group">
+          <label>Lines Receiving Credit</label>
           <select id="trade-lines-count" onchange="window.runCalc();">
             <option value="0">0 Trade-Ins</option>
             <option value="1">1 Trade-In Line</option>
@@ -1257,6 +1321,28 @@
           </select>
         </div>
       </div>
+
+      <!-- DAMAGE AUDIT & AYAC OVERRIDE BAR -->
+      <div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:10px; padding:10px 14px; margin-top:10px; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px;">
+        <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+          <label class="filter-item" style="color:#DC2626; font-weight:800;">
+            <input type="checkbox" id="check-trade-damaged" onchange="window.syncTradeDevice();" style="accent-color:#DC2626;">
+            <span>🔨 Physical Damage / Cracked Screen (-50% Hyla Drop)</span>
+          </label>
+          <label class="filter-item rep-only" style="color:var(--att-blue); font-weight:800;">
+            <input type="checkbox" id="check-ayac-promo" onchange="window.syncTradeDevice();" style="accent-color:var(--att-blue);">
+            <span>🛡️ Active "Any Year, Any Condition" (AYAC) Promo</span>
+          </label>
+        </div>
+        <div id="damage-impact-badge" style="font-size:8.5px; font-weight:800; color:var(--text-muted);">
+          Condition: Flawless (100% Value)
+        </div>
+      </div>
+
+      <div class="callout-box" id="trade-damage-warning" style="display:none; margin-top:8px; margin-bottom:0;">
+        <b>⚠️ Condition Demotion:</b> Cracked or damaged glass cut book value below promo threshold! Customer loses up to $650 in bill credits unless repaired or qualifying under an AYAC promotion.
+      </div>
+
       <div class="warning-box" id="trade-disqualify-warning" style="display:none; margin-top:8px; margin-bottom:0;">
         <b>⚠️ Entry Tier Disqualification:</b> Value Plus &amp; Business Standard lines are excluded from $830/$1,000 national trade credits. Lines must be placed on Advanced/Extra or higher to capture the full credit!
       </div>
@@ -1559,6 +1645,81 @@ window.syncUpgradeLines = function(val) {
   if (tradeSelect) {
     tradeSelect.value = count.toString();
   }
+  window.runCalc();
+};
+
+/* DEVICE TRADE-IN LOOKUP + DAMAGE & AYAC CALCULATOR */
+window.syncTradeDevice = function() {
+  var picker = document.getElementById('trade-device-picker');
+  if (!picker) return;
+  var parts = picker.value.split('|');
+  var rawBookVal = parseFloat(parts[0]) || 0;
+  var devName = parts[3] || "Device";
+
+  var isDamaged = document.getElementById('check-trade-damaged') ? document.getElementById('check-trade-damaged').checked : false;
+  var isAyac = document.getElementById('check-ayac-promo') ? document.getElementById('check-ayac-promo').checked : false;
+
+  var effectiveBookVal = isDamaged ? Math.floor(rawBookVal * 0.5) : rawBookVal;
+
+  // Badge Display
+  var badge = document.getElementById('trade-book-val-badge');
+  if (badge) {
+    if (isDamaged) {
+      badge.textContent = "AT&T Book Value: $" + effectiveBookVal + " (Was $" + rawBookVal + " - Damaged)";
+      badge.style.background = "#FEF2F2";
+      badge.style.color = "#DC2626";
+      badge.style.borderColor = "#FECACA";
+    } else {
+      badge.textContent = "AT&T Book Value: $" + effectiveBookVal;
+      badge.style.background = "#EFF6FF";
+      badge.style.color = "var(--att-blue)";
+      badge.style.borderColor = "#BFDBFE";
+    }
+  }
+
+  // Damage impact badge
+  var impactBadge = document.getElementById('damage-impact-badge');
+  if (impactBadge) {
+    if (isAyac) {
+      impactBadge.textContent = "🛡️ AYAC Active: Full Promo Protected";
+      impactBadge.style.color = "var(--emerald)";
+    } else if (isDamaged) {
+      impactBadge.textContent = "🔨 50% Valuation Penalty Applied";
+      impactBadge.style.color = "#DC2626";
+    } else {
+      impactBadge.textContent = "Condition: Flawless (100% Value)";
+      impactBadge.style.color = "var(--text-muted)";
+    }
+  }
+
+  // Tier Re-Assignment Logic
+  var tierSelect = document.getElementById('trade-promo-tier');
+  var damageWarning = document.getElementById('trade-damage-warning');
+
+  if (isAyac) {
+    if (tierSelect) tierSelect.value = "27.78"; // Force Top Tier on AYAC
+    if (damageWarning) damageWarning.style.display = "none";
+  } else {
+    if (tierSelect) {
+      if (effectiveBookVal >= 230) {
+        tierSelect.value = "27.78"; // Tier 1: $1,000 Off
+      } else if (effectiveBookVal >= 130) {
+        tierSelect.value = "23.06"; // Tier 2: $830 Off
+      } else if (effectiveBookVal >= 35) {
+        tierSelect.value = "9.72";  // Tier 3: $350 Off
+      } else {
+        tierSelect.value = "0";     // Disqualified under $35
+      }
+    }
+
+    if (damageWarning) {
+      // Alert rep if damage caused tier demotion
+      var origTier = (rawBookVal >= 230) ? 1 : ((rawBookVal >= 130) ? 2 : ((rawBookVal >= 35) ? 3 : 0));
+      var newTier = (effectiveBookVal >= 230) ? 1 : ((effectiveBookVal >= 130) ? 2 : ((effectiveBookVal >= 35) ? 3 : 0));
+      damageWarning.style.display = (isDamaged && (newTier < origTier)) ? 'block' : 'none';
+    }
+  }
+
   window.runCalc();
 };
 
@@ -1920,6 +2081,9 @@ window.autoSaveState = function() {
     nt: document.getElementById('addon-tablets').value,
     aip: document.getElementById('aip-cart-val').value,
     meta: document.getElementById('aip-meta-select').value,
+    tdp: document.getElementById('trade-device-picker') ? document.getElementById('trade-device-picker').value : "",
+    tdm: document.getElementById('check-trade-damaged') ? document.getElementById('check-trade-damaged').checked : false,
+    tay: document.getElementById('check-ayac-promo') ? document.getElementById('check-ayac-promo').checked : false,
     tpt: document.getElementById('trade-promo-tier').value,
     tlc: document.getElementById('trade-lines-count').value,
     upc: document.getElementById('upgrade-count').value,
@@ -2034,6 +2198,18 @@ window.restoreState = function() {
     if (s.nt) document.getElementById('addon-tablets').value = s.nt;
     if (s.aip) document.getElementById('aip-cart-val').value = s.aip;
     if (s.meta) document.getElementById('aip-meta-select').value = s.meta;
+
+    if (s.tdp && document.getElementById('trade-device-picker')) {
+      document.getElementById('trade-device-picker').value = s.tdp;
+    }
+    if (s.tdm !== undefined && document.getElementById('check-trade-damaged')) {
+      document.getElementById('check-trade-damaged').checked = s.tdm;
+    }
+    if (s.tay !== undefined && document.getElementById('check-ayac-promo')) {
+      document.getElementById('check-ayac-promo').checked = s.tay;
+    }
+    window.syncTradeDevice();
+
     if (s.tpt) document.getElementById('trade-promo-tier').value = s.tpt;
     if (s.tlc) document.getElementById('trade-lines-count').value = s.tlc;
     if (s.upc) document.getElementById('upgrade-count').value = s.upc;
@@ -2146,7 +2322,6 @@ window.runCalc = function() {
     extRate = tierData.noApExt;
     valRate = tierData.noApVal;
   } else if (apMethod === 'credit') {
-    // In Business CRU, Corporate Credit Cards get full $10/L discount
     premRate += (isBiz ? 0 : 5);
     extRate += (isBiz ? 0 : 5);
     valRate += (isBiz ? 0 : 5);
