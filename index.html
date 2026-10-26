@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>AT&T Executive Solutions Studio • elitererate.com</title>
 
+<!-- PREVENT CACHING / FORCE FRESH FETCH -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
+<!-- iOS PWA Standalone Meta Tags -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -374,7 +380,7 @@
         <button type="button" class="seg-btn" id="seg-btn-business" onclick="window.setAccountSegment('business')">🏢 Business</button>
       </div>
       <button type="button" class="btn" onclick="window.shareQuoteURL()">🔗 Share</button>
-      <button type="button" class="btn" onclick="window.resetToNextCustomer()">🔄 Reset</button>
+      <button type="button" class="btn" onclick="window.forceHardRefresh()">🔄 Force Update</button>
       <button type="button" class="btn btn-pres" id="pres-btn" onclick="window.togglePresMode();">👁️ Customer View: OFF</button>
       <button type="button" class="btn btn-print" onclick="window.print()">🖨️ Print</button>
     </div>
@@ -1632,6 +1638,12 @@ window.shareQuoteURL = function() {
   navigator.clipboard.writeText(fullURL).then(function() {
     alert("Quote URL copied to clipboard: " + fullURL);
   });
+};
+
+window.forceHardRefresh = function() {
+  localStorage.removeItem('att_quote_state');
+  var basePath = (window.accountSegment === "business") ? "/business" : "/";
+  window.location.href = window.location.origin + basePath + "?t=" + new Date().getTime();
 };
 
 window.resetToNextCustomer = function() {
