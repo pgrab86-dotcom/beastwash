@@ -364,7 +364,7 @@
         <span class="cust-only" id="hdr-title-cust">AT&amp;T Customized Plan Solutions</span>
       </h1>
       <p>
-        <span class="rep-only" id="hdr-sub-rep">DOWNWARD WATERFALL ARBITRAGE • HARDWARE REINVESTMENT • OPUS AUDIT</span>
+        <span class="rep-only" id="hdr-sub-rep">DOWNWARD WATERFALL ARBITRAGE • NEW LINE CONVERSIONS • OPUS AUDIT</span>
         <span class="cust-only" id="hdr-sub-cust">TAILORED MULTI-LINE SAVINGS &amp; BROADBAND BREAKDOWN</span>
       </p>
     </div>
@@ -404,7 +404,7 @@
     </div>
   </div>
 
-  <!-- SECTION 2: DEVICE TRADE-IN INTAKE (DEFAULT: 1 LINE) -->
+  <!-- SECTION 2: DEVICE TRADE-IN INTAKE (DEFAULT: 0 TRADE-INS) -->
   <div class="section-card" id="sec-tradeins">
     <div class="sec-header">
       <div class="sec-title">🏷️ 2. Device Trade-In Intake (Oct 9th Grid)</div>
@@ -413,14 +413,15 @@
 
     <div style="background:#F0F9FF; border:1.5px solid #BAE6FD; border-radius:14px; padding:14px 18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
       <label class="filter-item" style="font-size:13px; font-weight:800; color:var(--att-blue);">
-        <input type="checkbox" id="toggle-has-tradeins" checked onchange="window.toggleTradeInMaster();" style="width:20px; height:20px; accent-color:var(--att-blue);">
+        <input type="checkbox" id="toggle-has-tradeins" onchange="window.toggleTradeInMaster();" style="width:20px; height:20px; accent-color:var(--att-blue);">
         <span>Trading in Devices for Promotional Bill Credits?</span>
       </label>
 
-      <div id="wrap-trade-count" style="display:inline-flex; align-items:center; gap:10px;">
+      <div id="wrap-trade-count" style="display:none; align-items:center; gap:10px;">
         <span style="font-size:11px; font-weight:800; color:var(--text-secondary); text-transform:uppercase;">Lines Trading In:</span>
         <select id="trade-lines-count" style="padding:6px 12px; border-radius:10px; border:2px solid var(--att-blue); background:#FFF; color:#0F172A; font-weight:800; font-size:13px;" onchange="window.renderTradeCards();">
-          <option value="1" selected>1 Device Trade-In</option>
+          <option value="0" selected>0 Devices</option>
+          <option value="1">1 Device Trade-In</option>
           <option value="2">2 Devices Trading In</option>
           <option value="3">3 Devices Trading In</option>
           <option value="4">4 Devices Trading In</option>
@@ -428,7 +429,7 @@
       </div>
     </div>
 
-    <div id="wrap-trade-inner" style="margin-top:14px;">
+    <div id="wrap-trade-inner" style="display:none; margin-top:14px;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:10px;">
         <span style="font-size:11px; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Configure trade-in details per line:</span>
         <label class="filter-item rep-only" style="color:var(--att-blue); font-weight:800;">
@@ -440,7 +441,7 @@
     </div>
   </div>
 
-  <!-- SECTION 3: CURRENT ACCOUNT BASELINE (DEFAULT: 1 LINE @ $75.00) -->
+  <!-- SECTION 3: CURRENT ACCOUNT BASELINE (DEFAULT: 1 LINE @ $100.00) -->
   <div class="section-card">
     <div class="sec-header">
       <div class="sec-title">
@@ -451,7 +452,7 @@
     <div class="grid-5">
       <div class="control-group">
         <label>Current Plan Total ($)</label>
-        <input type="number" id="curr-total" value="75.00" step="0.01" oninput="window.runCalc();">
+        <input type="number" id="curr-total" value="100.00" step="0.01" oninput="window.runCalc();">
       </div>
       <div class="control-group">
         <label>Voice Lines</label>
@@ -526,15 +527,44 @@
     </div>
   </div>
 
-  <!-- SECTION 4: RECOMMENDED WIRELESS -->
+  <!-- SECTION 4: RECOMMENDED WIRELESS & REINVESTMENT OPPORTUNITIES -->
   <div class="section-card">
     <div class="sec-header">
       <div class="sec-title">🎯 4. Recommended Wireless Configuration &amp; Starting Pot</div>
-      <div class="pool-pill" id="wireless-pool">Wireless Base: $75.00/mo</div>
+      <div class="pool-pill" id="wireless-pool">Wireless Base: $50.00/mo</div>
     </div>
+    
     <div class="recommendations-grid" id="plan-cards-container"></div>
 
-    <!-- DYNAMIC STEPPERS INITIALIZING AT EXACTLY 1 LINE TOTAL (1 PREM, 0 EXTRA, 0 VAL) -->
+    <!-- PRIMARY REINVESTMENT CARD: ADD-A-LINE / NEW LINE BASKET FIRST -->
+    <div id="reinvest-new-lines-box" style="display:none; background:linear-gradient(135deg, #FEF08A 0%, #FDE047 50%, #FACC15 100%); border:2.5px solid #CA8A04; border-radius:16px; padding:16px; margin-top:16px; box-shadow:0 6px 20px rgba(250, 204, 21, 0.35);">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <span style="font-size:13.5px; font-weight:900; color:#713F12; text-transform:uppercase; letter-spacing:0.5px;">
+          ✨ Reinvest Savings: New Line Opportunities ($0 Net Increase)
+        </span>
+        <span id="reinvest-margin-badge" style="background:#FFFFFF; border:1.5px solid #A16207; color:#713F12; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:900;">
+          Available Margin: +$0.00/mo
+        </span>
+      </div>
+      <div style="font-size:11.5px; color:#854D0E; font-weight:700; margin-top:4px;">
+        Pitch new connected additions that completely fit inside the customer's plan savings before altering the tier:
+      </div>
+
+      <div id="new-line-opportunities-list" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:10px; margin-top:10px;">
+      </div>
+
+      <!-- DECLINE PIVOT: TIER ADJUSTMENT FALL-BACK -->
+      <div style="margin-top:12px; padding-top:10px; border-top:1px dashed #A16207; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <span style="font-size:11px; color:#713F12; font-weight:800;">
+          Customer declined new lines? Step the plan tier to lock in rate or capture commission:
+        </span>
+        <button type="button" class="btn" style="background:#FFFFFF; border-color:#A16207; color:#713F12; font-size:11px; font-weight:800; padding:6px 12px;" onclick="window.scrollToPlanSteppers();">
+          ⚡ Adjust Plan Tiers (Upsell Premium / Value) ▾
+        </button>
+      </div>
+    </div>
+
+    <!-- DYNAMIC STEPPERS (INITIALIZES AT 1 LINE TOTAL: 0 PREM, 0 EXTRA, 1 VAL) -->
     <div style="margin-top:16px;">
       <div class="counter-row">
         <div>
@@ -543,7 +573,7 @@
         </div>
         <div class="counter-controls">
           <div class="btn-circle" onclick="window.changeCount('prem', -1)">-</div>
-          <div class="counter-val" id="cnt-prem">1</div>
+          <div class="counter-val" id="cnt-prem">0</div>
           <div class="btn-circle" onclick="window.changeCount('prem', 1)">+</div>
         </div>
       </div>
@@ -565,7 +595,7 @@
         </div>
         <div class="counter-controls">
           <div class="btn-circle" onclick="window.changeCount('val', -1)">-</div>
-          <div class="counter-val" id="cnt-val">0</div>
+          <div class="counter-val" id="cnt-val">1</div>
           <div class="btn-circle" onclick="window.changeCount('val', 1)">+</div>
         </div>
       </div>
@@ -576,10 +606,10 @@
   <div class="waterfall-reinvest-bar rep-only">
     <div class="wf-status">
       <div class="wf-label">Active Reinvestment Pool</div>
-      <div class="wf-tier-name" id="wf-active-tier">Allocated from: Premium 2.0</div>
+      <div class="wf-tier-name" id="wf-active-tier">Allocated from: Value Plus 2.0</div>
     </div>
     <div class="wf-pot-display" id="wf-pot-badge" style="background:var(--emerald-bg); border:2px solid var(--emerald); color:var(--emerald);">
-      Starting Pot: $0.00/mo
+      Starting Pot: +$50.00/mo
     </div>
   </div>
 
@@ -592,7 +622,7 @@
     <div class="grid-4" id="bb-tiles-container"></div>
   </div>
 
-  <!-- SECTION 6: PROTECTION & CONNECTED TECH (DEFAULT: 0 WATCHES/TABLETS) -->
+  <!-- SECTION 6: PROTECTION & CONNECTED TECH -->
   <div class="section-card">
     <div class="sec-header">
       <div class="sec-title">🛡️ 6. Protection, Connected Tech &amp; AIP Cart</div>
@@ -666,7 +696,7 @@
     </div>
   </div>
 
-  <!-- SECTION 7: EXECUTIVE SUMMARY (DEFAULT: 1 PHONE ACQUIRED) -->
+  <!-- SECTION 7: EXECUTIVE SUMMARY & CHECKOUT LEDGER -->
   <div class="section-card summary-card">
     <div class="sec-header">
       <div class="sec-title">📊 7. Executive Summary &amp; Out-The-Door Quote</div>
@@ -675,10 +705,10 @@
     <div class="summary-grid">
       <div class="sum-left">
         <div class="sum-label" id="lbl-sum-bill-title">New Total Monthly Bill (w/ AutoPay)</div>
-        <div class="sum-total" id="sum-new-total">$80.00</div>
+        <div class="sum-total" id="sum-new-total">$50.00</div>
       </div>
       <div class="sum-savings" id="sum-savings-box">
-        Saves $0.00/mo vs Old Bill
+        Saves $50.00/mo vs Old Bill!
       </div>
     </div>
 
@@ -898,13 +928,26 @@ var deviceTradeOptionsHTML = `
 window.toggleTradeInMaster = function() {
   var isEnabled = document.getElementById('toggle-has-tradeins').checked;
   document.getElementById('wrap-trade-inner').style.display = isEnabled ? 'block' : 'none';
+  document.getElementById('wrap-trade-count').style.display = isEnabled ? 'inline-flex' : 'none';
+  if (!isEnabled) {
+    document.getElementById('trade-lines-count').value = "0";
+    document.getElementById('trade-devices-container').innerHTML = '';
+  } else {
+    document.getElementById('trade-lines-count').value = "1";
+    window.renderTradeCards();
+  }
   window.runCalc();
 };
 
 window.renderTradeCards = function() {
-  var count = parseInt(document.getElementById('trade-lines-count').value, 10) || 1;
+  var count = parseInt(document.getElementById('trade-lines-count').value, 10) || 0;
   var container = document.getElementById('trade-devices-container');
   container.innerHTML = '';
+
+  if (count === 0) {
+    window.runCalc();
+    return;
+  }
 
   for (var i = 1; i <= count; i++) {
     var lineCard = document.createElement('div');
@@ -957,7 +1000,7 @@ window.syncSingleTradeLine = function(lineIdx) {
 };
 
 window.syncAllTradeLines = function() {
-  var count = parseInt(document.getElementById('trade-lines-count').value, 10) || 1;
+  var count = parseInt(document.getElementById('trade-lines-count').value, 10) || 0;
   for (var i = 1; i <= count; i++) {
     window.syncSingleTradeLine(i);
   }
@@ -1059,13 +1102,15 @@ window.updateConditionalSections = function() {
 window.setLines = function(num) {
   var n = parseInt(num, 10);
   if (n === 1) {
-    document.getElementById('cnt-prem').textContent = "1";
+    document.getElementById('cnt-prem').textContent = "0";
     document.getElementById('cnt-extra').textContent = "0";
-    document.getElementById('cnt-val').textContent = "0";
+    document.getElementById('cnt-val').textContent = "1";
+    window.selectedPlanIndex = 0;
   } else {
     document.getElementById('cnt-prem').textContent = "1";
     document.getElementById('cnt-extra').textContent = "0";
     document.getElementById('cnt-val').textContent = (n - 1).toString();
+    window.selectedPlanIndex = 1;
   }
   window.runCalc();
 };
@@ -1079,7 +1124,7 @@ window.changeCount = function(type, delta) {
   if (type === 'val') v = Math.max(0, v + delta);
   var total = p + e + v;
   if (total > 10) return;
-  if (total === 0) p = 1;
+  if (total === 0) v = 1;
   document.getElementById('cnt-prem').textContent = p;
   document.getElementById('cnt-extra').textContent = e;
   document.getElementById('cnt-val').textContent = v;
@@ -1092,15 +1137,15 @@ window.selectRecommendedPlan = function(idx) {
   var totalLines = parseInt(document.getElementById('curr-lines').value, 10) || 1;
 
   if (totalLines === 1) {
-    if (idx === 0) { // Value Plus
+    if (idx === 0) {
       document.getElementById('cnt-prem').textContent = "0";
       document.getElementById('cnt-extra').textContent = "0";
       document.getElementById('cnt-val').textContent = "1";
-    } else if (idx === 1 || idx === 2) { // Extra
+    } else if (idx === 1) {
       document.getElementById('cnt-prem').textContent = "0";
       document.getElementById('cnt-extra').textContent = "1";
       document.getElementById('cnt-val').textContent = "0";
-    } else { // Premium
+    } else {
       document.getElementById('cnt-prem').textContent = "1";
       document.getElementById('cnt-extra').textContent = "0";
       document.getElementById('cnt-val').textContent = "0";
@@ -1114,11 +1159,6 @@ window.selectRecommendedPlan = function(idx) {
       document.getElementById('cnt-prem').textContent = "1";
       document.getElementById('cnt-extra').textContent = "0";
       document.getElementById('cnt-val').textContent = Math.max(0, totalLines - 1);
-    } else if (idx === 2) {
-      var pCount = totalLines >= 3 ? 2 : 1;
-      document.getElementById('cnt-prem').textContent = pCount;
-      document.getElementById('cnt-extra').textContent = totalLines - pCount;
-      document.getElementById('cnt-val').textContent = "0";
     } else {
       document.getElementById('cnt-prem').textContent = totalLines;
       document.getElementById('cnt-extra').textContent = "0";
@@ -1126,6 +1166,34 @@ window.selectRecommendedPlan = function(idx) {
     }
   }
   window.runCalc();
+};
+
+/* QUICK-ATTACH CONVERTORS FOR ADD-A-LINE ARBITRAGE */
+window.quickAttachConnected = function(type) {
+  if (type === 'watch') {
+    var wSel = document.getElementById('addon-watches');
+    wSel.value = "1";
+    window.renderConnectedLedger();
+  } else if (type === 'tablet') {
+    var tSel = document.getElementById('addon-tablets');
+    tSel.value = "1";
+    window.renderConnectedLedger();
+  }
+  window.runCalc();
+};
+
+window.quickAttachVoiceLine = function() {
+  var linesSel = document.getElementById('curr-lines');
+  var currentL = parseInt(linesSel.value, 10) || 1;
+  if (currentL < 10) {
+    linesSel.value = (currentL + 1).toString();
+    window.changeCount('val', 1);
+  }
+};
+
+window.scrollToPlanSteppers = function() {
+  var el = document.getElementById('cnt-prem');
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
 };
 
 window.togglePresMode = function() {
@@ -1180,7 +1248,7 @@ window.syncSegmentUI = function() {
 /* MASTER CALCULATION AND REINVESTMENT LEDGER */
 window.runCalc = function() {
   var isBiz = (window.accountSegment === "business");
-  var rawCurrentBill = parseFloat(document.getElementById('curr-total').value) || 75.00;
+  var rawCurrentBill = parseFloat(document.getElementById('curr-total').value) || 100.00;
   var pCount = parseInt(document.getElementById('cnt-prem').textContent, 10) || 0;
   var eCount = parseInt(document.getElementById('cnt-extra').textContent, 10) || 0;
   var vCount = parseInt(document.getElementById('cnt-val').textContent, 10) || 0;
@@ -1232,7 +1300,7 @@ window.runCalc = function() {
 
   document.getElementById('trade-pool-badge').textContent = `Total Trade Credits: -$${totalMonthlyTradeCredits.toFixed(2)}/mo`;
 
-  /* RENDER RECOMMENDATION TILES (ADAPTS FOR 1 LINE VS MULTI-LINE) */
+  /* RENDER RECOMMENDATION TILES */
   var planOptions = [];
   if (totalLines === 1) {
     planOptions = [
@@ -1296,7 +1364,6 @@ window.runCalc = function() {
     }
   }
 
-  /* CONNECTED DEVICES TAX */
   var wCount = parseInt(document.getElementById('addon-watches').value, 10) || 0;
   var tabCount = parseInt(document.getElementById('addon-tablets').value, 10) || 0;
   var totalConnectedTaxPOS = 0;
@@ -1310,7 +1377,6 @@ window.runCalc = function() {
     if (ctEl) totalConnectedTaxPOS += (parseFloat(ctEl.value.split('|')[0]) * 0.07);
   }
 
-  /* AIP CART TAX & INSTALLMENT */
   var aipEligible = document.getElementById('check-aip-eligible').checked;
   var aipCartVal = parseFloat(document.getElementById('aip-cart-val').value) || 0;
   var aipMetaVal = parseFloat(document.getElementById('aip-meta-select').value) || 0;
@@ -1318,7 +1384,6 @@ window.runCalc = function() {
   var aipMonthly = (aipEligible && totalAipRetail >= 75) ? (totalAipRetail / 12) : 0;
   var aipTaxPOS = totalAipRetail * 0.07;
 
-  /* PROTECTION & ADDONS */
   var pa1 = parseFloat(document.getElementById('addon-pa1').value) || 0;
   var pa4 = parseFloat(document.getElementById('addon-pa4').value) || 0;
   var htp = parseFloat(document.getElementById('addon-htp').value) || 0;
@@ -1326,7 +1391,6 @@ window.runCalc = function() {
   var watchMonthly = wCount * (isBiz ? 10 : 10.99);
   var tabMonthly = tabCount * (isBiz ? 20 : 20.99);
 
-  /* DIRECTV STREAM IF SELECTED IN SCOPE */
   var hasTV = document.getElementById('scope-tv') && document.getElementById('scope-tv').classList.contains('active');
   var dtvMonthly = hasTV ? 79.99 : 0;
 
@@ -1336,6 +1400,87 @@ window.runCalc = function() {
 
   document.getElementById('sum-new-total').textContent = `$${totalHousehold.toFixed(2)}/mo`;
   document.getElementById('wireless-pool').textContent = `Base Plan: $${wirelessBasePlanTotal.toFixed(2)}/mo`;
+
+  /* DYNAMIC REINVESTMENT BASKET: NEW LINE BASKET FIRST (VOICE, TABLET, WATCH) */
+  var reinvestBox = document.getElementById('reinvest-new-lines-box');
+  var reinvestList = document.getElementById('new-line-opportunities-list');
+  var marginBadge = document.getElementById('reinvest-margin-badge');
+
+  if (reinvestBox && reinvestList) {
+    if (monthlySavings >= 5.50) {
+      reinvestBox.style.display = 'block';
+      marginBadge.textContent = `Available Margin: +$${monthlySavings.toFixed(2)}/mo`;
+
+      var opps = [];
+
+      // A. Watch Line ($5.50 promo / $10.99)
+      var wRate = isBiz ? 10.00 : (pCount > 0 ? 5.50 : 10.99);
+      if (monthlySavings >= wRate) {
+        opps.push(`
+          <div style="background:#FFFFFF; border:1.5px solid #CA8A04; border-radius:12px; padding:10px; display:flex; flex-direction:column; justify-content:space-between; gap:6px;">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:12px; font-weight:900; color:#0F172A;">⌚ Smartwatch Line</span>
+                <span style="font-size:11px; font-weight:800; color:var(--emerald);">+$${wRate.toFixed(2)}/mo</span>
+              </div>
+              <div style="font-size:10px; color:var(--text-secondary); margin-top:2px;">
+                Connect Apple Watch Series 12. Fits completely inside savings!
+              </div>
+            </div>
+            <button type="button" class="btn" style="background:#FEF3C7; border-color:#D97706; color:#92400E; width:100%; font-size:11px; font-weight:800; padding:6px;" onclick="window.quickAttachConnected('watch');">
+              ➕ Add Watch Line
+            </button>
+          </div>
+        `);
+      }
+
+      // B. Tablet Line ($10.50 promo / $20.99)
+      var tabRate = isBiz ? 20.00 : (pCount > 0 ? 10.50 : 20.99);
+      if (monthlySavings >= tabRate) {
+        opps.push(`
+          <div style="background:#FFFFFF; border:1.5px solid #CA8A04; border-radius:12px; padding:10px; display:flex; flex-direction:column; justify-content:space-between; gap:6px;">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:12px; font-weight:900; color:#0F172A;">📱 Tablet Line</span>
+                <span style="font-size:11px; font-weight:800; color:var(--emerald);">+$${tabRate.toFixed(2)}/mo</span>
+              </div>
+              <div style="font-size:10px; color:var(--text-secondary); margin-top:2px;">
+                Dedicated cellular for iPad 10th Gen. Fits inside savings!
+              </div>
+            </div>
+            <button type="button" class="btn" style="background:#FEF3C7; border-color:#D97706; color:#92400E; width:100%; font-size:11px; font-weight:800; padding:6px;" onclick="window.quickAttachConnected('tablet');">
+              ➕ Add Tablet Line
+            </button>
+          </div>
+        `);
+      }
+
+      // C. Voice Line Addition (Multi-Line Scale)
+      var nextLineCost = (rateTable[Math.min(totalLines + 1, 10)] ? rateTable[Math.min(totalLines + 1, 10)].val : valRate);
+      if (monthlySavings >= nextLineCost) {
+        opps.push(`
+          <div style="background:#FFFFFF; border:1.5px solid #CA8A04; border-radius:12px; padding:10px; display:flex; flex-direction:column; justify-content:space-between; gap:6px;">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:12px; font-weight:900; color:#0F172A;">📞 Voice Line (Add Line)</span>
+                <span style="font-size:11px; font-weight:800; color:var(--emerald);">+$${nextLineCost.toFixed(2)}/mo</span>
+              </div>
+              <div style="font-size:10px; color:var(--text-secondary); margin-top:2px;">
+                Add Line ${totalLines + 1}. Multi-line curve drop absorbs the cost!
+              </div>
+            </div>
+            <button type="button" class="btn" style="background:#FEF3C7; border-color:#D97706; color:#92400E; width:100%; font-size:11px; font-weight:800; padding:6px;" onclick="window.quickAttachVoiceLine();">
+              ➕ Add Voice Line
+            </button>
+          </div>
+        `);
+      }
+
+      reinvestList.innerHTML = opps.join('');
+    } else {
+      reinvestBox.style.display = 'none';
+    }
+  }
 
   /* DYNAMIC SAVINGS BADGES */
   var saveBox = document.getElementById('sum-savings-box');
@@ -1467,7 +1612,7 @@ window.autoSaveState = function() {
     nuad: document.getElementById('audit-nua-drop').checked,
     tht: document.getElementById('toggle-has-tradeins').checked,
     tlc: document.getElementById('trade-lines-count').value,
-    tay: document.getElementById('check-ayac-promo').checked,
+    tay: document.getElementById('check-ayac-promo') ? document.getElementById('check-ayac-promo').checked : false,
     bcd: document.getElementById('bill-cut-day').value,
     fbt: document.getElementById('fee-billing-target').value,
     tcd: document.getElementById('trade-credit-delay').value,
@@ -1521,9 +1666,10 @@ window.restoreState = function() {
     if (s.tht !== undefined) {
       document.getElementById('toggle-has-tradeins').checked = s.tht;
       document.getElementById('wrap-trade-inner').style.display = s.tht ? 'block' : 'none';
+      document.getElementById('wrap-trade-count').style.display = s.tht ? 'inline-flex' : 'none';
     }
     if (s.tlc) document.getElementById('trade-lines-count').value = s.tlc;
-    if (s.tay !== undefined) document.getElementById('check-ayac-promo').checked = s.tay;
+    if (s.tay !== undefined && document.getElementById('check-ayac-promo')) document.getElementById('check-ayac-promo').checked = s.tay;
     if (s.bcd) document.getElementById('bill-cut-day').value = s.bcd;
     if (s.fbt) document.getElementById('fee-billing-target').value = s.fbt;
     if (s.tcd) document.getElementById('trade-credit-delay').value = s.tcd;
