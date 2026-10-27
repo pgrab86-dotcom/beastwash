@@ -212,6 +212,18 @@
   .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
   .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
 
+  /* RESPONSIVE 2X2 BASELINE GRID (PREVENTS VOICE LINE FIELD CRUSH) */
+  .baseline-grid-2x2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 480px) {
+    .baseline-grid-2x2 {
+      gap: 8px;
+    }
+  }
+
   .control-group { display: flex; flex-direction: column; gap: 6px; }
   .control-group label { font-size: 11px; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; }
   .control-group input, .control-group select {
@@ -384,9 +396,18 @@
     margin-top: 16px;
   }
 
+  /* STRICT PRESENTATION / CUSTOMER VIEW ISOLATION */
   body.presentation-mode .rep-only { display: none !important; }
   body.presentation-mode .cust-only { display: block !important; }
   body.presentation-mode span.cust-only { display: inline !important; }
+  body.presentation-mode .steppers-wrap,
+  body.presentation-mode .leak-audit-tray,
+  body.presentation-mode #sec-tradeins,
+  body.presentation-mode .address-precheck-bar,
+  body.presentation-mode .pool-pill,
+  body.presentation-mode .btn-run-numbers {
+    display: none !important;
+  }
   .cust-only { display: none; }
 </style>
 </head>
@@ -408,12 +429,12 @@
       </p>
     </div>
     <div class="header-actions">
-      <div class="segment-switch-group">
+      <div class="segment-switch-group rep-only">
         <button type="button" class="seg-btn active" id="seg-btn-consumer" onclick="window.setAccountSegment('consumer')">👤 Consumer</button>
         <button type="button" class="seg-btn" id="seg-btn-business" onclick="window.setAccountSegment('business')">🏢 Business</button>
       </div>
-      <button type="button" class="btn" onclick="window.shareQuoteURL()">🔗 Share</button>
-      <button type="button" class="btn" onclick="window.resetToNextCustomer()">🔄 Reset</button>
+      <button type="button" class="btn rep-only" onclick="window.shareQuoteURL()">🔗 Share</button>
+      <button type="button" class="btn rep-only" onclick="window.resetToNextCustomer()">🔄 Reset</button>
       <button type="button" class="btn btn-pres" id="pres-btn" onclick="window.togglePresMode();">👁️ Customer View: OFF</button>
       <button type="button" class="btn" onclick="window.print()">🖨️ Print</button>
     </div>
@@ -485,30 +506,33 @@
     </div>
   </div>
 
-  <!-- SECTION 3: CURRENT ACCOUNT BASELINE (INITIALIZES AT $0) -->
+  <!-- SECTION 3: CURRENT ACCOUNT BASELINE (PROPORTION-BALANCED 2X2 GRID) -->
   <div class="section-card" id="sec-baseline">
     <div class="sec-header">
       <div class="sec-title">
         <span class="rep-only">📋 3. Current Account Baseline &amp; Leak Audit</span>
         <span class="cust-only">📋 3. Current Account Baseline</span>
       </div>
-      <div class="pool-pill" id="baseline-harvest-badge" style="display:none; background:#ECFDF5; border-color:#10B981; color:#065F46;">
+      <div class="pool-pill rep-only" id="baseline-harvest-badge" style="display:none; background:#ECFDF5; border-color:#10B981; color:#065F46;">
         Audit Harvest: +$0.00/mo
       </div>
     </div>
 
-    <div class="grid-4" style="align-items:end;">
-      <div class="control-group">
-        <label style="color:var(--att-blue); font-weight:900;">Current Plan Total ($)</label>
-        <div style="position:relative; display:flex; align-items:center;">
-          <span style="position:absolute; left:12px; font-weight:900; font-size:18px; color:var(--text-muted);">$</span>
-          <input type="number" id="curr-total" value="" placeholder="0.00" step="0.01" style="padding-left:28px; font-size:18px; font-weight:900; border-color:var(--att-blue);" oninput="window.runCalc();">
+    <!-- 2X2 BALANCED INPUT GRID -->
+    <div class="baseline-grid-2x2">
+      <!-- ROW 1, COL 1: CURRENT BILL -->
+      <div class="control-group" style="min-width:0;">
+        <label style="color:var(--att-blue); font-weight:800; font-size:10.5px;">Current Plan Total ($)</label>
+        <div style="position:relative; width:100%; display:flex; align-items:center;">
+          <span style="position:absolute; left:10px; font-weight:900; font-size:15px; color:var(--text-muted);">$</span>
+          <input type="number" id="curr-total" value="" placeholder="0.00" step="0.01" style="width:100%; padding-left:24px; font-size:15px; font-weight:800; border-color:var(--att-blue);" oninput="window.runCalc();">
         </div>
       </div>
 
-      <div class="control-group">
-        <label>Voice Lines</label>
-        <select id="curr-lines" onchange="window.setLines(this.value);" style="font-weight:800;">
+      <!-- ROW 1, COL 2: VOICE LINES -->
+      <div class="control-group" style="min-width:0;">
+        <label style="font-size:10.5px; font-weight:800;">Voice Lines</label>
+        <select id="curr-lines" onchange="window.setLines(this.value);" style="width:100%; font-weight:800; font-size:13px;">
           <option value="1" selected>1 Line Account</option>
           <option value="2">2 Lines Account</option>
           <option value="3">3 Lines Account</option>
@@ -522,57 +546,59 @@
         </select>
       </div>
 
-      <div class="control-group">
-        <label>AutoPay Method</label>
-        <select id="curr-autopay" onchange="window.runCalc();">
+      <!-- ROW 2, COL 1: AUTOPAY -->
+      <div class="control-group" style="min-width:0;">
+        <label style="font-size:10.5px; font-weight:800;">AutoPay Method</label>
+        <select id="curr-autopay" onchange="window.runCalc();" style="width:100%; font-size:12px;">
           <option value="debit" selected>Checking / Debit ($10/L off)</option>
           <option value="credit">Credit Card ($5/L off)</option>
           <option value="none">No AutoPay ($0 off)</option>
         </select>
       </div>
 
-      <div class="control-group">
-        <label>Discount Profile</label>
-        <select id="curr-discount" onchange="window.runCalc();"></select>
+      <!-- ROW 2, COL 2: DISCOUNT PROFILE -->
+      <div class="control-group" style="min-width:0;">
+        <label style="font-size:10.5px; font-weight:800;">Discount Profile</label>
+        <select id="curr-discount" onchange="window.runCalc();" style="width:100%; font-size:12px;"></select>
       </div>
     </div>
 
-    <!-- LEAK AUDIT TRAY -->
-    <div style="margin-top:14px; background:#F8FAFC; border:1.5px solid #CBD5E1; border-radius:14px; padding:12px 16px;">
+    <!-- LEAK AUDIT TRAY (STRICTLY REP-ONLY) -->
+    <div class="leak-audit-tray rep-only" style="margin-top:14px; background:#F8FAFC; border:1.5px solid #CBD5E1; border-radius:14px; padding:12px 14px;">
       <div style="font-size:11px; font-weight:800; color:var(--text-secondary); text-transform:uppercase; margin-bottom:8px; display:flex; justify-content:space-between;">
         <span>🔍 Account Leak Audit (Harvest Inactive Features)</span>
-        <span style="color:var(--text-muted); font-size:10px;">Select to drop &amp; add to savings pot</span>
+        <span style="color:var(--text-muted); font-size:10px;">Drop &amp; add to savings</span>
       </div>
 
-      <div class="grid-3" style="gap:10px;">
-        <label style="display:flex; align-items:center; justify-content:space-between; background:#FFF; border:1.5px solid #E2E8F0; border-radius:10px; padding:10px 12px; cursor:pointer;">
-          <div style="display:flex; align-items:center; gap:8px;">
-            <input type="checkbox" id="audit-watch-unused" onchange="window.runCalc();" style="width:16px; height:16px; accent-color:#DC2626;">
-            <span style="font-size:12px; font-weight:700;">⌚ Drop Inactive Watch</span>
+      <div class="grid-3" style="gap:8px;">
+        <label style="display:flex; align-items:center; justify-content:space-between; background:#FFF; border:1.5px solid #E2E8F0; border-radius:10px; padding:8px 10px; cursor:pointer;">
+          <div style="display:flex; align-items:center; gap:6px;">
+            <input type="checkbox" id="audit-watch-unused" onchange="window.runCalc();" style="width:15px; height:15px; accent-color:#DC2626;">
+            <span style="font-size:11px; font-weight:700;">⌚ Drop Watch</span>
           </div>
-          <span style="font-size:11px; font-weight:800; color:#DC2626;">+$10.99/mo</span>
+          <span style="font-size:10.5px; font-weight:800; color:#DC2626;">+$10.99</span>
         </label>
 
-        <label style="display:flex; align-items:center; justify-content:space-between; background:#FFF; border:1.5px solid #E2E8F0; border-radius:10px; padding:10px 12px; cursor:pointer;">
-          <div style="display:flex; align-items:center; gap:8px;">
-            <input type="checkbox" id="audit-tab-unused" onchange="window.runCalc();" style="width:16px; height:16px; accent-color:#DC2626;">
-            <span style="font-size:12px; font-weight:700;">📱 Drop Inactive Tablet</span>
+        <label style="display:flex; align-items:center; justify-content:space-between; background:#FFF; border:1.5px solid #E2E8F0; border-radius:10px; padding:8px 10px; cursor:pointer;">
+          <div style="display:flex; align-items:center; gap:6px;">
+            <input type="checkbox" id="audit-tab-unused" onchange="window.runCalc();" style="width:15px; height:15px; accent-color:#DC2626;">
+            <span style="font-size:11px; font-weight:700;">📱 Drop Tablet</span>
           </div>
-          <span style="font-size:11px; font-weight:800; color:#DC2626;">+$20.99/mo</span>
+          <span style="font-size:10.5px; font-weight:800; color:#DC2626;">+$20.99</span>
         </label>
 
-        <label style="display:flex; align-items:center; justify-content:space-between; background:#FFF; border:1.5px solid #E2E8F0; border-radius:10px; padding:10px 12px; cursor:pointer;">
-          <div style="display:flex; align-items:center; gap:8px;">
-            <input type="checkbox" id="audit-nua-drop" onchange="window.runCalc();" style="width:16px; height:16px; accent-color:#DC2626;">
-            <span style="font-size:12px; font-weight:700;">🔄 Drop Unused Next Up</span>
+        <label style="display:flex; align-items:center; justify-content:space-between; background:#FFF; border:1.5px solid #E2E8F0; border-radius:10px; padding:8px 10px; cursor:pointer;">
+          <div style="display:flex; align-items:center; gap:6px;">
+            <input type="checkbox" id="audit-nua-drop" onchange="window.runCalc();" style="width:15px; height:15px; accent-color:#DC2626;">
+            <span style="font-size:11px; font-weight:700;">🔄 Drop Next Up</span>
           </div>
-          <span style="font-size:11px; font-weight:800; color:#D97706;">+$10.00/mo</span>
+          <span style="font-size:10.5px; font-weight:800; color:#D97706;">+$10.00</span>
         </label>
       </div>
     </div>
 
-    <!-- PRIMARY ACTION: RUN THE NUMBERS BUTTON -->
-    <button type="button" class="btn-run-numbers" onclick="window.runNumbersAction();">
+    <!-- PRIMARY ACTION: RUN THE NUMBERS BUTTON (REP-ONLY) -->
+    <button type="button" class="btn-run-numbers rep-only" onclick="window.runNumbersAction();">
       <span>⚡ Run The Numbers &amp; Optimize Solutions</span>
       <span style="font-size:17px;">➔</span>
     </button>
@@ -631,13 +657,17 @@
           Available Margin: +$0.00/mo
         </span>
       </div>
+      
+      <!-- SUB-CAPTION: ISOLATED FOR REP VS CUSTOMER -->
       <div style="font-size:11.5px; color:#854D0E; font-weight:700; margin-top:4px;">
-        Pitch new additions that completely fit inside the customer's plan savings before adjusting the base plan:
+        <span class="rep-only">Pitch new additions that completely fit inside the customer's plan savings before adjusting the base plan:</span>
+        <span class="cust-only">Add connected accessories or lines using your unlocked monthly savings:</span>
       </div>
 
       <div id="new-line-opportunities-list" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:10px; margin-top:12px;"></div>
 
-      <div style="margin-top:14px; padding-top:10px; border-top:1.5px dashed #CBD5E1; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+      <!-- COMMISSIONS & STEPPER PIVOT (REP-ONLY) -->
+      <div class="rep-only" style="margin-top:14px; padding-top:10px; border-top:1.5px dashed #CBD5E1; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
         <span style="font-size:11px; color:#475569; font-weight:800;">
           Customer declined new lines? Step the plan tier to lock in rate or capture commission:
         </span>
@@ -647,8 +677,8 @@
       </div>
     </div>
 
-    <!-- DYNAMIC STEPPERS (INITIALIZES AT 1 LINE: 0 PREM, 0 EXTRA, 1 VAL) -->
-    <div style="margin-top:16px;">
+    <!-- DYNAMIC STEPPERS (STRICTLY REP-ONLY) -->
+    <div class="steppers-wrap rep-only" style="margin-top:16px;">
       <div class="counter-row">
         <div>
           <div class="counter-title">🐆 Unlimited Premium 2.0</div>
@@ -824,7 +854,7 @@
 </div>
 
 <script>
-/* CORE DATA DICTIONARIES (CLEANED & DEDUPLICATED) */
+/* CORE DATA DICTIONARIES (COMPACT DATA ARRAYS) */
 const DEVICES = [
   [1999.00, "iPhone Duo (Foldable)", "apple"],
   [1299.00, "iPhone 18 Pro Max", "apple"],
@@ -909,18 +939,7 @@ window.activeTablet = null;
 window.activeAip = 0;
 window.activeProt = { pa1: false, pa4: false, htp: false };
 
-/* DOM CACHE SHORTCUTS */
 const $ = (id) => document.getElementById(id);
-
-/* GENERATE CATALOG OPTIONS DYNAMICALLY (SAVES ~300 LINES OF REPETITIVE HTML) */
-function getDeviceOptionsHTML() {
-  var app = '<optgroup label="Apple Lineup">', and = '<optgroup label="Android & Foldables">';
-  DEVICES.forEach(d => {
-    var opt = `<option value="${d[0]}|${d[1]}">${d[1]} ($${d[0].toFixed(2)})</option>`;
-    if (d[2] === 'apple') app += opt; else and += opt;
-  });
-  return app + '</optgroup>' + and + '</optgroup>';
-}
 
 function getTradeOptionsHTML() {
   return TRADES.map(t => `<option value="${t[0]}|${t[1]}|${t[2]}|${t[3]}">${t[3]} ($${t[0]} base book)</option>`).join('');
