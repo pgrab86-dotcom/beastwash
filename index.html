@@ -352,6 +352,12 @@
     color: #7C2D12 !important;
     box-shadow: 0 4px 12px rgba(194, 65, 12, 0.25) !important;
   }
+  .badge-phone {
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 50%, #BFDBFE 100%) !important;
+    border: 2px solid #2563EB !important;
+    color: #1E40AF !important;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25) !important;
+  }
 
   .savings-badge-yellow { background: #FEF3C7 !important; border: 2px solid #F59E0B !important; color: #B45309 !important; }
   .savings-badge-green { background: #ECFDF5 !important; border: 2px solid #10B981 !important; color: #065F46 !important; }
@@ -616,18 +622,18 @@
     
     <div class="recommendations-grid" id="plan-cards-container"></div>
 
-    <!-- SECOND WINDOW: PRIMARY REINVESTMENT MEDALS (GOLD, SILVER, BRONZE) -->
-    <div id="reinvest-new-lines-box" style="display:none; background:#FFFFFF; border:2.5px solid #CA8A04; border-radius:16px; padding:16px; margin-top:16px; box-shadow:0 6px 20px rgba(250, 204, 21, 0.25);">
+    <!-- SECOND WINDOW: PRIMARY REINVESTMENT MEDALS (GOLD, SILVER, BRONZE, PHONE) -->
+    <div id="reinvest-new-lines-box" style="background:#FFFFFF; border:2.5px solid #CA8A04; border-radius:16px; padding:16px; margin-top:16px; box-shadow:0 6px 20px rgba(250, 204, 21, 0.25);">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
         <span style="font-size:13.5px; font-weight:900; color:#713F12; text-transform:uppercase; letter-spacing:0.5px;">
           ✨ Reinvest Savings: New Line Opportunities ($0 Net Increase)
         </span>
         <span id="reinvest-margin-badge" style="background:#FEF3C7; border:1.5px solid #A16207; color:#713F12; padding:3px 10px; border-radius:12px; font-size:11.5px; font-weight:900;">
-          Available Margin: +$0.00/mo
+          Available Margin: +$50.00/mo
         </span>
       </div>
       <div style="font-size:11.5px; color:#854D0E; font-weight:700; margin-top:4px;">
-        Pitch new connected additions that completely fit inside the customer's plan savings before altering the tier:
+        Pitch new additions that completely fit inside the customer's plan savings before adjusting the base plan:
       </div>
 
       <div id="new-line-opportunities-list" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:10px; margin-top:10px;">
@@ -851,7 +857,7 @@
       </div>
     </div>
 
-    <!-- LINE-BY-LINE ACQUISITION MATRIX (DEFAULT: 1 PHONE) -->
+    <!-- LINE-BY-LINE ACQUISITION MATRIX (DEFAULT: 0 PHONES) -->
     <div style="background:#F0F9FF; border:2px solid #BAE6FD; border-radius:14px; padding:16px; margin-top:16px;">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
         <span style="font-size:12px; font-weight:800; color:var(--att-blue); text-transform:uppercase;">
@@ -860,8 +866,8 @@
         <div style="display:flex; align-items:center; gap:10px;">
           <span style="font-size:11px; font-weight:800; color:var(--text-secondary);">Phones Acquired:</span>
           <select id="acquired-phone-count" style="padding:5px 10px; border-radius:8px; border:1.5px solid var(--att-blue); font-weight:800; font-size:12px;" onchange="window.renderAcquiredPhoneLedger();">
-            <option value="0">0 Phones</option>
-            <option value="1" selected>1 Phone</option>
+            <option value="0" selected>0 Phones</option>
+            <option value="1">1 Phone</option>
             <option value="2">2 Phones</option>
             <option value="3">3 Phones</option>
             <option value="4">4 Phones</option>
@@ -1093,7 +1099,7 @@ window.renderAcquiredPhoneLedger = function() {
   container.innerHTML = '';
 
   if (count === 0) {
-    container.innerHTML = '<div style="font-size:11px; color:var(--text-muted); font-style:italic;">No hardware acquired ($0 POS Tax).</div>';
+    container.innerHTML = '<div style="font-size:11px; color:var(--text-muted); font-style:italic;">No phone hardware acquired yet ($0 POS Tax).</div>';
     window.runCalc();
     return;
   }
@@ -1329,6 +1335,15 @@ window.quickAttachVoiceLine = function() {
   }
 };
 
+window.quickAttachPhone = function() {
+  var pCount = document.getElementById('acquired-phone-count');
+  pCount.value = "1";
+  window.renderAcquiredPhoneLedger();
+  window.runCalc();
+  var target = document.getElementById('acquired-phone-count');
+  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+};
+
 window.scrollToPlanSteppers = function() {
   var el = document.getElementById('cnt-prem');
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -1416,6 +1431,9 @@ window.runCalc = function() {
   else if (isApprec) { premRate = +(premRate * 0.75).toFixed(2); extRate = +(extRate * 0.75).toFixed(2); valRate = +(valRate * 0.75).toFixed(2); }
 
   var wirelessBasePlanTotal = Number(((pCount * premRate) + (eCount * extRate) + (vCount * valRate)).toFixed(2));
+
+  /* CORE REINVESTMENT MARGIN IS ANCHORED TO BASELINE PLAN SAVINGS */
+  var availablePlanMargin = Number((adjustedBaseline - wirelessBasePlanTotal).toFixed(2));
 
   /* TRADE-IN INTAKE CREDITS */
   var hasTradeIns = document.getElementById('toggle-has-tradeins').checked;
@@ -1532,49 +1550,49 @@ window.runCalc = function() {
   var hasTV = document.getElementById('scope-tv') && document.getElementById('scope-tv').classList.contains('active');
   var dtvMonthly = hasTV ? 79.99 : 0;
 
-  /* TOTAL ONGOING RECURRING BILL & MONTHLY SAVINGS MUST BE COMPUTED HERE BEFORE REINVESTMENT WINDOW */
+  /* TOTAL ONGOING RECURRING BILL & MONTHLY SAVINGS */
   var totalHousehold = Number((wirelessBasePlanTotal + totalNetDeviceInstallments + protectTotal + watchMonthly + tabMonthly + aipMonthly + dtvMonthly).toFixed(2));
   var monthlySavings = Number((adjustedBaseline - totalHousehold).toFixed(2));
 
   document.getElementById('sum-new-total').textContent = `$${totalHousehold.toFixed(2)}/mo`;
   document.getElementById('wireless-pool').textContent = `Base Plan: $${wirelessBasePlanTotal.toFixed(2)}/mo`;
-  document.getElementById('wf-pot-badge').textContent = (monthlySavings >= 0 ? `Starting Pot: +$${monthlySavings.toFixed(2)}/mo` : `Over Budget: +$${Math.abs(monthlySavings).toFixed(2)}/mo`);
+  document.getElementById('wf-pot-badge').textContent = (availablePlanMargin >= 0 ? `Starting Pot: +$${availablePlanMargin.toFixed(2)}/mo` : `Over Budget: +$${Math.abs(availablePlanMargin).toFixed(2)}/mo`);
 
   /* DYNAMIC HBO AUDIT EVALUATION */
   var hasHbo = document.getElementById('check-hbo').checked;
   var hboBanner = document.getElementById('hbo-audit-banner');
   if (hasHbo) {
     hboBanner.style.display = 'block';
-    if (monthlySavings >= 16.99) {
+    if (availablePlanMargin >= 16.99) {
       hboBanner.style.background = "#ECFDF5";
       hboBanner.style.border = "1.5px solid #10B981";
       hboBanner.style.color = "#065F46";
-      hboBanner.innerHTML = `<b>🎬 HBO Irrelevant (Savings Outweighs Max Perk):</b> Plan rerate saves <b>$${monthlySavings.toFixed(2)}/mo</b>! Even if customer subscribes to Max separately ($16.99/mo), they are still net ahead by <b>+$${(monthlySavings - 16.99).toFixed(2)}/mo</b> in cash!`;
+      hboBanner.innerHTML = `<b>🎬 HBO Irrelevant (Savings Outweighs Max Perk):</b> Plan rerate saves <b>$${availablePlanMargin.toFixed(2)}/mo</b>! Even if customer subscribes to Max separately ($16.99/mo), they are still net ahead by <b>+$${(availablePlanMargin - 16.99).toFixed(2)}/mo</b> in cash!`;
     } else {
       hboBanner.style.background = "#FFFBEB";
       hboBanner.style.border = "1.5px solid #F59E0B";
       hboBanner.style.color = "#92400E";
-      hboBanner.innerHTML = `<b>⚠️ HBO Retention Alert:</b> Current savings are <b>$${monthlySavings.toFixed(2)}/mo</b>. Customer loses free grandfathered Max ($16.99 retail value). Customer must value newer network speeds/priority to justify rerate.`;
+      hboBanner.innerHTML = `<b>⚠️ HBO Retention Alert:</b> Current savings are <b>$${availablePlanMargin.toFixed(2)}/mo</b>. Customer loses free grandfathered Max ($16.99 retail value). Customer must value newer network speeds/priority to justify rerate.`;
     }
   } else {
     hboBanner.style.display = 'none';
   }
 
-  /* SECOND WINDOW: MEDAL-TIER REINVESTMENT BASKET (GOLD = VOICE, SILVER = TABLET, BRONZE = WATCH) */
+  /* SECOND WINDOW: MEDAL-TIER REINVESTMENT BASKET (GOLD = VOICE, SILVER = TABLET, BRONZE = WATCH, BLUE = PHONE) */
   var reinvestBox = document.getElementById('reinvest-new-lines-box');
   var reinvestList = document.getElementById('new-line-opportunities-list');
   var marginBadge = document.getElementById('reinvest-margin-badge');
 
   if (reinvestBox && reinvestList) {
-    if (monthlySavings >= 5.50) {
+    if (availablePlanMargin >= 5.50) {
       reinvestBox.style.display = 'block';
-      marginBadge.textContent = `Available Margin: +$${monthlySavings.toFixed(2)}/mo`;
+      marginBadge.textContent = `Available Margin: +$${availablePlanMargin.toFixed(2)}/mo`;
 
       var opps = [];
 
-      // 1. SPARKLING GOLD MEDAL: NEW VOICE ADD-A-LINE
+      // 1. SPARKLING GOLD: NEW VOICE ADD-A-LINE
       var nextLineCost = (rateTable[Math.min(totalLines + 1, 10)] ? rateTable[Math.min(totalLines + 1, 10)].val : valRate);
-      if (monthlySavings >= nextLineCost) {
+      if (availablePlanMargin >= nextLineCost) {
         opps.push(`
           <div class="badge-sparkling-gold" style="border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between; gap:6px;">
             <div>
@@ -1593,9 +1611,9 @@ window.runCalc = function() {
         `);
       }
 
-      // 2. SILVER MEDAL: TABLET ADD-A-LINE
+      // 2. SILVER: TABLET ADD-A-LINE
       var tabRate = isBiz ? 20.00 : (pCount > 0 ? 10.50 : 20.99);
-      if (monthlySavings >= tabRate) {
+      if (availablePlanMargin >= tabRate) {
         opps.push(`
           <div class="badge-silver" style="border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between; gap:6px;">
             <div>
@@ -1604,7 +1622,7 @@ window.runCalc = function() {
                 <span style="font-size:11.5px; font-weight:900; color:var(--emerald);">+$${tabRate.toFixed(2)}/mo</span>
               </div>
               <div style="font-size:10.5px; margin-top:3px; line-height:1.35;">
-                Dedicated cellular for iPad 10th Gen or Galaxy Tab at 50% promotional rate. Fits inside savings!
+                Dedicated cellular for iPad 10th Gen or Galaxy Tab at 50% promo rate. Fits inside savings!
               </div>
             </div>
             <button type="button" class="btn" style="background:#FFFFFF; border-color:#64748B; color:#1E293B; width:100%; font-size:11.5px; font-weight:900; padding:7px;" onclick="window.quickAttachConnected('tablet');">
@@ -1614,9 +1632,9 @@ window.runCalc = function() {
         `);
       }
 
-      // 3. BRONZE MEDAL: SMARTWATCH ADD-A-LINE
+      // 3. BRONZE: SMARTWATCH ADD-A-LINE
       var wRate = isBiz ? 10.00 : (pCount > 0 ? 5.50 : 10.99);
-      if (monthlySavings >= wRate) {
+      if (availablePlanMargin >= wRate) {
         opps.push(`
           <div class="badge-bronze" style="border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between; gap:6px;">
             <div>
@@ -1630,6 +1648,26 @@ window.runCalc = function() {
             </div>
             <button type="button" class="btn" style="background:#FFFFFF; border-color:#C2410C; color:#7C2D12; width:100%; font-size:11.5px; font-weight:900; padding:7px;" onclick="window.quickAttachConnected('watch');">
               ➕ Add Watch Line (Bronze)
+            </button>
+          </div>
+        `);
+      }
+
+      // 4. BLUE: NEW PHONE UPGRADE / ADD OPPORTUNITY
+      if (availablePlanMargin >= 16.00) {
+        opps.push(`
+          <div class="badge-phone" style="border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between; gap:6px;">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:12.5px; font-weight:900;">📱 NEW PHONE: Flagship Upgrade</span>
+                <span style="font-size:11.5px; font-weight:900; color:#1E40AF;">+$16-$25/mo</span>
+              </div>
+              <div style="font-size:10.5px; margin-top:3px; line-height:1.35;">
+                iPhone 17 or Galaxy S26 monthly installment absorbed by plan rerate with $0 net bill change!
+              </div>
+            </div>
+            <button type="button" class="btn" style="background:#FFFFFF; border-color:#2563EB; color:#1E40AF; width:100%; font-size:11.5px; font-weight:900; padding:7px;" onclick="window.quickAttachPhone();">
+              ➕ Add Phone Hardware
             </button>
           </div>
         `);
