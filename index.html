@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>AT&T Executive Solutions Studio • elitererate.com</title>
 
-<!-- PREVENT CACHING / FORCE FRESH FETCH -->
+<!-- PREVENT BROWSER CACHING -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
@@ -45,7 +45,6 @@
     min-height: 100vh;
     font-size: 14px;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     text-rendering: geometricPrecision;
     overflow-x: hidden;
     position: relative;
@@ -92,7 +91,6 @@
     margin: 0;
     font-size: 19px;
     font-weight: 800;
-    letter-spacing: -0.3px;
     color: #0F172A;
     display: flex;
     align-items: center;
@@ -118,9 +116,6 @@
     font-weight: 800;
     color: var(--text-secondary);
     cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
   }
   .seg-btn.active#seg-btn-consumer {
     background: var(--att-blue);
@@ -143,7 +138,7 @@
   }
   .addr-row-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
   .addr-title { font-size: 12.5px; font-weight: 800; color: var(--att-blue); text-transform: uppercase; }
-  .addr-inputs { display: flex; gap: 10px; flex: 1; min-width: 280px; }
+  .addr-inputs { display: flex; gap: 10px; flex: 1; min-width: 260px; }
   .addr-input {
     width: 100%;
     padding: 10px 14px;
@@ -175,34 +170,6 @@
     font-weight: 800;
   }
 
-  .waterfall-reinvest-bar {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: linear-gradient(180deg, #FFFFFF 0%, #F0F9FF 100%);
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
-    border-top: 2.5px solid var(--emerald);
-    border-bottom: 2.5px solid #93C5FD;
-    padding: 12px 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    box-shadow: 0 6px 20px rgba(0, 87, 184, 0.14);
-  }
-  .wf-status { display: flex; flex-direction: column; gap: 3px; }
-  .wf-label { font-size: 10.5px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
-  .wf-tier-name { font-size: 14.5px; font-weight: 800; color: #0F172A; }
-  .wf-pot-display {
-    padding: 8px 18px;
-    border-radius: 12px;
-    font-size: 17px;
-    font-weight: 900;
-    text-align: right;
-  }
-
   .btn {
     background: #F8FAFC;
     color: var(--text-primary);
@@ -216,6 +183,7 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
+    text-decoration: none;
   }
   .btn-pres { background: #EFF6FF; border-color: #BFDBFE; color: var(--att-blue); }
   .btn-pres.active { background: #FEF3C7; border-color: #F59E0B; color: #B45309; }
@@ -225,8 +193,8 @@
     color: #FFFFFF;
     border: none;
     border-radius: 12px;
-    padding: 16px 22px;
-    font-size: 15px;
+    padding: 15px 22px;
+    font-size: 14.5px;
     font-weight: 900;
     letter-spacing: 0.5px;
     text-transform: uppercase;
@@ -238,14 +206,11 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .btn-run-numbers:active { transform: scale(0.98); }
 
   .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
   .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
   .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
-  .grid-5 { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; }
 
   .control-group { display: flex; flex-direction: column; gap: 6px; }
   .control-group label { font-size: 11px; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; }
@@ -275,132 +240,56 @@
   }
   .pill-title { font-size: 13px; font-weight: 800; color: #0F172A; }
 
+  /* DISTINCT PLAN CARD PERSONAS */
   .recommendations-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 14px;
     margin-top: 12px;
   }
-  
-  /* DISTINCT PLAN CARD PERSONAS */
   .rec-card {
     border-radius: 16px;
-    padding: 16px 18px;
+    padding: 16px;
     cursor: pointer;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    justify-content: space-between;
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  
-  .rec-card-value {
+  .rec-card-val {
     background: linear-gradient(180deg, #FFFFFF 0%, #F0FDF4 100%);
     border: 2px solid #86EFAC;
   }
-  .rec-card-value.selected-plan {
-    border: 3px solid #059669 !important;
-    box-shadow: 0 6px 20px rgba(5, 150, 105, 0.22) !important;
+  .rec-card-val.selected-plan {
+    border: 2.5px solid #059669 !important;
+    box-shadow: 0 6px 20px rgba(5, 150, 105, 0.25) !important;
   }
-
-  .rec-card-extra {
+  .rec-card-ext {
     background: linear-gradient(180deg, #FFFFFF 0%, #F0F9FF 100%);
     border: 2px solid #7DD3FC;
   }
-  .rec-card-extra.selected-plan {
-    border: 3px solid #0284C7 !important;
-    box-shadow: 0 6px 20px rgba(2, 132, 199, 0.22) !important;
+  .rec-card-ext.selected-plan {
+    border: 2.5px solid #0284C7 !important;
+    box-shadow: 0 6px 20px rgba(2, 132, 199, 0.25) !important;
   }
-
-  .rec-card-premium {
+  .rec-card-prem {
     background: linear-gradient(180deg, #FFFFFF 0%, #EFF6FF 100%);
     border: 2px solid #93C5FD;
   }
-  .rec-card-premium.selected-plan {
-    border: 3px solid #0057B8 !important;
-    box-shadow: 0 6px 22px rgba(0, 87, 184, 0.25) !important;
+  .rec-card-prem.selected-plan {
+    border: 2.5px solid #0057B8 !important;
+    box-shadow: 0 6px 20px rgba(0, 87, 184, 0.3) !important;
   }
 
-  .plan-card-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  .plan-title-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .plan-title-text {
-    font-size: 16px;
-    font-weight: 900;
-    color: #0F172A;
-  }
-  .plan-role-badge {
+  .plan-badge-pill {
     font-size: 10px;
     font-weight: 800;
     padding: 3px 8px;
     border-radius: 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-  }
-  .badge-value-role { background:#DCFCE7; color:#166534; border:1px solid #86EFAC; }
-  .badge-extra-role { background:#E0F2FE; color:#0369A1; border:1px solid #7DD3FC; }
-  .badge-premium-role { background:#DBEAFE; color:#1E40AF; border:1px solid #93C5FD; }
-
-  .plan-price-row {
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-    margin-top: 2px;
-  }
-  .plan-price-num {
-    font-size: 26px;
-    font-weight: 900;
-  }
-  .plan-price-savings {
-    font-size: 13px;
-    font-weight: 800;
-  }
-
-  .plan-feature-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 4px;
-  }
-  .feature-chip {
-    font-size: 10.5px;
-    font-weight: 700;
-    padding: 3px 8px;
-    border-radius: 6px;
-    background: #FFFFFF;
-    border: 1px solid #CBD5E1;
-    color: var(--text-secondary);
-  }
-
-  .step2-transition-divider {
-    background: linear-gradient(90deg, #FEF08A 0%, #FDE047 50%, #FEF08A 100%);
-    border: 1.5px solid #CA8A04;
-    border-radius: 12px;
-    padding: 10px 16px;
-    margin: 18px 0 10px 0;
-    display: flex;
-    justify-content: space-between;
+    display: inline-flex;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  .step2-title {
-    font-size: 12px;
-    font-weight: 900;
-    color: #713F12;
+    gap: 4px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
   }
 
   .counter-row {
@@ -432,10 +321,7 @@
   }
   .counter-val { font-size: 20px; font-weight: 900; color: var(--emerald); min-width: 24px; text-align: center; }
 
-  .filter-item { display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 700; color: #0F172A; cursor: pointer; }
-  .filter-item input[type="checkbox"] { width: 18px; height: 18px; }
-
-  /* MEDAL-TIER REINVESTMENT THEMES */
+  /* REINVESTMENT BASKET MEDAL TIERS */
   .badge-sparkling-gold {
     background: linear-gradient(135deg, #FEF08A 0%, #FDE047 50%, #FACC15 100%) !important;
     border: 2px solid #CA8A04 !important;
@@ -460,6 +346,28 @@
     color: #1E40AF !important;
     box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25) !important;
   }
+  .badge-aip {
+    background: linear-gradient(135deg, #FAF5FF 0%, #F3E8FF 50%, #E9D5FF 100%) !important;
+    border: 2px solid #9333EA !important;
+    color: #581C87 !important;
+    box-shadow: 0 4px 12px rgba(147, 51, 234, 0.25) !important;
+  }
+
+  /* PROTECTION TILES */
+  .prot-tile {
+    background: #FFFFFF;
+    border: 2px solid #BAE6FD;
+    border-radius: 12px;
+    padding: 12px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .prot-tile.active {
+    background: #EFF6FF !important;
+    border: 2.5px solid var(--att-blue) !important;
+    box-shadow: 0 4px 14px rgba(0, 87, 184, 0.25) !important;
+  }
 
   .summary-card { background: #FFFFFF; border: 2.5px solid var(--att-blue); box-shadow: 0 12px 36px rgba(0, 87, 184, 0.12); }
   .summary-grid { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
@@ -468,17 +376,6 @@
   .sum-total { font-size: 44px; font-weight: 900; color: #0F172A; letter-spacing: -1.5px; }
   .sum-savings { padding: 12px 24px; border-radius: 14px; font-size: 16px; font-weight: 900; text-align: right; }
 
-  .checkout-line-item {
-    background: #FFFFFF;
-    border: 1.5px solid #BAE6FD;
-    border-radius: 12px;
-    padding: 12px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 10px;
-  }
-
   .due-box {
     background: #FFFBEB;
     border: 2px dashed #F59E0B;
@@ -486,15 +383,10 @@
     padding: 14px 18px;
     margin-top: 16px;
   }
-  .due-title { font-size: 12px; font-weight: 800; color: #92400E; text-transform: uppercase; margin-bottom: 4px; }
-  .due-amt { font-size: 20px; font-weight: 900; color: #0F172A; margin-bottom: 3px; }
-  .due-sub { font-size: 11px; color: #B45309; line-height: 1.4; }
 
   body.presentation-mode .rep-only { display: none !important; }
   body.presentation-mode .cust-only { display: block !important; }
   body.presentation-mode span.cust-only { display: inline !important; }
-  body.presentation-mode .waterfall-reinvest-bar { display: none !important; }
-  body.presentation-mode .pool-pill { display: none !important; }
   .cust-only { display: none; }
 </style>
 </head>
@@ -511,8 +403,8 @@
         <span class="cust-only" id="hdr-title-cust">AT&amp;T Customized Plan Solutions</span>
       </h1>
       <p>
-        <span class="rep-only" id="hdr-sub-rep">DOWNWARD WATERFALL ARBITRAGE • NEW LINE CONVERSIONS • OPUS AUDIT</span>
-        <span class="cust-only" id="hdr-sub-cust">TAILORED MULTI-LINE SAVINGS &amp; BROADBAND BREAKDOWN</span>
+        <span class="rep-only">DOWNWARD WATERFALL ARBITRAGE • NEW LINE CONVERSIONS • OPUS AUDIT</span>
+        <span class="cust-only">TAILORED MULTI-LINE SAVINGS &amp; BROADBAND BREAKDOWN</span>
       </p>
     </div>
     <div class="header-actions">
@@ -521,30 +413,35 @@
         <button type="button" class="seg-btn" id="seg-btn-business" onclick="window.setAccountSegment('business')">🏢 Business</button>
       </div>
       <button type="button" class="btn" onclick="window.shareQuoteURL()">🔗 Share</button>
-      <button type="button" class="btn" onclick="window.forceHardRefresh()">🔄 Force Update</button>
+      <button type="button" class="btn" onclick="window.resetToNextCustomer()">🔄 Reset</button>
       <button type="button" class="btn btn-pres" id="pres-btn" onclick="window.togglePresMode();">👁️ Customer View: OFF</button>
-      <button type="button" class="btn btn-print" onclick="window.print()">🖨️ Print</button>
+      <button type="button" class="btn" onclick="window.print()">🖨️ Print</button>
     </div>
   </div>
 
-  <!-- ADDRESS BAR -->
+  <!-- BROADBAND PRE-CHECK & JUMP TOOLS -->
   <div class="address-precheck-bar rep-only">
     <div class="addr-row-top">
-      <div class="addr-title">📍 Broadband Pre-Check</div>
+      <div class="addr-title">📍 Broadband Pre-Check &amp; Map Jump</div>
       <div class="addr-inputs">
         <input type="text" id="addr-field" class="addr-input" placeholder="Enter customer street address, city, state..." value="" oninput="window.autoSaveState();">
       </div>
-      <button type="button" class="btn" style="background:#EFF6FF; border-color:#BFDBFE; color:var(--att-blue);" onclick="window.copyAddress()">📋 Copy Address</button>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <button type="button" class="btn" style="background:#EFF6FF; border-color:#BFDBFE; color:var(--att-blue);" onclick="window.copyAddress()">📋 Copy Address</button>
+        <a href="https://www.att.com/internet/availability/" target="_blank" rel="noopener" class="btn" style="background:#ECFDF5; border-color:#A7F3D0; color:#065F46;">🌐 Check AT&amp;T Fiber / Air</a>
+        <a href="https://broadbandmap.fcc.gov/home" target="_blank" rel="noopener" class="btn" style="background:#FEF3C7; border-color:#FDE68A; color:#92400E;">🗺️ FCC Map Jump</a>
+      </div>
     </div>
   </div>
 
-  <!-- SECTION 1: CONSULTATION SCOPE -->
+  <!-- SECTION 1: CONSULTATION SCOPE (STARTS WITH NOTHING SELECTED) -->
   <div class="section-card">
     <div class="sec-header">
       <div class="sec-title">🎯 1. Consultation Scope</div>
+      <span style="font-size:11px; color:var(--text-muted); font-weight:700;">Select areas of customer opportunity</span>
     </div>
     <div class="grid-4">
-      <div class="pill-option active" id="scope-upg" onclick="window.toggleScope(this);"><div class="pill-title">📱 Upgrade</div></div>
+      <div class="pill-option" id="scope-upg" onclick="window.toggleScope(this);"><div class="pill-title">📱 Upgrade</div></div>
       <div class="pill-option" id="scope-add" onclick="window.toggleScope(this);"><div class="pill-title">➕ Add a Line</div></div>
       <div class="pill-option" id="scope-bb" onclick="window.toggleScope(this);"><div class="pill-title" id="lbl-scope-bb">🌐 AT&amp;T Fiber / Air</div></div>
       <div class="pill-option" id="scope-tv" onclick="window.toggleScope(this);"><div class="pill-title">📺 DIRECTV Stream</div></div>
@@ -559,7 +456,7 @@
     </div>
 
     <div style="background:#F0F9FF; border:1.5px solid #BAE6FD; border-radius:14px; padding:14px 18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-      <label class="filter-item" style="font-size:13px; font-weight:800; color:var(--att-blue);">
+      <label class="filter-item" style="font-size:13px; font-weight:800; color:var(--att-blue); cursor:pointer;">
         <input type="checkbox" id="toggle-has-tradeins" onchange="window.toggleTradeInMaster();" style="width:20px; height:20px; accent-color:var(--att-blue);">
         <span>Trading in Devices for Promotional Bill Credits?</span>
       </label>
@@ -579,7 +476,7 @@
     <div id="wrap-trade-inner" style="display:none; margin-top:14px;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:10px;">
         <span style="font-size:11px; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Configure trade-in details per line:</span>
-        <label class="filter-item rep-only" style="color:var(--att-blue); font-weight:800;">
+        <label class="rep-only" style="color:var(--att-blue); font-weight:800; display:flex; align-items:center; gap:8px; cursor:pointer;">
           <input type="checkbox" id="check-ayac-promo" onchange="window.syncAllTradeLines();" style="accent-color:var(--att-blue);">
           <span>🛡️ Active "Any Year, Any Condition" (AYAC) Promo Active</span>
         </label>
@@ -588,22 +485,30 @@
     </div>
   </div>
 
-  <!-- SECTION 3: CURRENT ACCOUNT BASELINE (DEFAULT: 1 LINE @ $100.00) -->
+  <!-- SECTION 3: CURRENT ACCOUNT BASELINE (INITIALIZES AT $0) -->
   <div class="section-card" id="sec-baseline">
     <div class="sec-header">
       <div class="sec-title">
         <span class="rep-only">📋 3. Current Account Baseline &amp; Leak Audit</span>
-        <span class="cust-only">📋 3. Current Account Details</span>
+        <span class="cust-only">📋 3. Current Account Baseline</span>
+      </div>
+      <div class="pool-pill" id="baseline-harvest-badge" style="display:none; background:#ECFDF5; border-color:#10B981; color:#065F46;">
+        Audit Harvest: +$0.00/mo
       </div>
     </div>
-    <div class="grid-5">
+
+    <div class="grid-4" style="align-items:end;">
       <div class="control-group">
-        <label>Current Plan Total ($)</label>
-        <input type="number" id="curr-total" value="100.00" step="0.01" oninput="window.runCalc();">
+        <label style="color:var(--att-blue); font-weight:900;">Current Plan Total ($)</label>
+        <div style="position:relative; display:flex; align-items:center;">
+          <span style="position:absolute; left:12px; font-weight:900; font-size:18px; color:var(--text-muted);">$</span>
+          <input type="number" id="curr-total" value="" placeholder="0.00" step="0.01" style="padding-left:28px; font-size:18px; font-weight:900; border-color:var(--att-blue);" oninput="window.runCalc();">
+        </div>
       </div>
+
       <div class="control-group">
         <label>Voice Lines</label>
-        <select id="curr-lines" onchange="window.setLines(this.value);">
+        <select id="curr-lines" onchange="window.setLines(this.value);" style="font-weight:800;">
           <option value="1" selected>1 Line Account</option>
           <option value="2">2 Lines Account</option>
           <option value="3">3 Lines Account</option>
@@ -616,60 +521,53 @@
           <option value="10">10 Lines Account</option>
         </select>
       </div>
+
       <div class="control-group">
-        <label id="lbl-curr-watches">Current Smartwatches</label>
-        <select id="curr-watches" onchange="window.runCalc();">
-          <option value="0" selected>0 Watches</option>
-          <option value="1">1 Watch ($10.99/mo)</option>
-          <option value="2">2 Watches ($21.98/mo)</option>
-        </select>
-      </div>
-      <div class="control-group">
-        <label id="lbl-curr-tablets">Current Tablets</label>
-        <select id="curr-tablets" onchange="window.runCalc();">
-          <option value="0" selected>0 Tablets</option>
-          <option value="1">1 Tablet ($20.99/mo)</option>
-          <option value="2">2 Tablets ($41.98/mo)</option>
-        </select>
-      </div>
-      <div class="control-group">
-        <label id="lbl-autopay-title">AutoPay Method</label>
+        <label>AutoPay Method</label>
         <select id="curr-autopay" onchange="window.runCalc();">
           <option value="debit" selected>Checking / Debit ($10/L off)</option>
           <option value="credit">Credit Card ($5/L off)</option>
-          <option value="none">No AutoPay</option>
+          <option value="none">No AutoPay ($0 off)</option>
         </select>
       </div>
-    </div>
 
-    <div class="grid-3" style="margin-top:12px;">
-      <div style="background:#F0F9FF; border:1.5px solid #BAE6FD; border-radius:12px; padding:12px 14px; display:flex; flex-direction:column; gap:8px;">
-        <div style="font-size:11px; font-weight:800; color:var(--att-blue); text-transform:uppercase;">⌚ Watch Lines</div>
-        <label class="filter-item">
-          <input type="checkbox" id="audit-watch-unused" onchange="window.runCalc();">
-          <span style="color:#DC2626;">❌ Drop Inactive Lines</span>
-        </label>
-      </div>
-      <div style="background:#F0F9FF; border:1.5px solid #BAE6FD; border-radius:12px; padding:12px 14px; display:flex; flex-direction:column; gap:8px;">
-        <div style="font-size:11px; font-weight:800; color:var(--att-blue); text-transform:uppercase;">📱 Tablet Lines</div>
-        <label class="filter-item">
-          <input type="checkbox" id="audit-tab-unused" onchange="window.runCalc();">
-          <span style="color:#DC2626;">❌ Drop Inactive Lines</span>
-        </label>
-      </div>
-      <div style="background:#F0F9FF; border:1.5px solid #BAE6FD; border-radius:12px; padding:12px 14px; display:flex; flex-direction:column; gap:8px;">
-        <div style="font-size:11px; font-weight:800; color:#D97706; text-transform:uppercase;">🔄 Next Up Feature</div>
-        <label class="filter-item">
-          <input type="checkbox" id="audit-nua-drop" onchange="window.runCalc();">
-          <span style="color:#DC2626;">❌ Drop Unused Early Upgrades</span>
-        </label>
-      </div>
-    </div>
-
-    <div class="grid-2" style="margin-top:12px;">
       <div class="control-group">
-        <label id="lbl-discount-title">Discount Profile / Organization</label>
+        <label>Discount Profile</label>
         <select id="curr-discount" onchange="window.runCalc();"></select>
+      </div>
+    </div>
+
+    <!-- LEAK AUDIT TRAY -->
+    <div style="margin-top:14px; background:#F8FAFC; border:1.5px solid #CBD5E1; border-radius:14px; padding:12px 16px;">
+      <div style="font-size:11px; font-weight:800; color:var(--text-secondary); text-transform:uppercase; margin-bottom:8px; display:flex; justify-content:space-between;">
+        <span>🔍 Account Leak Audit (Harvest Inactive Features)</span>
+        <span style="color:var(--text-muted); font-size:10px;">Select to drop &amp; add to savings pot</span>
+      </div>
+
+      <div class="grid-3" style="gap:10px;">
+        <label style="display:flex; align-items:center; justify-content:space-between; background:#FFF; border:1.5px solid #E2E8F0; border-radius:10px; padding:10px 12px; cursor:pointer;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <input type="checkbox" id="audit-watch-unused" onchange="window.runCalc();" style="width:16px; height:16px; accent-color:#DC2626;">
+            <span style="font-size:12px; font-weight:700;">⌚ Drop Inactive Watch</span>
+          </div>
+          <span style="font-size:11px; font-weight:800; color:#DC2626;">+$10.99/mo</span>
+        </label>
+
+        <label style="display:flex; align-items:center; justify-content:space-between; background:#FFF; border:1.5px solid #E2E8F0; border-radius:10px; padding:10px 12px; cursor:pointer;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <input type="checkbox" id="audit-tab-unused" onchange="window.runCalc();" style="width:16px; height:16px; accent-color:#DC2626;">
+            <span style="font-size:12px; font-weight:700;">📱 Drop Inactive Tablet</span>
+          </div>
+          <span style="font-size:11px; font-weight:800; color:#DC2626;">+$20.99/mo</span>
+        </label>
+
+        <label style="display:flex; align-items:center; justify-content:space-between; background:#FFF; border:1.5px solid #E2E8F0; border-radius:10px; padding:10px 12px; cursor:pointer;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <input type="checkbox" id="audit-nua-drop" onchange="window.runCalc();" style="width:16px; height:16px; accent-color:#DC2626;">
+            <span style="font-size:12px; font-weight:700;">🔄 Drop Unused Next Up</span>
+          </div>
+          <span style="font-size:11px; font-weight:800; color:#D97706;">+$10.00/mo</span>
+        </label>
       </div>
     </div>
 
@@ -684,67 +582,61 @@
   <div class="section-card" id="sec-wireless-config">
     <div class="sec-header">
       <div class="sec-title">🎯 4. Recommended Wireless Configuration &amp; Starting Pot</div>
-      <div class="pool-pill" id="wireless-pool">Wireless Base: $50.00/mo</div>
+      <div class="pool-pill" id="wireless-pool">Base Plan: $50.00/mo</div>
     </div>
 
-    <!-- NEEDS ASSESSMENT & USAGE OVERRIDE / HBO AUDIT -->
-    <div class="filter-box" style="margin-bottom:12px; background:#F8FAFC; border:1.5px solid #CBD5E1; border-radius:14px; padding:12px 16px; display:flex; flex-wrap:wrap; gap:16px; align-items:center;">
-      <label class="filter-item">
+    <!-- NEEDS ASSESSMENT OVERRIDE / HBO AUDIT -->
+    <div style="margin-bottom:12px; background:#F8FAFC; border:1.5px solid #CBD5E1; border-radius:14px; padding:12px 16px; display:flex; flex-wrap:wrap; gap:16px; align-items:center;">
+      <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
         <input type="checkbox" id="check-hotspot" onchange="window.toggleHotspotFilter();">
-        <span style="font-weight:800;">📶 Needs Dedicated Hotspot Data</span>
+        <span style="font-weight:800; font-size:12px;">📶 Needs Dedicated Hotspot Data</span>
       </label>
 
       <div id="hotspot-lines-wrap" style="display:none; align-items:center; gap:8px;">
-        <span style="font-size:11px; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Hotspot Required Lines:</span>
+        <span style="font-size:11px; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Lines:</span>
         <select id="hotspot-lines-count" style="padding:4px 8px; border-radius:8px; background:#FFF; color:#0F172A; border:1.5px solid var(--emerald); font-weight:800;" onchange="window.applyHotspotRouting();">
-          <option value="0">0 Lines (Standard 5G)</option>
-          <option value="1" selected>1 Line (Lead Hotspot)</option>
+          <option value="0">0 Lines</option>
+          <option value="1" selected>1 Line (Lead)</option>
           <option value="2">2 Lines</option>
-          <option value="all">All Lines (Max Tethering)</option>
+          <option value="all">All Lines</option>
         </select>
       </div>
 
-      <label class="filter-item rep-only" id="wrap-check-hbo">
-        <input type="checkbox" id="check-hbo" onchange="window.toggleHboAudit();">
-        <span style="font-weight:800;">🎬 Account Actively Uses Free Legacy HBO / Max</span>
+      <label class="rep-only" style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+        <input type="checkbox" id="check-hbo" onchange="window.runCalc();">
+        <span style="font-weight:800; font-size:12px;">🎬 Account Actively Uses Free Legacy HBO / Max</span>
       </label>
     </div>
 
-    <!-- HBO RETENTION / SAVINGS AUDIT BANNER -->
     <div id="hbo-audit-banner" style="display:none; margin-bottom:12px; padding:12px 16px; border-radius:12px; font-size:11.5px; line-height:1.45;"></div>
     
-    <!-- 1. RESTORED PLAN CARDS CONTAINER -->
     <div class="recommendations-grid" id="plan-cards-container"></div>
 
-    <!-- 2. DISTINCT STEP 2 DIVIDER -->
-    <div class="step2-transition-divider" id="step2-divider-banner">
-      <div class="step2-title">
-        <span>🎁 STEP 2: REINVESTMENT BASKET</span>
-        <span style="font-size:11px; font-weight:700; color:#854D0E; text-transform:none;">(Absorbed by Plan Savings • $0 Net Increase)</span>
-      </div>
-      <div id="step2-margin-tag" style="font-size:11.5px; font-weight:900; color:#713F12; background:#FFFFFF; padding:2px 8px; border-radius:6px; border:1px solid #CA8A04;">
-        Margin Available: +$50.00/mo
-      </div>
+    <!-- DISTINCT SEPARATOR BEFORE STEP 2 BASKET -->
+    <div style="display:flex; align-items:center; margin:20px 0 14px 0; gap:12px;">
+      <div style="flex:1; height:1.5px; background:linear-gradient(90deg, transparent, #CBD5E1);"></div>
+      <span style="font-size:11.5px; font-weight:900; color:#713F12; text-transform:uppercase; letter-spacing:0.8px; background:#FEF9C3; border:1px solid #FDE047; padding:4px 14px; border-radius:16px;">
+        🎁 Step 2: Available Reinvestment Basket ($0 Net Increase)
+      </span>
+      <div style="flex:1; height:1.5px; background:linear-gradient(90deg, #CBD5E1, transparent);"></div>
     </div>
 
-    <!-- 3. SECOND WINDOW: PRIMARY REINVESTMENT MEDALS (GOLD, SILVER, BRONZE, PHONE) -->
+    <!-- REINVESTMENT OPPORTUNITIES CONTAINER -->
     <div id="reinvest-new-lines-box" style="background:#FFFFFF; border:2.5px solid #CA8A04; border-radius:16px; padding:16px; box-shadow:0 6px 20px rgba(250, 204, 21, 0.25);">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-        <span style="font-size:13.5px; font-weight:900; color:#713F12; text-transform:uppercase; letter-spacing:0.5px;">
-          ✨ Reinvest Savings: New Line Opportunities
+        <span style="font-size:13px; font-weight:900; color:#713F12; text-transform:uppercase;">
+          ✨ Zero-Net-Increase Opportunities
         </span>
         <span id="reinvest-margin-badge" style="background:#FEF3C7; border:1.5px solid #A16207; color:#713F12; padding:3px 10px; border-radius:12px; font-size:11.5px; font-weight:900;">
-          Available Margin: +$50.00/mo
+          Available Margin: +$0.00/mo
         </span>
       </div>
       <div style="font-size:11.5px; color:#854D0E; font-weight:700; margin-top:4px;">
         Pitch new additions that completely fit inside the customer's plan savings before adjusting the base plan:
       </div>
 
-      <div id="new-line-opportunities-list" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:10px; margin-top:10px;">
-      </div>
+      <div id="new-line-opportunities-list" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:10px; margin-top:12px;"></div>
 
-      <!-- DECLINE PIVOT: TIER ADJUSTMENT FALL-BACK -->
       <div style="margin-top:14px; padding-top:10px; border-top:1.5px dashed #CBD5E1; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
         <span style="font-size:11px; color:#475569; font-weight:800;">
           Customer declined new lines? Step the plan tier to lock in rate or capture commission:
@@ -755,12 +647,12 @@
       </div>
     </div>
 
-    <!-- DYNAMIC STEPPERS (INITIALIZES AT 1 LINE TOTAL: 0 PREM, 0 EXTRA, 1 VAL) -->
+    <!-- DYNAMIC STEPPERS (INITIALIZES AT 1 LINE: 0 PREM, 0 EXTRA, 1 VAL) -->
     <div style="margin-top:16px;">
       <div class="counter-row">
         <div>
-          <div class="counter-title" id="stepper-title-t1">🐆 Unlimited Premium 2.0</div>
-          <div class="counter-desc" id="stepper-desc-t1">Unlimited Priority Data (QCI-8) • 100GB Hotspot • 4K UHD</div>
+          <div class="counter-title">🐆 Unlimited Premium 2.0</div>
+          <div class="counter-desc">Unlimited Priority Data (QCI-8) • 100GB Hotspot • 4K UHD</div>
         </div>
         <div class="counter-controls">
           <div class="btn-circle" onclick="window.changeCount('prem', -1)">-</div>
@@ -770,8 +662,8 @@
       </div>
       <div class="counter-row">
         <div>
-          <div class="counter-title" id="stepper-title-t2">🐇 Unlimited Extra 2.0</div>
-          <div class="counter-desc" id="stepper-desc-t2">100GB Priority Data (QCI-8) • 50GB Hotspot</div>
+          <div class="counter-title">🐇 Unlimited Extra 2.0</div>
+          <div class="counter-desc">100GB Priority Data (QCI-8) • 50GB Hotspot</div>
         </div>
         <div class="counter-controls">
           <div class="btn-circle" onclick="window.changeCount('extra', -1)">-</div>
@@ -781,8 +673,8 @@
       </div>
       <div class="counter-row">
         <div>
-          <div class="counter-title" id="stepper-title-t3">🐢 Value Plus 2.0</div>
-          <div class="counter-desc" id="stepper-desc-t3">Standard 5G Data • 3GB Mobile Hotspot</div>
+          <div class="counter-title">🐢 Value Plus 2.0</div>
+          <div class="counter-desc">Standard 5G Data • 3GB Mobile Hotspot</div>
         </div>
         <div class="counter-controls">
           <div class="btn-circle" onclick="window.changeCount('val', -1)">-</div>
@@ -793,97 +685,45 @@
     </div>
   </div>
 
-  <!-- FLOATING REINVESTMENT BAR -->
-  <div class="waterfall-reinvest-bar rep-only">
-    <div class="wf-status">
-      <div class="wf-label">Active Reinvestment Pool</div>
-      <div class="wf-tier-name" id="wf-active-tier">Allocated from: Value Plus 2.0</div>
-    </div>
-    <div class="wf-pot-display" id="wf-pot-badge" style="background:var(--emerald-bg); border:2px solid var(--emerald); color:var(--emerald);">
-      Starting Pot: +$50.00/mo
-    </div>
-  </div>
-
   <!-- SECTION 5: BROADBAND -->
   <div class="section-card" id="sec-broadband" style="display:none;">
     <div class="sec-header">
-      <div class="sec-title">🌐 5. Home / Business Broadband Drawdown</div>
+      <div class="sec-title">🌐 5. Broadband Drawdown</div>
       <div class="pool-pill" id="pool-badge-broadband">Drawdown: $0/mo</div>
     </div>
     <div class="grid-4" id="bb-tiles-container"></div>
   </div>
 
-  <!-- SECTION 6: PROTECTION & CONNECTED TECH -->
-  <div class="section-card">
+  <!-- SECTION 6: STREAMLINED PROTECTION & HARDWARE ATTACH -->
+  <div class="section-card" id="sec-hardware-cart">
     <div class="sec-header">
-      <div class="sec-title">🛡️ 6. Protection, Connected Tech &amp; AIP Cart</div>
+      <div class="sec-title">🛡️ 6. Comprehensive Protection &amp; Hardware Cart</div>
       <div class="pool-pill" id="pool-badge-devices">Drawdown: $0/mo</div>
     </div>
+
+    <!-- COMPACT PROTECTION TILES (REPLACES VERTICAL DROPDOWNS) -->
     <div class="grid-3" style="margin-bottom:14px;">
-      <div class="control-group">
-        <label>PA1 (Protect 1)</label>
-        <select id="addon-pa1" onchange="window.runCalc();">
-          <option value="0" selected>0 Devices ($0/mo)</option>
-          <option value="17">1 Device ($17.00/mo)</option>
-        </select>
+      <div class="prot-tile" id="tile-pa1" onclick="window.toggleProtOption('pa1');">
+        <div style="font-size:12px; font-weight:800; color:var(--att-blue);">📱 PA1 (Protect 1)</div>
+        <div style="font-size:16px; font-weight:900; color:#0F172A; margin:3px 0;">$17.00/mo</div>
+        <div style="font-size:10.5px; color:var(--text-muted);">Single Device Coverage</div>
       </div>
-      <div class="control-group">
-        <label id="lbl-pa4">PA4 Multi-Device</label>
-        <select id="addon-pa4" onchange="window.runCalc();">
-          <option value="0" selected>None ($0/mo)</option>
-          <option value="50">PA4 Multi-Device ($50.00/mo)</option>
-        </select>
+      <div class="prot-tile" id="tile-pa4" onclick="window.toggleProtOption('pa4');">
+        <div style="font-size:12px; font-weight:800; color:var(--att-blue);">👨‍👩‍👧‍👦 PA4 Multi-Device</div>
+        <div style="font-size:16px; font-weight:900; color:#0F172A; margin:3px 0;">$50.00/mo</div>
+        <div style="font-size:10.5px; color:var(--text-muted);">Up to 4 Devices Covered</div>
       </div>
-      <div class="control-group">
-        <label>Tech Protection (HTP)</label>
-        <select id="addon-htp" onchange="window.runCalc();">
-          <option value="0" selected>None ($0/mo)</option>
-          <option value="25">HomeTech Protection ($25.00/mo)</option>
-        </select>
+      <div class="prot-tile" id="tile-htp" onclick="window.toggleProtOption('htp');">
+        <div style="font-size:12px; font-weight:800; color:var(--att-blue);">🏠 HomeTech (HTP)</div>
+        <div style="font-size:16px; font-weight:900; color:#0F172A; margin:3px 0;">$25.00/mo</div>
+        <div style="font-size:10.5px; color:var(--text-muted);">Whole-Home Electronics</div>
       </div>
     </div>
 
-    <div class="grid-2" style="margin-bottom:14px;">
-      <div class="control-group">
-        <label>⌚ Add Smartwatches</label>
-        <select id="addon-watches" onchange="window.renderConnectedLedger();">
-          <option value="0" selected>0 Watches Added</option>
-          <option value="1">1 Watch</option>
-        </select>
-      </div>
-      <div class="control-group">
-        <label>📱 Add Tablets</label>
-        <select id="addon-tablets" onchange="window.renderConnectedLedger();">
-          <option value="0" selected>0 Tablets Added</option>
-          <option value="1">1 Tablet</option>
-        </select>
-      </div>
-    </div>
-
-    <div id="connected-hardware-container" style="display:none; flex-direction:column; gap:10px; margin-bottom:14px;"></div>
-
-    <div style="background:#F0F9FF; border:1.5px solid #BAE6FD; border-radius:14px; padding:14px;">
-      <div style="font-size:11.5px; font-weight:800; color:#B45309; text-transform:uppercase; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
-        <span>🛍️ 12-Month Accessory Installment Plan (AIP) &amp; POS Catch-All</span>
-        <label style="display:flex; align-items:center; gap:8px;">
-          <input type="checkbox" id="check-aip-eligible" checked onchange="window.runCalc();" style="accent-color:var(--emerald); width:18px; height:18px;">
-          <span style="font-size:10.5px; color:var(--text-secondary);">12-Mo Financing ($75 Min)</span>
-        </label>
-      </div>
-      <div class="grid-2">
-        <div class="control-group">
-          <label>Custom Accessory Cart Total ($)</label>
-          <input type="number" id="aip-cart-val" value="0" placeholder="e.g. 150.00" step="5" oninput="window.runCalc();">
-        </div>
-        <div class="control-group">
-          <label>🕶️ Ray-Ban Meta Smart Glasses</label>
-          <select id="aip-meta-select" onchange="window.runCalc();">
-            <option value="0">None / No Smart Glasses</option>
-            <option value="299">Wayfarer Standard ($299 = $24.92/mo)</option>
-            <option value="379">Transitions / Polarized ($379 = $31.58/mo)</option>
-          </select>
-        </div>
-      </div>
+    <!-- DYNAMIC HARDWARE LEDGER (STAYS HIDDEN UNTIL A DEVICE IS ACTIVATED) -->
+    <div id="hardware-ledger-container" style="display:none; flex-direction:column; gap:10px; background:#F0F9FF; border:1.5px solid #BAE6FD; border-radius:12px; padding:12px;">
+      <div style="font-size:11.5px; font-weight:800; color:var(--att-blue); text-transform:uppercase;">Line Hardware Configuration</div>
+      <div id="active-hardware-items" style="display:flex; flex-direction:column; gap:8px;"></div>
     </div>
   </div>
 
@@ -895,11 +735,11 @@
 
     <div class="summary-grid">
       <div class="sum-left">
-        <div class="sum-label" id="lbl-sum-bill-title">New Total Monthly Bill (w/ AutoPay)</div>
-        <div class="sum-total" id="sum-new-total">$50.00</div>
+        <div class="sum-label">New Total Monthly Bill (w/ AutoPay)</div>
+        <div class="sum-total" id="sum-new-total">$0.00</div>
       </div>
       <div class="sum-savings" id="sum-savings-box">
-        Saves $50.00/mo vs Old Bill!
+        Saves $0.00/mo vs Old Bill!
       </div>
     </div>
 
@@ -918,16 +758,16 @@
         <div class="control-group">
           <label>Bill Cycle Cut Day</label>
           <select id="bill-cut-day" onchange="window.runCalc();">
-            <option value="1">1st of the month</option>
-            <option value="4">4th of the month</option>
-            <option value="7">7th of the month</option>
-            <option value="10">10th of the month</option>
-            <option value="13">13th of the month</option>
-            <option value="16" selected>16th of the month</option>
-            <option value="19">19th of the month</option>
-            <option value="22">22nd of the month</option>
-            <option value="25">25th of the month</option>
-            <option value="28">28th of the month</option>
+            <option value="1">1st of month</option>
+            <option value="4">4th of month</option>
+            <option value="7">7th of month</option>
+            <option value="10">10th of month</option>
+            <option value="13">13th of month</option>
+            <option value="16" selected>16th of month</option>
+            <option value="19">19th of month</option>
+            <option value="22">22nd of month</option>
+            <option value="25">25th of month</option>
+            <option value="28">28th of month</option>
           </select>
         </div>
         <div class="control-group">
@@ -962,51 +802,78 @@
       </div>
     </div>
 
-    <!-- LINE-BY-LINE ACQUISITION MATRIX (DEFAULT: 0 PHONES) -->
-    <div style="background:#F0F9FF; border:2px solid #BAE6FD; border-radius:14px; padding:16px; margin-top:16px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
-        <span style="font-size:12px; font-weight:800; color:var(--att-blue); text-transform:uppercase;">
-          📱 Line-by-Line Device Acquisition Matrix (Full Catalog)
-        </span>
-        <div style="display:flex; align-items:center; gap:10px;">
-          <span style="font-size:11px; font-weight:800; color:var(--text-secondary);">Phones Acquired:</span>
-          <select id="acquired-phone-count" style="padding:5px 10px; border-radius:8px; border:1.5px solid var(--att-blue); font-weight:800; font-size:12px;" onchange="window.renderAcquiredPhoneLedger();">
-            <option value="0" selected>0 Phones</option>
-            <option value="1">1 Phone</option>
-            <option value="2">2 Phones</option>
-            <option value="3">3 Phones</option>
-            <option value="4">4 Phones</option>
-          </select>
-        </div>
-      </div>
-      <div id="acquired-phones-container" style="display:flex; flex-direction:column; gap:10px;"></div>
-    </div>
-
     <!-- DUE TODAY AT REGISTER -->
     <div class="due-box">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-        <div class="due-title" id="lbl-due-title">🏷️ Total Due Today at Register (7% State Tax &amp; Goods)</div>
-        <label class="rep-only" style="display:flex; align-items:center; gap:8px;">
+        <div style="font-size:12px; font-weight:800; color:#92400E; text-transform:uppercase;">🏷️ Total Due Today at Register (7% State Tax &amp; Goods)</div>
+        <label class="rep-only" style="display:flex; align-items:center; gap:8px; cursor:pointer;">
           <input type="checkbox" id="check-waived-fees" onchange="window.runCalc();" style="accent-color:var(--emerald); width:18px; height:18px;">
           <span style="font-size:11px; font-weight:800; color:#059669;">🎉 Waived Upgrade Fees? (-$35/phone)</span>
         </label>
       </div>
-      <div class="due-amt" id="due-today-amt">$0.00 Due Today</div>
-      <div class="due-sub" id="due-today-breakdown">Calculates exact 7% state tax on retail hardware + accessories + network fees.</div>
+      <div id="due-today-amt" style="font-size:20px; font-weight:900; color:#0F172A; margin-bottom:3px;">$0.00 Due Today</div>
+      <div id="due-today-breakdown" style="font-size:11px; color:#B45309; line-height:1.4;">Calculates exact 7% state tax on retail hardware + accessories + network fees.</div>
     </div>
 
     <div class="control-group" style="margin-top:16px;">
       <label style="font-size:12px;">📱 Instant Customer SMS Quote</label>
-      <textarea id="sms-text" style="width:100%; height:110px; background:#F0F9FF; border:2px solid #BAE6FD; color:#0F172A; border-radius:12px; padding:12px; font-family:inherit; font-size:12.5px; resize:none;" readonly></textarea>
-      <button type="button" class="btn" style="margin-top:10px; width:100%; background:var(--att-blue); color:#FFF; border-color:var(--att-blue); font-size:13.5px; padding:12px;" onclick="window.copySMS()">📋 Copy Text for Customer</button>
+      <textarea id="sms-text" style="width:100%; height:100px; background:#F0F9FF; border:2px solid #BAE6FD; color:#0F172A; border-radius:12px; padding:12px; font-family:inherit; font-size:12px; resize:none;" readonly></textarea>
+      <button type="button" class="btn" style="margin-top:10px; width:100%; background:var(--att-blue); color:#FFF; font-size:13.5px; padding:12px;" onclick="window.copySMS()">📋 Copy Text for Customer</button>
     </div>
   </div>
 </div>
 
 <script>
-window.accountSegment = "consumer";
-window.broadbandCost = 0;
-window.selectedPlanIndex = 0;
+/* CORE DATA DICTIONARIES (CLEANED & DEDUPLICATED) */
+const DEVICES = [
+  [1999.00, "iPhone Duo (Foldable)", "apple"],
+  [1299.00, "iPhone 18 Pro Max", "apple"],
+  [1199.00, "iPhone 18 Pro", "apple"],
+  [1049.00, "iPhone Air", "apple"],
+  [899.00,  "iPhone 17", "apple"],
+  [599.00,  "iPhone 16e", "apple"],
+  [2099.99, "Galaxy Z Fold8 Ultra", "android"],
+  [1899.99, "Galaxy Z Fold8", "android"],
+  [1799.00, "Pixel 10 Pro Fold", "android"],
+  [1299.00, "Galaxy S26 Ultra", "android"],
+  [1199.00, "Pixel 10 Pro XL", "android"],
+  [1099.00, "Galaxy Z Flip7", "android"],
+  [999.00,  "Galaxy S26+", "android"],
+  [799.00,  "Galaxy S26 Base", "android"],
+  [799.00,  "Pixel 10 Base", "android"]
+];
+
+const TRADES = [
+  [230, 1000, 27.78, "iPhone 14 Pro Max"],
+  [230, 1000, 27.78, "iPhone 15 / 15 Plus"],
+  [260, 1000, 27.78, "iPhone 15 Pro"],
+  [300, 1000, 27.78, "iPhone 15 Pro Max"],
+  [320, 1000, 27.78, "iPhone 16 / 16 Plus"],
+  [380, 1000, 27.78, "iPhone 16 Pro / Pro Max"],
+  [230, 1000, 27.78, "Galaxy S24+ / S25 FE"],
+  [300, 1000, 27.78, "Galaxy S24 Ultra"],
+  [290, 1000, 27.78, "Galaxy S25 / S25+"],
+  [455, 1000, 27.78, "Galaxy S25 Ultra / S26"],
+  [230, 1000, 27.78, "Galaxy Z Flip7 / FE"],
+  [300, 1000, 27.78, "Galaxy Z Fold6 / Fold7"],
+  [350, 1000, 27.78, "Pixel 9 Pro Fold"],
+  [290, 1000, 27.78, "Pixel 10 / Pro / XL"],
+  [180, 830,  23.06, "iPhone 14 / 14 Plus"],
+  [195, 830,  23.06, "iPhone 14 Pro"],
+  [130, 830,  23.06, "Galaxy S22 Ultra / S23"],
+  [150, 830,  23.06, "Galaxy S23+ / S24 FE"],
+  [160, 830,  23.06, "Galaxy S24"],
+  [190, 830,  23.06, "Galaxy Z Flip6"],
+  [210, 830,  23.06, "Galaxy Z Fold5"],
+  [35,  350,  9.72,  "iPhone XR / XS / Max"],
+  [55,  350,  9.72,  "iPhone 11"],
+  [95,  350,  9.72,  "iPhone 11 Pro / 12 / Mini"],
+  [115, 350,  9.72,  "iPhone 12 Pro Max / 13"],
+  [125, 350,  9.72,  "iPhone 13 Pro / Max / 16e"],
+  [35,  350,  9.72,  "Galaxy S10 / S20 / S21"],
+  [95,  350,  9.72,  "Galaxy Z Fold3 / 4"],
+  [0,   0,    0,     "Legacy / Under $35 ($0 Promo)"]
+];
 
 var consumerRates = {
   1: { prem: 90, ext: 70, val: 50, fanPrem: 80, noApPrem: 100, noApExt: 80, noApVal: 60 },
@@ -1034,131 +901,168 @@ var businessRates = {
   10: { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50, noApExt: 45, noApVal: 40.99 }
 };
 
-var acquiredDeviceCatalogHTML = `
-  <optgroup label="Apple Lineup">
-    <option value="1999|iPhone Duo (Foldable)" selected>iPhone Duo (Foldable • $1,999.00)</option>
-    <option value="1299|iPhone 18 Pro Max">iPhone 18 Pro Max ($1,299.00)</option>
-    <option value="1199|iPhone 18 Pro">iPhone 18 Pro ($1,199.00)</option>
-    <option value="1049|iPhone Air">iPhone Air ($1,049.00)</option>
-    <option value="899|iPhone 17">iPhone 17 ($899.00)</option>
-    <option value="599|iPhone 16e">iPhone 16e ($599.00)</option>
-  </optgroup>
-  <optgroup label="Android & Foldable Lineup">
-    <option value="2099.99|Galaxy Z Fold8 Ultra">Galaxy Z Fold8 Ultra ($2,099.99)</option>
-    <option value="1899.99|Galaxy Z Fold8">Galaxy Z Fold8 ($1,899.99)</option>
-    <option value="1799|Pixel 10 Pro Fold">Pixel 10 Pro Fold ($1,799.00)</option>
-    <option value="1299|Galaxy S26 Ultra">Galaxy S26 Ultra ($1,299.00)</option>
-    <option value="1199|Pixel 10 Pro XL">Pixel 10 Pro XL ($1,199.00)</option>
-    <option value="1099|Galaxy Z Flip7">Galaxy Z Flip7 ($1,099.00)</option>
-    <option value="999|Galaxy S26+">Galaxy S26+ ($999.00)</option>
-    <option value="799|Galaxy S26 Base">Galaxy S26 ($799.00)</option>
-    <option value="799|Pixel 10 Base">Pixel 10 ($799.00)</option>
-  </optgroup>
-`;
+window.accountSegment = "consumer";
+window.selectedPlanIndex = 0;
+window.activePhone = null;
+window.activeWatch = null;
+window.activeTablet = null;
+window.activeAip = 0;
+window.activeProt = { pa1: false, pa4: false, htp: false };
 
-var watchCatalogHTML = `
-  <option value="799|Apple Watch Ultra 3">Apple Watch Ultra 3 ($799.00)</option>
-  <option value="429|Apple Watch Series 12" selected>Apple Watch Series 12 ($429.00)</option>
-  <option value="249|Apple Watch SE 3">Apple Watch SE 3 ($249.00)</option>
-  <option value="649|Galaxy Watch Ultra">Galaxy Watch Ultra ($649.00)</option>
-  <option value="299|Galaxy Watch 8">Galaxy Watch 8 ($299.00)</option>
-`;
+/* DOM CACHE SHORTCUTS */
+const $ = (id) => document.getElementById(id);
 
-var tabletCatalogHTML = `
-  <option value="999|iPad Pro OLED">iPad Pro OLED ($999.00)</option>
-  <option value="599|iPad Air 11-inch">iPad Air 11-inch ($599.00)</option>
-  <option value="349|iPad 10th Gen" selected>iPad 10th Gen ($349.00)</option>
-  <option value="899|Galaxy Tab S10+">Galaxy Tab S10+ ($899.00)</option>
-`;
+/* GENERATE CATALOG OPTIONS DYNAMICALLY (SAVES ~300 LINES OF REPETITIVE HTML) */
+function getDeviceOptionsHTML() {
+  var app = '<optgroup label="Apple Lineup">', and = '<optgroup label="Android & Foldables">';
+  DEVICES.forEach(d => {
+    var opt = `<option value="${d[0]}|${d[1]}">${d[1]} ($${d[0].toFixed(2)})</option>`;
+    if (d[2] === 'apple') app += opt; else and += opt;
+  });
+  return app + '</optgroup>' + and + '</optgroup>';
+}
 
-var deviceTradeOptionsHTML = `
-  <optgroup label="Tier 1 ($230+ Value • $1,000 Off Flagship)">
-    <option value="230|1000|27.78|iPhone 14 Pro Max" selected>iPhone 14 Pro Max ($230 base book)</option>
-    <option value="230|1000|27.78|iPhone 15 / 15 Plus">iPhone 15 / 15 Plus ($230 base book)</option>
-    <option value="260|1000|27.78|iPhone 15 Pro">iPhone 15 Pro ($260 base book)</option>
-    <option value="300|1000|27.78|iPhone 15 Pro Max">iPhone 15 Pro Max ($300 base book)</option>
-    <option value="320|1000|27.78|iPhone 16 / 16 Plus">iPhone 16 / 16 Plus ($320 base book)</option>
-    <option value="380|1000|27.78|iPhone 16 Pro / Pro Max">iPhone 16 Pro / Pro Max ($380-$480)</option>
-    <option value="230|1000|27.78|Galaxy S24+ / S25 FE">Galaxy S24+ / S25 FE ($230 base book)</option>
-    <option value="300|1000|27.78|Galaxy S24 Ultra">Galaxy S24 Ultra ($300 base book)</option>
-    <option value="290|1000|27.78|Galaxy S25 / S25+">Galaxy S25 / S25+ ($290-$330)</option>
-    <option value="455|1000|27.78|Galaxy S25 Ultra / S26">Galaxy S25 Ultra / S26 ($350-$500)</option>
-    <option value="230|1000|27.78|Galaxy Z Flip7 FE / Flip7">Galaxy Z Flip7 / FE ($230-$250)</option>
-    <option value="300|1000|27.78|Galaxy Z Fold6 / Fold7">Galaxy Z Fold6 / Fold7 ($300-$480)</option>
-    <option value="350|1000|27.78|Pixel 9 Pro Fold">Pixel 9 Pro Fold ($350 base book)</option>
-    <option value="290|1000|27.78|Pixel 10 / 10 Pro / XL">Pixel 10 Series ($290-$420)</option>
-  </optgroup>
-  <optgroup label="Tier 2 ($130–$229 Value • $830 Off)">
-    <option value="180|830|23.06|iPhone 14 / 14 Plus">iPhone 14 / 14 Plus ($180 base book)</option>
-    <option value="195|830|23.06|iPhone 14 Pro">iPhone 14 Pro ($195 base book)</option>
-    <option value="225|830|23.06|iPhone 17e">iPhone 17e ($225 base book)</option>
-    <option value="130|830|23.06|Galaxy S22 Ultra / S23">Galaxy S22 Ultra / S23 ($130 base book)</option>
-    <option value="150|830|23.06|Galaxy S23+ / S24 FE">Galaxy S23+ / S24 FE ($130-$150)</option>
-    <option value="160|830|23.06|Galaxy S24">Galaxy S24 ($160 base book)</option>
-    <option value="190|830|23.06|Galaxy Z Flip6">Galaxy Z Flip6 ($190 base book)</option>
-    <option value="210|830|23.06|Galaxy Z Fold5">Galaxy Z Fold5 ($210 base book)</option>
-  </optgroup>
-  <optgroup label="Tier 3 ($35–$129 Value • $350 Off)">
-    <option value="35|350|9.72|iPhone XR / XS / Max">iPhone XR / XS / Max ($35 base book)</option>
-    <option value="55|350|9.72|iPhone 11">iPhone 11 ($55 base book)</option>
-    <option value="95|350|9.72|iPhone 11 Pro / Max">iPhone 11 Pro / Max ($95 base book)</option>
-    <option value="95|350|9.72|iPhone 12 / Mini / Pro">iPhone 12 / Mini / Pro ($95 base book)</option>
-    <option value="115|350|9.72|iPhone 12 Pro Max">iPhone 12 Pro Max ($115 base book)</option>
-    <option value="115|350|9.72|iPhone 13 / Mini">iPhone 13 / Mini ($95-$115 base book)</option>
-    <option value="125|350|9.72|iPhone 13 Pro / Max">iPhone 13 Pro / Max ($125 base book)</option>
-    <option value="125|350|9.72|iPhone 16e">iPhone 16e ($125 base book)</option>
-    <option value="35|350|9.72|Galaxy S10 / S20 / S21">Galaxy S10 / S20 / S21 ($35 base book)</option>
-    <option value="95|350|9.72|Galaxy Z Fold3 / 4">Galaxy Z Fold3 / 4 ($95-$120)</option>
-  </optgroup>
-  <optgroup label="Ineligible / Under $35 ($0 Promo)">
-    <option value="0|0|0|Legacy / Out of Support">iPhone 6-8 / S7-S9 / &lt;$35 ($0 Promo)</option>
-  </optgroup>
-`;
+function getTradeOptionsHTML() {
+  return TRADES.map(t => `<option value="${t[0]}|${t[1]}|${t[2]}|${t[3]}">${t[3]} ($${t[0]} base book)</option>`).join('');
+}
+
+/* PROTECTION TILE TOGGLE */
+window.toggleProtOption = function(type) {
+  if (type === 'pa4') {
+    window.activeProt.pa4 = !window.activeProt.pa4;
+    if (window.activeProt.pa4) window.activeProt.pa1 = false;
+  } else if (type === 'pa1') {
+    window.activeProt.pa1 = !window.activeProt.pa1;
+    if (window.activeProt.pa1) window.activeProt.pa4 = false;
+  } else if (type === 'htp') {
+    window.activeProt.htp = !window.activeProt.htp;
+  }
+  $('tile-pa1').classList.toggle('active', window.activeProt.pa1);
+  $('tile-pa4').classList.toggle('active', window.activeProt.pa4);
+  $('tile-htp').classList.toggle('active', window.activeProt.htp);
+  window.runCalc();
+};
+
+/* REINVESTMENT QUICK-ATTACH HANDLERS */
+window.quickAttachVoiceLine = function() {
+  var linesSel = $('curr-lines');
+  var currentL = parseInt(linesSel.value, 10) || 1;
+  if (currentL < 10) {
+    linesSel.value = (currentL + 1).toString();
+    window.changeCount('val', 1);
+  }
+};
+
+window.quickAttachTablet = function() {
+  window.activeTablet = "iPad 10th Gen ($349.00)";
+  window.syncHardwareLedger();
+  window.runCalc();
+};
+
+window.quickAttachWatch = function() {
+  window.activeWatch = "Apple Watch Series 12 ($429.00)";
+  window.syncHardwareLedger();
+  window.runCalc();
+};
+
+window.quickAttachPhone = function() {
+  window.activePhone = DEVICES[4][1]; // iPhone 17
+  window.syncHardwareLedger();
+  window.runCalc();
+};
+
+window.quickAttachAIP = function(amount) {
+  window.activeAip = amount;
+  window.syncHardwareLedger();
+  window.runCalc();
+};
+
+window.syncHardwareLedger = function() {
+  var container = $('hardware-ledger-container');
+  var items = $('active-hardware-items');
+  var html = [];
+
+  if (window.activePhone) {
+    html.push(`
+      <div style="display:flex; justify-content:space-between; align-items:center; background:#FFF; padding:8px 12px; border-radius:8px; border:1px solid #BAE6FD;">
+        <span>📱 <b>Phone:</b> ${window.activePhone}</span>
+        <button type="button" class="btn" style="padding:4px 8px; font-size:10px; color:#DC2626;" onclick="window.activePhone=null;window.syncHardwareLedger();window.runCalc();">Remove</button>
+      </div>
+    `);
+  }
+  if (window.activeTablet) {
+    html.push(`
+      <div style="display:flex; justify-content:space-between; align-items:center; background:#FFF; padding:8px 12px; border-radius:8px; border:1px solid #BAE6FD;">
+        <span>📱 <b>Tablet:</b> ${window.activeTablet}</span>
+        <button type="button" class="btn" style="padding:4px 8px; font-size:10px; color:#DC2626;" onclick="window.activeTablet=null;window.syncHardwareLedger();window.runCalc();">Remove</button>
+      </div>
+    `);
+  }
+  if (window.activeWatch) {
+    html.push(`
+      <div style="display:flex; justify-content:space-between; align-items:center; background:#FFF; padding:8px 12px; border-radius:8px; border:1px solid #BAE6FD;">
+        <span>⌚ <b>Smartwatch:</b> ${window.activeWatch}</span>
+        <button type="button" class="btn" style="padding:4px 8px; font-size:10px; color:#DC2626;" onclick="window.activeWatch=null;window.syncHardwareLedger();window.runCalc();">Remove</button>
+      </div>
+    `);
+  }
+  if (window.activeAip > 0) {
+    html.push(`
+      <div style="display:flex; justify-content:space-between; align-items:center; background:#FFF; padding:8px 12px; border-radius:8px; border:1px solid #BAE6FD;">
+        <span>🛍️ <b>12-Mo Accessory Plan:</b> $${window.activeAip.toFixed(2)} ($${(window.activeAip/12).toFixed(2)}/mo)</span>
+        <button type="button" class="btn" style="padding:4px 8px; font-size:10px; color:#DC2626;" onclick="window.activeAip=0;window.syncHardwareLedger();window.runCalc();">Remove</button>
+      </div>
+    `);
+  }
+
+  if (html.length > 0) {
+    container.style.display = 'flex';
+    items.innerHTML = html.join('');
+  } else {
+    container.style.display = 'none';
+    items.innerHTML = '';
+  }
+};
 
 /* TRADE-IN INTAKE ENGINE */
 window.toggleTradeInMaster = function() {
-  var isEnabled = document.getElementById('toggle-has-tradeins').checked;
-  document.getElementById('wrap-trade-inner').style.display = isEnabled ? 'block' : 'none';
-  document.getElementById('wrap-trade-count').style.display = isEnabled ? 'inline-flex' : 'none';
+  var isEnabled = $('toggle-has-tradeins').checked;
+  $('wrap-trade-inner').style.display = isEnabled ? 'block' : 'none';
+  $('wrap-trade-count').style.display = isEnabled ? 'inline-flex' : 'none';
   if (!isEnabled) {
-    document.getElementById('trade-lines-count').value = "0";
-    document.getElementById('trade-devices-container').innerHTML = '';
+    $('trade-lines-count').value = "0";
+    $('trade-devices-container').innerHTML = '';
   } else {
-    document.getElementById('trade-lines-count').value = "1";
+    $('trade-lines-count').value = "1";
     window.renderTradeCards();
   }
   window.runCalc();
 };
 
 window.renderTradeCards = function() {
-  var count = parseInt(document.getElementById('trade-lines-count').value, 10) || 0;
-  var container = document.getElementById('trade-devices-container');
+  var count = parseInt($('trade-lines-count').value, 10) || 0;
+  var container = $('trade-devices-container');
   container.innerHTML = '';
+  if (count === 0) { window.runCalc(); return; }
 
-  if (count === 0) {
-    window.runCalc();
-    return;
-  }
-
+  var optionsHTML = getTradeOptionsHTML();
   for (var i = 1; i <= count; i++) {
     var lineCard = document.createElement('div');
     lineCard.style = "background:#FFFFFF; border:1.5px solid #BAE6FD; border-radius:12px; padding:12px 16px; display:flex; flex-direction:column; gap:8px;";
     lineCard.innerHTML = `
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
         <span style="font-size:11.5px; font-weight:800; color:var(--att-blue);">Line ${i} Trade-In Intake</span>
-        <span id="t-badge-${i}" style="background:#EFF6FF; border:1px solid #BFDBFE; color:var(--att-blue); padding:3px 10px; border-radius:12px; font-size:10px; font-weight:800;">Book: $230 • Tier 1 ($1,000 Off)</span>
+        <span id="t-badge-${i}" style="background:#EFF6FF; border:1px solid #BFDBFE; color:var(--att-blue); padding:3px 10px; border-radius:12px; font-size:10px; font-weight:800;">Tier 1 ($1,000 Off)</span>
       </div>
       <div class="grid-2">
         <div class="control-group">
           <label>Select Current Model</label>
-          <select id="trade-select-${i}" onchange="window.syncSingleTradeLine(${i});">
-            ${deviceTradeOptionsHTML}
-          </select>
+          <select id="trade-select-${i}" onchange="window.syncSingleTradeLine(${i});">${optionsHTML}</select>
         </div>
         <div style="display:flex; align-items:center; gap:12px; margin-top:16px;">
-          <label class="filter-item" style="color:#DC2626; font-weight:800;">
+          <label style="color:#DC2626; font-weight:800; display:flex; align-items:center; gap:6px; cursor:pointer;">
             <input type="checkbox" id="trade-damage-${i}" onchange="window.syncSingleTradeLine(${i});" style="accent-color:#DC2626;">
-            <span>🔨 Physical Damage / Cracked (-50%)</span>
+            <span>🔨 Cracked / Damaged (-50%)</span>
           </label>
         </div>
       </div>
@@ -1169,711 +1073,550 @@ window.renderTradeCards = function() {
 };
 
 window.syncSingleTradeLine = function(lineIdx) {
-  var sel = document.getElementById(`trade-select-${lineIdx}`);
-  var isDamaged = document.getElementById(`trade-damage-${lineIdx}`).checked;
-  var isAyac = document.getElementById('check-ayac-promo') ? document.getElementById('check-ayac-promo').checked : false;
-  var badge = document.getElementById(`t-badge-${lineIdx}`);
+  var sel = $(`trade-select-${lineIdx}`), isDamaged = $(`trade-damage-${lineIdx}`).checked;
+  var isAyac = $('check-ayac-promo') ? $('check-ayac-promo').checked : false;
+  var badge = $(`t-badge-${lineIdx}`);
   if (!sel || !badge) return;
 
   var parts = sel.value.split('|');
   var rawBook = parseFloat(parts[0]) || 0;
-  var effectiveBook = (isDamaged && !isAyac) ? Math.floor(rawBook * 0.5) : rawBook;
-
+  var effBook = (isDamaged && !isAyac) ? Math.floor(rawBook * 0.5) : rawBook;
   var tierName = "No Promo ($0)";
-  if (isAyac || effectiveBook >= 230) tierName = "Tier 1: $1,000 Off";
-  else if (effectiveBook >= 130) tierName = "Tier 2: $830 Off";
-  else if (effectiveBook >= 35) tierName = "Tier 3: $350 Off";
+  if (isAyac || effBook >= 230) tierName = "Tier 1: $1,000 Off";
+  else if (effBook >= 130) tierName = "Tier 2: $830 Off";
+  else if (effBook >= 35) tierName = "Tier 3: $350 Off";
 
-  badge.textContent = `Book: $${effectiveBook} • ${tierName}`;
-  badge.style.background = isDamaged ? "#FEF2F2" : "#EFF6FF";
+  badge.textContent = `Book: $${effBook} • ${tierName}`;
   badge.style.color = isDamaged ? "#DC2626" : "var(--att-blue)";
   window.runCalc();
 };
 
 window.syncAllTradeLines = function() {
-  var count = parseInt(document.getElementById('trade-lines-count').value, 10) || 0;
-  for (var i = 1; i <= count; i++) {
-    window.syncSingleTradeLine(i);
-  }
+  var count = parseInt($('trade-lines-count').value, 10) || 0;
+  for (var i = 1; i <= count; i++) window.syncSingleTradeLine(i);
 };
 
-/* LINE-BY-LINE ACQUISITION MATRIX */
-window.renderAcquiredPhoneLedger = function() {
-  var count = parseInt(document.getElementById('acquired-phone-count').value, 10) || 0;
-  var container = document.getElementById('acquired-phones-container');
-  container.innerHTML = '';
-
-  if (count === 0) {
-    container.innerHTML = '<div style="font-size:11px; color:var(--text-muted); font-style:italic;">No phone hardware acquired yet ($0 POS Tax).</div>';
-    window.runCalc();
-    return;
-  }
-
-  for (var i = 1; i <= count; i++) {
-    var lineCard = document.createElement('div');
-    lineCard.className = "checkout-line-item";
-    lineCard.innerHTML = `
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-size:11px; font-weight:800; color:var(--att-blue);">Line ${i} Hardware Acquisition</span>
-        <select id="acq-type-${i}" style="padding:4px 8px; border-radius:8px; font-size:10.5px; border:1.5px solid #93C5FD; font-weight:800;" onchange="window.runCalc();">
-          <option value="upgrade" selected>Upgrade Existing</option>
-          <option value="add">➕ Add a Line</option>
-        </select>
-      </div>
-      <div class="grid-2">
-        <div class="control-group">
-          <label>Target Hardware</label>
-          <select id="acq-phone-select-${i}" onchange="window.runCalc();">
-            ${acquiredDeviceCatalogHTML}
-          </select>
-        </div>
-        <div id="acq-math-display-${i}" style="font-size:10.5px; color:var(--text-secondary); display:flex; flex-direction:column; justify-content:center; gap:3px;">
-        </div>
-      </div>
-    `;
-    container.appendChild(lineCard);
-  }
-  window.runCalc();
-};
-
-/* CONNECTED TECH LEDGER */
-window.renderConnectedLedger = function() {
-  var wCount = parseInt(document.getElementById('addon-watches').value, 10) || 0;
-  var tCount = parseInt(document.getElementById('addon-tablets').value, 10) || 0;
-  var container = document.getElementById('connected-hardware-container');
-  container.innerHTML = '';
-
-  if (wCount === 0 && tCount === 0) {
-    container.style.display = 'none';
-    window.runCalc();
-    return;
-  }
-  container.style.display = 'flex';
-
-  for (var w = 1; w <= wCount; w++) {
-    var div = document.createElement('div');
-    div.style = "background:#FFFFFF; border:1.5px solid #BAE6FD; border-radius:10px; padding:10px 14px; display:flex; justify-content:space-between; align-items:center; gap:10px;";
-    div.innerHTML = `
-      <span style="font-size:11px; font-weight:800; color:var(--att-blue);">Watch ${w}:</span>
-      <select id="conn-watch-${w}" style="flex:1; padding:6px 10px; font-size:11px; border-radius:8px; border:1.5px solid #93C5FD;" onchange="window.runCalc();">
-        ${watchCatalogHTML}
-      </select>
-    `;
-    container.appendChild(div);
-  }
-
-  for (var t = 1; t <= tCount; t++) {
-    var divT = document.createElement('div');
-    divT.style = "background:#FFFFFF; border:1.5px solid #BAE6FD; border-radius:10px; padding:10px 14px; display:flex; justify-content:space-between; align-items:center; gap:10px;";
-    divT.innerHTML = `
-      <span style="font-size:11px; font-weight:800; color:var(--att-blue);">Tablet ${t}:</span>
-      <select id="conn-tablet-${t}" style="flex:1; padding:6px 10px; font-size:11px; border-radius:8px; border:1.5px solid #93C5FD;" onchange="window.runCalc();">
-        ${tabletCatalogHTML}
-      </select>
-    `;
-    container.appendChild(divT);
-  }
-  window.runCalc();
-};
-
-/* SCOPES, SYNCS & 1-LINE VS MULTI-LINE PROPER PLAN TOGGLE */
-window.toggleScope = function(el) { 
-  el.classList.toggle('active'); 
-  window.updateConditionalSections();
-  window.runCalc(); 
-};
-
-window.updateConditionalSections = function() {
-  var hasBB = document.getElementById('scope-bb') && document.getElementById('scope-bb').classList.contains('active');
-  var secBroadband = document.getElementById('sec-broadband');
-  if (secBroadband) secBroadband.style.display = hasBB ? 'block' : 'none';
-  if (!hasBB) window.broadbandCost = 0;
-};
+/* SCOPES & STEPPERS */
+window.toggleScope = function(el) { el.classList.toggle('active'); window.runCalc(); };
 
 window.setLines = function(num) {
   var n = parseInt(num, 10);
   if (n === 1) {
-    document.getElementById('cnt-prem').textContent = "0";
-    document.getElementById('cnt-extra').textContent = "0";
-    document.getElementById('cnt-val').textContent = "1";
+    $('cnt-prem').textContent = "0"; $('cnt-extra').textContent = "0"; $('cnt-val').textContent = "1";
     window.selectedPlanIndex = 0;
   } else {
-    document.getElementById('cnt-prem').textContent = "1";
-    document.getElementById('cnt-extra').textContent = "0";
-    document.getElementById('cnt-val').textContent = (n - 1).toString();
+    $('cnt-prem').textContent = "1"; $('cnt-extra').textContent = "0"; $('cnt-val').textContent = (n - 1).toString();
     window.selectedPlanIndex = 1;
   }
   window.runCalc();
 };
 
 window.changeCount = function(type, delta) {
-  var p = parseInt(document.getElementById('cnt-prem').textContent, 10);
-  var e = parseInt(document.getElementById('cnt-extra').textContent, 10);
-  var v = parseInt(document.getElementById('cnt-val').textContent, 10);
+  var p = parseInt($('cnt-prem').textContent, 10), e = parseInt($('cnt-extra').textContent, 10), v = parseInt($('cnt-val').textContent, 10);
   if (type === 'prem') p = Math.max(0, p + delta);
   if (type === 'extra') e = Math.max(0, e + delta);
   if (type === 'val') v = Math.max(0, v + delta);
   var total = p + e + v;
-  if (total > 10) return;
-  if (total === 0) v = 1;
-  document.getElementById('cnt-prem').textContent = p;
-  document.getElementById('cnt-extra').textContent = e;
-  document.getElementById('cnt-val').textContent = v;
-  document.getElementById('curr-lines').value = (p + e + v);
+  if (total > 10 || total === 0) return;
+  $('cnt-prem').textContent = p; $('cnt-extra').textContent = e; $('cnt-val').textContent = v;
+  $('curr-lines').value = total;
   window.runCalc();
 };
 
 window.selectRecommendedPlan = function(idx) {
   window.selectedPlanIndex = idx;
-  var totalLines = parseInt(document.getElementById('curr-lines').value, 10) || 1;
-
+  var totalLines = parseInt($('curr-lines').value, 10) || 1;
   if (totalLines === 1) {
-    if (idx === 0) {
-      document.getElementById('cnt-prem').textContent = "0";
-      document.getElementById('cnt-extra').textContent = "0";
-      document.getElementById('cnt-val').textContent = "1";
-    } else if (idx === 1) {
-      document.getElementById('cnt-prem').textContent = "0";
-      document.getElementById('cnt-extra').textContent = "1";
-      document.getElementById('cnt-val').textContent = "0";
-    } else {
-      document.getElementById('cnt-prem').textContent = "1";
-      document.getElementById('cnt-extra').textContent = "0";
-      document.getElementById('cnt-val').textContent = "0";
-    }
+    $('cnt-prem').textContent = (idx === 2 ? 1 : 0);
+    $('cnt-extra').textContent = (idx === 1 ? 1 : 0);
+    $('cnt-val').textContent = (idx === 0 ? 1 : 0);
   } else {
-    if (idx === 0) {
-      document.getElementById('cnt-prem').textContent = "0";
-      document.getElementById('cnt-extra').textContent = "0";
-      document.getElementById('cnt-val').textContent = totalLines;
-    } else if (idx === 1) {
-      document.getElementById('cnt-prem').textContent = "1";
-      document.getElementById('cnt-extra').textContent = "0";
-      document.getElementById('cnt-val').textContent = Math.max(0, totalLines - 1);
-    } else {
-      document.getElementById('cnt-prem').textContent = totalLines;
-      document.getElementById('cnt-extra').textContent = "0";
-      document.getElementById('cnt-val').textContent = "0";
-    }
+    if (idx === 0) { $('cnt-prem').textContent = 0; $('cnt-extra').textContent = 0; $('cnt-val').textContent = totalLines; }
+    else if (idx === 1) { $('cnt-prem').textContent = 1; $('cnt-extra').textContent = 0; $('cnt-val').textContent = Math.max(0, totalLines - 1); }
+    else { $('cnt-prem').textContent = totalLines; $('cnt-extra').textContent = 0; $('cnt-val').textContent = 0; }
   }
   window.runCalc();
 };
 
-/* HOTSPOT FILTERING & ROUTING */
+/* HOTSPOT ROUTING */
 window.toggleHotspotFilter = function() {
-  var isChecked = document.getElementById('check-hotspot').checked;
-  var wrap = document.getElementById('hotspot-lines-wrap');
-  wrap.style.display = isChecked ? 'inline-flex' : 'none';
-  if (!isChecked) {
-    document.getElementById('hotspot-lines-count').value = "0";
-  } else {
-    document.getElementById('hotspot-lines-count').value = "1";
-  }
+  var isChecked = $('check-hotspot').checked;
+  $('hotspot-lines-wrap').style.display = isChecked ? 'inline-flex' : 'none';
+  $('hotspot-lines-count').value = isChecked ? "1" : "0";
   window.applyHotspotRouting();
 };
 
 window.applyHotspotRouting = function() {
-  var totalLines = parseInt(document.getElementById('curr-lines').value, 10) || 1;
-  var sel = document.getElementById('hotspot-lines-count').value;
-
+  var totalLines = parseInt($('curr-lines').value, 10) || 1;
+  var sel = $('hotspot-lines-count').value;
   if (sel === "0") {
-    if (totalLines === 1) {
-      document.getElementById('cnt-prem').textContent = "0";
-      document.getElementById('cnt-extra').textContent = "0";
-      document.getElementById('cnt-val').textContent = "1";
-      window.selectedPlanIndex = 0;
-    } else {
-      document.getElementById('cnt-prem').textContent = "0";
-      document.getElementById('cnt-extra').textContent = "0";
-      document.getElementById('cnt-val').textContent = totalLines;
-      window.selectedPlanIndex = 0;
-    }
+    $('cnt-prem').textContent = 0; $('cnt-extra').textContent = 0; $('cnt-val').textContent = totalLines;
+    window.selectedPlanIndex = 0;
   } else if (sel === "all") {
-    document.getElementById('cnt-prem').textContent = totalLines;
-    document.getElementById('cnt-extra').textContent = "0";
-    document.getElementById('cnt-val').textContent = "0";
+    $('cnt-prem').textContent = totalLines; $('cnt-extra').textContent = 0; $('cnt-val').textContent = 0;
     window.selectedPlanIndex = 2;
   } else {
-    var count = Math.min(totalLines, parseInt(sel, 10));
-    document.getElementById('cnt-prem').textContent = count;
-    document.getElementById('cnt-extra').textContent = "0";
-    document.getElementById('cnt-val').textContent = Math.max(0, totalLines - count);
+    var c = Math.min(totalLines, parseInt(sel, 10));
+    $('cnt-prem').textContent = c; $('cnt-extra').textContent = 0; $('cnt-val').textContent = Math.max(0, totalLines - c);
     window.selectedPlanIndex = 1;
   }
   window.runCalc();
 };
 
-/* HBO AUDIT & COMPARISON LOGIC */
-window.toggleHboAudit = function() {
-  window.runCalc();
-};
-
-/* RUN THE NUMBERS ACTION */
 window.runNumbersAction = function() {
   window.runCalc();
-  var target = document.getElementById('sec-wireless-config');
-  if (target) {
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-};
-
-/* QUICK-ATTACH CONVERTORS FOR ADD-A-LINE ARBITRAGE */
-window.quickAttachConnected = function(type) {
-  if (type === 'watch') {
-    var wSel = document.getElementById('addon-watches');
-    wSel.value = "1";
-    window.renderConnectedLedger();
-  } else if (type === 'tablet') {
-    var tSel = document.getElementById('addon-tablets');
-    tSel.value = "1";
-    window.renderConnectedLedger();
-  }
-  window.runCalc();
-};
-
-window.quickAttachVoiceLine = function() {
-  var linesSel = document.getElementById('curr-lines');
-  var currentL = parseInt(linesSel.value, 10) || 1;
-  if (currentL < 10) {
-    linesSel.value = (currentL + 1).toString();
-    window.changeCount('val', 1);
-  }
-};
-
-window.quickAttachPhone = function() {
-  var pCount = document.getElementById('acquired-phone-count');
-  pCount.value = "1";
-  window.renderAcquiredPhoneLedger();
-  window.runCalc();
-  var target = document.getElementById('acquired-phone-count');
-  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  var target = $('sec-wireless-config');
+  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 };
 
 window.scrollToPlanSteppers = function() {
-  var el = document.getElementById('cnt-prem');
+  var el = $('cnt-prem');
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
 };
 
 window.togglePresMode = function() {
   document.body.classList.toggle('presentation-mode');
-  var isPres = document.body.classList.contains('presentation-mode');
-  var btn = document.getElementById('pres-btn');
-  if (btn) btn.innerHTML = isPres ? '👁️ Customer View: ON' : '👁️ Customer View: OFF';
+  $('pres-btn').innerHTML = document.body.classList.contains('presentation-mode') ? '👁️ Customer View: ON' : '👁️ Customer View: OFF';
 };
 
 window.copySMS = function() {
-  var t = document.getElementById('sms-text');
-  t.select();
-  document.execCommand('copy');
-  alert("Customer Quote Copied!");
+  var t = $('sms-text'); t.select(); document.execCommand('copy'); alert("Customer Quote Copied!");
 };
 
 window.copyAddress = function() {
-  var a = document.getElementById('addr-field').value;
-  if (!a) { alert("Address is empty"); return; }
-  navigator.clipboard.writeText(a).then(function() { alert("Copied address: " + a); });
+  var a = $('addr-field').value; if (!a) { alert("Address is empty"); return; }
+  navigator.clipboard.writeText(a).then(() => alert("Copied address: " + a));
 };
 
 window.setAccountSegment = function(seg) {
   window.accountSegment = seg;
-  document.getElementById('seg-btn-consumer').classList.toggle('active', seg === 'consumer');
-  document.getElementById('seg-btn-business').classList.toggle('active', seg === 'business');
+  $('seg-btn-consumer').classList.toggle('active', seg === 'consumer');
+  $('seg-btn-business').classList.toggle('active', seg === 'business');
   window.syncSegmentUI();
   window.runCalc();
 };
 
 window.syncSegmentUI = function() {
   var isBiz = (window.accountSegment === "business");
-  var discSel = document.getElementById('curr-discount');
+  var discSel = $('curr-discount');
   if (isBiz) {
-    document.getElementById('hdr-title-rep').textContent = "AT&T Business CRU Solutions Studio";
+    $('hdr-title-rep').textContent = "AT&T Business CRU Solutions Studio";
     discSel.innerHTML = `
-      <option value="biz_std" selected>Standard Corporate CRU (No FAN)</option>
-      <option value="biz_evp">EVP / Corporate Volume Agreement ($10/L off Premium 3.0)</option>
+      <option value="biz_std" selected>Corporate CRU (No FAN)</option>
+      <option value="biz_evp">EVP Corporate Agreement ($10/L off)</option>
       <option value="biz_fn">FirstNet Agency-Paid Primary</option>
     `;
   } else {
-    document.getElementById('hdr-title-rep').textContent = "AT&T Executive Solutions Studio";
+    $('hdr-title-rep').textContent = "AT&T Executive Solutions Studio";
     discSel.innerHTML = `
       <option value="none" selected>Standard Consumer (No FAN)</option>
-      <option value="fan_corp">Corporate Employer FAN ($10/L off Premium)</option>
+      <option value="fan_corp">Corporate Employer FAN ($10/L off)</option>
       <option value="apprec_mil">Military / Veteran / FirstNet (25% Off)</option>
       <option value="fiber">AT&amp;T Fiber Convergence (20% Off)</option>
     `;
   }
 };
 
-/* MASTER CALCULATION AND REINVESTMENT LEDGER */
+/* MASTER CALCULATION ENGINE */
 window.runCalc = function() {
   var isBiz = (window.accountSegment === "business");
-  var rawCurrentBill = parseFloat(document.getElementById('curr-total').value) || 100.00;
-  var pCount = parseInt(document.getElementById('cnt-prem').textContent, 10) || 0;
-  var eCount = parseInt(document.getElementById('cnt-extra').textContent, 10) || 0;
-  var vCount = parseInt(document.getElementById('cnt-val').textContent, 10) || 0;
-  var totalLines = pCount + eCount + vCount;
-  if (totalLines < 1) totalLines = 1;
+  var rawCurrentBill = parseFloat($('curr-total').value) || 0;
+  var pCount = parseInt($('cnt-prem').textContent, 10) || 0;
+  var eCount = parseInt($('cnt-extra').textContent, 10) || 0;
+  var vCount = parseInt($('cnt-val').textContent, 10) || 0;
+  var totalLines = Math.max(1, pCount + eCount + vCount);
 
-  var currentWatches = parseInt(document.getElementById('curr-watches').value, 10) || 0;
-  var currentTablets = parseInt(document.getElementById('curr-tablets').value, 10) || 0;
-  var watchHarvest = (document.getElementById('audit-watch-unused').checked && currentWatches > 0) ? (currentWatches * (isBiz ? 10 : 10.99)) : 0;
-  var tabHarvest = (document.getElementById('audit-tab-unused').checked && currentTablets > 0) ? (currentTablets * (isBiz ? 20 : 20.99)) : 0;
-  var nuaHarvest = document.getElementById('audit-nua-drop').checked ? 10.00 : 0;
-  var adjustedBaseline = rawCurrentBill + watchHarvest + tabHarvest + nuaHarvest;
+  // Leak Audit Harvest
+  var watchHarvest = $('audit-watch-unused').checked ? (isBiz ? 10.00 : 10.99) : 0;
+  var tabHarvest = $('audit-tab-unused').checked ? (isBiz ? 20.00 : 20.99) : 0;
+  var nuaHarvest = $('audit-nua-drop').checked ? 10.00 : 0;
+  var totalHarvest = watchHarvest + tabHarvest + nuaHarvest;
 
-  var disc = document.getElementById('curr-discount').value;
+  var harvestBadge = $('baseline-harvest-badge');
+  if (harvestBadge) {
+    harvestBadge.style.display = totalHarvest > 0 ? 'block' : 'none';
+    harvestBadge.textContent = `Audit Harvest: +$${totalHarvest.toFixed(2)}/mo`;
+  }
+  var adjustedBaseline = rawCurrentBill + totalHarvest;
+
+  // Rate Multipliers
+  var disc = $('curr-discount').value;
   var isFan = (!isBiz && disc === 'fan_corp') || (isBiz && disc === 'biz_evp');
   var isApprec = (!isBiz && disc === 'apprec_mil') || (isBiz && disc === 'biz_fn');
-  var ap = document.getElementById('curr-autopay').value;
+  var ap = $('curr-autopay').value;
 
   var rateTable = isBiz ? businessRates : consumerRates;
   var tData = rateTable[Math.min(totalLines, 10)] || rateTable[1];
   var premRate = tData.prem, extRate = tData.ext, valRate = tData.val;
 
   if (ap === 'none') { premRate = tData.noApPrem; extRate = tData.noApExt; valRate = tData.noApVal; }
-  else if (ap === 'credit') { premRate += (isBiz ? 0 : 5); extRate += (isBiz ? 0 : 5); valRate += (isBiz ? 0 : 5); }
+  else if (ap === 'credit') { premRate += 5; extRate += 5; valRate += 5; }
 
-  if (isFan) { premRate = (ap === 'none') ? tData.noApExt : (tData.fanPrem + (ap === 'credit' && !isBiz ? 5 : 0)); }
+  if (isFan) premRate = (ap === 'none') ? tData.noApExt : (tData.fanPrem + (ap === 'credit' && !isBiz ? 5 : 0));
   else if (isApprec) { premRate = +(premRate * 0.75).toFixed(2); extRate = +(extRate * 0.75).toFixed(2); valRate = +(valRate * 0.75).toFixed(2); }
 
   var wirelessBasePlanTotal = Number(((pCount * premRate) + (eCount * extRate) + (vCount * valRate)).toFixed(2));
-
-  /* CORE REINVESTMENT MARGIN IS ANCHORED TO BASELINE PLAN SAVINGS */
   var availablePlanMargin = Number((adjustedBaseline - wirelessBasePlanTotal).toFixed(2));
 
-  /* TRADE-IN INTAKE CREDITS */
-  var hasTradeIns = document.getElementById('toggle-has-tradeins').checked;
-  var tCount = hasTradeIns ? (parseInt(document.getElementById('trade-lines-count').value, 10) || 0) : 0;
-  var isAyac = document.getElementById('check-ayac-promo') ? document.getElementById('check-ayac-promo').checked : false;
+  // Trade Credits
+  var hasTradeIns = $('toggle-has-tradeins').checked;
+  var tCount = hasTradeIns ? (parseInt($('trade-lines-count').value, 10) || 0) : 0;
+  var isAyac = $('check-ayac-promo') ? $('check-ayac-promo').checked : false;
   var totalMonthlyTradeCredits = 0;
-  var lineTradeCredits = [];
 
   for (var t = 1; t <= tCount; t++) {
-    var tSel = document.getElementById(`trade-select-${t}`);
-    var tDam = document.getElementById(`trade-damage-${t}`);
+    var tSel = $(`trade-select-${t}`), tDam = $(`trade-damage-${t}`);
     if (tSel && tDam) {
       var parts = tSel.value.split('|');
       var effBook = (tDam.checked && !isAyac) ? Math.floor(parseFloat(parts[0]) * 0.5) : parseFloat(parts[0]);
       var credit = (isAyac || effBook >= 230) ? 27.78 : ((effBook >= 130) ? 23.06 : ((effBook >= 35) ? 9.72 : 0));
       totalMonthlyTradeCredits += credit;
-      lineTradeCredits.push(credit);
     }
   }
+  $('trade-pool-badge').textContent = `Total Trade Credits: -$${totalMonthlyTradeCredits.toFixed(2)}/mo`;
 
-  document.getElementById('trade-pool-badge').textContent = `Total Trade Credits: -$${totalMonthlyTradeCredits.toFixed(2)}/mo`;
+  // Render Plan Recommendation Personas
+  var planOptions = (totalLines === 1) ? [
+    { title: "🐢 Value Plus 2.0", cost: valRate, desc: "Essential unlimited data at our lowest single-line price point.", tag: "💰 Max Savings", cls: "rec-card-val" },
+    { title: "🐇 Unlimited Extra 2.0", cost: extRate, desc: "100GB priority data & 50GB hotspot tethering.", tag: "⚡ Most Popular", cls: "rec-card-ext" },
+    { title: "🐆 Unlimited Premium 2.0", cost: premRate, desc: "Fast-track QCI-8 data • 100GB hotspot • 4K UHD video.", tag: "👑 Peak Tier", cls: "rec-card-prem" }
+  ] : [
+    { title: "🐢 All Value Plus 2.0", cost: Number((totalLines * valRate).toFixed(2)), desc: "Core unlimited access across all lines.", tag: "💰 Max Budget", cls: "rec-card-val" },
+    { title: "🐆 1x Prem + 🐢 Crew Mix", cost: Number((premRate + (totalLines - 1) * valRate).toFixed(2)), desc: "Lead line priority, crew on value.", tag: "⚡ High Value", cls: "rec-card-ext" },
+    { title: "🐆 All-Cheetah Premium", cost: Number((totalLines * premRate).toFixed(2)), desc: "Unlimited fast-track QCI-8 data on all devices.", tag: "👑 Zero Slowdown", cls: "rec-card-prem" }
+  ];
 
-  /* RENDER RECOMMENDATION TILES (WITH VIBRANT DISTINCT PERSONAS & FEATURE CHIPS) */
-  var planOptions = [];
-  if (totalLines === 1) {
-    planOptions = [
-      { 
-        title: isBiz ? "🐢 Business Standard 3.0" : "🐢 Value Plus 2.0", 
-        roleBadge: "💰 MAX MARGIN ANCHOR", 
-        roleClass: "badge-value-role", 
-        cardClass: "rec-card-value",
-        cost: valRate, 
-        chips: ["Standard 5G Data", "3GB Hotspot", "SD Video"],
-        desc: "Essential unlimited data at our best single-line rate." 
-      },
-      { 
-        title: isBiz ? "🐇 Business Advanced 3.0" : "🐇 Unlimited Extra 2.0", 
-        roleBadge: "⚡ BALANCED TIER", 
-        roleClass: "badge-extra-role", 
-        cardClass: "rec-card-extra",
-        cost: extRate, 
-        chips: ["100GB Priority (QCI-8)", "50GB Hotspot", "Mexico & Canada"],
-        desc: "High-priority data & tethering for active daily usage." 
-      },
-      { 
-        title: isBiz ? "🦅 Business Premium 3.0" : "🐆 Unlimited Premium 2.0", 
-        roleBadge: "👑 PEAK PERFORMANCE", 
-        roleClass: "badge-premium-role", 
-        cardClass: "rec-card-premium",
-        cost: premRate, 
-        chips: ["Unlimited Priority QCI-8", "100GB Hotspot", "4K UHD Streaming"],
-        desc: "Unlimited fast-track priority data & max hotspot." 
-      }
-    ];
-  } else {
-    planOptions = [
-      { 
-        title: isBiz ? "🐢 All Business Standard 3.0" : "🐢 All Value Plus 2.0", 
-        roleBadge: "💰 MAX MARGIN ANCHOR", 
-        roleClass: "badge-value-role", 
-        cardClass: "rec-card-value",
-        cost: Number((totalLines * valRate).toFixed(2)), 
-        chips: ["Core 5G Network", "3GB Mobile Hotspot / Line"],
-        desc: "Core unlimited data with standard speeds." 
-      },
-      { 
-        title: isBiz ? "🦅 1x Prem + 🐢 Crew Standard" : "🐆 1x Prem + 🐢 Value Mix", 
-        roleBadge: "⭐ SMART OPTIMIZER MIX", 
-        roleClass: "badge-extra-role", 
-        cardClass: "rec-card-extra",
-        cost: Number((premRate + (totalLines - 1) * valRate).toFixed(2)), 
-        chips: ["Lead Line: QCI-8 & 100GB", "Secondary: Standard Access"],
-        desc: "Lead line on Premium, remainder on standard access." 
-      },
-      { 
-        title: isBiz ? "🦅 All-Executive Business 3.0" : "🐆 All-Cheetah Premium", 
-        roleBadge: "👑 UNCOMPROMISED FLAGSHIP", 
-        roleClass: "badge-premium-role", 
-        cardClass: "rec-card-premium",
-        cost: Number((totalLines * premRate).toFixed(2)), 
-        chips: ["100% Unlimited QCI-8", "100GB Hotspot / Line", "4K UHD"],
-        desc: "Unlimited priority data across all lines." 
-      }
-    ];
-  }
-
-  var cardsContainer = document.getElementById('plan-cards-container');
-  if (cardsContainer) {
-    cardsContainer.innerHTML = '';
-    for (var c = 0; c < planOptions.length; c++) {
-      var opt = planOptions[c];
-      var cSavings = Number((adjustedBaseline - opt.cost).toFixed(2));
-      var cardDiv = document.createElement('div');
-      cardDiv.className = 'rec-card ' + opt.cardClass + (c === window.selectedPlanIndex ? ' selected-plan' : '');
-      cardDiv.setAttribute('onclick', 'window.selectRecommendedPlan(' + c + ')');
-      
-      var chipsHTML = opt.chips.map(function(ch) { return '<span class="feature-chip">' + ch + '</span>'; }).join('');
-
-      cardDiv.innerHTML = `
-        <div>
-          <div class="plan-card-top">
-            <div class="plan-title-row">
-              <span class="plan-title-text">${opt.title}</span>
-            </div>
-            <span class="plan-role-badge ${opt.roleClass}">${opt.roleBadge}</span>
-          </div>
-          <div class="plan-price-row">
-            <span class="plan-price-num" style="color:${c === 0 ? 'var(--emerald)' : (c === 1 ? 'var(--att-cyan)' : 'var(--att-blue)')};">$${opt.cost.toFixed(2)}/mo</span>
-            <span class="plan-price-savings" style="color:${cSavings >= 0 ? 'var(--emerald)' : '#DC2626'};">${cSavings >= 0 ? 'Saves $' + cSavings.toFixed(2) + '/mo' : '+$' + Math.abs(cSavings).toFixed(2) + '/mo'}</span>
-          </div>
-          <div class="plan-feature-chips">${chipsHTML}</div>
+  var cardsContainer = $('plan-cards-container');
+  cardsContainer.innerHTML = '';
+  planOptions.forEach((opt, c) => {
+    var cSavings = Number((adjustedBaseline - opt.cost).toFixed(2));
+    var div = document.createElement('div');
+    div.className = `rec-card ${opt.cls} ${c === window.selectedPlanIndex ? 'selected-plan' : ''}`;
+    div.setAttribute('onclick', `window.selectRecommendedPlan(${c})`);
+    div.innerHTML = `
+      <div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+          <div style="font-size:14px; font-weight:800; color:#0F172A;">${opt.title}</div>
+          <span class="plan-badge-pill" style="background:#FFF; border:1px solid #CBD5E1;">${opt.tag}</span>
         </div>
-        <div style="font-size:11px; color:var(--text-secondary); line-height:1.4; margin-top:2px;">${opt.desc}</div>
-      `;
-      cardsContainer.appendChild(cardDiv);
-    }
-  }
+        <div style="font-size:22px; font-weight:900; color:var(--emerald);">$${opt.cost.toFixed(2)}/mo</div>
+        <div style="font-size:11.5px; font-weight:800; color:var(--emerald); margin-bottom:8px;">
+          ${rawCurrentBill > 0 ? (cSavings >= 0 ? `Saves $${cSavings.toFixed(2)}/mo` : `+$${Math.abs(cSavings).toFixed(2)}/mo`) : 'Select to configure'}
+        </div>
+      </div>
+      <div style="font-size:11px; color:var(--text-secondary); line-height:1.4;">${opt.desc}</div>
+    `;
+    cardsContainer.appendChild(div);
+  });
 
-  /* HARDWARE CHECKOUT LEDGER: PHONES, WATCHES, TABLETS, AIP */
-  var acqPhoneCount = parseInt(document.getElementById('acquired-phone-count').value, 10) || 0;
-  var totalPhoneRetail = 0;
-  var totalGrossInstallments = 0;
-  var totalNetDeviceInstallments = 0;
-  var totalPhoneSalesTaxPOS = 0;
+  // Calculate Active Hardware, Protection & AIP
+  var phoneRetail = window.activePhone ? (DEVICES.find(d => d[1] === window.activePhone)?.[0] || 899.00) : 0;
+  var netPhoneInstallment = window.activePhone ? Math.max(0, (phoneRetail / 36) - (totalMonthlyTradeCredits > 0 ? 27.78 : 0)) : 0;
+  var phoneTaxPOS = phoneRetail * 0.07;
 
-  for (var p = 1; p <= acqPhoneCount; p++) {
-    var pSel = document.getElementById(`acq-phone-select-${p}`);
-    var mathBox = document.getElementById(`acq-math-display-${p}`);
-    if (pSel && mathBox) {
-      var price = parseFloat(pSel.value.split('|')[0]) || 0;
-      var tax = price * 0.07;
-      var grossInst = price / 36;
-      var tCredit = (lineTradeCredits[p - 1] || 0);
-      var netInst = Math.max(0, grossInst - tCredit);
+  var tabletMonthly = window.activeTablet ? (isBiz ? 20.00 : (pCount > 0 ? 10.50 : 20.99)) : 0;
+  var tabletTaxPOS = window.activeTablet ? (349.00 * 0.07) : 0;
 
-      totalPhoneRetail += price;
-      totalGrossInstallments += grossInst;
-      totalNetDeviceInstallments += netInst;
-      totalPhoneSalesTaxPOS += tax;
+  var watchMonthly = window.activeWatch ? (isBiz ? 10.00 : (pCount > 0 ? 5.50 : 10.99)) : 0;
+  var watchTaxPOS = window.activeWatch ? (429.00 * 0.07) : 0;
 
-      mathBox.innerHTML = `
-        <div>Retail: $${price.toFixed(2)} • <b>Tax Due: $${tax.toFixed(2)}</b></div>
-        <div>Installment: $${grossInst.toFixed(2)}/mo ${tCredit > 0 ? `<span style="color:var(--emerald);">(-$${tCredit.toFixed(2)} credit)</span> = <b>$${netInst.toFixed(2)}/mo</b>` : ''}</div>
-      `;
-    }
-  }
+  var aipMonthly = (window.activeAip >= 75) ? (window.activeAip / 12) : 0;
+  var aipTaxPOS = window.activeAip * 0.07;
 
-  var wCount = parseInt(document.getElementById('addon-watches').value, 10) || 0;
-  var tabCount = parseInt(document.getElementById('addon-tablets').value, 10) || 0;
-  var totalConnectedTaxPOS = 0;
-
-  for (var cw = 1; cw <= wCount; cw++) {
-    var cwEl = document.getElementById(`conn-watch-${cw}`);
-    if (cwEl) totalConnectedTaxPOS += (parseFloat(cwEl.value.split('|')[0]) * 0.07);
-  }
-  for (var ct = 1; ct <= tabCount; ct++) {
-    var ctEl = document.getElementById(`conn-tablet-${ct}`);
-    if (ctEl) totalConnectedTaxPOS += (parseFloat(ctEl.value.split('|')[0]) * 0.07);
-  }
-
-  var aipEligible = document.getElementById('check-aip-eligible').checked;
-  var aipCartVal = parseFloat(document.getElementById('aip-cart-val').value) || 0;
-  var aipMetaVal = parseFloat(document.getElementById('aip-meta-select').value) || 0;
-  var totalAipRetail = aipCartVal + aipMetaVal;
-  var aipMonthly = (aipEligible && totalAipRetail >= 75) ? (totalAipRetail / 12) : 0;
-  var aipTaxPOS = totalAipRetail * 0.07;
-
-  var pa1 = parseFloat(document.getElementById('addon-pa1').value) || 0;
-  var pa4 = parseFloat(document.getElementById('addon-pa4').value) || 0;
-  var htp = parseFloat(document.getElementById('addon-htp').value) || 0;
-  var protectTotal = pa1 + pa4 + htp;
-  var watchMonthly = wCount * (isBiz ? 10 : 10.99);
-  var tabMonthly = tabCount * (isBiz ? 20 : 20.99);
-
-  var hasTV = document.getElementById('scope-tv') && document.getElementById('scope-tv').classList.contains('active');
+  var protMonthly = (window.activeProt.pa1 ? 17.00 : 0) + (window.activeProt.pa4 ? 50.00 : 0) + (window.activeProt.htp ? 25.00 : 0);
+  var hasTV = $('scope-tv').classList.contains('active');
   var dtvMonthly = hasTV ? 79.99 : 0;
 
-  /* TOTAL ONGOING RECURRING BILL & MONTHLY SAVINGS */
-  var totalHousehold = Number((wirelessBasePlanTotal + totalNetDeviceInstallments + protectTotal + watchMonthly + tabMonthly + aipMonthly + dtvMonthly).toFixed(2));
-  var monthlySavings = Number((adjustedBaseline - totalHousehold).toFixed(2));
+  var totalHousehold = Number((wirelessBasePlanTotal + netPhoneInstallment + tabletMonthly + watchMonthly + aipMonthly + protMonthly + dtvMonthly).toFixed(2));
+  var finalOngoingSavings = Number((adjustedBaseline - totalHousehold).toFixed(2));
 
-  document.getElementById('sum-new-total').textContent = `$${totalHousehold.toFixed(2)}/mo`;
-  document.getElementById('wireless-pool').textContent = `Wireless Base: $${wirelessBasePlanTotal.toFixed(2)}/mo`;
-  document.getElementById('wf-pot-badge').textContent = (availablePlanMargin >= 0 ? `Starting Pot: +$${availablePlanMargin.toFixed(2)}/mo` : `Over Budget: +$${Math.abs(availablePlanMargin).toFixed(2)}/mo`);
+  $('sum-new-total').textContent = `$${totalHousehold.toFixed(2)}/mo`;
+  $('wireless-pool').textContent = `Base Plan: $${wirelessBasePlanTotal.toFixed(2)}/mo`;
 
-  /* DYNAMIC HBO AUDIT EVALUATION */
-  var hasHbo = document.getElementById('check-hbo').checked;
-  var hboBanner = document.getElementById('hbo-audit-banner');
+  // HBO Audit
+  var hasHbo = $('check-hbo').checked;
+  var hboBanner = $('hbo-audit-banner');
   if (hasHbo) {
     hboBanner.style.display = 'block';
     if (availablePlanMargin >= 16.99) {
-      hboBanner.style.background = "#ECFDF5";
-      hboBanner.style.border = "1.5px solid #10B981";
-      hboBanner.style.color = "#065F46";
-      hboBanner.innerHTML = `<b>🎬 HBO Irrelevant (Savings Outweighs Max Perk):</b> Plan rerate saves <b>$${availablePlanMargin.toFixed(2)}/mo</b>! Even if customer subscribes to Max separately ($16.99/mo), they are still net ahead by <b>+$${(availablePlanMargin - 16.99).toFixed(2)}/mo</b> in cash!`;
+      hboBanner.style.background = "#ECFDF5"; hboBanner.style.border = "1.5px solid #10B981"; hboBanner.style.color = "#065F46";
+      hboBanner.innerHTML = `<b>🎬 HBO Irrelevant:</b> Plan rerate saves <b>$${availablePlanMargin.toFixed(2)}/mo</b>! Even if paying $16.99/mo for standalone Max, customer is net ahead by <b>+$${(availablePlanMargin - 16.99).toFixed(2)}/mo</b> in cash!`;
     } else {
-      hboBanner.style.background = "#FFFBEB";
-      hboBanner.style.border = "1.5px solid #F59E0B";
-      hboBanner.style.color = "#92400E";
-      hboBanner.innerHTML = `<b>⚠️ HBO Retention Alert:</b> Current savings are <b>$${availablePlanMargin.toFixed(2)}/mo</b>. Customer loses free grandfathered Max ($16.99 retail value). Customer must value newer network speeds/priority to justify rerate.`;
+      hboBanner.style.background = "#FFFBEB"; hboBanner.style.border = "1.5px solid #F59E0B"; hboBanner.style.color = "#92400E";
+      hboBanner.innerHTML = `<b>⚠️ HBO Retention Alert:</b> Current savings are <b>$${availablePlanMargin.toFixed(2)}/mo</b>. Customer loses grandfathered Max ($16.99 value).`;
     }
+  } else { hboBanner.style.display = 'none'; }
+
+  // Reinvestment Opportunity Basket
+  var reinvestList = $('new-line-opportunities-list');
+  $('reinvest-margin-badge').textContent = `Available Margin: +$${availablePlanMargin.toFixed(2)}/mo`;
+
+  var opps = [];
+  var nextVoiceCost = (rateTable[Math.min(totalLines + 1, 10)] ? rateTable[Math.min(totalLines + 1, 10)].val : valRate);
+
+  // 1. Gold Voice
+  if (availablePlanMargin >= nextVoiceCost || rawCurrentBill === 0) {
+    opps.push(`
+      <div class="badge-sparkling-gold" style="border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between; gap:6px;">
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:12px; font-weight:900;">🥇 GOLD: Voice Add-A-Line</span>
+            <span style="font-size:11px; font-weight:900;">+$${nextVoiceCost.toFixed(2)}/mo</span>
+          </div>
+          <div style="font-size:10px; margin-top:3px; line-height:1.3;">Add Line ${totalLines + 1}. Curve drop absorbs the cost!</div>
+        </div>
+        <button type="button" class="btn" style="background:#FFF; border-color:#CA8A04; color:#713F12; width:100%; font-size:11px; font-weight:900; padding:6px;" onclick="window.quickAttachVoiceLine();">➕ Add Voice Line</button>
+      </div>
+    `);
+  }
+
+  // 2. Silver Tablet
+  var tabPromoRate = isBiz ? 20.00 : (pCount > 0 ? 10.50 : 20.99);
+  if (availablePlanMargin >= tabPromoRate || rawCurrentBill === 0) {
+    opps.push(`
+      <div class="badge-silver" style="border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between; gap:6px;">
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:12px; font-weight:900;">🥈 SILVER: Connected Tablet</span>
+            <span style="font-size:11px; font-weight:900; color:var(--emerald);">+$${tabPromoRate.toFixed(2)}/mo</span>
+          </div>
+          <div style="font-size:10px; margin-top:3px; line-height:1.3;">Dedicated cellular iPad 10th Gen at promo rate.</div>
+        </div>
+        <button type="button" class="btn" style="background:#FFF; border-color:#64748B; color:#1E293B; width:100%; font-size:11px; font-weight:900; padding:6px;" onclick="window.quickAttachTablet();">➕ Add Tablet</button>
+      </div>
+    `);
+  }
+
+  // 3. Bronze Watch
+  var watchPromoRate = isBiz ? 10.00 : (pCount > 0 ? 5.50 : 10.99);
+  if (availablePlanMargin >= watchPromoRate || rawCurrentBill === 0) {
+    opps.push(`
+      <div class="badge-bronze" style="border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between; gap:6px;">
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:12px; font-weight:900;">🥉 BRONZE: Smartwatch Line</span>
+            <span style="font-size:11px; font-weight:900; color:#9A3412;">+$${watchPromoRate.toFixed(2)}/mo</span>
+          </div>
+          <div style="font-size:10px; margin-top:3px; line-height:1.3;">Connect Apple Watch Series 12 at $0 net bill change!</div>
+        </div>
+        <button type="button" class="btn" style="background:#FFF; border-color:#C2410C; color:#7C2D12; width:100%; font-size:11px; font-weight:900; padding:6px;" onclick="window.quickAttachWatch();">➕ Add Watch</button>
+      </div>
+    `);
+  }
+
+  // 4. Blue Phone
+  if (availablePlanMargin >= 16.00 || rawCurrentBill === 0) {
+    opps.push(`
+      <div class="badge-phone" style="border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between; gap:6px;">
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:12px; font-weight:900;">📱 NEW PHONE: Flagship Upgrade</span>
+            <span style="font-size:11px; font-weight:900; color:#1E40AF;">+$16-$25/mo</span>
+          </div>
+          <div style="font-size:10px; margin-top:3px; line-height:1.3;">iPhone 17 or Galaxy S26 absorbed by plan savings!</div>
+        </div>
+        <button type="button" class="btn" style="background:#FFF; border-color:#2563EB; color:#1E40AF; width:100%; font-size:11px; font-weight:900; padding:6px;" onclick="window.quickAttachPhone();">➕ Add Phone</button>
+      </div>
+    `);
+  }
+
+  // 5. Purple AIP
+  if (availablePlanMargin >= 12.50 || rawCurrentBill === 0) {
+    opps.push(`
+      <div class="badge-aip" style="border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between; gap:6px;">
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:12px; font-weight:900;">🛍️ AIP: Ray-Ban Meta / Gear</span>
+            <span style="font-size:11px; font-weight:900; color:#6B21A8;">+$12.50-$24.92/mo</span>
+          </div>
+          <div style="font-size:10px; margin-top:3px; line-height:1.3;">12-Mo financing for Smart Glasses &amp; power gear.</div>
+        </div>
+        <button type="button" class="btn" style="background:#FFF; border-color:#9333EA; color:#581C87; width:100%; font-size:11px; font-weight:900; padding:6px;" onclick="window.quickAttachAIP(299);">➕ Add Ray-Bans ($24.92/mo)</button>
+      </div>
+    `);
+  }
+  reinvestList.innerHTML = opps.join('');
+
+  // Summary Savings Badge
+  var saveBox = $('sum-savings-box');
+  if (finalOngoingSavings >= 25.00) {
+    saveBox.style.background = "#ECFDF5"; saveBox.style.color = "#065F46"; saveBox.style.border = "2px solid #10B981";
+    saveBox.innerHTML = `🟢 Saves $${finalOngoingSavings.toFixed(2)}/mo vs Old Bill!`;
+  } else if (finalOngoingSavings > 0) {
+    saveBox.style.background = "#FEF3C7"; saveBox.style.color = "#B45309"; saveBox.style.border = "2px solid #F59E0B";
+    saveBox.innerHTML = `⚡ Saves $${finalOngoingSavings.toFixed(2)}/mo vs Old Bill`;
   } else {
-    hboBanner.style.display = 'none';
+    saveBox.style.background = "#FEF2F2"; saveBox.style.color = "#DC2626"; saveBox.style.border = "1.5px solid #FECACA";
+    saveBox.innerHTML = rawCurrentBill > 0 ? `+$${Math.abs(finalOngoingSavings).toFixed(2)}/mo vs Old Bill` : `Total Bill: $${totalHousehold.toFixed(2)}/mo`;
   }
 
-  /* STEP 2 DIVIDER & MEDAL-TIER REINVESTMENT BASKET POPULATION */
-  var step2Divider = document.getElementById('step2-divider-banner');
-  var step2MarginTag = document.getElementById('step2-margin-tag');
-  var reinvestBox = document.getElementById('reinvest-new-lines-box');
-  var reinvestList = document.getElementById('new-line-opportunities-list');
-  var marginBadge = document.getElementById('reinvest-margin-badge');
-
-  if (reinvestBox && reinvestList) {
-    if (availablePlanMargin >= 5.50) {
-      if (step2Divider) step2Divider.style.display = 'flex';
-      reinvestBox.style.display = 'block';
-      if (step2MarginTag) step2MarginTag.textContent = `Margin Available: +$${availablePlanMargin.toFixed(2)}/mo`;
-      if (marginBadge) marginBadge.textContent = `Available Margin: +$${availablePlanMargin.toFixed(2)}/mo`;
-
-      var opps = [];
-
-      // 1. SPARKLING GOLD: NEW VOICE ADD-A-LINE
-      var nextLineCost = (rateTable[Math.min(totalLines + 1, 10)] ? rateTable[Math.min(totalLines + 1, 10)].val : valRate);
-      if (availablePlanMargin >= nextLineCost) {
-        opps.push(`
-          <div class="badge-sparkling-gold" style="border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between; gap:6px;">
-            <div>
-              <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size:12.5px; font-weight:900;">🥇 SPARKLING GOLD: New Voice Line</span>
-                <span style="font-size:11.5px; font-weight:900;">+$${nextLineCost.toFixed(2)}/mo</span>
-              </div>
-              <div style="font-size:10.5px; margin-top:3px; line-height:1.35;">
-                Add Line ${totalLines + 1} for family or business. Multi-line curve drop completely absorbs the cost!
-              </div>
-            </div>
-            <button type="button" class="btn" style="background:#FFFFFF; border-color:#CA8A04; color:#713F12; width:100%; font-size:11.5px; font-weight:900; padding:7px;" onclick="window.quickAttachVoiceLine();">
-              ➕ Add Voice Line (Gold)
-            </button>
-          </div>
-        `);
-      }
-
-      // 2. SILVER: TABLET ADD-A-LINE
-      var tabRate = isBiz ? 20.00 : (pCount > 0 ? 10.50 : 20.99);
-      if (availablePlanMargin >= tabRate) {
-        opps.push(`
-          <div class="badge-silver" style="border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between; gap:6px;">
-            <div>
-              <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size:12.5px; font-weight:900;">🥈 SILVER: Connected Tablet</span>
-                <span style="font-size:11.5px; font-weight:900; color:var(--emerald);">+$${tabRate.toFixed(2)}/mo</span>
-              </div>
-              <div style="font-size:10.5px; margin-top:3px; line-height:1.35;">
-                Dedicated cellular for iPad 10th Gen or Galaxy Tab at 50% promo rate. Fits inside savings!
-              </div>
-            </div>
-            <button type="button" class="btn" style="background:#FFFFFF; border-color:#64748B; color:#1E293B; width:100%; font-size:11.5px; font-weight:900; padding:7px;" onclick="window.quickAttachConnected('tablet');">
-              ➕ Add Tablet Line (Silver)
-            </button>
-          </div>
-        `);
-      }
-
-      // 3. BRONZE: SMARTWATCH ADD-A-LINE
-      var wRate = isBiz ? 10.00 : (pCount > 0 ? 5.50 : 10.99);
-      if (availablePlanMargin >= wRate) {
-        opps.push(`
-          <div class="badge-bronze" style="border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between; gap:6px;">
-            <div>
-              <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size:12.5px; font-weight:900;">🥉 BRONZE: Smartwatch Line</span>
-                <span style="font-size:11.5px; font-weight:900; color:#9A3412;">+$${wRate.toFixed(2)}/mo</span>
-              </div>
-              <div style="font-size:10.5px; margin-top:3px; line-height:1.35;">
-                Connect Apple Watch Series 12 or Galaxy Watch. Zero net impact to customer's baseline bill!
-              </div>
-            </div>
-            <button type="button" class="btn" style="background:#FFFFFF; border-color:#C2410C; color:#7C2D12; width:100%; font-size:11.5px; font-weight:900; padding:7px;" onclick="window.quickAttachConnected('watch');">
-              ➕ Add Watch Line (Bronze)
-            </button>
-          </div>
-        `);
-      }
-
-      // 4. BLUE: NEW PHONE UPGRADE / ADD OPPORTUNITY
-      if (availablePlanMargin >= 16.00) {
-        opps.push(`
-          <div class="badge-phone" style="border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between; gap:6px;">
-            <div>
-              <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size:12.5px; font-weight:900;">📱 NEW PHONE: Flagship Upgrade</span>
-                <span style="font-size:11.5px; font-weight:900; color:#1E40AF;">+$16-$25/mo</span>
-              </div>
-              <div style="font-size:10.5px; margin-top:3px; line-height:1.35;">
-                iPhone 17 or Galaxy S26 monthly installment absorbed by plan rerate with $0 net bill change!
-              </div>
-            </div>
-            <button type="button" class="btn" style="background:#FFFFFF; border-color:#2563EB; color:#1E40AF; width:100%; font-size:11.5px; font-weight:900; padding:7px;" onclick="window.quickAttachPhone();">
-              ➕ Add Phone Hardware
-            </button>
-          </div>
-        `);
-      }
-
-      reinvestList.innerHTML = opps.join('');
-    } else {
-      if (step2Divider) step2Divider.style.display = 'none';
-      reinvestBox.style.display = 'none';
-    }
-  }
-
-  /* DYNAMIC SAVINGS BADGES */
-  var saveBox = document.getElementById('sum-savings-box');
-  if (saveBox) {
-    saveBox.className = "sum-savings";
-    if (monthlySavings >= 65.00) {
-      saveBox.classList.add("savings-badge-gold");
-      saveBox.innerHTML = `✨ Gold Reinvestment Tier: Saves $${monthlySavings.toFixed(2)}/mo!<br><span style="font-size:12px;">(Add-A-Line Territory)</span>`;
-    } else if (monthlySavings >= 25.00) {
-      saveBox.classList.add("savings-badge-green");
-      saveBox.innerHTML = `🟢 High Impact: Saves $${monthlySavings.toFixed(2)}/mo vs Old Bill!`;
-    } else if (monthlySavings > 0) {
-      saveBox.classList.add("savings-badge-yellow");
-      saveBox.innerHTML = `⚡ Modest Savings: Saves $${monthlySavings.toFixed(2)}/mo vs Old Bill`;
-    } else {
-      saveBox.style.color = "#DC2626";
-      saveBox.style.background = "#FEF2F2";
-      saveBox.style.border = "1.5px solid #FECACA";
-      saveBox.innerHTML = `+$${Math.abs(monthlySavings).toFixed(2)}/mo vs Old Bill`;
-    }
-  }
-
-  /* BILL CYCLE & PRORATION ENGINE */
-  var cutDay = parseInt(document.getElementById('bill-cut-day').value, 10) || 16;
-  var feeHandling = document.getElementById('fee-billing-target').value;
-  var tradeDelayed = document.getElementById('trade-credit-delay').value === "delayed";
+  // Bill Cycle Proration & Fees
+  var cutDay = parseInt($('bill-cut-day').value, 10) || 16;
+  var feeHandling = $('fee-billing-target').value;
   var now = new Date(), today = now.getDate();
-  
+  var daysRemaining = (today <= cutDay) ? (cutDay - today) : ((30 - today) + cutDay);
+  var prorationRatio = Number((daysRemaining / 30).toFixed(2));
+  var monthlyPlanDelta = totalHousehold - rawCurrentBill;
+  var proratedAdj = Number((monthlyPlanDelta * prorationRatio).toFixed(2));
+
+  var feesWaived = $('check-waived-fees').checked;
+  var activePhoneCount = window.activePhone ? 1 : 0;
+  var oneTimeFeesOnBill = (!feesWaived && feeHandling === "bill") ? (activePhoneCount * 35.00) : 0;
+  var estimatedFirstBill = Number((totalHousehold + proratedAdj + oneTimeFeesOnBill).toFixed(2));
+
+  $('cycle-days-badge').textContent = `${daysRemaining} Days Left in Cycle (${cutDay}th Cut)`;
+  $('first-bill-total').textContent = `$${estimatedFirstBill.toFixed(2)}`;
+  $('ongoing-bill-total').textContent = `$${totalHousehold.toFixed(2)}/mo`;
+
+  var notes = [
+    `• <b>Full Advance Month:</b> $${totalHousehold.toFixed(2)} (New baseline plan + hardware installments).`,
+    `• <b>Proration (${daysRemaining} days):</b> ${proratedAdj >= 0 ? '+' : '-'}$${Math.abs(proratedAdj).toFixed(2)} transition difference.`
+  ];
+  if (oneTimeFeesOnBill > 0) notes.push(`• <b>Upgrade/Act. Fees:</b> +$${oneTimeFeesOnBill.toFixed(2)} ($35 billed to invoice).`);
+  $('first-bill-breakdown-notes').innerHTML = notes.join("<br>");
+
+  // Due Today at Register (7% IN Sales Tax)
+  var posNetworkFees = (!feesWaived && feeHandling === "pos") ? (activePhoneCount * 35.00) : 0;
+  var totalDuePOS = Number((phoneTaxPOS + tabletTaxPOS + watchTaxPOS + aipTaxPOS + posNetworkFees).toFixed(2));
+
+  $('due-today-amt').textContent = isBiz ? `$0.00 Due at POS ($${totalDuePOS.toFixed(2)} BTA)` : `$${totalDuePOS.toFixed(2)} Due Today at Register`;
+  $('due-today-breakdown').textContent = isBiz ? "Corporate CRU BTA Active: All hardware taxes and fees billed to account." : `Includes 7% IN sales tax on equipment ($${(phoneTaxPOS+tabletTaxPOS+watchTaxPOS+aipTaxPOS).toFixed(2)})` + (posNetworkFees > 0 ? ` + $${posNetworkFees} network fees` : '');
+
+  // SMS Summary Text
+  var sms = `AT&T Quote: ${totalLines} Voice Line(s). Total Monthly: $${totalHousehold.toFixed(2)}/mo (w/ AutoPay).\n`;
+  if (finalOngoingSavings > 0) sms += `• Ongoing Savings: $${finalOngoingSavings.toFixed(2)}/mo vs prior bill!\n`;
+  if (totalMonthlyTradeCredits > 0) sms += `• Trade-In Credits: -$${totalMonthlyTradeCredits.toFixed(2)}/mo in bill credits applied.\n`;
+  sms += `• First Bill Estimate: ~$${estimatedFirstBill.toFixed(2)} (includes ${daysRemaining} days proration), then stabilizes to $${totalHousehold.toFixed(2)}/mo.\n`;
+  sms += `• Due Today at Register: $${isBiz ? '0.00 (Billed to Account)' : totalDuePOS.toFixed(2)}.\nQuestions? Stop in-store to finalize!`;
+  $('sms-text').value = sms;
+
+  window.autoSaveState();
+};
+
+/* AMBIENT CANVAS */
+(function() {
+  var canvas = $('ambient-canvas'); if (!canvas) return;
+  var ctx = canvas.getContext('2d'), width = 0, height = 0, time = 0;
+  function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
+  window.addEventListener('resize', resize); resize();
+  var orbs = [
+    { x: 0.25, y: 0.25, r: 520, c: 'rgba(2, 132, 199, 0.22)', s: 0.005 },
+    { x: 0.75, y: 0.35, r: 580, c: 'rgba(0, 87, 184, 0.24)', s: 0.004 },
+    { x: 0.50, y: 0.75, r: 540, c: 'rgba(56, 189, 248, 0.25)', s: 0.006 }
+  ];
+  function draw() {
+    ctx.clearRect(0, 0, width, height); time += 0.01;
+    orbs.forEach((o, i) => {
+      var cx = width * o.x + Math.sin(time * o.s * 20 + i) * 80;
+      var cy = height * o.y + Math.cos(time * o.s * 18 + i) * 70;
+      var g = ctx.createRadialGradient(cx, cy, 0, cx, cy, o.r);
+      g.addColorStop(0, o.c); g.addColorStop(1, 'rgba(186, 230, 253, 0)');
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, o.r, 0, Math.PI * 2); ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* AUTO-SAVE & STATE RESTORATION */
+window.autoSaveState = function() {
+  var state = {
+    seg: window.accountSegment,
+    b: $('curr-total').value,
+    l: $('curr-lines').value,
+    p: $('cnt-prem').textContent,
+    e: $('cnt-extra').textContent,
+    v: $('cnt-val').textContent,
+    d: $('curr-discount').value,
+    ap: $('curr-autopay').value,
+    awu: $('audit-watch-unused').checked,
+    atu: $('audit-tab-unused').checked,
+    nuad: $('audit-nua-drop').checked,
+    tht: $('toggle-has-tradeins').checked,
+    tlc: $('trade-lines-count').value,
+    bcd: $('bill-cut-day').value,
+    fbt: $('fee-billing-target').value,
+    wf: $('check-waived-fees').checked,
+    hs: $('check-hotspot').checked,
+    hbo: $('check-hbo').checked,
+    phone: window.activePhone,
+    tab: window.activeTablet,
+    watch: window.activeWatch,
+    aip: window.activeAip,
+    prot: window.activeProt
+  };
+  localStorage.setItem('att_quote_state', JSON.stringify(state));
+};
+
+window.shareQuoteURL = function() {
+  window.autoSaveState();
+  var saved = localStorage.getItem('att_quote_state'); if (!saved) return;
+  var fullURL = window.location.origin + (window.accountSegment === "business" ? "/business" : "/") + "#q=" + encodeURIComponent(saved);
+  navigator.clipboard.writeText(fullURL).then(() => alert("Quote URL copied to clipboard: " + fullURL));
+};
+
+window.resetToNextCustomer = function() {
+  localStorage.removeItem('att_quote_state');
+  window.location.href = window.location.origin + (window.accountSegment === "business" ? "/business" : "/");
+};
+
+window.restoreState = function() {
+  var rawData = null;
+  if (window.location.hash && window.location.hash.indexOf("#q=") === 0) {
+    try { rawData = decodeURIComponent(window.location.hash.substring(3)); } catch(err) {}
+  }
+  if (!rawData) rawData = localStorage.getItem('att_quote_state');
+  if (!rawData) return;
+
+  try {
+    var s = JSON.parse(rawData);
+    if (s.seg) window.setAccountSegment(s.seg);
+    if (s.b !== undefined) $('curr-total').value = s.b;
+    if (s.l) $('curr-lines').value = s.l;
+    if (s.p) $('cnt-prem').textContent = s.p;
+    if (s.e) $('cnt-extra').textContent = s.e;
+    if (s.v) $('cnt-val').textContent = s.v;
+    if (s.d) $('curr-discount').value = s.d;
+    if (s.ap) $('curr-autopay').value = s.ap;
+    if (s.awu !== undefined) $('audit-watch-unused').checked = s.awu;
+    if (s.atu !== undefined) $('audit-tab-unused').checked = s.atu;
+    if (s.nuad !== undefined) $('audit-nua-drop').checked = s.nuad;
+    if (s.tht !== undefined) {
+      $('toggle-has-tradeins').checked = s.tht;
+      $('wrap-trade-inner').style.display = s.tht ? 'block' : 'none';
+      $('wrap-trade-count').style.display = s.tht ? 'inline-flex' : 'none';
+    }
+    if (s.tlc) $('trade-lines-count').value = s.tlc;
+    if (s.bcd) $('bill-cut-day').value = s.bcd;
+    if (s.fbt) $('fee-billing-target').value = s.fbt;
+    if (s.wf !== undefined) $('check-waived-fees').checked = s.wf;
+    if (s.hs !== undefined) {
+      $('check-hotspot').checked = s.hs;
+      $('hotspot-lines-wrap').style.display = s.hs ? 'inline-flex' : 'none';
+    }
+    if (s.hbo !== undefined) $('check-hbo').checked = s.hbo;
+    if (s.phone) window.activePhone = s.phone;
+    if (s.tab) window.activeTablet = s.tab;
+    if (s.watch) window.activeWatch = s.watch;
+    if (s.aip) window.activeAip = s.aip;
+    if (s.prot) {
+      window.activeProt = s.prot;
+      $('tile-pa1').classList.toggle('active', window.activeProt.pa1);
+      $('tile-pa4').classList.toggle('active', window.activeProt.pa4);
+      $('tile-htp').classList.toggle('active', window.activeProt.htp);
+    }
+    window.syncHardwareLedger();
+  } catch(e) {}
+};
+
+window.onload = function() {
+  window.syncSegmentUI();
+  window.restoreState();
+  window.renderTradeCards();
+  window.syncHardwareLedger();
+  window.runCalc();
+};
+</script>
+
+</body>
+</html>
