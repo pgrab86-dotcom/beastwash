@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -221,13 +220,12 @@
   .btn-pres { background: #EFF6FF; border-color: #BFDBFE; color: var(--att-blue); }
   .btn-pres.active { background: #FEF3C7; border-color: #F59E0B; color: #B45309; }
 
-  /* RUN THE NUMBERS ACTION BUTTON */
   .btn-run-numbers {
     background: linear-gradient(135deg, #0057B8 0%, #0284C7 100%);
     color: #FFFFFF;
     border: none;
     border-radius: 12px;
-    padding: 14px 20px;
+    padding: 16px 22px;
     font-size: 15px;
     font-weight: 900;
     letter-spacing: 0.5px;
@@ -235,7 +233,7 @@
     width: 100%;
     margin-top: 14px;
     cursor: pointer;
-    box-shadow: 0 4px 14px rgba(0, 87, 184, 0.35);
+    box-shadow: 0 4px 16px rgba(0, 87, 184, 0.35);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -335,7 +333,7 @@
   .filter-item { display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 700; color: #0F172A; cursor: pointer; }
   .filter-item input[type="checkbox"] { width: 18px; height: 18px; }
 
-  /* MEDAL-TIER REINVESTMENT THEMES: GOLD, SILVER, BRONZE */
+  /* MEDAL-TIER REINVESTMENT THEMES */
   .badge-sparkling-gold {
     background: linear-gradient(135deg, #FEF08A 0%, #FDE047 50%, #FACC15 100%) !important;
     border: 2px solid #CA8A04 !important;
@@ -1299,7 +1297,7 @@ window.toggleHboAudit = function() {
   window.runCalc();
 };
 
-/* RUN THE NUMBERS ACTION */
+/* RUN THE NUMBERS ACTION - FORCES SYNC & SMOOTH SCROLL */
 window.runNumbersAction = function() {
   window.runCalc();
   var target = document.getElementById('sec-wireless-config');
@@ -1534,12 +1532,13 @@ window.runCalc = function() {
   var hasTV = document.getElementById('scope-tv') && document.getElementById('scope-tv').classList.contains('active');
   var dtvMonthly = hasTV ? 79.99 : 0;
 
-  /* TOTAL ONGOING RECURRING BILL */
+  /* TOTAL ONGOING RECURRING BILL & MONTHLY SAVINGS MUST BE COMPUTED HERE BEFORE REINVESTMENT WINDOW */
   var totalHousehold = Number((wirelessBasePlanTotal + totalNetDeviceInstallments + protectTotal + watchMonthly + tabMonthly + aipMonthly + dtvMonthly).toFixed(2));
-  var monthlySavings = Number((rawCurrentBill - totalHousehold).toFixed(2));
+  var monthlySavings = Number((adjustedBaseline - totalHousehold).toFixed(2));
 
   document.getElementById('sum-new-total').textContent = `$${totalHousehold.toFixed(2)}/mo`;
   document.getElementById('wireless-pool').textContent = `Base Plan: $${wirelessBasePlanTotal.toFixed(2)}/mo`;
+  document.getElementById('wf-pot-badge').textContent = (monthlySavings >= 0 ? `Starting Pot: +$${monthlySavings.toFixed(2)}/mo` : `Over Budget: +$${Math.abs(monthlySavings).toFixed(2)}/mo`);
 
   /* DYNAMIC HBO AUDIT EVALUATION */
   var hasHbo = document.getElementById('check-hbo').checked;
@@ -1550,7 +1549,7 @@ window.runCalc = function() {
       hboBanner.style.background = "#ECFDF5";
       hboBanner.style.border = "1.5px solid #10B981";
       hboBanner.style.color = "#065F46";
-      hboBanner.innerHTML = `<b>🎬 HBO Irrelevant (Savings Outweighs Max Perk):</b> New plan saves <b>$${monthlySavings.toFixed(2)}/mo</b>! Even if customer re-subscribes to Max separately ($16.99/mo), they are still net ahead by <b>+$${(monthlySavings - 16.99).toFixed(2)}/mo</b> in cash!`;
+      hboBanner.innerHTML = `<b>🎬 HBO Irrelevant (Savings Outweighs Max Perk):</b> Plan rerate saves <b>$${monthlySavings.toFixed(2)}/mo</b>! Even if customer subscribes to Max separately ($16.99/mo), they are still net ahead by <b>+$${(monthlySavings - 16.99).toFixed(2)}/mo</b> in cash!`;
     } else {
       hboBanner.style.background = "#FFFBEB";
       hboBanner.style.border = "1.5px solid #F59E0B";
