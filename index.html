@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -220,6 +221,29 @@
   .btn-pres { background: #EFF6FF; border-color: #BFDBFE; color: var(--att-blue); }
   .btn-pres.active { background: #FEF3C7; border-color: #F59E0B; color: #B45309; }
 
+  /* RUN THE NUMBERS ACTION BUTTON */
+  .btn-run-numbers {
+    background: linear-gradient(135deg, #0057B8 0%, #0284C7 100%);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 20px;
+    font-size: 15px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    width: 100%;
+    margin-top: 14px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0, 87, 184, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .btn-run-numbers:active { transform: scale(0.98); }
+
   .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
   .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
   .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
@@ -310,6 +334,26 @@
 
   .filter-item { display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 700; color: #0F172A; cursor: pointer; }
   .filter-item input[type="checkbox"] { width: 18px; height: 18px; }
+
+  /* MEDAL-TIER REINVESTMENT THEMES: GOLD, SILVER, BRONZE */
+  .badge-sparkling-gold {
+    background: linear-gradient(135deg, #FEF08A 0%, #FDE047 50%, #FACC15 100%) !important;
+    border: 2px solid #CA8A04 !important;
+    color: #713F12 !important;
+    box-shadow: 0 4px 14px rgba(250, 204, 21, 0.45) !important;
+  }
+  .badge-silver {
+    background: linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 50%, #CBD5E1 100%) !important;
+    border: 2px solid #64748B !important;
+    color: #1E293B !important;
+    box-shadow: 0 4px 12px rgba(100, 116, 139, 0.25) !important;
+  }
+  .badge-bronze {
+    background: linear-gradient(135deg, #FFEDD5 0%, #FED7AA 50%, #FDBA74 100%) !important;
+    border: 2px solid #C2410C !important;
+    color: #7C2D12 !important;
+    box-shadow: 0 4px 12px rgba(194, 65, 12, 0.25) !important;
+  }
 
   .savings-badge-yellow { background: #FEF3C7 !important; border: 2px solid #F59E0B !important; color: #B45309 !important; }
   .savings-badge-green { background: #ECFDF5 !important; border: 2px solid #10B981 !important; color: #065F46 !important; }
@@ -448,7 +492,7 @@
   </div>
 
   <!-- SECTION 3: CURRENT ACCOUNT BASELINE (DEFAULT: 1 LINE @ $100.00) -->
-  <div class="section-card">
+  <div class="section-card" id="sec-baseline">
     <div class="sec-header">
       <div class="sec-title">
         <span class="rep-only">📋 3. Current Account Baseline &amp; Leak Audit</span>
@@ -531,24 +575,56 @@
         <select id="curr-discount" onchange="window.runCalc();"></select>
       </div>
     </div>
+
+    <!-- PRIMARY ACTION: RUN THE NUMBERS BUTTON -->
+    <button type="button" class="btn-run-numbers" onclick="window.runNumbersAction();">
+      <span>⚡ Run The Numbers &amp; Optimize Solutions</span>
+      <span style="font-size:17px;">➔</span>
+    </button>
   </div>
 
   <!-- SECTION 4: RECOMMENDED WIRELESS & REINVESTMENT OPPORTUNITIES -->
-  <div class="section-card">
+  <div class="section-card" id="sec-wireless-config">
     <div class="sec-header">
       <div class="sec-title">🎯 4. Recommended Wireless Configuration &amp; Starting Pot</div>
       <div class="pool-pill" id="wireless-pool">Wireless Base: $50.00/mo</div>
     </div>
+
+    <!-- NEEDS ASSESSMENT & USAGE OVERRIDE / HBO AUDIT -->
+    <div class="filter-box" style="margin-bottom:12px; background:#F8FAFC; border:1.5px solid #CBD5E1; border-radius:14px; padding:12px 16px; display:flex; flex-wrap:wrap; gap:16px; align-items:center;">
+      <label class="filter-item">
+        <input type="checkbox" id="check-hotspot" onchange="window.toggleHotspotFilter();">
+        <span style="font-weight:800;">📶 Needs Dedicated Hotspot Data</span>
+      </label>
+
+      <div id="hotspot-lines-wrap" style="display:none; align-items:center; gap:8px;">
+        <span style="font-size:11px; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Hotspot Required Lines:</span>
+        <select id="hotspot-lines-count" style="padding:4px 8px; border-radius:8px; background:#FFF; color:#0F172A; border:1.5px solid var(--emerald); font-weight:800;" onchange="window.applyHotspotRouting();">
+          <option value="0">0 Lines (Standard 5G)</option>
+          <option value="1" selected>1 Line (Lead Hotspot)</option>
+          <option value="2">2 Lines</option>
+          <option value="all">All Lines (Max Tethering)</option>
+        </select>
+      </div>
+
+      <label class="filter-item rep-only" id="wrap-check-hbo">
+        <input type="checkbox" id="check-hbo" onchange="window.toggleHboAudit();">
+        <span style="font-weight:800;">🎬 Account Actively Uses Free Legacy HBO / Max</span>
+      </label>
+    </div>
+
+    <!-- HBO RETENTION / SAVINGS AUDIT BANNER -->
+    <div id="hbo-audit-banner" style="display:none; margin-bottom:12px; padding:12px 16px; border-radius:12px; font-size:11.5px; line-height:1.45;"></div>
     
     <div class="recommendations-grid" id="plan-cards-container"></div>
 
-    <!-- PRIMARY REINVESTMENT CARD: ADD-A-LINE / NEW LINE BASKET FIRST -->
-    <div id="reinvest-new-lines-box" style="display:none; background:linear-gradient(135deg, #FEF08A 0%, #FDE047 50%, #FACC15 100%); border:2.5px solid #CA8A04; border-radius:16px; padding:16px; margin-top:16px; box-shadow:0 6px 20px rgba(250, 204, 21, 0.35);">
+    <!-- SECOND WINDOW: PRIMARY REINVESTMENT MEDALS (GOLD, SILVER, BRONZE) -->
+    <div id="reinvest-new-lines-box" style="display:none; background:#FFFFFF; border:2.5px solid #CA8A04; border-radius:16px; padding:16px; margin-top:16px; box-shadow:0 6px 20px rgba(250, 204, 21, 0.25);">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
         <span style="font-size:13.5px; font-weight:900; color:#713F12; text-transform:uppercase; letter-spacing:0.5px;">
           ✨ Reinvest Savings: New Line Opportunities ($0 Net Increase)
         </span>
-        <span id="reinvest-margin-badge" style="background:#FFFFFF; border:1.5px solid #A16207; color:#713F12; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:900;">
+        <span id="reinvest-margin-badge" style="background:#FEF3C7; border:1.5px solid #A16207; color:#713F12; padding:3px 10px; border-radius:12px; font-size:11.5px; font-weight:900;">
           Available Margin: +$0.00/mo
         </span>
       </div>
@@ -560,11 +636,11 @@
       </div>
 
       <!-- DECLINE PIVOT: TIER ADJUSTMENT FALL-BACK -->
-      <div style="margin-top:12px; padding-top:10px; border-top:1px dashed #A16207; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-        <span style="font-size:11px; color:#713F12; font-weight:800;">
+      <div style="margin-top:14px; padding-top:10px; border-top:1.5px dashed #CBD5E1; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <span style="font-size:11px; color:#475569; font-weight:800;">
           Customer declined new lines? Step the plan tier to lock in rate or capture commission:
         </span>
-        <button type="button" class="btn" style="background:#FFFFFF; border-color:#A16207; color:#713F12; font-size:11px; font-weight:800; padding:6px 12px;" onclick="window.scrollToPlanSteppers();">
+        <button type="button" class="btn" style="background:#FFFFFF; border-color:#93C5FD; color:var(--att-blue); font-size:11px; font-weight:800; padding:6px 12px;" onclick="window.scrollToPlanSteppers();">
           ⚡ Adjust Plan Tiers (Upsell Premium / Value) ▾
         </button>
       </div>
@@ -1174,6 +1250,64 @@ window.selectRecommendedPlan = function(idx) {
   window.runCalc();
 };
 
+/* HOTSPOT FILTERING & ROUTING */
+window.toggleHotspotFilter = function() {
+  var isChecked = document.getElementById('check-hotspot').checked;
+  var wrap = document.getElementById('hotspot-lines-wrap');
+  wrap.style.display = isChecked ? 'inline-flex' : 'none';
+  if (!isChecked) {
+    document.getElementById('hotspot-lines-count').value = "0";
+  } else {
+    document.getElementById('hotspot-lines-count').value = "1";
+  }
+  window.applyHotspotRouting();
+};
+
+window.applyHotspotRouting = function() {
+  var totalLines = parseInt(document.getElementById('curr-lines').value, 10) || 1;
+  var sel = document.getElementById('hotspot-lines-count').value;
+
+  if (sel === "0") {
+    if (totalLines === 1) {
+      document.getElementById('cnt-prem').textContent = "0";
+      document.getElementById('cnt-extra').textContent = "0";
+      document.getElementById('cnt-val').textContent = "1";
+      window.selectedPlanIndex = 0;
+    } else {
+      document.getElementById('cnt-prem').textContent = "0";
+      document.getElementById('cnt-extra').textContent = "0";
+      document.getElementById('cnt-val').textContent = totalLines;
+      window.selectedPlanIndex = 0;
+    }
+  } else if (sel === "all") {
+    document.getElementById('cnt-prem').textContent = totalLines;
+    document.getElementById('cnt-extra').textContent = "0";
+    document.getElementById('cnt-val').textContent = "0";
+    window.selectedPlanIndex = 2;
+  } else {
+    var count = Math.min(totalLines, parseInt(sel, 10));
+    document.getElementById('cnt-prem').textContent = count;
+    document.getElementById('cnt-extra').textContent = "0";
+    document.getElementById('cnt-val').textContent = Math.max(0, totalLines - count);
+    window.selectedPlanIndex = 1;
+  }
+  window.runCalc();
+};
+
+/* HBO AUDIT & COMPARISON LOGIC */
+window.toggleHboAudit = function() {
+  window.runCalc();
+};
+
+/* RUN THE NUMBERS ACTION */
+window.runNumbersAction = function() {
+  window.runCalc();
+  var target = document.getElementById('sec-wireless-config');
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+};
+
 /* QUICK-ATTACH CONVERTORS FOR ADD-A-LINE ARBITRAGE */
 window.quickAttachConnected = function(type) {
   if (type === 'watch') {
@@ -1407,7 +1541,27 @@ window.runCalc = function() {
   document.getElementById('sum-new-total').textContent = `$${totalHousehold.toFixed(2)}/mo`;
   document.getElementById('wireless-pool').textContent = `Base Plan: $${wirelessBasePlanTotal.toFixed(2)}/mo`;
 
-  /* DYNAMIC REINVESTMENT BASKET: NEW LINE BASKET FIRST (VOICE, TABLET, WATCH) */
+  /* DYNAMIC HBO AUDIT EVALUATION */
+  var hasHbo = document.getElementById('check-hbo').checked;
+  var hboBanner = document.getElementById('hbo-audit-banner');
+  if (hasHbo) {
+    hboBanner.style.display = 'block';
+    if (monthlySavings >= 16.99) {
+      hboBanner.style.background = "#ECFDF5";
+      hboBanner.style.border = "1.5px solid #10B981";
+      hboBanner.style.color = "#065F46";
+      hboBanner.innerHTML = `<b>🎬 HBO Irrelevant (Savings Outweighs Max Perk):</b> New plan saves <b>$${monthlySavings.toFixed(2)}/mo</b>! Even if customer re-subscribes to Max separately ($16.99/mo), they are still net ahead by <b>+$${(monthlySavings - 16.99).toFixed(2)}/mo</b> in cash!`;
+    } else {
+      hboBanner.style.background = "#FFFBEB";
+      hboBanner.style.border = "1.5px solid #F59E0B";
+      hboBanner.style.color = "#92400E";
+      hboBanner.innerHTML = `<b>⚠️ HBO Retention Alert:</b> Current savings are <b>$${monthlySavings.toFixed(2)}/mo</b>. Customer loses free grandfathered Max ($16.99 retail value). Customer must value newer network speeds/priority to justify rerate.`;
+    }
+  } else {
+    hboBanner.style.display = 'none';
+  }
+
+  /* SECOND WINDOW: MEDAL-TIER REINVESTMENT BASKET (GOLD = VOICE, SILVER = TABLET, BRONZE = WATCH) */
   var reinvestBox = document.getElementById('reinvest-new-lines-box');
   var reinvestList = document.getElementById('new-line-opportunities-list');
   var marginBadge = document.getElementById('reinvest-margin-badge');
@@ -1419,64 +1573,64 @@ window.runCalc = function() {
 
       var opps = [];
 
-      // A. Watch Line ($5.50 promo / $10.99)
-      var wRate = isBiz ? 10.00 : (pCount > 0 ? 5.50 : 10.99);
-      if (monthlySavings >= wRate) {
-        opps.push(`
-          <div style="background:#FFFFFF; border:1.5px solid #CA8A04; border-radius:12px; padding:10px; display:flex; flex-direction:column; justify-content:space-between; gap:6px;">
-            <div>
-              <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size:12px; font-weight:900; color:#0F172A;">⌚ Smartwatch Line</span>
-                <span style="font-size:11px; font-weight:800; color:var(--emerald);">+$${wRate.toFixed(2)}/mo</span>
-              </div>
-              <div style="font-size:10px; color:var(--text-secondary); margin-top:2px;">
-                Connect Apple Watch Series 12. Fits completely inside savings!
-              </div>
-            </div>
-            <button type="button" class="btn" style="background:#FEF3C7; border-color:#D97706; color:#92400E; width:100%; font-size:11px; font-weight:800; padding:6px;" onclick="window.quickAttachConnected('watch');">
-              ➕ Add Watch Line
-            </button>
-          </div>
-        `);
-      }
-
-      // B. Tablet Line ($10.50 promo / $20.99)
-      var tabRate = isBiz ? 20.00 : (pCount > 0 ? 10.50 : 20.99);
-      if (monthlySavings >= tabRate) {
-        opps.push(`
-          <div style="background:#FFFFFF; border:1.5px solid #CA8A04; border-radius:12px; padding:10px; display:flex; flex-direction:column; justify-content:space-between; gap:6px;">
-            <div>
-              <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size:12px; font-weight:900; color:#0F172A;">📱 Tablet Line</span>
-                <span style="font-size:11px; font-weight:800; color:var(--emerald);">+$${tabRate.toFixed(2)}/mo</span>
-              </div>
-              <div style="font-size:10px; color:var(--text-secondary); margin-top:2px;">
-                Dedicated cellular for iPad 10th Gen. Fits inside savings!
-              </div>
-            </div>
-            <button type="button" class="btn" style="background:#FEF3C7; border-color:#D97706; color:#92400E; width:100%; font-size:11px; font-weight:800; padding:6px;" onclick="window.quickAttachConnected('tablet');">
-              ➕ Add Tablet Line
-            </button>
-          </div>
-        `);
-      }
-
-      // C. Voice Line Addition (Multi-Line Scale)
+      // 1. SPARKLING GOLD MEDAL: NEW VOICE ADD-A-LINE
       var nextLineCost = (rateTable[Math.min(totalLines + 1, 10)] ? rateTable[Math.min(totalLines + 1, 10)].val : valRate);
       if (monthlySavings >= nextLineCost) {
         opps.push(`
-          <div style="background:#FFFFFF; border:1.5px solid #CA8A04; border-radius:12px; padding:10px; display:flex; flex-direction:column; justify-content:space-between; gap:6px;">
+          <div class="badge-sparkling-gold" style="border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between; gap:6px;">
             <div>
               <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size:12px; font-weight:900; color:#0F172A;">📞 Voice Line (Add Line)</span>
-                <span style="font-size:11px; font-weight:800; color:var(--emerald);">+$${nextLineCost.toFixed(2)}/mo</span>
+                <span style="font-size:12.5px; font-weight:900;">🥇 SPARKLING GOLD: New Voice Line</span>
+                <span style="font-size:11.5px; font-weight:900;">+$${nextLineCost.toFixed(2)}/mo</span>
               </div>
-              <div style="font-size:10px; color:var(--text-secondary); margin-top:2px;">
-                Add Line ${totalLines + 1}. Multi-line curve drop absorbs the cost!
+              <div style="font-size:10.5px; margin-top:3px; line-height:1.35;">
+                Add Line ${totalLines + 1} for family or business. Multi-line curve drop completely absorbs the cost!
               </div>
             </div>
-            <button type="button" class="btn" style="background:#FEF3C7; border-color:#D97706; color:#92400E; width:100%; font-size:11px; font-weight:800; padding:6px;" onclick="window.quickAttachVoiceLine();">
-              ➕ Add Voice Line
+            <button type="button" class="btn" style="background:#FFFFFF; border-color:#CA8A04; color:#713F12; width:100%; font-size:11.5px; font-weight:900; padding:7px;" onclick="window.quickAttachVoiceLine();">
+              ➕ Add Voice Line (Gold)
+            </button>
+          </div>
+        `);
+      }
+
+      // 2. SILVER MEDAL: TABLET ADD-A-LINE
+      var tabRate = isBiz ? 20.00 : (pCount > 0 ? 10.50 : 20.99);
+      if (monthlySavings >= tabRate) {
+        opps.push(`
+          <div class="badge-silver" style="border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between; gap:6px;">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:12.5px; font-weight:900;">🥈 SILVER: Connected Tablet</span>
+                <span style="font-size:11.5px; font-weight:900; color:var(--emerald);">+$${tabRate.toFixed(2)}/mo</span>
+              </div>
+              <div style="font-size:10.5px; margin-top:3px; line-height:1.35;">
+                Dedicated cellular for iPad 10th Gen or Galaxy Tab at 50% promotional rate. Fits inside savings!
+              </div>
+            </div>
+            <button type="button" class="btn" style="background:#FFFFFF; border-color:#64748B; color:#1E293B; width:100%; font-size:11.5px; font-weight:900; padding:7px;" onclick="window.quickAttachConnected('tablet');">
+              ➕ Add Tablet Line (Silver)
+            </button>
+          </div>
+        `);
+      }
+
+      // 3. BRONZE MEDAL: SMARTWATCH ADD-A-LINE
+      var wRate = isBiz ? 10.00 : (pCount > 0 ? 5.50 : 10.99);
+      if (monthlySavings >= wRate) {
+        opps.push(`
+          <div class="badge-bronze" style="border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between; gap:6px;">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:12.5px; font-weight:900;">🥉 BRONZE: Smartwatch Line</span>
+                <span style="font-size:11.5px; font-weight:900; color:#9A3412;">+$${wRate.toFixed(2)}/mo</span>
+              </div>
+              <div style="font-size:10.5px; margin-top:3px; line-height:1.35;">
+                Connect Apple Watch Series 12 or Galaxy Watch. Zero net impact to customer's baseline bill!
+              </div>
+            </div>
+            <button type="button" class="btn" style="background:#FFFFFF; border-color:#C2410C; color:#7C2D12; width:100%; font-size:11.5px; font-weight:900; padding:7px;" onclick="window.quickAttachConnected('watch');">
+              ➕ Add Watch Line (Bronze)
             </button>
           </div>
         `);
@@ -1623,7 +1777,10 @@ window.autoSaveState = function() {
     fbt: document.getElementById('fee-billing-target').value,
     tcd: document.getElementById('trade-credit-delay').value,
     apc: document.getElementById('acquired-phone-count').value,
-    wf: document.getElementById('check-waived-fees').checked
+    wf: document.getElementById('check-waived-fees').checked,
+    hs: document.getElementById('check-hotspot').checked,
+    hsc: document.getElementById('hotspot-lines-count').value,
+    hbo: document.getElementById('check-hbo').checked
   };
   localStorage.setItem('att_quote_state', JSON.stringify(state));
 };
@@ -1687,6 +1844,12 @@ window.restoreState = function() {
     if (s.tcd) document.getElementById('trade-credit-delay').value = s.tcd;
     if (s.apc) document.getElementById('acquired-phone-count').value = s.apc;
     if (s.wf !== undefined) document.getElementById('check-waived-fees').checked = s.wf;
+    if (s.hs !== undefined) {
+      document.getElementById('check-hotspot').checked = s.hs;
+      document.getElementById('hotspot-lines-wrap').style.display = s.hs ? 'inline-flex' : 'none';
+    }
+    if (s.hsc) document.getElementById('hotspot-lines-count').value = s.hsc;
+    if (s.hbo !== undefined) document.getElementById('check-hbo').checked = s.hbo;
   } catch(e) {}
 };
 
