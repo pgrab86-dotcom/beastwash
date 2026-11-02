@@ -212,7 +212,7 @@
   .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
   .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
 
-  /* RESPONSIVE 2X2 BASELINE GRID (PREVENTS VOICE LINE FIELD CRUSH) */
+  /* RESPONSIVE 2X2 BASELINE GRID */
   .baseline-grid-2x2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -334,6 +334,12 @@
   .counter-val { font-size: 20px; font-weight: 900; color: var(--emerald); min-width: 24px; text-align: center; }
 
   /* REINVESTMENT BASKET MEDAL TIERS */
+  .badge-platinum {
+    background: linear-gradient(135deg, #F8FAFC 0%, #E0F2FE 40%, #BAE6FD 100%) !important;
+    border: 2px solid #0284C7 !important;
+    color: #0369A1 !important;
+    box-shadow: 0 4px 16px rgba(2, 132, 199, 0.35) !important;
+  }
   .badge-sparkling-gold {
     background: linear-gradient(135deg, #FEF08A 0%, #FDE047 50%, #FACC15 100%) !important;
     border: 2px solid #CA8A04 !important;
@@ -477,7 +483,7 @@
     </div>
 
     <div style="background:#F0F9FF; border:1.5px solid #BAE6FD; border-radius:14px; padding:14px 18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-      <label class="filter-item" style="font-size:13px; font-weight:800; color:var(--att-blue); cursor:pointer;">
+      <label style="font-size:13px; font-weight:800; color:var(--att-blue); cursor:pointer; display:flex; align-items:center; gap:8px;">
         <input type="checkbox" id="toggle-has-tradeins" onchange="window.toggleTradeInMaster();" style="width:20px; height:20px; accent-color:var(--att-blue);">
         <span>Trading in Devices for Promotional Bill Credits?</span>
       </label>
@@ -942,7 +948,7 @@ window.activeProt = { pa1: false, pa4: false, htp: false };
 const $ = (id) => document.getElementById(id);
 
 function getTradeOptionsHTML() {
-  return TRADES.map(t => `<option value="${t[0]}|${t[1]}|${t[2]}|${t[3]}">${t[3]} ($${t[0]} base book)</option>`).join('');
+  return TRADES.map(t => `<option value="${t[0]}\vert{}${t[1]}|${t[2]}\vert{}${t[3]}">${t[3]} ($${t[0]} base book)</option>`).join('');
 }
 
 /* PROTECTION TILE TOGGLE */
@@ -963,6 +969,19 @@ window.toggleProtOption = function(type) {
 };
 
 /* REINVESTMENT QUICK-ATTACH HANDLERS */
+window.quickAttachBroadband = function() {
+  var bbPill = $('scope-bb');
+  if (bbPill && !bbPill.classList.contains('active')) {
+    bbPill.classList.add('active');
+  }
+  window.runCalc();
+  var secBB = $('sec-broadband');
+  if (secBB) {
+    secBB.style.display = 'block';
+    secBB.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+};
+
 window.quickAttachVoiceLine = function() {
   var linesSel = $('curr-lines');
   var currentL = parseInt(linesSel.value, 10) || 1;
@@ -1094,18 +1113,7 @@ window.renderTradeCards = function() {
 window.syncSingleTradeLine = function(lineIdx) {
   var sel = $(`trade-select-${lineIdx}`), isDamaged = $(`trade-damage-${lineIdx}`).checked;
   var isAyac = $('check-ayac-promo') ? $('check-ayac-promo').checked : false;
-  var badge = $(`t-badge-${lineIdx}`);
-  if (!sel || !badge) return;
-
-  var parts = sel.value.split('|');
-  var rawBook = parseFloat(parts[0]) || 0;
-  var effBook = (isDamaged && !isAyac) ? Math.floor(rawBook * 0.5) : rawBook;
-  var tierName = "No Promo ($0)";
-  if (isAyac || effBook >= 230) tierName = "Tier 1: $1,000 Off";
-  else if (effBook >= 130) tierName = "Tier 2: $830 Off";
-  else if (effBook >= 35) tierName = "Tier 3: $350 Off";
-
-  badge.textContent = `Book: $${effBook} • ${tierName}`;
+  var badge = $(`t-badge-${lineIdx}`); if (!sel \vert{}\vert{} !badge) return;  var parts = sel.value.split('\vert{}'); var rawBook = parseFloat(parts[0]) \vert{}\vert{} 0; var effBook = (isDamaged && !isAyac) ? Math.floor(rawBook * 0.5) : rawBook; var tierName = "No Promo ($0)"; if (isAyac \vert{}\vert{} effBook >= 230) tierName = "Tier 1: $1,000 Off"; else if (effBook >= 130) tierName = "Tier 2: $830 Off"; else if (effBook >= 35) tierName = "Tier 3: $350 Off";  badge.textContent = `Book: $${effBook} •${tierName}`;
   badge.style.color = isDamaged ? "#DC2626" : "var(--att-blue)";
   window.runCalc();
 };
@@ -1116,7 +1124,13 @@ window.syncAllTradeLines = function() {
 };
 
 /* SCOPES & STEPPERS */
-window.toggleScope = function(el) { el.classList.toggle('active'); window.runCalc(); };
+window.toggleScope = function(el) { 
+  el.classList.toggle('active'); 
+  var hasBB = $('scope-bb').classList.contains('active');
+  var secBB = $('sec-broadband');
+  if (secBB) secBB.style.display = hasBB ? 'block' : 'none';
+  window.runCalc(); 
+};
 
 window.setLines = function(num) {
   var n = parseInt(num, 10);
@@ -1254,388 +1268,42 @@ window.runCalc = function() {
   var harvestBadge = $('baseline-harvest-badge');
   if (harvestBadge) {
     harvestBadge.style.display = totalHarvest > 0 ? 'block' : 'none';
-    harvestBadge.textContent = `Audit Harvest: +$${totalHarvest.toFixed(2)}/mo`;
-  }
-  var adjustedBaseline = rawCurrentBill + totalHarvest;
-
-  // Rate Multipliers
-  var disc = $('curr-discount').value;
-  var isFan = (!isBiz && disc === 'fan_corp') || (isBiz && disc === 'biz_evp');
-  var isApprec = (!isBiz && disc === 'apprec_mil') || (isBiz && disc === 'biz_fn');
-  var ap = $('curr-autopay').value;
-
-  var rateTable = isBiz ? businessRates : consumerRates;
-  var tData = rateTable[Math.min(totalLines, 10)] || rateTable[1];
-  var premRate = tData.prem, extRate = tData.ext, valRate = tData.val;
-
-  if (ap === 'none') { premRate = tData.noApPrem; extRate = tData.noApExt; valRate = tData.noApVal; }
-  else if (ap === 'credit') { premRate += 5; extRate += 5; valRate += 5; }
-
-  if (isFan) premRate = (ap === 'none') ? tData.noApExt : (tData.fanPrem + (ap === 'credit' && !isBiz ? 5 : 0));
-  else if (isApprec) { premRate = +(premRate * 0.75).toFixed(2); extRate = +(extRate * 0.75).toFixed(2); valRate = +(valRate * 0.75).toFixed(2); }
-
-  var wirelessBasePlanTotal = Number(((pCount * premRate) + (eCount * extRate) + (vCount * valRate)).toFixed(2));
-  var availablePlanMargin = Number((adjustedBaseline - wirelessBasePlanTotal).toFixed(2));
-
-  // Trade Credits
-  var hasTradeIns = $('toggle-has-tradeins').checked;
-  var tCount = hasTradeIns ? (parseInt($('trade-lines-count').value, 10) || 0) : 0;
-  var isAyac = $('check-ayac-promo') ? $('check-ayac-promo').checked : false;
-  var totalMonthlyTradeCredits = 0;
-
-  for (var t = 1; t <= tCount; t++) {
-    var tSel = $(`trade-select-${t}`), tDam = $(`trade-damage-${t}`);
-    if (tSel && tDam) {
-      var parts = tSel.value.split('|');
-      var effBook = (tDam.checked && !isAyac) ? Math.floor(parseFloat(parts[0]) * 0.5) : parseFloat(parts[0]);
-      var credit = (isAyac || effBook >= 230) ? 27.78 : ((effBook >= 130) ? 23.06 : ((effBook >= 35) ? 9.72 : 0));
-      totalMonthlyTradeCredits += credit;
-    }
-  }
-  $('trade-pool-badge').textContent = `Total Trade Credits: -$${totalMonthlyTradeCredits.toFixed(2)}/mo`;
-
-  // Render Plan Recommendation Personas
-  var planOptions = (totalLines === 1) ? [
-    { title: "🐢 Value Plus 2.0", cost: valRate, desc: "Essential unlimited data at our lowest single-line price point.", tag: "💰 Max Savings", cls: "rec-card-val" },
-    { title: "🐇 Unlimited Extra 2.0", cost: extRate, desc: "100GB priority data & 50GB hotspot tethering.", tag: "⚡ Most Popular", cls: "rec-card-ext" },
-    { title: "🐆 Unlimited Premium 2.0", cost: premRate, desc: "Fast-track QCI-8 data • 100GB hotspot • 4K UHD video.", tag: "👑 Peak Tier", cls: "rec-card-prem" }
-  ] : [
-    { title: "🐢 All Value Plus 2.0", cost: Number((totalLines * valRate).toFixed(2)), desc: "Core unlimited access across all lines.", tag: "💰 Max Budget", cls: "rec-card-val" },
-    { title: "🐆 1x Prem + 🐢 Crew Mix", cost: Number((premRate + (totalLines - 1) * valRate).toFixed(2)), desc: "Lead line priority, crew on value.", tag: "⚡ High Value", cls: "rec-card-ext" },
-    { title: "🐆 All-Cheetah Premium", cost: Number((totalLines * premRate).toFixed(2)), desc: "Unlimited fast-track QCI-8 data on all devices.", tag: "👑 Zero Slowdown", cls: "rec-card-prem" }
-  ];
-
-  var cardsContainer = $('plan-cards-container');
-  cardsContainer.innerHTML = '';
-  planOptions.forEach((opt, c) => {
-    var cSavings = Number((adjustedBaseline - opt.cost).toFixed(2));
-    var div = document.createElement('div');
-    div.className = `rec-card ${opt.cls} ${c === window.selectedPlanIndex ? 'selected-plan' : ''}`;
-    div.setAttribute('onclick', `window.selectRecommendedPlan(${c})`);
+    harvestBadge.textContent = `Audit Harvest: +$${totalHarvest.toFixed(2)}/mo`; } var adjustedBaseline = rawCurrentBill + totalHarvest;  // Rate Multipliers var disc = $('curr-discount').value; var isFan = (!isBiz && disc === 'fan_corp') \vert{}\vert{} (isBiz && disc === 'biz_evp'); var isApprec = (!isBiz && disc === 'apprec_mil') \vert{}\vert{} (isBiz && disc === 'biz_fn'); var ap = $('curr-autopay').value;  var rateTable = isBiz ? businessRates : consumerRates; var tData = rateTable[Math.min(totalLines, 10)] \vert{}\vert{} rateTable[1]; var premRate = tData.prem, extRate = tData.ext, valRate = tData.val;  if (ap === 'none') { premRate = tData.noApPrem; extRate = tData.noApExt; valRate = tData.noApVal; } else if (ap === 'credit') { premRate += 5; extRate += 5; valRate += 5; }  if (isFan) premRate = (ap === 'none') ? tData.noApExt : (tData.fanPrem + (ap === 'credit' && !isBiz ? 5 : 0)); else if (isApprec) { premRate = +(premRate * 0.75).toFixed(2); extRate = +(extRate * 0.75).toFixed(2); valRate = +(valRate * 0.75).toFixed(2); }  var wirelessBasePlanTotal = Number(((pCount * premRate) + (eCount * extRate) + (vCount * valRate)).toFixed(2)); var availablePlanMargin = Number((adjustedBaseline - wirelessBasePlanTotal).toFixed(2));  // Trade Credits var hasTradeIns = $('toggle-has-tradeins').checked; var tCount = hasTradeIns ? (parseInt($('trade-lines-count').value, 10) \vert{}\vert{} 0) : 0; var isAyac = $('check-ayac-promo') ? $('check-ayac-promo').checked : false; var totalMonthlyTradeCredits = 0;  for (var t = 1; t <= tCount; t++) { var tSel = $(`trade-select-${t}`), tDam = $(`trade-damage-${t}`); if (tSel && tDam) { var parts = tSel.value.split('\vert{}'); var effBook = (tDam.checked && !isAyac) ? Math.floor(parseFloat(parts[0]) * 0.5) : parseFloat(parts[0]); var credit = (isAyac \vert{}\vert{} effBook >= 230) ? 27.78 : ((effBook >= 130) ? 23.06 : ((effBook >= 35) ? 9.72 : 0)); totalMonthlyTradeCredits += credit; } } $('trade-pool-badge').textContent = `Total Trade Credits: -$${totalMonthlyTradeCredits.toFixed(2)}/mo`;  // Render Plan Recommendation Personas var planOptions = (totalLines === 1) ? [ { title: "🐢 Value Plus 2.0", cost: valRate, desc: "Essential unlimited data at our lowest single-line price point.", tag: "💰 Max Savings", cls: "rec-card-val" }, { title: "🐇 Unlimited Extra 2.0", cost: extRate, desc: "100GB priority data & 50GB hotspot tethering.", tag: "⚡ Most Popular", cls: "rec-card-ext" }, { title: "🐆 Unlimited Premium 2.0", cost: premRate, desc: "Fast-track QCI-8 data • 100GB hotspot • 4K UHD video.", tag: "👑 Peak Tier", cls: "rec-card-prem" } ] : [ { title: "🐢 All Value Plus 2.0", cost: Number((totalLines * valRate).toFixed(2)), desc: "Core unlimited access across all lines.", tag: "💰 Max Budget", cls: "rec-card-val" }, { title: "🐆 1x Prem + 🐢 Crew Mix", cost: Number((premRate + (totalLines - 1) * valRate).toFixed(2)), desc: "Lead line priority, crew on value.", tag: "⚡ High Value", cls: "rec-card-ext" }, { title: "🐆 All-Cheetah Premium", cost: Number((totalLines * premRate).toFixed(2)), desc: "Unlimited fast-track QCI-8 data on all devices.", tag: "👑 Zero Slowdown", cls: "rec-card-prem" } ];  var cardsContainer = $('plan-cards-container'); cardsContainer.innerHTML = ''; planOptions.forEach((opt, c) => { var cSavings = Number((adjustedBaseline - opt.cost).toFixed(2)); var div = document.createElement('div'); div.className = `rec-card ${opt.cls} ${c === window.selectedPlanIndex ? 'selected-plan' : ''}`; div.setAttribute('onclick', `window.selectRecommendedPlan(${c})`);
     div.innerHTML = `
       <div>
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
           <div style="font-size:14px; font-weight:800; color:#0F172A;">${opt.title}</div>
-          <span class="plan-badge-pill" style="background:#FFF; border:1px solid #CBD5E1;">${opt.tag}</span>
-        </div>
-        <div style="font-size:22px; font-weight:900; color:var(--emerald);">$${opt.cost.toFixed(2)}/mo</div>
+          <span class="plan-badge-pill" style="background:#FFF; border:1px solid #CBD5E1;">${opt.tag}</span> </div> <div style="font-size:22px; font-weight:900; color:var(--emerald);">$${opt.cost.toFixed(2)}/mo</div>
         <div style="font-size:11.5px; font-weight:800; color:var(--emerald); margin-bottom:8px;">
           ${rawCurrentBill > 0 ? (cSavings >= 0 ? `Saves $${cSavings.toFixed(2)}/mo` : `+$${Math.abs(cSavings).toFixed(2)}/mo`) : 'Select to configure'}
         </div>
       </div>
-      <div style="font-size:11px; color:var(--text-secondary); line-height:1.4;">${opt.desc}</div>
-    `;
-    cardsContainer.appendChild(div);
-  });
-
-  // Calculate Active Hardware, Protection & AIP
-  var phoneRetail = window.activePhone ? (DEVICES.find(d => d[1] === window.activePhone)?.[0] || 899.00) : 0;
-  var netPhoneInstallment = window.activePhone ? Math.max(0, (phoneRetail / 36) - (totalMonthlyTradeCredits > 0 ? 27.78 : 0)) : 0;
-  var phoneTaxPOS = phoneRetail * 0.07;
-
-  var tabletMonthly = window.activeTablet ? (isBiz ? 20.00 : (pCount > 0 ? 10.50 : 20.99)) : 0;
-  var tabletTaxPOS = window.activeTablet ? (349.00 * 0.07) : 0;
-
-  var watchMonthly = window.activeWatch ? (isBiz ? 10.00 : (pCount > 0 ? 5.50 : 10.99)) : 0;
-  var watchTaxPOS = window.activeWatch ? (429.00 * 0.07) : 0;
-
-  var aipMonthly = (window.activeAip >= 75) ? (window.activeAip / 12) : 0;
-  var aipTaxPOS = window.activeAip * 0.07;
-
-  var protMonthly = (window.activeProt.pa1 ? 17.00 : 0) + (window.activeProt.pa4 ? 50.00 : 0) + (window.activeProt.htp ? 25.00 : 0);
-  var hasTV = $('scope-tv').classList.contains('active');
-  var dtvMonthly = hasTV ? 79.99 : 0;
-
-  var totalHousehold = Number((wirelessBasePlanTotal + netPhoneInstallment + tabletMonthly + watchMonthly + aipMonthly + protMonthly + dtvMonthly).toFixed(2));
-  var finalOngoingSavings = Number((adjustedBaseline - totalHousehold).toFixed(2));
-
-  $('sum-new-total').textContent = `$${totalHousehold.toFixed(2)}/mo`;
-  $('wireless-pool').textContent = `Base Plan: $${wirelessBasePlanTotal.toFixed(2)}/mo`;
-
-  // HBO Audit
-  var hasHbo = $('check-hbo').checked;
-  var hboBanner = $('hbo-audit-banner');
-  if (hasHbo) {
-    hboBanner.style.display = 'block';
-    if (availablePlanMargin >= 16.99) {
-      hboBanner.style.background = "#ECFDF5"; hboBanner.style.border = "1.5px solid #10B981"; hboBanner.style.color = "#065F46";
-      hboBanner.innerHTML = `<b>🎬 HBO Irrelevant:</b> Plan rerate saves <b>$${availablePlanMargin.toFixed(2)}/mo</b>! Even if paying $16.99/mo for standalone Max, customer is net ahead by <b>+$${(availablePlanMargin - 16.99).toFixed(2)}/mo</b> in cash!`;
-    } else {
-      hboBanner.style.background = "#FFFBEB"; hboBanner.style.border = "1.5px solid #F59E0B"; hboBanner.style.color = "#92400E";
-      hboBanner.innerHTML = `<b>⚠️ HBO Retention Alert:</b> Current savings are <b>$${availablePlanMargin.toFixed(2)}/mo</b>. Customer loses grandfathered Max ($16.99 value).`;
+      <div style="font-size:11px; color:var(--text-secondary); line-height:1.4;">${opt.desc}</div> `; cardsContainer.appendChild(div); });  // Calculate Active Hardware, Protection & AIP var phoneRetail = window.activePhone ? (DEVICES.find(d => d[1] === window.activePhone)?.[0] \vert{}\vert{} 899.00) : 0; var netPhoneInstallment = window.activePhone ? Math.max(0, (phoneRetail / 36) - (totalMonthlyTradeCredits > 0 ? 27.78 : 0)) : 0; var phoneTaxPOS = phoneRetail * 0.07;  var tabletMonthly = window.activeTablet ? (isBiz ? 20.00 : (pCount > 0 ? 10.50 : 20.99)) : 0; var tabletTaxPOS = window.activeTablet ? (349.00 * 0.07) : 0;  var watchMonthly = window.activeWatch ? (isBiz ? 10.00 : (pCount > 0 ? 5.50 : 10.99)) : 0; var watchTaxPOS = window.activeWatch ? (429.00 * 0.07) : 0;  var aipMonthly = (window.activeAip >= 75) ? (window.activeAip / 12) : 0; var aipTaxPOS = window.activeAip * 0.07;  var protMonthly = (window.activeProt.pa1 ? 17.00 : 0) + (window.activeProt.pa4 ? 50.00 : 0) + (window.activeProt.htp ? 25.00 : 0); var hasTV = $('scope-tv').classList.contains('active'); var dtvMonthly = hasTV ? 79.99 : 0;  var totalHousehold = Number((wirelessBasePlanTotal + netPhoneInstallment + tabletMonthly + watchMonthly + aipMonthly + protMonthly + dtvMonthly).toFixed(2)); var finalOngoingSavings = Number((adjustedBaseline - totalHousehold).toFixed(2));  $('sum-new-total').textContent = `$${totalHousehold.toFixed(2)}/mo`;
+  $('wireless-pool').textContent = `Base Plan: $${wirelessBasePlanTotal.toFixed(2)}/mo`;  // HBO Audit var hasHbo = $('check-hbo').checked; var hboBanner = $('hbo-audit-banner'); if (hasHbo) { hboBanner.style.display = 'block'; if (availablePlanMargin >= 16.99) { hboBanner.style.background = "#ECFDF5"; hboBanner.style.border = "1.5px solid #10B981"; hboBanner.style.color = "#065F46"; hboBanner.innerHTML = `<b>🎬 HBO Irrelevant:</b> Plan rerate saves <b>$${availablePlanMargin.toFixed(2)}/mo</b>! Even if paying $16.99/mo for standalone Max, customer is net ahead by <b>+$${(availablePlanMargin - 16.99).toFixed(2)}/mo</b> in cash!`; } else { hboBanner.style.background = "#FFFBEB"; hboBanner.style.border = "1.5px solid #F59E0B"; hboBanner.style.color = "#92400E"; hboBanner.innerHTML = `<b>⚠️ HBO Retention Alert:</b> Current savings are <b>$${availablePlanMargin.toFixed(2)}/mo</b>. Customer loses grandfathered Max ($16.99 value).`;
     }
   } else { hboBanner.style.display = 'none'; }
 
-  // Reinvestment Opportunity Basket
+  // REINVESTMENT OPPORTUNITY BASKET (PLATINUM + GOLD + SILVER + BRONZE + PHONE + AIP)
   var reinvestList = $('new-line-opportunities-list');
-  $('reinvest-margin-badge').textContent = `Available Margin: +$${availablePlanMargin.toFixed(2)}/mo`;
+  $('reinvest-margin-badge').textContent = `Available Margin: +$${availablePlanMargin.toFixed(2)}/mo`;  var opps = []; var isBbScoped = $('scope-bb').classList.contains('active'); var bbPromoCost = 35.00; // AT&T Internet Air / Fiber 300 with wireless convergence discount  // 0. 💎 PLATINUM TIER: BROADBAND CONVERGENCE (HIGHEST IMPACT) if (isBbScoped \vert{}\vert{} availablePlanMargin >= bbPromoCost \vert{}\vert{} rawCurrentBill === 0) { opps.push(` <div class="badge-platinum" style="border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between; gap:6px; grid-column: 1 / -1;"> <div> <div style="display:flex; justify-content:space-between; align-items:center;"> <span style="font-size:12.5px; font-weight:900;">💎 PLATINUM: AT&amp;T Fiber / Internet Air</span> <span style="font-size:11.5px; font-weight:900; color:#0284C7;">+$${bbPromoCost.toFixed(2)}/mo (w/ All-In 20% Off)</span>
+          </div>
+          <div style="font-size:10.5px; margin-top:3px; line-height:1.35; color:#0C4A6E;">
+            Broadband Convergence: Plan savings absorb Gigabit Home Fiber or 5G Home Air, unlocking 20% off wireless!
+          </div>
+        </div>
+        <button type="button" class="btn" style="background:#FFF; border-color:#0284C7; color:#0284C7; width:100%; font-size:11.5px; font-weight:900; padding:7px;" onclick="window.quickAttachBroadband();">
+          🌐 Attach Broadband (Platinum)
+        </button>
+      </div>
+    `);
+  }
 
-  var opps = [];
+  // 1. 🥇 GOLD TIER: VOICE ADD-A-LINE
   var nextVoiceCost = (rateTable[Math.min(totalLines + 1, 10)] ? rateTable[Math.min(totalLines + 1, 10)].val : valRate);
-
-  // 1. Gold Voice
   if (availablePlanMargin >= nextVoiceCost || rawCurrentBill === 0) {
     opps.push(`
       <div class="badge-sparkling-gold" style="border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between; gap:6px;">
         <div>
           <div style="display:flex; justify-content:space-between; align-items:center;">
             <span style="font-size:12px; font-weight:900;">🥇 GOLD: Voice Add-A-Line</span>
-            <span style="font-size:11px; font-weight:900;">+$${nextVoiceCost.toFixed(2)}/mo</span>
-          </div>
-          <div style="font-size:10px; margin-top:3px; line-height:1.3;">Add Line ${totalLines + 1}. Curve drop absorbs the cost!</div>
-        </div>
-        <button type="button" class="btn" style="background:#FFF; border-color:#CA8A04; color:#713F12; width:100%; font-size:11px; font-weight:900; padding:6px;" onclick="window.quickAttachVoiceLine();">➕ Add Voice Line</button>
-      </div>
-    `);
-  }
-
-  // 2. Silver Tablet
-  var tabPromoRate = isBiz ? 20.00 : (pCount > 0 ? 10.50 : 20.99);
-  if (availablePlanMargin >= tabPromoRate || rawCurrentBill === 0) {
-    opps.push(`
-      <div class="badge-silver" style="border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between; gap:6px;">
-        <div>
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span style="font-size:12px; font-weight:900;">🥈 SILVER: Connected Tablet</span>
-            <span style="font-size:11px; font-weight:900; color:var(--emerald);">+$${tabPromoRate.toFixed(2)}/mo</span>
-          </div>
-          <div style="font-size:10px; margin-top:3px; line-height:1.3;">Dedicated cellular iPad 10th Gen at promo rate.</div>
-        </div>
-        <button type="button" class="btn" style="background:#FFF; border-color:#64748B; color:#1E293B; width:100%; font-size:11px; font-weight:900; padding:6px;" onclick="window.quickAttachTablet();">➕ Add Tablet</button>
-      </div>
-    `);
-  }
-
-  // 3. Bronze Watch
-  var watchPromoRate = isBiz ? 10.00 : (pCount > 0 ? 5.50 : 10.99);
-  if (availablePlanMargin >= watchPromoRate || rawCurrentBill === 0) {
-    opps.push(`
-      <div class="badge-bronze" style="border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between; gap:6px;">
-        <div>
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span style="font-size:12px; font-weight:900;">🥉 BRONZE: Smartwatch Line</span>
-            <span style="font-size:11px; font-weight:900; color:#9A3412;">+$${watchPromoRate.toFixed(2)}/mo</span>
-          </div>
-          <div style="font-size:10px; margin-top:3px; line-height:1.3;">Connect Apple Watch Series 12 at $0 net bill change!</div>
-        </div>
-        <button type="button" class="btn" style="background:#FFF; border-color:#C2410C; color:#7C2D12; width:100%; font-size:11px; font-weight:900; padding:6px;" onclick="window.quickAttachWatch();">➕ Add Watch</button>
-      </div>
-    `);
-  }
-
-  // 4. Blue Phone
-  if (availablePlanMargin >= 16.00 || rawCurrentBill === 0) {
-    opps.push(`
-      <div class="badge-phone" style="border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between; gap:6px;">
-        <div>
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span style="font-size:12px; font-weight:900;">📱 NEW PHONE: Flagship Upgrade</span>
-            <span style="font-size:11px; font-weight:900; color:#1E40AF;">+$16-$25/mo</span>
-          </div>
-          <div style="font-size:10px; margin-top:3px; line-height:1.3;">iPhone 17 or Galaxy S26 absorbed by plan savings!</div>
-        </div>
-        <button type="button" class="btn" style="background:#FFF; border-color:#2563EB; color:#1E40AF; width:100%; font-size:11px; font-weight:900; padding:6px;" onclick="window.quickAttachPhone();">➕ Add Phone</button>
-      </div>
-    `);
-  }
-
-  // 5. Purple AIP
-  if (availablePlanMargin >= 12.50 || rawCurrentBill === 0) {
-    opps.push(`
-      <div class="badge-aip" style="border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between; gap:6px;">
-        <div>
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span style="font-size:12px; font-weight:900;">🛍️ AIP: Ray-Ban Meta / Gear</span>
-            <span style="font-size:11px; font-weight:900; color:#6B21A8;">+$12.50-$24.92/mo</span>
-          </div>
-          <div style="font-size:10px; margin-top:3px; line-height:1.3;">12-Mo financing for Smart Glasses &amp; power gear.</div>
-        </div>
-        <button type="button" class="btn" style="background:#FFF; border-color:#9333EA; color:#581C87; width:100%; font-size:11px; font-weight:900; padding:6px;" onclick="window.quickAttachAIP(299);">➕ Add Ray-Bans ($24.92/mo)</button>
-      </div>
-    `);
-  }
-  reinvestList.innerHTML = opps.join('');
-
-  // Summary Savings Badge
-  var saveBox = $('sum-savings-box');
-  if (finalOngoingSavings >= 25.00) {
-    saveBox.style.background = "#ECFDF5"; saveBox.style.color = "#065F46"; saveBox.style.border = "2px solid #10B981";
-    saveBox.innerHTML = `🟢 Saves $${finalOngoingSavings.toFixed(2)}/mo vs Old Bill!`;
-  } else if (finalOngoingSavings > 0) {
-    saveBox.style.background = "#FEF3C7"; saveBox.style.color = "#B45309"; saveBox.style.border = "2px solid #F59E0B";
-    saveBox.innerHTML = `⚡ Saves $${finalOngoingSavings.toFixed(2)}/mo vs Old Bill`;
-  } else {
-    saveBox.style.background = "#FEF2F2"; saveBox.style.color = "#DC2626"; saveBox.style.border = "1.5px solid #FECACA";
-    saveBox.innerHTML = rawCurrentBill > 0 ? `+$${Math.abs(finalOngoingSavings).toFixed(2)}/mo vs Old Bill` : `Total Bill: $${totalHousehold.toFixed(2)}/mo`;
-  }
-
-  // Bill Cycle Proration & Fees
-  var cutDay = parseInt($('bill-cut-day').value, 10) || 16;
-  var feeHandling = $('fee-billing-target').value;
-  var now = new Date(), today = now.getDate();
-  var daysRemaining = (today <= cutDay) ? (cutDay - today) : ((30 - today) + cutDay);
-  var prorationRatio = Number((daysRemaining / 30).toFixed(2));
-  var monthlyPlanDelta = totalHousehold - rawCurrentBill;
-  var proratedAdj = Number((monthlyPlanDelta * prorationRatio).toFixed(2));
-
-  var feesWaived = $('check-waived-fees').checked;
-  var activePhoneCount = window.activePhone ? 1 : 0;
-  var oneTimeFeesOnBill = (!feesWaived && feeHandling === "bill") ? (activePhoneCount * 35.00) : 0;
-  var estimatedFirstBill = Number((totalHousehold + proratedAdj + oneTimeFeesOnBill).toFixed(2));
-
-  $('cycle-days-badge').textContent = `${daysRemaining} Days Left in Cycle (${cutDay}th Cut)`;
-  $('first-bill-total').textContent = `$${estimatedFirstBill.toFixed(2)}`;
-  $('ongoing-bill-total').textContent = `$${totalHousehold.toFixed(2)}/mo`;
-
-  var notes = [
-    `• <b>Full Advance Month:</b> $${totalHousehold.toFixed(2)} (New baseline plan + hardware installments).`,
-    `• <b>Proration (${daysRemaining} days):</b> ${proratedAdj >= 0 ? '+' : '-'}$${Math.abs(proratedAdj).toFixed(2)} transition difference.`
-  ];
-  if (oneTimeFeesOnBill > 0) notes.push(`• <b>Upgrade/Act. Fees:</b> +$${oneTimeFeesOnBill.toFixed(2)} ($35 billed to invoice).`);
-  $('first-bill-breakdown-notes').innerHTML = notes.join("<br>");
-
-  // Due Today at Register (7% IN Sales Tax)
-  var posNetworkFees = (!feesWaived && feeHandling === "pos") ? (activePhoneCount * 35.00) : 0;
-  var totalDuePOS = Number((phoneTaxPOS + tabletTaxPOS + watchTaxPOS + aipTaxPOS + posNetworkFees).toFixed(2));
-
-  $('due-today-amt').textContent = isBiz ? `$0.00 Due at POS ($${totalDuePOS.toFixed(2)} BTA)` : `$${totalDuePOS.toFixed(2)} Due Today at Register`;
-  $('due-today-breakdown').textContent = isBiz ? "Corporate CRU BTA Active: All hardware taxes and fees billed to account." : `Includes 7% IN sales tax on equipment ($${(phoneTaxPOS+tabletTaxPOS+watchTaxPOS+aipTaxPOS).toFixed(2)})` + (posNetworkFees > 0 ? ` + $${posNetworkFees} network fees` : '');
-
-  // SMS Summary Text
-  var sms = `AT&T Quote: ${totalLines} Voice Line(s). Total Monthly: $${totalHousehold.toFixed(2)}/mo (w/ AutoPay).\n`;
-  if (finalOngoingSavings > 0) sms += `• Ongoing Savings: $${finalOngoingSavings.toFixed(2)}/mo vs prior bill!\n`;
-  if (totalMonthlyTradeCredits > 0) sms += `• Trade-In Credits: -$${totalMonthlyTradeCredits.toFixed(2)}/mo in bill credits applied.\n`;
-  sms += `• First Bill Estimate: ~$${estimatedFirstBill.toFixed(2)} (includes ${daysRemaining} days proration), then stabilizes to $${totalHousehold.toFixed(2)}/mo.\n`;
-  sms += `• Due Today at Register: $${isBiz ? '0.00 (Billed to Account)' : totalDuePOS.toFixed(2)}.\nQuestions? Stop in-store to finalize!`;
-  $('sms-text').value = sms;
-
-  window.autoSaveState();
-};
-
-/* AMBIENT CANVAS */
-(function() {
-  var canvas = $('ambient-canvas'); if (!canvas) return;
-  var ctx = canvas.getContext('2d'), width = 0, height = 0, time = 0;
-  function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
-  window.addEventListener('resize', resize); resize();
-  var orbs = [
-    { x: 0.25, y: 0.25, r: 520, c: 'rgba(2, 132, 199, 0.22)', s: 0.005 },
-    { x: 0.75, y: 0.35, r: 580, c: 'rgba(0, 87, 184, 0.24)', s: 0.004 },
-    { x: 0.50, y: 0.75, r: 540, c: 'rgba(56, 189, 248, 0.25)', s: 0.006 }
-  ];
-  function draw() {
-    ctx.clearRect(0, 0, width, height); time += 0.01;
-    orbs.forEach((o, i) => {
-      var cx = width * o.x + Math.sin(time * o.s * 20 + i) * 80;
-      var cy = height * o.y + Math.cos(time * o.s * 18 + i) * 70;
-      var g = ctx.createRadialGradient(cx, cy, 0, cx, cy, o.r);
-      g.addColorStop(0, o.c); g.addColorStop(1, 'rgba(186, 230, 253, 0)');
-      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, o.r, 0, Math.PI * 2); ctx.fill();
-    });
-    requestAnimationFrame(draw);
-  }
-  draw();
-})();
-
-/* AUTO-SAVE & STATE RESTORATION */
-window.autoSaveState = function() {
-  var state = {
-    seg: window.accountSegment,
-    b: $('curr-total').value,
-    l: $('curr-lines').value,
-    p: $('cnt-prem').textContent,
-    e: $('cnt-extra').textContent,
-    v: $('cnt-val').textContent,
-    d: $('curr-discount').value,
-    ap: $('curr-autopay').value,
-    awu: $('audit-watch-unused').checked,
-    atu: $('audit-tab-unused').checked,
-    nuad: $('audit-nua-drop').checked,
-    tht: $('toggle-has-tradeins').checked,
-    tlc: $('trade-lines-count').value,
-    bcd: $('bill-cut-day').value,
-    fbt: $('fee-billing-target').value,
-    wf: $('check-waived-fees').checked,
-    hs: $('check-hotspot').checked,
-    hbo: $('check-hbo').checked,
-    phone: window.activePhone,
-    tab: window.activeTablet,
-    watch: window.activeWatch,
-    aip: window.activeAip,
-    prot: window.activeProt
-  };
-  localStorage.setItem('att_quote_state', JSON.stringify(state));
-};
-
-window.shareQuoteURL = function() {
-  window.autoSaveState();
-  var saved = localStorage.getItem('att_quote_state'); if (!saved) return;
-  var fullURL = window.location.origin + (window.accountSegment === "business" ? "/business" : "/") + "#q=" + encodeURIComponent(saved);
-  navigator.clipboard.writeText(fullURL).then(() => alert("Quote URL copied to clipboard: " + fullURL));
-};
-
-window.resetToNextCustomer = function() {
-  localStorage.removeItem('att_quote_state');
-  window.location.href = window.location.origin + (window.accountSegment === "business" ? "/business" : "/");
-};
-
-window.restoreState = function() {
-  var rawData = null;
-  if (window.location.hash && window.location.hash.indexOf("#q=") === 0) {
-    try { rawData = decodeURIComponent(window.location.hash.substring(3)); } catch(err) {}
-  }
-  if (!rawData) rawData = localStorage.getItem('att_quote_state');
-  if (!rawData) return;
-
-  try {
-    var s = JSON.parse(rawData);
-    if (s.seg) window.setAccountSegment(s.seg);
-    if (s.b !== undefined) $('curr-total').value = s.b;
-    if (s.l) $('curr-lines').value = s.l;
-    if (s.p) $('cnt-prem').textContent = s.p;
-    if (s.e) $('cnt-extra').textContent = s.e;
-    if (s.v) $('cnt-val').textContent = s.v;
-    if (s.d) $('curr-discount').value = s.d;
-    if (s.ap) $('curr-autopay').value = s.ap;
-    if (s.awu !== undefined) $('audit-watch-unused').checked = s.awu;
-    if (s.atu !== undefined) $('audit-tab-unused').checked = s.atu;
-    if (s.nuad !== undefined) $('audit-nua-drop').checked = s.nuad;
-    if (s.tht !== undefined) {
-      $('toggle-has-tradeins').checked = s.tht;
-      $('wrap-trade-inner').style.display = s.tht ? 'block' : 'none';
-      $('wrap-trade-count').style.display = s.tht ? 'inline-flex' : 'none';
-    }
-    if (s.tlc) $('trade-lines-count').value = s.tlc;
-    if (s.bcd) $('bill-cut-day').value = s.bcd;
-    if (s.fbt) $('fee-billing-target').value = s.fbt;
-    if (s.wf !== undefined) $('check-waived-fees').checked = s.wf;
-    if (s.hs !== undefined) {
-      $('check-hotspot').checked = s.hs;
-      $('hotspot-lines-wrap').style.display = s.hs ? 'inline-flex' : 'none';
-    }
-    if (s.hbo !== undefined) $('check-hbo').checked = s.hbo;
-    if (s.phone) window.activePhone = s.phone;
-    if (s.tab) window.activeTablet = s.tab;
-    if (s.watch) window.activeWatch = s.watch;
-    if (s.aip) window.activeAip = s.aip;
-    if (s.prot) {
-      window.activeProt = s.prot;
-      $('tile-pa1').classList.toggle('active', window.activeProt.pa1);
-      $('tile-pa4').classList.toggle('active', window.activeProt.pa4);
-      $('tile-htp').classList.toggle('active', window.activeProt.htp);
-    }
-    window.syncHardwareLedger();
-  } catch(e) {}
-};
-
-window.onload = function() {
-  window.syncSegmentUI();
-  window.restoreState();
-  window.renderTradeCards();
-  window.syncHardwareLedger();
-  window.runCalc();
-};
-</script>
-
-</body>
-</html>
+            <span style="font-size:11px; font
