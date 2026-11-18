@@ -32,72 +32,1750 @@
   --sky-300: #7DD3FC;
   --blue-50: #EFF6FF;
   --line: #BFDBFE;
-  if (c.cmd) { c.cmd(); return; }
-  if (!slot) return;
-  if (c.multi) { if (AG.sel.has(c.v)) AG.sel.delete(c.v); else AG.sel.add(c.v); c.on = AG.sel.has(c.v); agDrawChips(AG.chips, i); return; }
-  if (c.done) { const names = AG.chips.filter((x) => x.multi && x.on).map((x) => x.t); agPick(slot, [...AG.sel], names.length ? names.join(', ') : 'Nothing'); return; }
-  agPick(slot, c.v, c.t);
+  --line-2: #93C5FD;
+  --slate-50: #F8FAFC;
+  --slate-300: #CBD5E1;
+  --red: #DC2626;
+  --amber: #F59E0B;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --fs-input: 13px;
 }
-function agAsk(slot) {
-  AG.cur = slot.id; AG.finished = false; AG.sel = new Set();
-  const q = slot.ask();
-  agSay('bot', q.q);
-  if (q.select) agSelect(q.select.label, q.select.options, (v, t) => agPick(slot, v, t));
-  else agDrawChips(q.chips);
+/* iOS zooms into any focused field under 16px. The old viewport zoom-lock hid that; this fixes it properly. */
+@media (pointer: coarse) { :root { --fs-input: 16px; } }
+
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0;
+  padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  font-family: "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  color: var(--text-primary);
+  background: linear-gradient(180deg, #E0F2FE 0%, #BAE6FD 50%, #93C5FD 100%);
+  min-height: 100vh;
+  min-height: 100dvh;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
-function agNext() {
-  const s = SLOTS.find((x) => x.applies() && !AG.got[x.id]);
-  if (s) agAsk(s); else agFinish();
+@media (min-width: 1024px) { body { font-size: 15px; } }
+
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 3px solid var(--att-cyan); outline-offset: 2px; }
+
+#ambient-canvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.55; }
+
+.app-container {
+  max-width: 980px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.98);
+  border: 2px solid #60A5FA;
+  border-radius: 22px;
+  box-shadow: 0 20px 50px rgba(0, 87, 184, 0.16);
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
 }
-function agStart(quiet) {
-  AG.started = true;
-  if (parseFloat($('curr-total').value) > 0) AG.got.bill = true;
-  if (!quiet) agNext();
+
+/* ---------- Header ---------- */
+.header {
+  background: linear-gradient(180deg, #FFFFFF 0%, var(--sky-50) 100%);
+  padding: 18px 24px;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+  border-bottom: 2px solid var(--line);
 }
-function agRestart() {
-  AG.got = {}; AG.cur = null;
-  agSay('bot', "Starting the questions again. Answers already in the quote stay until you change them.");
-  agStart();
+.header h1 { margin: 0; font-size: 19px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+.header p { margin: 3px 0 0; font-size: 11px; color: var(--att-blue); font-weight: 800; }
+.header-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+.segment-switch-group { display: inline-flex; background: #E0F2FE; border: 2px solid var(--line-2); border-radius: 11px; padding: 3px; gap: 3px; }
+.seg-btn { background: transparent; border: none; border-radius: 8px; padding: 7px 14px; font-size: 12px; font-weight: 800; color: var(--text-secondary); }
+.seg-btn.active[data-seg="consumer"] { background: var(--att-blue); color: #fff; box-shadow: 0 2px 8px rgba(0, 87, 184, 0.3); }
+.seg-btn.active[data-seg="business"] { background: #D97706; color: #fff; box-shadow: 0 2px 8px rgba(217, 119, 6, 0.3); }
+
+/* ---------- Buttons ---------- */
+.btn {
+  background: var(--slate-50); color: var(--text-primary);
+  border: 1.5px solid var(--slate-300); border-radius: 10px;
+  padding: 9px 16px; font-size: 12px; font-weight: 800;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  text-decoration: none;
 }
-function agCustomerView() { if (!document.body.classList.contains('presentation-mode')) togglePres(); }
-function agCopy() { actions['copy-sms'](); }
-function agChange() {
-  const list = SLOTS.filter((s) => AG.got[s.id] && s.applies()).map((s) => ({ t: s.label, cmd: () => { agSay('me', 'Change ' + s.label.toLowerCase()); AG.got[s.id] = false; agNext(); } }));
-  agSay('bot', 'Which answer do you want to change?');
-  agDrawChips(list);
+.btn-blue  { background: var(--blue-50); border-color: var(--line); color: var(--att-blue); }
+.btn-green { background: #ECFDF5; border-color: #A7F3D0; color: #065F46; }
+.btn-amber { background: #FEF3C7; border-color: #FDE68A; color: #92400E; }
+.btn-pres { background: var(--blue-50); border-color: var(--line); color: var(--att-blue); }
+.btn-pres.active { background: #FEF3C7; border-color: var(--amber); color: #B45309; }
+.btn-run-numbers {
+  background: linear-gradient(135deg, #0057B8 0%, #0284C7 100%); color: #fff; border: none; border-radius: 12px;
+  padding: 15px 22px; font-size: 14.5px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase;
+  width: 100%; margin-top: 14px; box-shadow: 0 4px 16px rgba(0, 87, 184, 0.35);
+  display: flex; align-items: center; justify-content: center; gap: 10px;
 }
-function agCommand(t) {
-  if (/\b(start over|restart|begin again)\b/.test(t)) { agRestart(); return true; }
-    row('ar-nums', usd(c.newTotal) + '/mo');
-    row('ar-sub', 'Add the current bill to see the savings.');
+.btn-sms { margin-top: 10px; width: 100%; background: var(--att-blue); border-color: var(--att-blue); color: #fff; font-size: 13.5px; padding: 12px; }
+.btn-link-sm { background: #fff; border-color: var(--line-2); color: var(--att-blue); font-size: 11px; padding: 6px 12px; }
+
+/* ---------- Address pre-check ---------- */
+.address-precheck-bar { background: var(--sky-50); border-bottom: 2px solid var(--line); padding: 14px 24px; }
+.addr-row-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.addr-title { font-size: 12.5px; font-weight: 800; color: var(--att-blue); text-transform: uppercase; }
+.addr-inputs { display: flex; gap: 10px; flex: 1; min-width: 260px; }
+.addr-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.addr-input { width: 100%; padding: 10px 14px; border: 2px solid var(--line-2); border-radius: 10px; background: #fff; font-size: var(--fs-input); font-weight: 600; }
+
+/* ---------- Cards / sections ---------- */
+.section-card { background: #fff; border: 2px solid var(--line); border-radius: 16px; margin: 14px 20px; padding: 18px 22px; box-shadow: 0 4px 16px rgba(0, 87, 184, 0.05); }
+.sec-header { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 14px; }
+.sec-title { margin: 0; font-size: 14.5px; font-weight: 800; text-transform: uppercase; }
+.hint { font-size: 11px; color: var(--text-muted); font-weight: 700; }
+.pool-pill { background: #E0F2FE; border: 1.5px solid var(--sky-300); color: var(--att-blue); padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 800; }
+.pool-pill-green { background: #ECFDF5; border-color: #10B981; color: #065F46; }
+
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+.grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
+.grid-tight { gap: 8px; }
+.baseline-grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.baseline-grid-2x2 .control-group { min-width: 0; }
+.baseline-grid-2x2 label { font-size: 10.5px; }
+@media (max-width: 480px) { .baseline-grid-2x2 { gap: 8px; } }
+
+/* ---------- Form controls ---------- */
+.control-group { display: flex; flex-direction: column; gap: 6px; }
+.control-group label { font-size: 11px; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; }
+.control-group input, .control-group select {
+  padding: 10px 12px; border: 2px solid var(--line-2); border-radius: 10px; background: #fff;
+  font-size: var(--fs-input); font-weight: 600; width: 100%;
+}
+.control-group .lbl-accent { color: var(--att-blue); }
+.control-group .strong { font-weight: 800; }
+.money-field { position: relative; width: 100%; display: flex; align-items: center; }
+.money-sym { position: absolute; left: 10px; font-weight: 900; font-size: 15px; color: var(--text-muted); pointer-events: none; }
+.control-group .input-money { padding-left: 24px; font-size: max(15px, var(--fs-input)); font-weight: 800; border-color: var(--att-blue); }
+
+.check-label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.check-label span { font-weight: 800; font-size: 12px; }
+.check-label.blue { color: var(--att-blue); }
+.check-label.blue input { accent-color: var(--att-blue); }
+.check-label.danger { color: var(--red); }
+.check-label.danger input { accent-color: var(--red); }
+.check-label.green input { accent-color: var(--emerald); }
+.check-label.green span { color: var(--emerald); font-size: 11px; }
+.check-lg { width: 20px; height: 20px; }
+.check-lg-sm { width: 18px; height: 18px; }
+
+/* ---------- Scope pills & protection tiles (buttons) ---------- */
+.pill-option, .prot-tile {
+  display: block; width: 100%; text-align: center; border-radius: 14px;
+  transition: background-color 0.2s var(--ease), border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.pill-option { background: var(--sky-50); border: 2px solid var(--sky-200); padding: 14px 12px; }
+.pill-option.active { background: var(--blue-50); border: 2.5px solid var(--att-blue); box-shadow: 0 4px 16px rgba(0, 87, 184, 0.22); }
+.pill-title { display: block; font-size: 13px; font-weight: 800; }
+
+.prot-grid { margin-bottom: 14px; }
+.prot-tile { background: #fff; border: 2px solid var(--sky-200); border-radius: 12px; padding: 12px; }
+.prot-tile.active { background: var(--blue-50); border: 2.5px solid var(--att-blue); box-shadow: 0 4px 14px rgba(0, 87, 184, 0.25); }
+.pt-name { display: block; font-size: 12px; font-weight: 800; color: var(--att-blue); }
+.pt-price { display: block; font-size: 16px; font-weight: 900; margin: 3px 0; }
+.pt-sub { display: block; font-size: 10.5px; color: var(--text-muted); }
+
+/* ---------- Trade-in ---------- */
+.tradein-bar { background: var(--sky-50); border: 1.5px solid var(--sky-200); border-radius: 14px; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.tradein-bar > .check-label span { font-size: 13px; }
+.tradein-count { display: flex; align-items: center; gap: 10px; }
+.tradein-count label, .lbl-muted { font-size: 11px; font-weight: 800; text-transform: uppercase; }
+.tradein-count label { color: var(--text-secondary); }
+.lbl-muted { color: var(--text-muted); }
+.tradein-count select { padding: 6px 12px; border-radius: 10px; border: 2px solid var(--att-blue); background: #fff; font-weight: 800; font-size: var(--fs-input); }
+#wrap-trade-inner { margin-top: 14px; }
+.trade-inner-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 10px; }
+#trade-devices-container { display: flex; flex-direction: column; gap: 12px; }
+.trade-card { background: #fff; border: 1.5px solid var(--sky-200); border-radius: 12px; padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
+.trade-card-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.trade-card-title { font-size: 11.5px; font-weight: 800; color: var(--att-blue); }
+.trade-badge { background: var(--blue-50); border: 1px solid var(--line); color: var(--att-blue); padding: 3px 10px; border-radius: 12px; font-size: 10px; font-weight: 800; }
+.trade-badge.is-damaged { color: var(--red); }
+.trade-damage { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
+
+/* ---------- Baseline / leak audit ---------- */
+.leak-audit-tray { margin-top: 14px; background: var(--slate-50); border: 1.5px solid var(--slate-300); border-radius: 14px; padding: 12px 14px; }
+.leak-head { font-size: 11px; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 8px; display: flex; justify-content: space-between; gap: 8px; }
+.leak-head small { color: var(--text-muted); font-size: 10px; }
+.audit-item { display: flex; align-items: center; justify-content: space-between; background: #fff; border: 1.5px solid #E2E8F0; border-radius: 10px; padding: 8px 10px; cursor: pointer; }
+.audit-left { display: flex; align-items: center; gap: 6px; }
+.audit-left input { width: 15px; height: 15px; accent-color: var(--red); }
+.audit-name { font-size: 11px; font-weight: 700; }
+.audit-amt { font-size: 10.5px; font-weight: 800; color: var(--red); }
+.audit-amt.amber { color: #D97706; }
+
+/* ---------- Wireless config ---------- */
+.needs-bar { margin-bottom: 12px; background: var(--slate-50); border: 1.5px solid var(--slate-300); border-radius: 14px; padding: 12px 16px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+#hotspot-lines-wrap { display: flex; align-items: center; gap: 8px; }
+.hs-lbl { font-size: 11px; color: var(--text-secondary); text-transform: uppercase; font-weight: 700; }
+#hotspot-lines-wrap select { padding: 4px 8px; border-radius: 8px; background: #fff; border: 1.5px solid var(--emerald); font-weight: 800; font-size: var(--fs-input); }
+
+.banner { margin-bottom: 12px; padding: 12px 16px; border-radius: 12px; font-size: 11.5px; line-height: 1.45; }
+.banner-ok { background: #ECFDF5; border: 1.5px solid #10B981; color: #065F46; }
+.banner-warn { background: #FFFBEB; border: 1.5px solid var(--amber); color: #92400E; }
+
+.recommendations-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; margin-top: 12px; }
+.rec-card {
+  display: flex; flex-direction: column; justify-content: space-between; width: 100%; text-align: left;
+  border-radius: 16px; padding: 16px;
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.rec-card-val  { background: linear-gradient(180deg, #fff 0%, #F0FDF4 100%); border: 2px solid #86EFAC; }
+.rec-card-ext  { background: linear-gradient(180deg, #fff 0%, var(--sky-50) 100%); border: 2px solid var(--sky-300); }
+.rec-card-prem { background: linear-gradient(180deg, #fff 0%, var(--blue-50) 100%); border: 2px solid var(--line-2); }
+.rec-card-val.selected-plan  { border: 2.5px solid #059669; box-shadow: 0 6px 20px rgba(5, 150, 105, 0.25); }
+.rec-card-ext.selected-plan  { border: 2.5px solid #0284C7; box-shadow: 0 6px 20px rgba(2, 132, 199, 0.25); }
+.rec-card-prem.selected-plan { border: 2.5px solid #0057B8; box-shadow: 0 6px 20px rgba(0, 87, 184, 0.3); }
+.rc-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
+.rc-title { font-size: 14px; font-weight: 800; }
+.rec-card-ult { background: linear-gradient(180deg, #fff 0%, #EEF2FF 100%); border: 2px solid #A5B4FC; }
+.rec-card-ult.selected-plan { border: 2.5px solid #4338CA; box-shadow: 0 6px 20px rgba(67, 56, 202, 0.28); }
+#plan-cards-container.cols-4 { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+/* Segment-specific controls */
+body:not(.seg-business) .biz-only { display: none; }
+body.seg-business .cons-only { display: none !important; }
+.rc-price { display: block; font-size: 22px; font-weight: 900; color: var(--emerald); }
+.rc-save { display: block; font-size: 11.5px; font-weight: 800; color: var(--emerald); margin-bottom: 8px; }
+.rc-desc { display: block; font-size: 11px; color: var(--text-secondary); line-height: 1.4; }
+.plan-badge-pill { font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 6px; display: inline-flex; align-items: center; gap: 4px; text-transform: uppercase; background: #fff; border: 1px solid var(--slate-300); }
+
+/* ---------- Reinvestment basket ---------- */
+.basket-sep { display: flex; align-items: center; margin: 20px 0 14px; gap: 12px; }
+.basket-sep::before, .basket-sep::after { content: ""; flex: 1; height: 1.5px; }
+.basket-sep::before { background: linear-gradient(90deg, transparent, var(--slate-300)); }
+.basket-sep::after  { background: linear-gradient(90deg, var(--slate-300), transparent); }
+.basket-sep span { font-size: 11.5px; font-weight: 900; color: #713F12; text-transform: uppercase; letter-spacing: 0.8px; background: #FEF9C3; border: 1px solid #FDE047; padding: 4px 14px; border-radius: 16px; text-align: center; }
+
+.reinvest-box { background: #fff; border: 2.5px solid #CA8A04; border-radius: 16px; padding: 16px; box-shadow: 0 6px 20px rgba(250, 204, 21, 0.25); }
+.reinvest-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+.reinvest-title { font-size: 13px; font-weight: 900; color: #713F12; text-transform: uppercase; }
+.reinvest-badge { background: #FEF3C7; border: 1.5px solid #A16207; color: #713F12; padding: 3px 10px; border-radius: 12px; font-size: 11.5px; font-weight: 900; }
+.reinvest-sub { font-size: 11.5px; color: #854D0E; font-weight: 700; margin-top: 4px; }
+#new-line-opportunities-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; margin-top: 12px; }
+.reinvest-pivot { margin-top: 14px; padding-top: 10px; border-top: 1.5px dashed var(--slate-300); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+.reinvest-pivot span { font-size: 11px; color: #475569; font-weight: 800; }
+
+.opp { border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between; gap: 6px; }
+.opp-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.opp-title { font-size: 12px; font-weight: 900; }
+.opp-price { font-size: 11px; font-weight: 900; color: var(--price, inherit); }
+.opp-desc { font-size: 10px; margin-top: 3px; line-height: 1.3; }
+.opp-btn { background: #fff; border-color: var(--c); color: var(--ct, var(--c)); width: 100%; font-size: 11px; font-weight: 900; padding: 6px; }
+
+.badge-platinum { --c: #0284C7; --price: #0284C7; grid-column: 1 / -1; background: linear-gradient(135deg, #F8FAFC 0%, #E0F2FE 40%, #BAE6FD 100%); border: 2px solid #0284C7; color: #0369A1; box-shadow: 0 4px 16px rgba(2, 132, 199, 0.35); }
+.badge-platinum .opp-title { font-size: 12.5px; }
+.badge-platinum .opp-price { font-size: 11.5px; }
+.badge-platinum .opp-desc { font-size: 10.5px; line-height: 1.35; color: #0C4A6E; }
+.badge-platinum .opp-btn { font-size: 11.5px; padding: 7px; }
+.badge-sparkling-gold { --c: #CA8A04; --ct: #713F12; background: linear-gradient(135deg, #FEF08A 0%, #FDE047 50%, #FACC15 100%); border: 2px solid #CA8A04; color: #713F12; box-shadow: 0 4px 14px rgba(250, 204, 21, 0.45); }
+.badge-silver { --c: #64748B; --ct: #1E293B; --price: var(--emerald); background: linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 50%, #CBD5E1 100%); border: 2px solid #64748B; color: #1E293B; box-shadow: 0 4px 12px rgba(100, 116, 139, 0.25); }
+.badge-bronze { --c: #C2410C; --ct: #7C2D12; --price: #9A3412; background: linear-gradient(135deg, #FFEDD5 0%, #FED7AA 50%, #FDBA74 100%); border: 2px solid #C2410C; color: #7C2D12; box-shadow: 0 4px 12px rgba(194, 65, 12, 0.25); }
+.badge-phone { --c: #2563EB; --ct: #1E40AF; --price: #1E40AF; background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 50%, #BFDBFE 100%); border: 2px solid #2563EB; color: #1E40AF; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25); }
+.badge-aip { --c: #9333EA; --ct: #581C87; --price: #6B21A8; background: linear-gradient(135deg, #FAF5FF 0%, #F3E8FF 50%, #E9D5FF 100%); border: 2px solid #9333EA; color: #581C87; box-shadow: 0 4px 12px rgba(147, 51, 234, 0.25); }
+
+/* ---------- Steppers ---------- */
+.steppers-wrap { margin-top: 16px; }
+.counter-row { background: var(--sky-50); border: 1.5px solid var(--sky-200); border-radius: 14px; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 10px; }
+.counter-title { font-size: 14px; font-weight: 800; }
+.counter-desc { font-size: 11px; color: var(--text-muted); }
+.counter-controls { display: flex; align-items: center; gap: 14px; }
+.btn-circle { width: 38px; height: 38px; border-radius: 50%; background: #fff; border: 2px solid var(--line-2); font-size: 20px; font-weight: 800; line-height: 1; display: flex; align-items: center; justify-content: center; padding: 0; }
+.counter-val { display: block; font-size: 20px; font-weight: 900; color: var(--emerald); min-width: 24px; text-align: center; }
+
+/* ---------- Hardware ledger ---------- */
+.hw-ledger { display: flex; flex-direction: column; gap: 10px; background: var(--sky-50); border: 1.5px solid var(--sky-200); border-radius: 12px; padding: 12px; }
+.hw-title { font-size: 11.5px; font-weight: 800; color: var(--att-blue); text-transform: uppercase; }
+.hw-items { display: flex; flex-direction: column; gap: 8px; }
+.hw-item { display: flex; justify-content: space-between; align-items: center; gap: 8px; background: #fff; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--sky-200); }
+.hw-remove { padding: 4px 8px; font-size: 10px; color: var(--red); }
+
+/* ---------- Summary ---------- */
+.summary-card { border: 2.5px solid var(--att-blue); box-shadow: 0 12px 36px rgba(0, 87, 184, 0.12); }
+.summary-grid { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.sum-left { display: flex; flex-direction: column; gap: 4px; }
+.sum-label { font-size: 12px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
+.sum-total { font-size: 44px; font-weight: 900; letter-spacing: -1.5px; }
+.sum-savings { padding: 12px 24px; border-radius: 14px; font-size: 16px; font-weight: 900; text-align: right; }
+.save-good { background: #ECFDF5; color: #065F46; border: 2px solid #10B981; }
+.save-low  { background: #FEF3C7; color: #B45309; border: 2px solid var(--amber); }
+.save-bad  { background: #FEF2F2; color: var(--red); border: 1.5px solid #FECACA; }
+
+.cycle-box { background: var(--sky-50); border: 2px solid var(--sky-200); border-radius: 14px; padding: 16px; margin-top: 16px; }
+.cycle-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
+.cycle-title { font-size: 12px; font-weight: 800; color: var(--att-blue); text-transform: uppercase; }
+.cycle-badge { background: #fff; border: 1.5px solid var(--line-2); color: var(--att-blue); padding: 4px 12px; border-radius: 14px; font-size: 11px; font-weight: 800; }
+.first-bill { background: #fff; border: 1.5px solid var(--line-2); border-radius: 12px; padding: 14px; margin-top: 12px; }
+.fb-row { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 10px; }
+.fb-right { text-align: right; }
+.fb-label { font-size: 10.5px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
+.fb-label.green { color: var(--emerald); }
+.fb-total { font-size: 26px; font-weight: 900; }
+.fb-ongoing { font-size: 18px; font-weight: 900; color: var(--emerald); }
+.fb-notes { font-size: 11px; color: var(--text-secondary); line-height: 1.5; margin-top: 8px; border-top: 1px dashed #E2E8F0; padding-top: 8px; }
+
+.due-box { background: #FFFBEB; border: 2px dashed var(--amber); border-radius: 14px; padding: 14px 18px; margin-top: 16px; }
+.due-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 6px; }
+.due-title { font-size: 12px; font-weight: 800; color: #92400E; text-transform: uppercase; }
+.due-amt { font-size: 20px; font-weight: 900; margin-bottom: 3px; }
+.due-note { font-size: 11px; color: #B45309; line-height: 1.4; }
+.sms-box { width: 100%; height: 100px; background: var(--sky-50); border: 2px solid var(--sky-200); border-radius: 12px; padding: 12px; font-size: var(--fs-input); resize: none; }
+.sms-wrap { margin-top: 16px; }
+.sms-wrap label { font-size: 12px; }
+
+/* ---------- Toast ---------- */
+#toast {
+  position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom));
+  transform: translate(-50%, 20px); max-width: 90vw; z-index: 50; pointer-events: none;
+  background: #0F172A; color: #fff; padding: 10px 16px; border-radius: 12px; font-size: 13px; font-weight: 700;
+  opacity: 0; transition: opacity 0.2s, transform 0.2s;
+}
+#toast.show { opacity: 1; transform: translate(-50%, 0); }
+.sr-copy { position: fixed; top: 0; left: 0; opacity: 0; }
+
+/* ---------- Live savings tracker ----------
+   The new bill drops inside the gauge while the savings stack up above it.
+   Wide screens: a sticky panel beside the quote. Small screens: a thin bar pinned to the bottom edge. */
+.app-layout { display: block; }
+#tracker {
+  --base: 0%; --save: 0%; --over: 0%;
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+  display: grid; grid-template-columns: 1.35fr 1fr 1fr; grid-template-areas: "gauge gauge gauge" "hero new due";
+  gap: 8px 14px; align-items: end;
+  padding: 10px max(14px, env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
+  background: #fff; border-top: 2px solid #60A5FA; box-shadow: 0 -8px 24px rgba(0, 87, 184, 0.14);
+  font-variant-numeric: tabular-nums;
+}
+.trk-title, .trk-old, .trk-first { display: none; }
+.trk-gauge { grid-area: gauge; display: flex; height: 8px; border-radius: 6px; overflow: hidden; background: var(--sky-200); }
+.trk-seg { height: 100%; flex: none; transition: width 0.7s var(--ease), height 0.7s var(--ease); }
+.trk-base { width: var(--base); background: var(--att-blue); }
+.trk-save { width: var(--save); background: var(--emerald); }
+.trk-over { width: var(--over); background: repeating-linear-gradient(135deg, #D97706 0 5px, #F59E0B 5px 10px); }
+.trk-hero { grid-area: hero; }
+.trk-new { grid-area: new; }
+.trk-due { grid-area: due; }
+.trk-k { display: block; font-size: 11px; font-weight: 700; color: var(--text-muted); }
+.trk-v { display: block; font-size: 15px; font-weight: 800; }
+.trk-hero-num { display: inline-block; font-size: 21px; font-weight: 900; line-height: 1.1; color: var(--emerald); transform-origin: left center; }
+.trk-hero-unit { margin-left: 2px; font-size: 11px; font-weight: 700; color: var(--text-muted); }
+.trk-year { display: block; font-size: 11px; font-weight: 700; color: var(--text-secondary); }
+.trk-hero .trk-k::before { content: ''; display: inline-block; width: 9px; height: 9px; margin-right: 6px; border-radius: 3px; background: var(--emerald); }
+.trk-hero.is-over .trk-hero-num { color: #B45309; }
+.trk-hero.is-over .trk-k::before { background: repeating-linear-gradient(135deg, #D97706 0 3px, #F59E0B 3px 6px); }
+.trk-hero.is-plain .trk-hero-num { color: var(--att-blue); }
+.trk-hero.is-plain .trk-k::before { background: var(--att-blue); }
+.trk-hero-num.pulse { animation: trk-pop 0.5s var(--ease); }
+@keyframes trk-pop { 0% { transform: scale(1); } 40% { transform: scale(1.1); } 100% { transform: scale(1); } }
+
+@media (max-width: 1179px) {
+  body { padding-bottom: calc(100px + env(safe-area-inset-bottom)); }
+  #toast { bottom: calc(112px + env(safe-area-inset-bottom)); }
+}
+@media (min-width: 1180px) {
+  .app-layout { display: flex; align-items: flex-start; gap: 20px; max-width: 1232px; margin: 0 auto; }
+  .app-layout .app-container { flex: 1 1 auto; min-width: 0; max-width: 980px; margin: 0; }
+  #tracker {
+    position: sticky; top: 16px; left: auto; right: auto; bottom: auto; z-index: 2; flex: 0 0 248px;
+    grid-template-columns: 44px 1fr; grid-template-rows: auto auto auto auto 1fr auto auto;
+    grid-template-areas: "title title" "gauge hero" "gauge old" "gauge new" "gauge ." "due due" "first first";
+    gap: 10px 14px; align-items: start; padding: 16px;
+    background: rgba(255, 255, 255, 0.98); border: 2px solid #60A5FA; border-radius: 20px; box-shadow: 0 20px 50px rgba(0, 87, 184, 0.16);
   }
-  row('ar-sub', 'Due today ' + usd(c.isBiz ? 0 : c.due) + '. First bill ' + usd(c.firstBill) + '.');
-  const suggest = hasBill && !$('check-hotspot').checked && c.recIdx !== c.selIdx && c.planCosts[c.recIdx] <= c.baseline;
-  if (suggest) row('ar-sug', 'Suggested: ' + c.planTitles[c.recIdx] + ' at ' + usd(c.planCosts[c.recIdx]) + '/mo, which saves ' + usd(c.baseline - c.planCosts[c.recIdx]) + '/mo.');
-  agSay('bot', '', null, box);
-  const chips = [];
-  if (suggest) chips.push({ t: 'Switch to suggested plan', primary: true, cmd: () => { agSay('me', 'Switch to suggested plan'); selectPlan(lastCalc.recIdx); agFinish(); } });
-  chips.push({ t: 'Show Customer View', cmd: agCustomerView }, { t: 'Copy quote', cmd: agCopy }, { t: 'Change an answer', cmd: agChange });
-  AG.finishChips = chips;
-  agDrawChips(chips);
+  .trk-title { display: block; grid-area: title; font-size: 15px; font-weight: 800; }
+  .trk-old { display: block; grid-area: old; }
+  .trk-first { grid-area: first; }
+  .trk-gauge { flex-direction: column-reverse; align-self: start; width: 44px; height: 216px; border-radius: 14px; }
+  .trk-seg { width: 100%; }
+  .trk-base { height: var(--base); }
+  .trk-save { height: var(--save); }
+  .trk-over { height: var(--over); }
+  .trk-hero-num { font-size: 24px; }
+  .trk-due, .trk-first { display: flex; justify-content: space-between; align-items: baseline; }
+  body.presentation-mode :is(.trk-due, .trk-first) { display: none; }
+  .trk-due, .trk-first { padding-top: 10px; border-top: 1px dashed var(--slate-300); }
+  .trk-due .trk-k, .trk-first .trk-k { font-size: 12px; }
 }
 
-function agInit() {
-  const form = $('agent-form'), input = $('agent-input');
-  form.addEventListener('submit', (e) => { e.preventDefault(); const v = input.value; input.value = ''; agText(v); });
-  $('agent-chips').addEventListener('click', (e) => { const b = e.target.closest('button[data-i]'); if (b) agChipClick(parseInt(b.dataset.i, 10)); });
-  $('agent-restart').addEventListener('click', agRestart);
-  agSay('bot', 'Describe the account in your own words, like "4 lines, $240 on debit, wants an iPhone 17". Or I can ask the questions one at a time. The quote re-rates after every answer.');
-  agDrawChips([{ t: 'Ask me the questions', primary: true, cmd: () => { agSay('me', 'Ask me the questions'); agStart(); } }]);
+/* ---------- Suggested plan, trimmed offers, closing row ---------- */
+.rec-card { position: relative; }
+.rc-flag { position: absolute; top: -10px; left: 14px; padding: 1px 10px; border-radius: 999px; background: #FEF3C7; border: 1.5px solid var(--amber); color: #92400E; font-size: 11px; font-weight: 800; }
+.opps-toggle { align-self: center; justify-self: center; }
+.opps-toggle-wide { grid-column: 1 / -1; }
+.reinvest-note { margin-top: 10px; font-size: 12px; font-weight: 700; color: #854D0E; }
+.wrapup { display: flex; flex-wrap: wrap; gap: 8px; }
+.wrapup .btn-sms { flex: 1 1 160px; width: auto; }
+.btn-sms-alt { background: var(--blue-50); border-color: var(--line-2); color: var(--att-blue); }
+
+/* ---------- Customer summary (Customer View only) ---------- */
+#cust-summary { border: 2.5px solid var(--att-blue); box-shadow: 0 12px 36px rgba(0, 87, 184, 0.12); font-variant-numeric: tabular-nums; }
+.cs-hero { display: flex; align-items: center; flex-wrap: wrap; gap: 14px 24px; }
+.cs-col { display: flex; flex-direction: column; gap: 2px; }
+.cs-label { font-size: 12px; font-weight: 700; color: var(--text-muted); }
+.cs-old { font-size: 28px; font-weight: 800; color: var(--text-muted); text-decoration: line-through; text-decoration-thickness: 2px; }
+.cs-new { font-size: 44px; font-weight: 900; letter-spacing: -1.5px; line-height: 1; }
+.cs-unit { margin-left: 3px; font-size: 14px; font-weight: 800; color: var(--text-muted); }
+.cs-arrow { font-size: 26px; font-weight: 900; color: var(--att-blue); }
+.cs-save { margin-left: auto; text-align: center; }
+@media (max-width: 560px) { .cs-arrow { display: none; } .cs-save { margin-left: 0; width: 100%; } }
+.cs-note { margin-top: 10px; font-size: 12px; font-weight: 700; color: var(--text-secondary); }
+.cs-sub { margin: 20px 0 8px; font-size: 14px; font-weight: 800; }
+.cs-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.cs-item { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 12px; background: var(--sky-50); border: 1.5px solid var(--sky-200); }
+.cs-item-main b { display: block; font-size: 14px; }
+.cs-item-main small { display: block; font-size: 11.5px; color: var(--text-muted); }
+.cs-item-price { font-weight: 900; color: var(--att-blue); white-space: nowrap; }
+.cs-bills { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 16px; }
+.cs-bill { display: flex; flex-direction: column; gap: 2px; padding: 12px 16px; border-radius: 14px; background: #fff; border: 2px solid var(--line); }
+.cs-bill-num { font-size: 26px; font-weight: 900; }
+.cs-bill-sub { font-size: 12px; color: var(--text-secondary); }
+.cs-close { margin: 16px 0 0; font-size: 13px; font-weight: 700; color: var(--att-blue); text-align: center; }
+
+/* ---------- Quote assistant ---------- */
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.agent-log { display: flex; flex-direction: column; gap: 8px; max-height: 300px; overflow-y: auto; padding: 2px; overscroll-behavior: contain; }
+.agent-msg { max-width: 88%; padding: 9px 13px; border-radius: 14px; font-size: 14px; line-height: 1.45; overflow-wrap: anywhere; }
+.agent-msg p { margin: 0; }
+.agent-msg ul { margin: 6px 0 0; padding-left: 18px; }
+.agent-msg li { margin: 2px 0; }
+.agent-msg.bot { align-self: flex-start; background: var(--sky-50); border: 1.5px solid var(--sky-200); border-bottom-left-radius: 4px; }
+.agent-msg.me { align-self: flex-end; background: var(--att-blue); color: #fff; font-weight: 600; border-bottom-right-radius: 4px; }
+.agent-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.agent-chip { padding: 9px 14px; border-radius: 999px; border: 1.5px solid var(--line-2); background: #fff; color: var(--att-blue); font: inherit; font-size: 13.5px; font-weight: 700; cursor: pointer; transition: background 0.15s, border-color 0.15s; }
+.agent-chip:hover { background: var(--blue-50); }
+.agent-chip.on { background: var(--blue-50); border-color: var(--att-blue); box-shadow: inset 0 0 0 1px var(--att-blue); }
+.agent-chip.on::before { content: '✓ '; }
+.agent-chip.primary { background: var(--att-blue); border-color: var(--att-blue); color: #fff; }
+.agent-chip.primary:hover { background: #004A9E; }
+.agent-select { max-width: 100%; padding: 9px 12px; border: 2px solid var(--line-2); border-radius: 10px; background: #fff; font: inherit; font-size: var(--fs-input); font-weight: 600; }
+.agent-form { display: flex; gap: 8px; margin-top: 12px; }
+.agent-form .addr-input { flex: 1 1 auto; width: auto; min-width: 0; }
+.agent-send { background: var(--att-blue); border-color: var(--att-blue); color: #fff; }
+.agent-result { display: flex; flex-direction: column; gap: 2px; font-variant-numeric: tabular-nums; }
+.ar-plan { font-size: 12px; font-weight: 700; color: var(--text-muted); }
+.ar-nums { font-size: 22px; font-weight: 900; line-height: 1.25; }
+.ar-save { font-weight: 800; color: #065F46; }
+.ar-save.over { color: #B45309; }
+.ar-sub { font-size: 12.5px; color: var(--text-secondary); }
+.ar-sug { margin-top: 6px; font-size: 13px; font-weight: 700; color: var(--att-blue); }
+@keyframes agent-flash { 0% { box-shadow: 0 0 0 0 rgba(0, 87, 184, 0.55); } 100% { box-shadow: 0 0 0 12px rgba(0, 87, 184, 0); } }
+.agent-flash { animation: agent-flash 1.1s ease-out; border-radius: 10px; }
+
+/* ---------- Customer view isolation ---------- */
+.cust-only { display: none; }
+body.presentation-mode .cust-only { display: revert; }
+body.presentation-mode :is(.rep-only, #sec-tradeins, #sec-scope, #sec-baseline, #sec-broadband, #sec-summary, .pool-pill, .needs-bar, .hw-remove, .no-opps) { display: none !important; }
+
+/* ---------- Motion / print ---------- */
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+@media print {
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { background: #fff; padding: 0; }
+  #ambient-canvas, .header-actions, #toast, #tracker, #sec-agent { display: none !important; }
+  .app-container { box-shadow: none; border-radius: 0; }
+  .section-card { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="ambient-canvas" aria-hidden="true"></canvas>
+<div id="toast" role="status" aria-live="polite"></div>
+<noscript><p style="padding:24px;font-family:sans-serif">This tool needs JavaScript enabled.</p></noscript>
+
+<div class="app-layout">
+<div class="app-container">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div>
+      <h1>
+        <span class="rep-only" id="hdr-title-rep">AT&amp;T Executive Solutions Studio</span>
+        <span class="cust-only">AT&amp;T Customized Plan Solutions</span>
+      </h1>
+      <p>
+        <span class="rep-only">DOWNWARD WATERFALL ARBITRAGE • NEW LINE CONVERSIONS • OPUS AUDIT</span>
+        <span class="cust-only">TAILORED MULTI-LINE SAVINGS &amp; BROADBAND BREAKDOWN</span>
+      </p>
+    </div>
+    <div class="header-actions">
+      <div class="segment-switch-group rep-only">
+        <button type="button" class="seg-btn active" data-seg="consumer" data-action="set-segment" aria-pressed="true">👤 Consumer</button>
+        <button type="button" class="seg-btn" data-seg="business" data-action="set-segment" aria-pressed="false">🏢 Business</button>
+      </div>
+      <button type="button" class="btn rep-only" data-action="share">🔗 Share</button>
+      <button type="button" class="btn rep-only" data-action="reset">🔄 Reset</button>
+      <button type="button" class="btn btn-pres" id="pres-btn" data-action="toggle-pres" aria-pressed="false">👁️ Customer View: OFF</button>
+      <button type="button" class="btn" data-action="print">🖨️ Print</button>
+    </div>
+  </header>
+
+  <!-- CUSTOMER SUMMARY (Customer View only) -->
+  <section class="section-card cust-only" id="cust-summary" aria-label="Your quote summary">
+    <div class="sec-header"><h2 class="sec-title">Your savings summary</h2></div>
+    <div class="cs-hero">
+      <div class="cs-col"><span class="cs-label">Today you pay</span><span class="cs-old" id="cs-old">–</span></div>
+      <span class="cs-arrow" aria-hidden="true">➔</span>
+      <div class="cs-col"><span class="cs-label">With this plan</span><span><span class="cs-new" id="cs-new">$0.00</span><span class="cs-unit">/mo</span></span></div>
+      <div class="cs-save sum-savings save-low" id="cs-save-box" hidden></div>
+    </div>
+    <div class="cs-note" id="cs-note" hidden></div>
+    <h3 class="cs-sub">What you're getting</h3>
+    <ul class="cs-list" id="cs-lines"></ul>
+    <div class="cs-bills">
+      <div class="cs-bill"><span class="cs-label">Due today</span><span class="cs-bill-num" id="cs-due">$0.00</span><span class="cs-bill-sub" id="cs-due-sub"></span></div>
+      <div class="cs-bill"><span class="cs-label">Your first bill</span><span class="cs-bill-num" id="cs-first">$0.00</span><span class="cs-bill-sub" id="cs-first-sub"></span></div>
+    </div>
+    <p class="cs-close">Ready when you are. Your consultant will finish everything at the register.</p>
+  </section>
+
+  <!-- BROADBAND PRE-CHECK -->
+  <div class="address-precheck-bar rep-only">
+    <div class="addr-row-top">
+      <label class="addr-title" for="addr-field">📍 Broadband Pre-Check &amp; Map Jump</label>
+      <div class="addr-inputs">
+        <input type="text" id="addr-field" class="addr-input" placeholder="Enter customer street address, city, state..." autocomplete="off">
+      </div>
+      <div class="addr-actions">
+        <button type="button" class="btn btn-blue" data-action="copy-address">📋 Copy Address</button>
+        <a href="https://www.att.com/internet/availability/" target="_blank" rel="noopener" class="btn btn-green">🌐 Check AT&amp;T Fiber / Air</a>
+        <a href="https://broadbandmap.fcc.gov/home" target="_blank" rel="noopener" class="btn btn-amber">🗺️ FCC Map Jump</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUOTE ASSISTANT -->
+  <section class="section-card rep-only" id="sec-agent" aria-labelledby="agent-title">
+    <div class="sec-header">
+      <h2 class="sec-title" id="agent-title">💬 Quote assistant</h2>
+      <button type="button" class="btn btn-link-sm" id="agent-restart">Restart questions</button>
+    </div>
+    <div class="agent-log" id="agent-log" role="log" aria-live="polite" aria-label="Quote assistant conversation"></div>
+    <div class="agent-chips" id="agent-chips"></div>
+    <form class="agent-form" id="agent-form" autocomplete="off">
+      <label class="sr-only" for="agent-input">Describe the account or answer the question</label>
+      <input type="text" id="agent-input" class="addr-input" placeholder="Type an answer">
+      <button type="submit" class="btn agent-send">Send</button>
+    </form>
+  </section>
+
+  <!-- CONSULTATION SCOPE -->
+  <section class="section-card" id="sec-scope">
+    <div class="sec-header">
+      <h2 class="sec-title">🎯 Consultation Scope</h2>
+      <span class="hint">Select areas of customer opportunity</span>
+    </div>
+    <div class="grid-4">
+      <button type="button" class="pill-option" id="scope-upg" data-action="toggle-scope" aria-pressed="false"><span class="pill-title">📱 Upgrade</span></button>
+      <button type="button" class="pill-option" id="scope-add" data-action="toggle-scope" aria-pressed="false"><span class="pill-title">➕ Add a Line</span></button>
+      <button type="button" class="pill-option" id="scope-bb" data-action="toggle-scope" aria-pressed="false"><span class="pill-title">🌐 AT&amp;T Fiber / Air</span></button>
+      <button type="button" class="pill-option" id="scope-tv" data-action="toggle-scope" aria-pressed="false"><span class="pill-title">📺 DIRECTV Stream</span></button>
+    </div>
+  </section>
+
+  <!-- CURRENT ACCOUNT BASELINE -->
+  <section class="section-card" id="sec-baseline">
+    <div class="sec-header">
+      <h2 class="sec-title">
+        <span class="rep-only">📋 Current Account Baseline &amp; Leak Audit</span>
+        <span class="cust-only">📋 Current Account Baseline</span>
+      </h2>
+      <div class="pool-pill pool-pill-green rep-only" id="baseline-harvest-badge" hidden>Audit Harvest: +$0.00/mo</div>
+    </div>
+
+    <div class="baseline-grid-2x2">
+      <div class="control-group">
+        <label class="lbl-accent" for="curr-total">Current Plan Total ($)</label>
+        <div class="money-field">
+          <span class="money-sym" aria-hidden="true">$</span>
+          <input type="number" id="curr-total" class="input-money" placeholder="0.00" step="0.01" min="0" inputmode="decimal" data-input="calc">
+        </div>
+      </div>
+      <div class="control-group">
+        <label for="curr-lines">Voice Lines</label>
+        <select id="curr-lines" class="strong" data-change="set-lines">
+          <option value="1" selected>1 Line Account</option>
+          <option value="2">2 Lines Account</option>
+          <option value="3">3 Lines Account</option>
+          <option value="4">4 Lines Account</option>
+          <option value="5">5 Lines Account</option>
+          <option value="6">6 Lines Account</option>
+          <option value="7">7 Lines Account</option>
+          <option value="8">8 Lines Account</option>
+          <option value="9">9 Lines Account</option>
+          <option value="10">10 Lines Account</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label for="curr-autopay">AutoPay Method</label>
+        <select id="curr-autopay" data-change="calc">
+          <option value="ap10" selected>Checking / Debit ($10/L off)</option>
+          <option value="ap5">Credit Card ($5/L off)</option>
+          <option value="ap0">No AutoPay ($0 off)</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label for="curr-discount">Discount Profile</label>
+        <select id="curr-discount" data-change="calc"></select>
+      </div>
+    </div>
+
+    <!-- LEAK AUDIT (REP ONLY) -->
+    <div class="leak-audit-tray rep-only">
+      <div class="leak-head">
+        <span>🔍 Account Leak Audit (Harvest Inactive Features)</span>
+        <small>Drop &amp; add to savings</small>
+      </div>
+      <div class="grid-3 grid-tight">
+        <label class="audit-item">
+          <span class="audit-left"><input type="checkbox" id="audit-watch-unused" data-change="calc"><span class="audit-name">⌚ Drop Watch</span></span>
+          <span class="audit-amt">+$10.99</span>
+        </label>
+        <label class="audit-item">
+          <span class="audit-left"><input type="checkbox" id="audit-tab-unused" data-change="calc"><span class="audit-name">📱 Drop Tablet</span></span>
+          <span class="audit-amt">+$20.99</span>
+        </label>
+        <label class="audit-item">
+          <span class="audit-left"><input type="checkbox" id="audit-nua-drop" data-change="calc"><span class="audit-name">🔄 Drop Next Up</span></span>
+          <span class="audit-amt amber">+$10.00</span>
+        </label>
+      </div>
+    </div>
+
+    <button type="button" class="btn-run-numbers rep-only" data-action="run-numbers">
+      <span>⚡ Run The Numbers &amp; Optimize Solutions</span>
+      <span aria-hidden="true">➔</span>
+    </button>
+  </section>
+
+  <!-- WIRELESS CONFIG -->
+  <section class="section-card" id="sec-wireless-config">
+    <div class="sec-header">
+      <h2 class="sec-title">🎯 Recommended Wireless Configuration &amp; Starting Pot</h2>
+      <div class="pool-pill" id="wireless-pool">Base Plan: $50.00/mo</div>
+    </div>
+
+    <div class="needs-bar">
+      <label class="check-label">
+        <input type="checkbox" id="check-hotspot" data-change="hotspot-toggle">
+        <span>📶 Needs Dedicated Hotspot Data</span>
+      </label>
+      <div id="hotspot-lines-wrap" hidden>
+        <label class="hs-lbl" for="hotspot-lines-count">Lines:</label>
+        <select id="hotspot-lines-count" data-change="hotspot-routing">
+          <option value="0">0 Lines</option>
+          <option value="1" selected>1 Line (Lead)</option>
+          <option value="2">2 Lines</option>
+          <option value="all">All Lines</option>
+        </select>
+      </div>
+      <label class="check-label rep-only cons-only">
+        <input type="checkbox" id="check-hbo" data-change="calc">
+        <span>🎬 Account Actively Uses Free Legacy HBO / Max</span>
+      </label>
+      <label class="check-label rep-only biz-only">
+        <input type="checkbox" id="check-commit" data-change="calc">
+        <span>📝 Phone Lines on 2/3-Yr Service Commitment (+$25/line)</span>
+      </label>
+    </div>
+
+    <div id="hbo-audit-banner" class="banner rep-only" role="status" hidden></div>
+
+    <div class="recommendations-grid" id="plan-cards-container"></div>
+
+    <div class="basket-sep" id="basket-sep"><span>🎁 Available Reinvestment Basket ($0 Net Increase)</span></div>
+
+    <div class="reinvest-box" id="reinvest-new-lines-box">
+      <div class="reinvest-head">
+        <span class="reinvest-title">✨ Zero-Net-Increase Opportunities</span>
+        <span class="reinvest-badge" id="reinvest-margin-badge">Available Margin: +$0.00/mo</span>
+      </div>
+      <div class="reinvest-sub">
+        <span class="rep-only">Pitch new additions that completely fit inside the customer's plan savings before adjusting the base plan:</span>
+        <span class="cust-only">Add connected accessories or lines using your unlocked monthly savings:</span>
+      </div>
+      <div class="reinvest-note rep-only" id="reinvest-note" hidden></div>
+      <div id="new-line-opportunities-list"></div>
+      <div class="reinvest-pivot rep-only">
+        <span>Customer declined new lines? Step the plan tier to lock in rate or capture commission:</span>
+        <button type="button" class="btn btn-link-sm" data-action="scroll-steppers">⚡ Adjust Plan Tiers <span class="cons-only">(Upsell Premium / Value)</span><span class="biz-only">(Upsell Premium / Ultimate)</span> ▾</button>
+      </div>
+    </div>
+
+    <!-- STEPPERS (REP ONLY): rendered by renderSteppers() for the active segment -->
+    <div class="steppers-wrap rep-only" id="steppers"></div>
+  </section>
+
+  <!-- BROADBAND (reveals when scoped) -->
+  <section class="section-card" id="sec-broadband" hidden>
+    <div class="sec-header">
+      <h2 class="sec-title">🌐 Broadband Drawdown</h2>
+      <div class="pool-pill" id="pool-badge-broadband">Drawdown: $0/mo</div>
+    </div>
+    <div class="grid-4" id="bb-tiles-container"></div>
+  </section>
+
+  <!-- PROTECTION & HARDWARE -->
+  <section class="section-card" id="sec-hardware-cart">
+    <div class="sec-header">
+      <h2 class="sec-title">🛡️ Comprehensive Protection &amp; Hardware Cart</h2>
+      <div class="pool-pill" id="pool-badge-devices">Drawdown: $0/mo</div>
+    </div>
+    <div class="grid-3 prot-grid">
+      <button type="button" class="prot-tile" id="tile-pa1" data-action="toggle-prot" data-prot="pa1" aria-pressed="false">
+        <span class="pt-name">📱 PA1 (Protect 1)</span>
+        <span class="pt-price">$17.00/mo</span>
+        <span class="pt-sub">Single Device Coverage</span>
+      </button>
+      <button type="button" class="prot-tile" id="tile-pa4" data-action="toggle-prot" data-prot="pa4" aria-pressed="false">
+        <span class="pt-name">📲 PA4 Multi-Device</span>
+        <span class="pt-price">$50.00/mo</span>
+        <span class="pt-sub">Up to 4 Devices Covered</span>
+      </button>
+      <button type="button" class="prot-tile" id="tile-htp" data-action="toggle-prot" data-prot="htp" aria-pressed="false">
+        <span class="pt-name">🏠 HomeTech (HTP)</span>
+        <span class="pt-price">$25.00/mo</span>
+        <span class="pt-sub">Whole-Home Electronics</span>
+      </button>
+    </div>
+    <div id="hardware-ledger-container" class="hw-ledger" hidden>
+      <div class="hw-title">Line Hardware Configuration</div>
+      <div id="active-hardware-items" class="hw-items"></div>
+    </div>
+  </section>
+
+  <!-- DEVICE TRADE-IN INTAKE -->
+  <section class="section-card" id="sec-tradeins">
+    <div class="sec-header">
+      <h2 class="sec-title">🏷️ Device Trade-In Intake (Oct 9th Grid)</h2>
+      <div class="pool-pill" id="trade-pool-badge">Total Trade Credits: $0.00/mo</div>
+    </div>
+
+    <div class="tradein-bar">
+      <label class="check-label blue">
+        <input type="checkbox" id="toggle-has-tradeins" class="check-lg" data-change="trade-master">
+        <span>Trading in Devices for Promotional Bill Credits?</span>
+      </label>
+      <div id="wrap-trade-count" class="tradein-count" hidden>
+        <label for="trade-lines-count">Lines Trading In:</label>
+        <select id="trade-lines-count" data-change="trade-count">
+          <option value="0" selected>0 Devices</option>
+          <option value="1">1 Device Trade-In</option>
+          <option value="2">2 Devices Trading In</option>
+          <option value="3">3 Devices Trading In</option>
+          <option value="4">4 Devices Trading In</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="wrap-trade-inner" hidden>
+      <div class="trade-inner-head">
+        <span class="lbl-muted">Configure trade-in details per line:</span>
+        <label class="check-label blue rep-only">
+          <input type="checkbox" id="check-ayac-promo" data-change="trade-ayac">
+          <span>🛡️ Active "Any Year, Any Condition" (AYAC) Promo Active</span>
+        </label>
+      </div>
+      <div id="trade-devices-container"></div>
+    </div>
+  </section>
+
+  <!-- EXECUTIVE SUMMARY -->
+  <section class="section-card summary-card" id="sec-summary">
+    <div class="sec-header">
+      <h2 class="sec-title">📊 Executive Summary &amp; Out-The-Door Quote</h2>
+    </div>
+    <div class="summary-grid">
+      <div class="sum-left">
+        <div class="sum-label">New Total Monthly Bill (w/ AutoPay)</div>
+        <div class="sum-total" id="sum-new-total">$0.00</div>
+      </div>
+      <div class="sum-savings save-low" id="sum-savings-box">Saves $0.00/mo vs Old Bill!</div>
+    </div>
+
+    <div class="cycle-box">
+      <div class="cycle-head">
+        <span class="cycle-title">📅 Bill Cycle Cut Date &amp; First Bill Expectation</span>
+        <span class="cycle-badge" id="cycle-days-badge">Calculating...</span>
+      </div>
+      <div class="grid-3">
+        <div class="control-group">
+          <label for="bill-cut-day">Bill Cycle Cut Day</label>
+          <select id="bill-cut-day" data-change="calc">
+            <option value="1">1st of month</option>
+            <option value="4">4th of month</option>
+            <option value="7">7th of month</option>
+            <option value="10">10th of month</option>
+            <option value="13">13th of month</option>
+            <option value="16" selected>16th of month</option>
+            <option value="19">19th of month</option>
+            <option value="22">22nd of month</option>
+            <option value="25">25th of month</option>
+            <option value="28">28th of month</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="fee-billing-target">Fee Billing Target</label>
+          <select id="fee-billing-target" data-change="calc">
+            <option value="bill" selected>Billed to Next Invoice ($35/line)</option>
+            <option value="pos">Collected Today at Register</option>
+            <option value="waived">Authorized Waived / Credited ($0)</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="trade-credit-delay">Trade Credit Status (Cycle 1)</label>
+          <select id="trade-credit-delay" data-change="calc">
+            <option value="delayed" selected>Credits Pending (Takes 1-3 Cycles)</option>
+            <option value="instant">Credits Applied Instantly (Cycle 1)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="first-bill">
+        <div class="fb-row">
+          <div>
+            <div class="fb-label">Estimated Very Next Bill Total</div>
+            <div class="fb-total" id="first-bill-total">$0.00</div>
+          </div>
+          <div class="fb-right">
+            <div class="fb-label green">Normal Ongoing Rate (Cycle 3+)</div>
+            <div class="fb-ongoing" id="ongoing-bill-total">$0.00/mo</div>
+          </div>
+        </div>
+        <div class="fb-notes" id="first-bill-breakdown-notes"></div>
+      </div>
+    </div>
+
+    <div class="due-box">
+      <div class="due-head">
+        <div class="due-title">🏷️ Total Due Today at Register (7% State Tax &amp; Goods)</div>
+        <label class="check-label green rep-only">
+          <input type="checkbox" id="check-waived-fees" class="check-lg-sm" data-change="calc">
+          <span>🎉 Waived Upgrade Fees? (-$35/phone)</span>
+        </label>
+      </div>
+      <div class="due-amt" id="due-today-amt">$0.00 Due Today</div>
+      <div class="due-note" id="due-today-breakdown">Calculates exact 7% state tax on retail hardware + accessories + network fees.</div>
+    </div>
+
+    <div class="control-group sms-wrap">
+      <label for="sms-text">📱 Instant Customer SMS Quote</label>
+      <textarea id="sms-text" class="sms-box" readonly></textarea>
+      <div class="wrapup">
+        <button type="button" class="btn btn-sms" data-action="copy-sms">📋 Copy quote</button>
+        <a class="btn btn-sms btn-sms-alt" id="sms-link" href="sms:">💬 Text this quote</a>
+        <button type="button" class="btn btn-sms btn-sms-alt" data-action="print">🖨️ Print quote</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- LIVE SAVINGS TRACKER: the new bill drops while the savings stack up -->
+<aside id="tracker" aria-label="Live savings tracker">
+  <div class="trk-title">Your savings</div>
+  <div class="trk-gauge" aria-hidden="true">
+    <div class="trk-seg trk-base"></div><div class="trk-seg trk-save"></div><div class="trk-seg trk-over"></div>
+  </div>
+  <div class="trk-hero" id="trk-hero">
+    <span class="trk-k" id="trk-hero-label">You save</span>
+    <span class="trk-hero-num" id="trk-hero-num">$0.00</span><span class="trk-hero-unit" id="trk-hero-unit">/mo</span>
+    <span class="trk-year" id="trk-year"></span>
+  </div>
+  <div class="trk-old"><span class="trk-k" id="trk-old-label">Today</span><span class="trk-v" id="trk-old">$0.00</span></div>
+  <div class="trk-new"><span class="trk-k">New</span><span class="trk-v" id="trk-new">$0.00</span></div>
+  <div class="trk-due"><span class="trk-k">Due today</span><span class="trk-v" id="trk-due">$0.00</span></div>
+  <div class="trk-first"><span class="trk-k">Next bill</span><span class="trk-v" id="trk-first">$0.00</span></div>
+</aside>
+</div>
+
+<script>
+(() => {
+'use strict';
+
+/* ============================== DATA ============================== */
+const DEVICES = [
+  [1999.00, "iPhone Duo (Foldable)", "apple"],
+  [1299.00, "iPhone 18 Pro Max", "apple"],
+  [1199.00, "iPhone 18 Pro", "apple"],
+  [1049.00, "iPhone Air", "apple"],
+  [899.00, "iPhone 17", "apple"],
+  [599.00, "iPhone 16e", "apple"],
+  [2099.99, "Galaxy Z Fold8 Ultra", "android"],
+  [1899.99, "Galaxy Z Fold8", "android"],
+  [1799.00, "Pixel 10 Pro Fold", "android"],
+  [1299.00, "Galaxy S26 Ultra", "android"],
+  [1199.00, "Pixel 10 Pro XL", "android"],
+  [1099.00, "Galaxy Z Flip7", "android"],
+  [999.00, "Galaxy S26+", "android"],
+  [799.00, "Galaxy S26 Base", "android"],
+  [799.00, "Pixel 10 Base", "android"]
+];
+
+// [book value, total credit, monthly credit, model]
+const TRADES = [
+  [230, 1000, 27.78, "iPhone 14 Pro Max"],
+  [230, 1000, 27.78, "iPhone 15 / 15 Plus"],
+  [260, 1000, 27.78, "iPhone 15 Pro"],
+  [300, 1000, 27.78, "iPhone 15 Pro Max"],
+  [320, 1000, 27.78, "iPhone 16 / 16 Plus"],
+  [380, 1000, 27.78, "iPhone 16 Pro / Pro Max"],
+  [230, 1000, 27.78, "Galaxy S24+ / S25 FE"],
+  [300, 1000, 27.78, "Galaxy S24 Ultra"],
+  [290, 1000, 27.78, "Galaxy S25 / S25+"],
+  [455, 1000, 27.78, "Galaxy S25 Ultra / S26"],
+  [230, 1000, 27.78, "Galaxy Z Flip7 / FE"],
+  [300, 1000, 27.78, "Galaxy Z Fold6 / Fold7"],
+  [350, 1000, 27.78, "Pixel 9 Pro Fold"],
+  [290, 1000, 27.78, "Pixel 10 / Pro / XL"],
+  [180, 830, 23.06, "iPhone 14 / 14 Plus"],
+  [195, 830, 23.06, "iPhone 14 Pro"],
+  [130, 830, 23.06, "Galaxy S22 Ultra / S23"],
+  [150, 830, 23.06, "Galaxy S23+ / S24 FE"],
+  [160, 830, 23.06, "Galaxy S24"],
+  [190, 830, 23.06, "Galaxy Z Flip6"],
+  [210, 830, 23.06, "Galaxy Z Fold5"],
+  [35, 350, 9.72, "iPhone XR / XS / Max"],
+  [55, 350, 9.72, "iPhone 11"],
+  [95, 350, 9.72, "iPhone 11 Pro / 12 / Mini"],
+  [115, 350, 9.72, "iPhone 12 Pro Max / 13"],
+  [125, 350, 9.72, "iPhone 13 Pro / Max / 16e"],
+  [35, 350, 9.72, "Galaxy S10 / S20 / S21"],
+  [95, 350, 9.72, "Galaxy Z Fold3 / 4"],
+  [0, 0, 0, "Legacy / Under $35 ($0 Promo)"]
+];
+
+const CONSUMER_RATES = {
+  1:  { prem: 90, ext: 70, val: 50,    fanPrem: 80, noApPrem: 100, noApExt: 80, noApVal: 60 },
+  2:  { prem: 80, ext: 60, val: 45,    fanPrem: 70, noApPrem: 90,  noApExt: 70, noApVal: 55 },
+  3:  { prem: 65, ext: 50, val: 35,    fanPrem: 50, noApPrem: 75,  noApExt: 60, noApVal: 45 },
+  4:  { prem: 50, ext: 40, val: 30,    fanPrem: 40, noApPrem: 60,  noApExt: 50, noApVal: 40 },
+  5:  { prem: 40, ext: 35, val: 30.99, fanPrem: 30, noApPrem: 50,  noApExt: 45, noApVal: 40.99 },
+  6:  { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50,  noApExt: 45, noApVal: 40.99 },
+  7:  { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50,  noApExt: 45, noApVal: 40.99 },
+  8:  { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50,  noApExt: 45, noApVal: 40.99 },
+  9:  { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50,  noApExt: 45, noApVal: 40.99 },
+  10: { prem: 40, ext: 35, val: 30.99, fanPrem: 35, noApPrem: 50,  noApExt: 45, noApVal: 40.99 }
+};
+/* ---- AT&T Business Unlimited 3.0 ("Unlimited Your Way for Business"), pricing as of Nov 2026 ----
+   Source: AT&T Business brochure att-business-uyw3.pdf (business.att.com).
+   Monthly price per PHONE line. Columns = total lines on the account: 1, 2, 3, 4-24, 25-50.
+   nc = no service commitment (full price / installment / BYOD / month-to-month / basic phone): includes the $25 smartphone discount.
+   c  = smartphone on a 2- or 3-year service commitment (no $25 discount).
+   Every price already includes the $10 AutoPay + paperless discount (bank account); BIZ_AUTOPAY_ADJ adds back what a lesser method loses.
+   Listed cheapest -> priciest, which is the order the plan cards use. */
+const BIZ_PLANS = [
+  { key: 'std', icon: '🐢', name: 'Unlimited Standard 3.0', short: 'Standard 3.0', cls: 'rec-card-val', tag: '💰 Lowest Price',
+    desc: '5GB premium data • 5GB hotspot • SD video.',
+    step: '5GB Premium Data • 5GB Hotspot • SD Video',
+    nc: [50, 45, 35, 30, 25], c: [75, 70, 60, 55, 50] },
+  { key: 'adv', icon: '🐇', name: 'Unlimited Advanced 3.0', short: 'Advanced 3.0', cls: 'rec-card-ext', tag: '⚡ 100GB Hotspot',
+    desc: 'Unlimited premium data • 100GB hotspot • HD video.',
+    step: 'Unlimited Premium Data • 100GB Hotspot • HD Video',
+    nc: [70, 60, 50, 40, 35], c: [95, 85, 75, 65, 60] },
+  { key: 'prem', icon: '🐆', name: 'Unlimited Premium 3.0', short: 'Premium 3.0', cls: 'rec-card-prem', tag: '🚀 Turbo Included',
+    desc: 'Turbo for Business • 300GB hotspot • 4K UHD • 50% off a tablet or wearable per line.',
+    step: 'Turbo for Business • 300GB Hotspot • 4K UHD • 50% off a tablet or wearable per line',
+    nc: [85, 75, 60, 50, 45], c: [110, 100, 85, 75, 70] },
+  { key: 'ult', icon: '👑', name: 'Unlimited Ultimate 3.0', short: 'Ultimate 3.0', cls: 'rec-card-ult', tag: '👑 Unlimited Hotspot',
+    desc: 'Turbo for Business • unlimited hotspot (3Mbps after 500GB) • 4K UHD • tablet + wearable service included.',
+    step: 'Turbo for Business • Unlimited Hotspot (3Mbps after 500GB) • 4K UHD • tablet + wearable included',
+    nc: [110, 100, 85, 75, 75], c: [135, 125, 110, 100, 100] }
+];
+// AutoPay: bank account + paperless is already in the prices; debit card loses $5/line of the discount; credit card / none loses all $10.
+const BIZ_AUTOPAY_ADJ = { ap10: 0, ap5: 5, ap0: 10 };
+// Corporate-agreement profiles carried over from the earlier version of this tool. These are NOT on AT&T's public price list: confirm before quoting.
+const BIZ_PROFILES = { biz_std: { off: 0, pct: 0 }, biz_evp: { off: 10, pct: 0 }, biz_fn: { off: 0, pct: 25 } };
+const BIZ_DEFAULT_TIER = 'adv';   // tier new lines start on
+const BIZ_MAX_LINES = 50, CONSUMER_MAX_LINES = 10;
+
+// Consumer tiers in stepper order (priciest first)
+const CONSUMER_TIERS = [
+  { key: 'prem',  icon: '🐆', name: 'Unlimited Premium 2.0', noun: 'Premium', step: 'Unlimited Priority Data (QCI-8) • 100GB Hotspot • 4K UHD' },
+  { key: 'extra', icon: '🐇', name: 'Unlimited Extra 2.0',   noun: 'Extra',   step: '100GB Priority Data (QCI-8) • 50GB Hotspot' },
+  { key: 'val',   icon: '🐢', name: 'Value Plus 2.0',        noun: 'Value',   step: 'Standard 5G Data • 3GB Mobile Hotspot' }
+];
+// Older saved quotes / share links used these AutoPay values.
+const AP_LEGACY = { debit: 'ap10', credit: 'ap5', none: 'ap0' };
+
+const TABLET_LABEL = "iPad 10th Gen ($349.00)";
+const WATCH_LABEL = "Apple Watch Series 12 ($429.00)";
+const DEFAULT_PHONE = DEVICES[4][1]; // iPhone 17
+const SCOPE_IDS = ['scope-upg', 'scope-add', 'scope-bb', 'scope-tv'];
+const STORAGE_KEY = 'att_quote_state';
+const TRADE_OPTIONS = TRADES.map((t, i) => `<option value="${i}">${t[3]} ($${t[0]} base book)</option>`).join('');
+
+/* ============================== STATE & HELPERS ============================== */
+const S = {
+  segment: 'consumer',
+  planIndex: 0,
+  showAllOpps: false,
+  phone: null,
+  watch: null,
+  tablet: null,
+  aip: 0,
+  prot: { pa1: false, pa4: false, htp: false }
+};
+
+const $ = (id) => document.getElementById(id);
+const money = (n) => n.toFixed(2);
+const usd = (n) => (n < 0 ? '-$' : '$') + money(Math.abs(n)); // a credit reads -$6.10, not $-6.10
+const round2 = (n) => Number(n.toFixed(2));
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+// Plan tiers differ by segment (consumer 3, business 4). Counts live in the stepper outputs (#cnt-<tier key>).
+const tiersFor = (seg) => (seg === 'business' ? BIZ_PLANS.slice().reverse() : CONSUMER_TIERS);
+const tierKeys = () => tiersFor(S.segment).map((t) => t.key);
+const maxLines = () => (S.segment === 'business' ? BIZ_MAX_LINES : CONSUMER_MAX_LINES);
+const sum = (o) => Object.keys(o).reduce((a, k) => a + o[k], 0);
+const emptyCounts = () => { const o = {}; tierKeys().forEach((k) => { o[k] = 0; }); return o; };
+function getCounts() {
+  const o = {};
+  tierKeys().forEach((k) => { const el = $('cnt-' + k); o[k] = el ? (parseInt(el.textContent, 10) || 0) : 0; });
+  return o;
+}
+function putCounts(o) { tierKeys().forEach((k) => { const el = $('cnt-' + k); if (el) el.textContent = String(o[k] || 0); }); }
+function defaultCounts(n) {
+  if (S.segment === 'business') { const o = emptyCounts(); o[BIZ_DEFAULT_TIER] = n; return o; }
+  return n === 1 ? { prem: 0, extra: 0, val: 1 } : { prem: 1, extra: 0, val: n - 1 };
+}
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+const scrollTo = (el, block) => el && el.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth', block });
+
+// Skip DOM writes when the markup hasn't changed (keeps focus, saves layout work).
+function setHTML(el, html) {
+  if (el._html === html) return;
+  el._html = html;
+  el.innerHTML = html;
+}
+function setSelect(id, value) {
+  const el = $(id);
+  if (!el || value === undefined || value === null) return;
+  const v = String(value);
+  if (Array.prototype.some.call(el.options, (o) => o.value === v)) el.value = v;
 }
 
-/* ============================== INIT ============================== */
-syncSegmentUI();     // 1. populate discount options first
-restoreState();      // 2. restore saved / shared quote (validated)
-syncHardwareLedger();// 3. render attached hardware
-runCalc();           // 4. compute everything
-agInit();            // 5. quote assistant greeting
-})();
-</script>
-</body>
-</html>
+let toastTimer;
+function toast(msg) {
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+async function copyText(text) {
+  try { await navigator.clipboard.writeText(text); return true; } catch (_) { /* fall through */ }
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.readOnly = true; ta.className = 'sr-copy';
+    document.body.appendChild(ta);
+    ta.select();
+    const ok = document.execCommand('copy');
+    ta.remove();
+    return ok;
+  } catch (_) { return false; }
+}
+
+/* ============================== TRADE-INS ============================== */
+function tradeTier(book, ayac) {
+  if (ayac || book >= 230) return { name: 'Tier 1: $1,000 Off', credit: 27.78 };
+  if (book >= 130) return { name: 'Tier 2: $830 Off', credit: 23.06 };
+  if (book >= 35) return { name: 'Tier 3: $350 Off', credit: 9.72 };
+  return { name: 'No Promo ($0)', credit: 0 };
+}
+const isAyac = () => $('check-ayac-promo').checked;
+
+function tradeLine(i, ayac) {
+  const sel = $('trade-select-' + i), dmg = $('trade-damage-' + i);
+  if (!sel || !dmg) return null;
+  const raw = (TRADES[parseInt(sel.value, 10)] || [0])[0];
+  const damaged = dmg.checked;
+  const book = (damaged && !ayac) ? Math.floor(raw * 0.5) : raw;
+  return { book, damaged, tier: tradeTier(book, ayac) };
+}
+
+function updateTradeBadge(i) {
+  const badge = $('t-badge-' + i);
+  const t = tradeLine(i, isAyac());
+  if (!badge || !t) return;
+  badge.textContent = `Book: $${t.book} • ${t.tier.name}`;
+  badge.classList.toggle('is-damaged', t.damaged);
+}
+function syncAllTradeLines() {
+  const n = parseInt($('trade-lines-count').value, 10) || 0;
+  for (let i = 1; i <= n; i++) updateTradeBadge(i);
+}
+
+function readTradeSelections() {
+  const out = [];
+  for (let i = 1; $('trade-select-' + i); i++) out.push({ m: $('trade-select-' + i).value, d: $('trade-damage-' + i).checked });
+  return out;
+}
+function applyTradeSelections(list) {
+  list.forEach((p, k) => {
+    const sel = $('trade-select-' + (k + 1)), dmg = $('trade-damage-' + (k + 1));
+    if (!sel || !dmg) return;
+    setSelect('trade-select-' + (k + 1), p.m);
+    dmg.checked = !!p.d;
+  });
+}
+
+function tradeCardHTML(i) {
+  return `<div class="trade-card">
+    <div class="trade-card-head">
+      <span class="trade-card-title">Line ${i} Trade-In Intake</span>
+      <span class="trade-badge" id="t-badge-${i}">Tier 1 ($1,000 Off)</span>
+    </div>
+    <div class="grid-2">
+      <div class="control-group">
+        <label for="trade-select-${i}">Select Current Model</label>
+        <select id="trade-select-${i}" data-change="trade-line" data-line="${i}">${TRADE_OPTIONS}</select>
+      </div>
+      <div class="trade-damage">
+        <label class="check-label danger"><input type="checkbox" id="trade-damage-${i}" data-change="trade-line" data-line="${i}"><span>🔨 Cracked / Damaged (-50%)</span></label>
+      </div>
+    </div>
+  </div>`;
+}
+
+// Rebuilds the cards but keeps whatever the rep already picked for lines that still exist.
+function buildTradeCards() {
+  const n = parseInt($('trade-lines-count').value, 10) || 0;
+  const prev = readTradeSelections();
+  $('trade-devices-container').innerHTML = Array.from({ length: n }, (_, k) => tradeCardHTML(k + 1)).join('');
+  applyTradeSelections(prev.slice(0, n));
+  syncAllTradeLines();
+}
+function toggleTradeMaster() {
+  const on = $('toggle-has-tradeins').checked;
+  $('wrap-trade-inner').hidden = !on;
+  $('wrap-trade-count').hidden = !on;
+  $('trade-lines-count').value = on ? '1' : '0';
+  buildTradeCards();
+  requestCalc();
+}
+
+/* ============================== SCOPE / PLAN CONTROLS ============================== */
+function setScopeActive(el, on) {
+  el.classList.toggle('active', on);
+  el.setAttribute('aria-pressed', String(on));
+}
+function syncBroadbandSection() {
+  $('sec-broadband').hidden = !$('scope-bb').classList.contains('active');
+}
+function toggleScope(el) {
+  setScopeActive(el, !el.classList.contains('active'));
+  syncBroadbandSection();
+  runCalc();
+}
+
+function toggleProt(type) {
+  const p = S.prot;
+  if (type === 'pa4') { p.pa4 = !p.pa4; if (p.pa4) p.pa1 = false; }
+  else if (type === 'pa1') { p.pa1 = !p.pa1; if (p.pa1) p.pa4 = false; }
+  else if (type === 'htp') { p.htp = !p.htp; }
+  syncProtTiles();
+  runCalc();
+}
+function syncProtTiles() {
+  ['pa1', 'pa4', 'htp'].forEach((k) => {
+    const el = $('tile-' + k);
+    el.classList.toggle('active', !!S.prot[k]);
+    el.setAttribute('aria-pressed', String(!!S.prot[k]));
+  });
+}
+
+function setLines(num) {
+  const n = parseInt(num, 10);
+  putCounts(defaultCounts(n));
+  if (S.segment === 'consumer') S.planIndex = (n === 1) ? 0 : 1;
+  runCalc();
+}
+function changeCount(type, delta) {
+  const c = getCounts();
+  if (!(type in c)) return;
+  c[type] = Math.max(0, c[type] + delta);
+  const total = sum(c);
+  if (total > maxLines() || total === 0) return;
+  putCounts(c);
+  $('curr-lines').value = total;
+  runCalc();
+}
+function selectPlan(idx) {
+  const n = parseInt($('curr-lines').value, 10) || 1;
+  if (S.segment === 'business') {
+    const p = BIZ_PLANS[idx];
+    if (!p) return;
+    const o = emptyCounts(); o[p.key] = n; putCounts(o);
+  } else {
+    S.planIndex = idx;
+    if (n === 1) putCounts({ prem: idx === 2 ? 1 : 0, extra: idx === 1 ? 1 : 0, val: idx === 0 ? 1 : 0 });
+    else if (idx === 0) putCounts({ prem: 0, extra: 0, val: n });
+    else if (idx === 1) putCounts({ prem: 1, extra: 0, val: Math.max(0, n - 1) });
+    else putCounts({ prem: n, extra: 0, val: 0 });
+  }
+  runCalc();
+  const card = $('plan-cards-container').querySelector(`[data-idx="${idx}"]`);
+  if (card) card.focus({ preventScroll: true });
+}
+
+function toggleHotspot() {
+  const on = $('check-hotspot').checked;
+  $('hotspot-lines-wrap').hidden = !on;
+  $('hotspot-lines-count').value = on ? '1' : '0';
+  applyHotspotRouting();
+}
+// Moves lines between tiers for the "dedicated hotspot" toggle. No recalculation here: callers do that.
+function routeHotspot() {
+  const n = parseInt($('curr-lines').value, 10) || 1;
+  const sel = $('hotspot-lines-count').value;
+  if (S.segment === 'business') {
+    // Hotspot lines go on Premium 3.0 (300GB hotspot + Turbo); the rest stay on the default tier.
+    const c = sel === '0' ? 0 : (sel === 'all' ? n : Math.min(n, parseInt(sel, 10) || 0));
+    const o = emptyCounts();
+    o.prem = c; o[BIZ_DEFAULT_TIER] += n - c;
+    putCounts(o);
+    return;
+  }
+  if (sel === '0') { putCounts({ prem: 0, extra: 0, val: n }); S.planIndex = 0; }
+  else if (sel === 'all') { putCounts({ prem: n, extra: 0, val: 0 }); S.planIndex = 2; }
+  else { const c = Math.min(n, parseInt(sel, 10)); putCounts({ prem: c, extra: 0, val: Math.max(0, n - c) }); S.planIndex = 1; }
+}
+function applyHotspotRouting() { routeHotspot(); runCalc(); }
+
+/* ============================== HARDWARE ============================== */
+function attach(kind, amount) {
+  switch (kind) {
+    case 'broadband':
+      setScopeActive($('scope-bb'), true);
+      syncBroadbandSection();
+      runCalc();
+      scrollTo($('sec-broadband'), 'center');
+      return;
+    case 'voice': {
+      const c = getCounts();
+      if (sum(c) < maxLines()) changeCount(addLineKey(c), 1);
+      return;
+    }
+    case 'tablet': S.tablet = TABLET_LABEL; break;
+    case 'watch':  S.watch = WATCH_LABEL; break;
+    case 'phone':  S.phone = DEFAULT_PHONE; break;
+    case 'aip':    S.aip = amount; break;
+    default: return;
+  }
+  syncHardwareLedger();
+  runCalc();
+}
+function removeHardware(kind) {
+  if (kind === 'phone') S.phone = null;
+  else if (kind === 'tablet') S.tablet = null;
+  else if (kind === 'watch') S.watch = null;
+  else if (kind === 'aip') S.aip = 0;
+  syncHardwareLedger();
+  runCalc();
+}
+function syncHardwareLedger() {
+  const row = (icon, label, value, kind) =>
+    `<div class="hw-item"><span>${icon} <b>${label}:</b> ${value}</span><button type="button" class="btn hw-remove" data-action="remove-hw" data-hw="${kind}">Remove</button></div>`;
+  const rows = [];
+  if (S.phone) rows.push(row('📱', 'Phone', esc(S.phone), 'phone'));
+  if (S.tablet) rows.push(row('📱', 'Tablet', esc(S.tablet), 'tablet'));
+  if (S.watch) rows.push(row('⌚', 'Smartwatch', esc(S.watch), 'watch'));
+  if (S.aip > 0) rows.push(row('🛍️', '12-Mo Accessory Plan', `$${money(S.aip)} ($${money(S.aip / 12)}/mo)`, 'aip'));
+  $('hardware-ledger-container').hidden = rows.length === 0;
+  $('active-hardware-items').innerHTML = rows.join('');
+}
+
+/* ============================== SEGMENT / MODES ============================== */
+function setLineOptions(max, keep) {
+  const sel = $('curr-lines');
+  let html = '';
+  for (let i = 1; i <= max; i++) html += `<option value="${i}">${i} Line${i === 1 ? '' : 's'} Account</option>`;
+  sel.innerHTML = html;
+  const n = Math.min(Math.max(parseInt(keep, 10) || 1, 1), max);
+  sel.value = String(n);
+  return n;
+}
+function renderSteppers() {
+  $('steppers').innerHTML = tiersFor(S.segment).map((t) => {
+    const noun = t.noun || t.short;
+    return `<div class="counter-row">
+      <div>
+        <div class="counter-title">${t.icon} ${t.name}</div>
+        <div class="counter-desc">${t.step}</div>
+      </div>
+      <div class="counter-controls">
+        <button type="button" class="btn-circle" data-action="change-count" data-type="${t.key}" data-delta="-1" aria-label="Remove a ${noun} line">-</button>
+        <output class="counter-val" id="cnt-${t.key}">0</output>
+        <button type="button" class="btn-circle" data-action="change-count" data-type="${t.key}" data-delta="1" aria-label="Add a ${noun} line">+</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function syncSegmentUI() {
+  const isBiz = S.segment === 'business';
+  document.body.classList.toggle('seg-business', isBiz);
+  $('hdr-title-rep').textContent = isBiz ? 'AT&T Business CRU Solutions Studio' : 'AT&T Executive Solutions Studio';
+
+  const disc = $('curr-discount');
+  const curDisc = disc.value;
+  disc.innerHTML = isBiz
+    ? `<option value="biz_std">Corporate CRU (No FAN)</option>
+       <option value="biz_evp">EVP Corporate Agreement ($10/L off)</option>
+       <option value="biz_fn">FirstNet Agency-Paid Primary (25% Off)</option>`
+    : `<option value="none">Standard Consumer (No FAN)</option>
+       <option value="fan_corp">Corporate Employer FAN ($10/L off)</option>
+       <option value="apprec_mil">Military / Veteran / FirstNet (25% Off)</option>
+       <option value="fiber">AT&amp;T Fiber Convergence (20% Off)</option>`;
+  setSelect('curr-discount', curDisc);
+
+  const ap = $('curr-autopay');
+  const curAp = ap.value;
+  ap.innerHTML = isBiz
+    ? `<option value="ap10">Bank Acct + Paperless ($10/L off)</option>
+       <option value="ap5">Debit Card ($5/L off)</option>
+       <option value="ap0">Credit Card / None ($0 off)</option>`
+    : `<option value="ap10">Checking / Debit ($10/L off)</option>
+       <option value="ap5">Credit Card ($5/L off)</option>
+       <option value="ap0">No AutoPay ($0 off)</option>`;
+  setSelect('curr-autopay', curAp);
+
+  // The plan tiers differ by segment, so rebuild the line-count list and the steppers.
+  const n = setLineOptions(maxLines(), $('curr-lines').value);
+  renderSteppers();
+  putCounts(defaultCounts(n));
+  if (!isBiz) S.planIndex = (n === 1) ? 0 : 1;
+  if ($('check-hotspot').checked) routeHotspot();
+  $('plan-cards-container').classList.toggle('cols-4', isBiz);
+}
+function syncSegmentButtons() {
+  document.querySelectorAll('.seg-btn').forEach((b) => {
+    const on = b.dataset.seg === S.segment;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-pressed', String(on));
+  });
+}
+function setSegment(seg) {
+  if (seg === S.segment) return;
+  S.segment = seg;
+  syncSegmentButtons();
+  syncSegmentUI();
+  runCalc();
+}
+function togglePres() {
+  const on = document.body.classList.toggle('presentation-mode');
+  const btn = $('pres-btn');
+  btn.textContent = on ? '👁️ Customer View: ON' : '👁️ Customer View: OFF';
+  btn.classList.toggle('active', on);
+  btn.setAttribute('aria-pressed', String(on));
+}
+
+/* ============================== CALCULATION ENGINE ============================== */
+// Coalesces bursts of events (one change can fire several handlers) into a single recalculation.
+// A microtask, not requestAnimationFrame, so it still runs in background tabs and around printing.
+let calcQueued = false;
+function requestCalc() {
+  if (calcQueued) return;
+  calcQueued = true;
+  Promise.resolve().then(runCalc);
+}
+
+// Per-line monthly price of every tier at a given total line count.
+function lineRates(lines, ap, disc, commit) {
+  if (S.segment === 'business') {
+    const col = lines <= 3 ? lines - 1 : (lines <= 24 ? 3 : 4);
+    const adj = BIZ_AUTOPAY_ADJ[ap] != null ? BIZ_AUTOPAY_ADJ[ap] : 0;
+    const prof = BIZ_PROFILES[disc] || BIZ_PROFILES.biz_std;
+    const out = {};
+    BIZ_PLANS.forEach((p) => {
+      out[p.key] = round2(Math.max(0, (commit ? p.c : p.nc)[col] + adj - prof.off) * (1 - prof.pct / 100));
+    });
+    return out;
+  }
+  // Consumer: the original tables and rules, unchanged.
+  const t = CONSUMER_RATES[Math.min(lines, 10)] || CONSUMER_RATES[1];
+  let prem = t.prem, extra = t.ext, val = t.val;
+  if (ap === 'ap0') { prem = t.noApPrem; extra = t.noApExt; val = t.noApVal; }
+  else if (ap === 'ap5') { prem += 5; extra += 5; val += 5; }
+  if (disc === 'fan_corp') prem = (ap === 'ap0') ? t.noApExt : (t.fanPrem + (ap === 'ap5' ? 5 : 0));
+  else if (disc === 'apprec_mil') { prem = round2(prem * 0.75); extra = round2(extra * 0.75); val = round2(val * 0.75); }
+  return { prem, extra, val };
+}
+
+// Monthly service price of a cellular tablet / wearable line on the current plan mix.
+function connectedMonthly(counts, hasTablet, hasWatch) {
+  if (S.segment !== 'business') {
+    const hasPrem = (counts.prem || 0) > 0;
+    return { tablet: hasTablet ? (hasPrem ? 10.50 : 20.99) : 0, watch: hasWatch ? (hasPrem ? 5.50 : 10.99) : 0 };
+  }
+  // Ultimate 3.0: one tablet + one wearable plan per phone line included.
+  if ((counts.ult || 0) > 0) return { tablet: 0, watch: 0 };
+  // Premium 3.0: 50% off ONE tablet or wearable per Premium line. Everyone else pays $20 tablet / $10 wearable.
+  let slots = counts.prem || 0;
+  const price = (full) => { if (slots > 0) { slots--; return full / 2; } return full; };
+  return { tablet: hasTablet ? price(20) : 0, watch: hasWatch ? price(10) : 0 };
+}
+
+// Which tier a new voice line is added to: Value for consumer; the cheapest tier already on a business account.
+function addLineKey(counts) {
+  if (S.segment !== 'business') return 'val';
+  const used = BIZ_PLANS.find((p) => (counts[p.key] || 0) > 0);
+  return used ? used.key : BIZ_DEFAULT_TIER;
+}
+
+function oppCard(o) {
+  return `<div class="opp ${o.cls}">
+    <div>
+      <div class="opp-head"><span class="opp-title">${o.title}</span><span class="opp-price">${o.price}</span></div>
+      <div class="opp-desc">${o.desc}</div>
+    </div>
+    <button type="button" class="btn opp-btn" data-action="attach" data-attach="${o.attach}"${o.amount ? ` data-amount="${o.amount}"` : ''}>${o.btn}</button>
+  </div>`;
+}
+
+/* ---- Live tracker + customer summary ---- */
+let lastSave = null;
+let lastCalc = null;
+function updateTracker(c) {
+  const t = $('tracker');
+  const hasBill = c.bill > 0;
+  const scale = Math.max(c.baseline, c.newTotal, 0.01);
+  const pct = (n) => ((Math.max(0, n) / scale) * 100).toFixed(2) + '%';
+  t.style.setProperty('--base', hasBill ? pct(Math.min(c.baseline, c.newTotal)) : (c.newTotal > 0 ? '100%' : '0%'));
+  t.style.setProperty('--save', hasBill ? pct(c.baseline - c.newTotal) : '0%');
+  t.style.setProperty('--over', hasBill ? pct(c.newTotal - c.baseline) : '0%');
+
+  $('trk-old-label').textContent = c.harvest > 0 ? 'Today + add-ons' : 'Today';
+  $('trk-old').textContent = hasBill ? `$${money(c.baseline)}` : '–';
+  $('trk-new').textContent = `$${money(c.newTotal)}`;
+  $('trk-due').textContent = c.isBiz ? '$0.00' : `$${money(c.due)}`;
+  $('trk-first').textContent = usd(c.firstBill);
+
+  const num = $('trk-hero-num');
+  const over = hasBill && c.saveMo < 0;
+  $('trk-hero').classList.toggle('is-over', over);
+  $('trk-hero').classList.toggle('is-plain', !hasBill);
+  if (!hasBill) {
+    $('trk-hero-label').textContent = 'New total';
+    num.textContent = `$${money(c.newTotal)}`;
+    $('trk-year').textContent = 'Enter the current bill to see savings';
+  } else if (over) {
+    $('trk-hero-label').textContent = 'Over today by';
+    num.textContent = `$${money(-c.saveMo)}`;
+    $('trk-year').textContent = '';
+  } else {
+    $('trk-hero-label').textContent = 'You save';
+    num.textContent = `$${money(c.saveMo)}`;
+    $('trk-year').textContent = c.saveMo > 0 ? `about $${Math.round(c.saveMo * 12).toLocaleString('en-US')} a year` : '';
+  }
+  // A small pop only when the person has just made the savings bigger.
+  if (hasBill && lastSave !== null && c.saveMo > lastSave + 0.004) { num.classList.remove('pulse'); void num.offsetWidth; num.classList.add('pulse'); }
+  lastSave = hasBill ? c.saveMo : null;
+}
+
+function updateCustomerSummary(c) {
+  const hasBill = c.bill > 0;
+  $('cs-old').textContent = hasBill ? `$${money(c.bill)}` : '–';
+  $('cs-new').textContent = `$${money(c.newTotal)}`;
+  const box = $('cs-save-box');
+  box.hidden = !hasBill;
+  if (hasBill && c.saveMo > 0) {
+    box.className = 'cs-save sum-savings ' + (c.saveMo >= 25 ? 'save-good' : 'save-low');
+    box.textContent = `You save $${money(c.saveMo)}/mo (about $${Math.round(c.saveMo * 12).toLocaleString('en-US')} a year)`;
+  } else if (hasBill) {
+    box.className = 'cs-save sum-savings save-bad';
+    box.textContent = c.saveMo === 0 ? 'Same as today' : `$${money(-c.saveMo)}/mo more than today`;
+  }
+  const note = $('cs-note');
+  note.hidden = !(hasBill && c.harvest > 0);
+  note.textContent = `Includes $${money(c.harvest)}/mo from removing add-ons you aren't using.`;
+
+  const row = (it) => `<li class="cs-item"><span class="cs-item-main"><b>${it.t}</b>${it.s ? `<small>${it.s}</small>` : ''}</span><span class="cs-item-price">${it.p === 0 ? 'Included' : `$${money(it.p)}/mo`}</span></li>`;
+  setHTML($('cs-lines'), c.items.map(row).join(''));
+
+  $('cs-due').textContent = c.isBiz ? '$0.00' : `$${money(c.due)}`;
+  $('cs-due-sub').textContent = c.due <= 0 ? 'Nothing to pay at the register.' : (c.isBiz ? `Equipment taxes and fees ($${money(c.due)}) are billed to your account.` : 'Includes sales tax and any fees.');
+  $('cs-first').textContent = usd(c.firstBill);
+  $('cs-first-sub').textContent = (c.firstBill < 0 ? 'A credit applies to this bill. ' : '') + `Then $${money(c.newTotal)} a month.`;
+}
+
+function runCalc() {
+  calcQueued = false;
+  const isBiz = S.segment === 'business';
+  const bill = parseFloat($('curr-total').value) || 0;
+  const counts = getCounts();
+  const totalLines = Math.max(1, sum(counts));
+
+  // Leak audit harvest
+  const harvest = ($('audit-watch-unused').checked ? (isBiz ? 10.00 : 10.99) : 0)
+                + ($('audit-tab-unused').checked ? (isBiz ? 20.00 : 20.99) : 0)
+                + ($('audit-nua-drop').checked ? 10.00 : 0);
+  const harvestBadge = $('baseline-harvest-badge');
+  harvestBadge.hidden = !(harvest > 0);
+  harvestBadge.textContent = `Audit Harvest: +$${money(harvest)}/mo`;
+  const baseline = bill + harvest;
+
+  // Per-line rates: AT&T Business 3.0 price list for Business, the original tables for Consumer
+  const disc = $('curr-discount').value || 'none';
+  const ap = $('curr-autopay').value;
+  const commit = isBiz && $('check-commit').checked;
+  const rate = lineRates(totalLines, ap, disc, commit);
+  const wirelessBase = round2(tierKeys().reduce((a, k) => a + counts[k] * rate[k], 0));
+  const margin = round2(baseline - wirelessBase);
+
+  // Trade credits
+  const tCount = $('toggle-has-tradeins').checked ? (parseInt($('trade-lines-count').value, 10) || 0) : 0;
+  const ayac = isAyac();
+  let tradeCredits = 0;
+  for (let t = 1; t <= tCount; t++) {
+    const line = tradeLine(t, ayac);
+    if (line) tradeCredits += line.tier.credit;
+  }
+  $('trade-pool-badge').textContent = `Total Trade Credits: -$${money(tradeCredits)}/mo`;
+
+  // Plan recommendation cards
+  const premRate = rate.prem, extRate = rate.extra, valRate = rate.val; // consumer tiers (undefined for business)
+  const planOptions = isBiz ? BIZ_PLANS.map((p) => ({
+    title: `${p.icon} ${p.name}`, cost: round2(totalLines * rate[p.key]), desc: p.desc, tag: p.tag, cls: p.cls,
+    on: counts[p.key] === totalLines
+  })) : (totalLines === 1) ? [
+    { title: '🐢 Value Plus 2.0', cost: valRate, desc: 'Essential unlimited data at our lowest single-line price point.', tag: '💰 Max Savings', cls: 'rec-card-val' },
+    { title: '🐇 Unlimited Extra 2.0', cost: extRate, desc: '100GB priority data &amp; 50GB hotspot tethering.', tag: '⚡ Most Popular', cls: 'rec-card-ext' },
+    { title: '🐆 Unlimited Premium 2.0', cost: premRate, desc: 'Fast-track QCI-8 data • 100GB hotspot • 4K UHD video.', tag: '👑 Peak Tier', cls: 'rec-card-prem' }
+  ] : [
+    { title: '🐢 All Value Plus 2.0', cost: round2(totalLines * valRate), desc: 'Core unlimited access across all lines.', tag: '💰 Max Budget', cls: 'rec-card-val' },
+    { title: '🐆 1x Prem + 🐢 Crew Mix', cost: round2(premRate + (totalLines - 1) * valRate), desc: 'Lead line priority, crew on value.', tag: '⚡ High Value', cls: 'rec-card-ext' },
+    { title: '🐆 All-Cheetah Premium', cost: round2(totalLines * premRate), desc: 'Unlimited fast-track QCI-8 data on all devices.', tag: '👑 Zero Slowdown', cls: 'rec-card-prem' }
+  ];
+  // "Suggested" = the best plan that still saves money vs. the current bill; the middle option until a bill is entered.
+  let recIdx = 1;
+  if (bill > 0) { recIdx = 0; planOptions.forEach((o, i) => { if (o.cost <= baseline) recIdx = i; }); }
+  setHTML($('plan-cards-container'), planOptions.map((opt, c) => {
+    const saves = round2(baseline - opt.cost);
+    const selected = isBiz ? opt.on : c === S.planIndex;
+    const saveText = bill > 0 ? (saves >= 0 ? `Saves $${money(saves)}/mo` : `+$${money(Math.abs(saves))}/mo`) : 'Select to configure';
+    return `<button type="button" class="rec-card ${opt.cls}${selected ? ' selected-plan' : ''}" data-action="select-plan" data-idx="${c}" aria-pressed="${selected}">
+      ${c === recIdx ? '<span class="rc-flag" title="Best plan that still saves money vs. the current bill">⭐ Suggested</span>' : ''}
+      <span>
+        <span class="rc-head"><span class="rc-title">${opt.title}</span><span class="plan-badge-pill">${opt.tag}</span></span>
+        <span class="rc-price">$${money(opt.cost)}/mo</span>
+        <span class="rc-save">${saveText}</span>
+      </span>
+      <span class="rc-desc">${opt.desc}</span>
+    </button>`;
+  }).join(''));
+
+  // Hardware, protection, add-ons
+  const phoneRetail = S.phone ? ((DEVICES.find((d) => d[1] === S.phone) || [])[0] || 899.00) : 0;
+  const netPhoneInstallment = S.phone ? Math.max(0, (phoneRetail / 36) - (tradeCredits > 0 ? 27.78 : 0)) : 0;
+  const phoneTaxPOS = phoneRetail * 0.07;
+  const conn = connectedMonthly(counts, !!S.tablet, !!S.watch);
+  const tabletMonthly = conn.tablet;
+  const tabletTaxPOS = S.tablet ? (349.00 * 0.07) : 0;
+  const watchMonthly = conn.watch;
+  const watchTaxPOS = S.watch ? (429.00 * 0.07) : 0;
+  const aipMonthly = (S.aip >= 75) ? (S.aip / 12) : 0;
+  const aipTaxPOS = S.aip * 0.07;
+  const protMonthly = (S.prot.pa1 ? 17.00 : 0) + (S.prot.pa4 ? 50.00 : 0) + (S.prot.htp ? 25.00 : 0);
+  const dtvMonthly = $('scope-tv').classList.contains('active') ? 79.99 : 0;
+
+  const totalHousehold = round2(wirelessBase + netPhoneInstallment + tabletMonthly + watchMonthly + aipMonthly + protMonthly + dtvMonthly);
+  const ongoingSavings = round2(baseline - totalHousehold);
+  $('sum-new-total').textContent = `$${money(totalHousehold)}/mo`;
+  $('wireless-pool').textContent = `Base Plan: $${money(wirelessBase)}/mo`;
+
+  // HBO audit banner
+  const banner = $('hbo-audit-banner');
+  if (!isBiz && $('check-hbo').checked) {
+    banner.hidden = false;
+    if (margin >= 16.99) {
+      banner.className = 'banner banner-ok rep-only';
+      banner.innerHTML = `<b>🎬 HBO Irrelevant:</b> Plan rerate saves <b>$${money(margin)}/mo</b>! Even if paying $16.99/mo for standalone Max, customer is net ahead by <b>+$${money(margin - 16.99)}/mo</b> in cash!`;
+    } else {
+      banner.className = 'banner banner-warn rep-only';
+      banner.innerHTML = `<b>⚠️ HBO Retention Alert:</b> Current savings are <b>$${money(margin)}/mo</b>. Customer loses grandfathered Max ($16.99 value).`;
+    }
+  } else { banner.hidden = true; }
+
+  // Reinvestment basket
+  const hasBill = bill > 0;
+  const showAll = !hasBill; // no bill entered (new customer): list every add-on so hardware can still be quoted
+  const marginBadge = $('reinvest-margin-badge');
+  marginBadge.textContent = `Available Margin: ${margin < 0 ? '-' : '+'}$${money(Math.abs(margin))}/mo`;
+  marginBadge.hidden = !hasBill || margin < 0;
+  const opps = [];
+  const bbPromoCost = 35.00;
+  if ($('scope-bb').classList.contains('active') || margin >= bbPromoCost || showAll) {
+    opps.push(isBiz
+      ? oppCard({ cls: 'badge-platinum', title: '💎 PLATINUM: AT&amp;T Business Fiber / Internet Air', price: `+$${money(bbPromoCost)}/mo`, desc: 'Business broadband: plan savings can absorb a Business Fiber or Internet Air line. Confirm service and pricing at the address.', btn: '🌐 Attach Broadband (Platinum)', attach: 'broadband' })
+      : oppCard({ cls: 'badge-platinum', title: '💎 PLATINUM: AT&amp;T Fiber / Internet Air', price: `+$${money(bbPromoCost)}/mo (w/ All-In 20% Off)`, desc: 'Broadband Convergence: Plan savings absorb Gigabit Home Fiber or 5G Home Air, unlocking 20% off wireless!', btn: '🌐 Attach Broadband (Platinum)', attach: 'broadband' }));
+  }
+  const addKey = addLineKey(counts);
+  let nextVoiceCost;
+  if (isBiz) nextVoiceCost = lineRates(totalLines + 1, ap, disc, commit)[addKey];
+  else { const nextTier = CONSUMER_RATES[Math.min(totalLines + 1, 10)]; nextVoiceCost = nextTier ? nextTier.val : valRate; }
+  if ((margin >= nextVoiceCost || showAll) && totalLines < maxLines()) {
+    const addDesc = isBiz
+      ? `Add Line ${totalLines + 1} on ${BIZ_PLANS.find((p) => p.key === addKey).short}. Per-line pricing steps down as the account grows!`
+      : `Add Line ${totalLines + 1}. Curve drop absorbs the cost!`;
+    opps.push(oppCard({ cls: 'badge-sparkling-gold', title: '🥇 GOLD: Voice Add-A-Line', price: `+$${money(nextVoiceCost)}/mo`, desc: addDesc, btn: '➕ Add Voice Line', attach: 'voice' }));
+  }
+  const tabPromoRate = connectedMonthly(counts, true, false).tablet;
+  if (margin >= tabPromoRate || showAll) {
+    opps.push(oppCard({ cls: 'badge-silver', title: '🥈 SILVER: Connected Tablet', price: tabPromoRate === 0 ? 'Included ($0.00)' : `+$${money(tabPromoRate)}/mo`, desc: isBiz ? 'Cellular tablet line: included with Ultimate 3.0, 50% off with Premium 3.0, otherwise $20/mo.' : 'Dedicated cellular iPad 10th Gen at promo rate.', btn: '➕ Add Tablet', attach: 'tablet' }));
+  }
+  const watchPromoRate = connectedMonthly(counts, false, true).watch;
+  if (margin >= watchPromoRate || showAll) {
+    opps.push(oppCard({ cls: 'badge-bronze', title: '🥉 BRONZE: Smartwatch Line', price: watchPromoRate === 0 ? 'Included ($0.00)' : `+$${money(watchPromoRate)}/mo`, desc: isBiz ? 'Wearable line: included with Ultimate 3.0, 50% off with Premium 3.0, otherwise $10/mo.' : 'Connect Apple Watch Series 12 at $0 net bill change!', btn: '➕ Add Watch', attach: 'watch' }));
+  }
+  if (margin >= 16.00 || showAll) {
+    opps.push(oppCard({ cls: 'badge-phone', title: '📱 NEW PHONE: Flagship Upgrade', price: '+$16-$25/mo', desc: 'iPhone 17 or Galaxy S26 absorbed by plan savings!', btn: '➕ Add Phone', attach: 'phone' }));
+  }
+  if (margin >= 12.50 || showAll) {
+    opps.push(oppCard({ cls: 'badge-aip', title: '🛍️ AIP: Ray-Ban Meta / Gear', price: '+$12.50-$24.92/mo', desc: '12-Mo financing for Smart Glasses &amp; power gear.', btn: '➕ Add Ray-Bans ($24.92/mo)', attach: 'aip', amount: 299 }));
+  }
+  // Lead with the top two ideas; the rest sit behind a toggle so nobody is buried in options.
+  const OPP_PREVIEW = 2;
+  const extraOpps = Math.max(0, opps.length - OPP_PREVIEW);
+  const shownOpps = (S.showAllOpps || extraOpps === 0) ? opps.slice() : opps.slice(0, OPP_PREVIEW);
+  if (extraOpps > 0) shownOpps.push(`<button type="button" class="btn btn-link-sm opps-toggle${S.showAllOpps ? ' opps-toggle-wide' : ''}" data-action="toggle-opps" aria-expanded="${S.showAllOpps}">${S.showAllOpps ? '▴ Show fewer ideas' : `＋ ${extraOpps} more ideas ▾`}</button>`);
+  setHTML($('new-line-opportunities-list'), shownOpps.join(''));
+  let oppNote = '';
+  if (!hasBill) oppNote = 'No current bill entered, so every add-on is listed. Enter the bill to see what the savings can cover.';
+  else if (margin < 0) oppNote = `This plan is $${money(Math.abs(margin))}/mo over the current bill, so there's no room to add yet. Try a lower plan.`;
+  else if (opps.length === 0) oppNote = "The savings don't cover any add-ons yet.";
+  const noteEl = $('reinvest-note');
+  noteEl.textContent = oppNote;
+  noteEl.hidden = !oppNote;
+  $('reinvest-new-lines-box').classList.toggle('no-opps', opps.length === 0);
+  $('basket-sep').classList.toggle('no-opps', opps.length === 0);
+
+  // Summary savings badge
+  const saveBox = $('sum-savings-box');
+  if (ongoingSavings >= 25.00) {
+    saveBox.className = 'sum-savings save-good';
+    saveBox.textContent = `🟢 Saves $${money(ongoingSavings)}/mo vs Old Bill!`;
+  } else if (ongoingSavings > 0) {
+    saveBox.className = 'sum-savings save-low';
+    saveBox.textContent = `⚡ Saves $${money(ongoingSavings)}/mo vs Old Bill`;
+  } else {
+    saveBox.className = 'sum-savings save-bad';
+    saveBox.textContent = bill > 0 ? `+$${money(Math.abs(ongoingSavings))}/mo vs Old Bill` : `Total Bill: $${money(totalHousehold)}/mo`;
+  }
+
+  // Bill cycle / first bill
+  const cutDay = parseInt($('bill-cut-day').value, 10) || 16;
+  const feeHandling = $('fee-billing-target').value;
+  const today = new Date().getDate();
+  const daysRemaining = (today <= cutDay) ? (cutDay - today) : ((30 - today) + cutDay);
+  const prorationRatio = round2(daysRemaining / 30);
+  const proratedAdj = round2((totalHousehold - bill) * prorationRatio);
+  const feesWaived = $('check-waived-fees').checked;
+  const phoneCount = S.phone ? 1 : 0;
+  const feesOnBill = (!feesWaived && feeHandling === 'bill') ? phoneCount * 35.00 : 0;
+  const firstBill = round2(totalHousehold + proratedAdj + feesOnBill);
+
+  $('cycle-days-badge').textContent = `${daysRemaining} Days Left in Cycle (${cutDay}th Cut)`;
+  $('first-bill-total').textContent = usd(firstBill);
+  $('ongoing-bill-total').textContent = `$${money(totalHousehold)}/mo`;
+  const notes = [
+    `• <b>Full Advance Month:</b> $${money(totalHousehold)} (New baseline plan + hardware installments).`,
+    `• <b>Proration (${daysRemaining} days):</b> ${proratedAdj >= 0 ? '+' : '-'}$${money(Math.abs(proratedAdj))} transition difference.`
+  ];
+  if (feesOnBill > 0) notes.push(`• <b>Upgrade/Act. Fees:</b> +$${money(feesOnBill)} ($35 billed to invoice).`);
+  setHTML($('first-bill-breakdown-notes'), notes.join('<br>'));
+
+  // Due today at register (7% IN sales tax)
+  const posFees = (!feesWaived && feeHandling === 'pos') ? phoneCount * 35.00 : 0;
+  const equipmentTax = phoneTaxPOS + tabletTaxPOS + watchTaxPOS + aipTaxPOS;
+  const totalDuePOS = round2(equipmentTax + posFees);
+  $('due-today-amt').textContent = isBiz ? `$0.00 Due at POS ($${money(totalDuePOS)} BTA)` : `$${money(totalDuePOS)} Due Today at Register`;
+  $('due-today-breakdown').textContent = isBiz
+    ? 'Corporate CRU BTA Active: All hardware taxes and fees billed to account.'
+    : `Includes 7% IN sales tax on equipment ($${money(equipmentTax)})` + (posFees > 0 ? ` + $${posFees} network fees` : '');
+
+  // SMS text
+  let sms = isBiz
+    ? `AT&T Business Quote: ${BIZ_PLANS.filter((p) => counts[p.key] > 0).map((p) => `${counts[p.key]}x ${p.short}`).join(', ')}. Total Monthly: $${money(totalHousehold)}/mo (w/ AutoPay).\n`
+    : `AT&T Quote: ${totalLines} Voice Line(s). Total Monthly: $${money(totalHousehold)}/mo (w/ AutoPay).\n`;
+  if (ongoingSavings > 0) sms += `• Ongoing Savings: $${money(ongoingSavings)}/mo vs prior bill!\n`;
+  if (tradeCredits > 0) sms += `• Trade-In Credits: -$${money(tradeCredits)}/mo in bill credits applied.\n`;
+  sms += `• First Bill Estimate: ~${usd(firstBill)} (includes ${daysRemaining} days proration), then stabilizes to $${money(totalHousehold)}/mo.\n`;
+  sms += `• Due Today at Register: $${isBiz ? '0.00 (Billed to Account)' : money(totalDuePOS)}.\nQuestions? Stop in-store to finalize!`;
+  $('sms-text').value = sms;
+  $('sms-link').href = 'sms:?&body=' + encodeURIComponent(sms);
+
+  const items = [];
+  tiersFor(S.segment).forEach((t) => { const n = counts[t.key]; if (n > 0) items.push({ t: `${n} × ${esc(t.name)}`, s: esc(t.step), p: round2(n * rate[t.key]) }); });
+  if (S.phone) items.push({ t: `📱 ${esc(S.phone)}`, s: tradeCredits > 0 ? 'With your trade-in credit' : '36-month installment', p: round2(netPhoneInstallment) });
+  if (S.tablet) items.push({ t: '📱 Connected tablet', s: esc(S.tablet), p: tabletMonthly });
+  if (S.watch) items.push({ t: '⌚ Connected watch', s: esc(S.watch), p: watchMonthly });
+  if (S.aip > 0) items.push({ t: '🛍️ 12-month accessory plan', s: `$${money(S.aip)} total`, p: round2(aipMonthly) });
+  if (S.prot.pa1) items.push({ t: '🛡️ Protect 1 (PA1)', s: 'Single device coverage', p: 17 });
+  if (S.prot.pa4) items.push({ t: '🛡️ Multi-device protection (PA4)', s: 'Up to 4 devices covered', p: 50 });
+  if (S.prot.htp) items.push({ t: '🏠 HomeTech protection', s: 'Whole-home electronics', p: 25 });
+  if (dtvMonthly > 0) items.push({ t: '📺 DIRECTV Stream', s: '', p: round2(dtvMonthly) });
+  const ctx = { bill, baseline, harvest, newTotal: totalHousehold, saveMo: ongoingSavings, firstBill, due: totalDuePOS, isBiz, items };
+  updateTracker(ctx);
+  updateCustomerSummary(ctx);
+  lastCalc = Object.assign({}, ctx, {
+    margin, recIdx,
+    selIdx: planOptions.findIndex((o, i) => (isBiz ? o.on : i === S.planIndex)),
+    planTitles: planOptions.map((o) => o.title.replace(/^\S+\s+/, '')),
+    planCosts: planOptions.map((o) => o.cost)
+  });
+
+  scheduleSave();
+}
+
+/* ============================== SAVE / RESTORE ============================== */
+let saveTimer, resetting = false;
+
+function snapshot() {
+  return {
+    seg: S.segment,
+    b: $('curr-total').value,
+    l: $('curr-lines').value,
+    cn: getCounts(),
+    cm: $('check-commit').checked,
+    d: $('curr-discount').value,
+    ap: $('curr-autopay').value,
+    awu: $('audit-watch-unused').checked,
+    atu: $('audit-tab-unused').checked,
+    nuad: $('audit-nua-drop').checked,
+    tht: $('toggle-has-tradeins').checked,
+    tlc: $('trade-lines-count').value,
+    ay: $('check-ayac-promo').checked,
+    tr: readTradeSelections(),
+    bcd: $('bill-cut-day').value,
+    fbt: $('fee-billing-target').value,
+    wf: $('check-waived-fees').checked,
+    hs: $('check-hotspot').checked,
+    hl: $('hotspot-lines-count').value,
+    hbo: $('check-hbo').checked,
+    sc: SCOPE_IDS.filter((id) => $(id).classList.contains('active')),
+    sp: S.planIndex,
+    phone: S.phone,
+    tab: S.tablet,
+    watch: S.watch,
+    aip: S.aip,
+    prot: S.prot
+  };
+}
+function saveNow() {
+  if (resetting) return;
+  clearTimeout(saveTimer);
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot())); } catch (_) { /* storage blocked */ }
+}
+function scheduleSave() {
+  if (resetting) return;
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveNow, 300);
+}
+
+function restoreState() {
+  let raw = null;
+  const fromHash = location.hash.indexOf('#q=') === 0;
+  if (fromHash) { try { raw = d
