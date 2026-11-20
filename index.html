@@ -461,6 +461,7 @@ body.seg-business .cons-only { display: none !important; }
 .ar-save.over { color: #B45309; }
 .ar-sub { font-size: 12.5px; color: var(--text-secondary); }
 .ar-sug { margin-top: 6px; font-size: 13px; font-weight: 700; color: var(--att-blue); }
+.agent-quoteline { margin-top: 8px; padding-top: 7px; border-top: 1px solid var(--sky-200); font-size: 13px; font-weight: 800; font-variant-numeric: tabular-nums; }
 @keyframes agent-flash { 0% { box-shadow: 0 0 0 0 rgba(0, 87, 184, 0.55); } 100% { box-shadow: 0 0 0 12px rgba(0, 87, 184, 0); } }
 .agent-flash { animation: agent-flash 1.1s ease-out; border-radius: 10px; }
 
@@ -555,9 +556,9 @@ body.presentation-mode :is(.rep-only, #sec-tradeins, #sec-scope, #sec-baseline, 
     </div>
     <div class="agent-log" id="agent-log" role="log" aria-live="polite" aria-label="Quote assistant conversation"></div>
     <div class="agent-chips" id="agent-chips"></div>
-    <form class="agent-form" id="agent-form" autocomplete="off">
+    <form class="agent-form" id="agent-form" autocomplete="off" novalidate>
       <label class="sr-only" for="agent-input">Describe the account or answer the question</label>
-      <input type="text" id="agent-input" class="addr-input" placeholder="Type an answer">
+      <input type="text" id="agent-input" class="addr-input" placeholder="Type here, like 3 lines, $240" enterkeyhint="send" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="400">
       <button type="submit" class="btn agent-send">Send</button>
     </form>
   </section>
@@ -890,6 +891,22 @@ body.presentation-mode :is(.rep-only, #sec-tradeins, #sec-scope, #sec-baseline, 
   <div class="trk-first"><span class="trk-k">Next bill</span><span class="trk-v" id="trk-first">$0.00</span></div>
 </aside>
 </div>
+
+<script>
+/* Fallback: if the main script below fails to start, the assistant box says so instead of staying silent. */
+(function () {
+  var f = document.getElementById('agent-form');
+  if (!f) return;
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (window.__agentReady) return;
+    var log = document.getElementById('agent-log'), m = document.createElement('div'), p = document.createElement('p');
+    m.className = 'agent-msg bot';
+    p.textContent = 'The assistant has not started on this page. Reload with Ctrl+Shift+R (Cmd+Shift+R on a Mac). If it still does nothing, the page script did not load.';
+    m.appendChild(p); log.appendChild(m); log.scrollTop = log.scrollHeight;
+  });
+})();
+</script>
 
 <script>
 (() => {
@@ -1778,4 +1795,896 @@ function scheduleSave() {
 function restoreState() {
   let raw = null;
   const fromHash = location.hash.indexOf('#q=') === 0;
-  if (fromHash) { try { raw = d
+  if (fromHash) { try { raw = decodeURIComponent(location.hash.substring(3)); } catch (_) { /* ignore */ } }
+  if (!raw) { try { raw = localStorage.getItem(STORAGE_KEY); } catch (_) { /* ignore */ } }
+  if (!raw) return;
+
+  let s;
+  try { s = JSON.parse(raw); } catch (_) { return; }
+  if (!s || typeof s !== 'object') return;
+
+  // Everything below is validated: a shared link is untrusted input.
+  const bool = (v) => v === true;
+  const toInt = (v) => { const n = parseInt(v, 10); return Number.isFinite(n) ? n : -1; };
+
+  if (s.seg === 'consumer' || s.seg === 'business') { S.segment = s.seg; syncSegmentButtons(); syncSegmentUI(); }
+  if (s.b !== undefined && Number.isFinite(parseFloat(s.b))) $('curr-total').value = String(s.b);
+  setSelect('curr-lines', s.l);
+  // Per-tier line counts (older links carried consumer p/e/v instead of cn).
+  const cn = (s.cn && typeof s.cn === 'object') ? s.cn : (S.segment === 'consumer' ? { prem: s.p, extra: s.e, val: s.v } : null);
+  let countsRestored = false;
+  if (cn) {
+    const o = emptyCounts();
+    let total = 0, ok = true;
+    tierKeys().forEach((k) => { const v = toInt(cn[k]); if (v < 0 || v > maxLines()) ok = false; else { o[k] = v; total += v; } });
+    if (ok && total >= 1 && total <= maxLines()) { putCounts(o); setSelect('curr-lines', total); countsRestored = true; }
+  }
+  // No usable per-tier counts (e.g. a Business link from before the 3.0 plans): rebuild them from the line count so the two never disagree.
+  if (!countsRestored) putCounts(defaultCounts(parseInt($('curr-lines').value, 10) || 1));
+  setSelect('curr-discount', s.d);
+  setSelect('curr-autopay', AP_LEGACY[s.ap] || s.ap);
+  $('check-commit').checked = bool(s.cm);
+  $('audit-watch-unused').checked = bool(s.awu);
+  $('audit-tab-unused').checked = bool(s.atu);
+  $('audit-nua-drop').checked = bool(s.nuad);
+
+  if (bool(s.tht)) {
+    $('toggle-has-tradeins').checked = true;
+    $('wrap-trade-inner').hidden = false;
+    $('wrap-trade-count').hidden = false;
+    $('check-ayac-promo').checked = bool(s.ay);
+    setSelect('trade-lines-count', s.tlc);
+    buildTradeCards();
+    if (Array.isArray(s.tr)) {
+      applyTradeSelections(s.tr.slice(0, 4).map((t) => ({ m: (t && TRADES[toInt(t.m)]) ? String(toInt(t.m)) : '0', d: !!(t && t.d) })));
+      syncAllTradeLines();
+    }
+  }
+
+  setSelect('bill-cut-day', s.bcd);
+  setSelect('fee-billing-target', s.fbt);
+  $('check-waived-fees').checked = bool(s.wf);
+  $('check-hbo').checked = bool(s.hbo);
+  if (bool(s.hs)) {
+    $('check-hotspot').checked = true;
+    $('hotspot-lines-wrap').hidden = false;
+    setSelect('hotspot-lines-count', s.hl);
+  }
+
+  if (Array.isArray(s.sc)) SCOPE_IDS.forEach((id) => setScopeActive($(id), s.sc.indexOf(id) !== -1));
+  syncBroadbandSection();
+  const sp = toInt(s.sp);
+  if (sp >= 0 && sp <= 2) S.planIndex = sp;
+
+  if (DEVICES.some((d) => d[1] === s.phone)) S.phone = s.phone;
+  if (s.tab === TABLET_LABEL) S.tablet = TABLET_LABEL;
+  if (s.watch === WATCH_LABEL) S.watch = WATCH_LABEL;
+  const aip = Number(s.aip);
+  if (Number.isFinite(aip) && aip >= 0 && aip <= 10000) S.aip = aip;
+  if (s.prot && typeof s.prot === 'object') { S.prot = { pa1: bool(s.prot.pa1), pa4: bool(s.prot.pa4), htp: bool(s.prot.htp) }; }
+  syncProtTiles();
+
+  // Don't leave a stale #q= in the address bar: a refresh would discard later edits.
+  if (fromHash) { try { history.replaceState(null, '', location.pathname + location.search); } catch (_) { /* ignore */ } }
+}
+
+const homePath = () => location.origin + (S.segment === 'business' ? '/business' : '/');
+
+function shareQuoteURL() {
+  const url = homePath() + '#q=' + encodeURIComponent(JSON.stringify(snapshot()));
+  copyText(url).then((ok) => toast(ok ? 'Quote URL copied to clipboard' : 'Could not copy the link'));
+}
+function resetToNextCustomer() {
+  resetting = true;
+  clearTimeout(saveTimer);
+  try { localStorage.removeItem(STORAGE_KEY); } catch (_) { /* ignore */ }
+  location.href = homePath();
+}
+
+/* ============================== EVENT WIRING ============================== */
+const actions = {
+  'set-segment': (el) => setSegment(el.dataset.seg),
+  share: shareQuoteURL,
+  reset: resetToNextCustomer,
+  'toggle-pres': togglePres,
+  print: () => window.print(),
+  'copy-address': () => {
+    const a = $('addr-field').value;
+    if (!a) { toast('Address is empty'); return; }
+    copyText(a).then((ok) => toast(ok ? 'Copied address: ' + a : 'Could not copy the address'));
+  },
+  'toggle-scope': toggleScope,
+  'toggle-prot': (el) => toggleProt(el.dataset.prot),
+  attach: (el) => attach(el.dataset.attach, Number(el.dataset.amount) || 0),
+  'remove-hw': (el) => removeHardware(el.dataset.hw),
+  'change-count': (el) => changeCount(el.dataset.type, Number(el.dataset.delta)),
+  'select-plan': (el) => selectPlan(Number(el.dataset.idx)),
+  'toggle-opps': () => { S.showAllOpps = !S.showAllOpps; runCalc(); },
+  'scroll-steppers': () => scrollTo($('cnt-prem'), 'center'),
+  'run-numbers': () => { runCalc(); scrollTo($('sec-wireless-config'), 'start'); },
+  'copy-sms': () => copyText($('sms-text').value).then((ok) => toast(ok ? 'Quote copied' : 'Copy failed. Select the text and copy it manually.'))
+};
+const changes = {
+  calc: requestCalc,
+  'trade-master': toggleTradeMaster,
+  'trade-count': () => { buildTradeCards(); requestCalc(); },
+  'trade-ayac': () => { syncAllTradeLines(); requestCalc(); },
+  'trade-line': (el) => { updateTradeBadge(Number(el.dataset.line)); requestCalc(); },
+  'set-lines': (el) => setLines(el.value),
+  'hotspot-toggle': toggleHotspot,
+  'hotspot-routing': applyHotspotRouting
+};
+
+document.addEventListener('click', (e) => {
+  const el = e.target.closest('[data-action]');
+  const fn = el && actions[el.dataset.action];
+  if (fn) fn(el);
+});
+document.addEventListener('change', (e) => {
+  const el = e.target.closest('[data-change]');
+  const fn = el && changes[el.dataset.change];
+  if (fn) fn(el);
+});
+document.addEventListener('input', (e) => {
+  const el = e.target.closest('[data-input]');
+  const fn = el && changes[el.dataset.input];
+  if (fn) fn(el);
+});
+window.addEventListener('pagehide', saveNow);
+document.addEventListener('visibilitychange', () => { if (document.hidden) saveNow(); });
+
+/* ============================== AMBIENT BACKGROUND ============================== */
+// Drawn at 1/4 resolution and 30fps: the gradients are soft, so it looks the same for a fraction of the GPU/battery cost.
+(() => {
+  const canvas = $('ambient-canvas');
+  const ctx = canvas && canvas.getContext('2d');
+  if (!ctx) return;
+  const SCALE = 0.25, FRAME_MS = 1000 / 30;
+  let w = 0, h = 0, time = 0, last = 0, raf = 0, resizeTimer;
+  const orbs = [
+    { x: 0.25, y: 0.25, r: 520, c: 'rgba(2, 132, 199, 0.22)', s: 0.005 },
+    { x: 0.75, y: 0.35, r: 580, c: 'rgba(0, 87, 184, 0.24)', s: 0.004 },
+    { x: 0.50, y: 0.75, r: 540, c: 'rgba(56, 189, 248, 0.25)', s: 0.006 }
+  ];
+  function frame() {
+    ctx.clearRect(0, 0, w, h);
+    orbs.forEach((o, i) => {
+      const cx = w * o.x + Math.sin(time * o.s * 20 + i) * 80;
+      const cy = h * o.y + Math.cos(time * o.s * 18 + i) * 70;
+      const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, o.r);
+      g.addColorStop(0, o.c);
+      g.addColorStop(1, 'rgba(186, 230, 253, 0)');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(cx, cy, o.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+  }
+  function loop(now) {
+    raf = requestAnimationFrame(loop);
+    const dt = now - last;
+    if (dt < FRAME_MS) return;
+    last = now;
+    time += 0.01 * (Math.min(dt, 100) / 16.667);
+    frame();
+  }
+  function start() { if (raf || reduceMotion.matches) return; last = performance.now(); raf = requestAnimationFrame(loop); }
+  function stop() { cancelAnimationFrame(raf); raf = 0; }
+  function resize() {
+    w = window.innerWidth; h = window.innerHeight;
+    canvas.width = Math.ceil(w * SCALE); canvas.height = Math.ceil(h * SCALE);
+    ctx.setTransform(SCALE, 0, 0, SCALE, 0, 0);
+    frame();
+  }
+  window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(resize, 150); });
+  document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+  if (reduceMotion.addEventListener) reduceMotion.addEventListener('change', () => { if (reduceMotion.matches) stop(); else start(); });
+  resize();
+  start();
+})();
+
+/* ============================== QUOTE ASSISTANT ============================== */
+// A rule-based assistant that lives in the page; nothing is sent anywhere. It asks one question at a time, also understands
+// one typed sentence that answers several at once, and writes every answer into the same fields and buttons a rep would use,
+// so the quote re-rates after each answer exactly as if it had been typed into the form.
+const AG = { got: {}, cur: null, chips: [], sel: new Set(), has: new Set(), addLines: 0, pendingAdd: 0, tradeN: 0, started: false, finished: false, carry: null };
+const AG_NUM = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10, eleven: 11, twelve: 12, thirteen: 13, fourteen: 14, fifteen: 15, sixteen: 16, seventeen: 17, eighteen: 18, nineteen: 19, twenty: 20 };
+const AG_NW = Object.keys(AG_NUM).join('|');
+const AG_TENS = { ten: 10, twenty: 20, thirty: 30, forty: 40, fifty: 50, sixty: 60, seventy: 70, eighty: 80, ninety: 90 };
+const agNum = (w) => (/^\d+$/.test(w) ? parseInt(w, 10) : (AG_NUM[w] || null));
+const agNorm = (s) => String(s).toLowerCase().replace(/['’]/g, '').replace(/[^a-z0-9$.,/+&%\- ]/g, ' ').replace(/\s+/g, ' ').trim();
+const agYes = (t) => /^(?:y|yes|yeah|yea|yep|yup|sure|ok|okay|correct|definitely|absolutely|they do|it does|i think so)\b/.test(t);
+const agNo = (t) => /^(?:n|no|nope|nah|none|nothing|never|not really|not that i know|they dont|it doesnt|doesnt|dont)\b/.test(t);
+// Filler words reps type around an answer ("its about 240", "has 3").
+const agStrip = (t) => t.replace(/\b(?:about|around|roughly|approx|approximately|like|just|only|its|it is|is|has|have|got|they|theyre|currently|maybe|probably|the|a|an|of|for|with|on|bill|total|pays?|paying|paid)\b/g, ' ').replace(/\s+/g, ' ').trim();
+const AG_ADDLINE = /\b(?:add|adding|another|extra|new|additional)\s+(?:(?:a|an|one|two|three|\d{1,2})\s+)?(?:phone\s+)?lines?\b/g;
+const AG_DROP = /\b(?:drop|dropping|unused|dont use|not using|never use|cancel)\b[^.,;]{0,20}?\b(?:watch|tablet|ipad|next ?up|nua)\b/g;
+const agOptText = (id, value) => { const o = Array.prototype.find.call($(id).options, (x) => x.value === value); return o ? o.textContent : value; };
+
+function agFlash(...els) {
+  els.forEach((el) => {
+    if (!el) return;
+    el.classList.remove('agent-flash'); void el.offsetWidth; el.classList.add('agent-flash');
+    setTimeout(() => el.classList.remove('agent-flash'), 1300);
+  });
+}
+
+/* ---- parsers (each returns null when the text does not mention the thing) ---- */
+function agLines(t, cur) {
+  const x = t.replace(AG_ADDLINE, ' addline ');
+  let m = x.match(new RegExp('\\b(\\d{1,2}|' + AG_NW + ')[- ](?:phone )?lines?\\b'))
+       || x.match(new RegExp('\\b(?:family|group|account) of (\\d{1,2}|' + AG_NW + ')\\b'))
+       || x.match(new RegExp('\\b(\\d{1,2}|' + AG_NW + ') (?:people|users|members|of us)\\b'));
+  if (m) return agNum(m[1]);
+  if (/\b(?:a )?couple(?: of)?(?: phone)? lines?\b/.test(x)) return 2;
+  if (/\b(single line|just me|only me)\b/.test(x)) return 1;
+  if (cur) {
+    const s = agStrip(x);
+    m = s.match(new RegExp('^(\\d{1,2}|' + AG_NW + ')(?: (?:phones?|phone lines?|devices?|lines?|people))?$'));
+    if (m) return agNum(m[1]);
+    if (s === 'couple') return 2;
+  }
+  return null;
+}
+// "two forty" -> 240, "two hundred forty" -> 240, "three ten" -> 310 (only trusted where a bill is being talked about).
+function agWordMoney(t) {
+  const d = '(one|two|three|four|five|six|seven|eight|nine)', tens = '(ten|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety)';
+  let m = t.match(new RegExp('\\b' + d + ' hundred(?: and)?(?: ' + tens + '(?: ' + d + ')?)?\\b'));
+  if (m) return AG_NUM[m[1]] * 100 + (m[2] ? AG_TENS[m[2]] : 0) + (m[3] ? AG_NUM[m[3]] : 0);
+  m = t.match(new RegExp('\\b' + d + ' ' + tens + '(?: ' + d + ')?\\b'));
+  return m ? AG_NUM[m[1]] * 100 + AG_TENS[m[2]] + (m[3] ? AG_NUM[m[3]] : 0) : null;
+}
+function agBill(t, cur) {
+  const num = '(\\d[\\d,]*(?:\\.\\d{1,2})?)';
+  const x = t.replace(/\b(?:about|around|roughly|approx|approximately|like|just|its|currently)\b/g, ' ').replace(/\s+/g, ' ').trim();
+  let m = x.match(new RegExp('\\$\\s*' + num))
+       || x.match(new RegExp('\\b' + num + '\\s*(?:dollars|bucks|usd|a month|a mo|per month|per mo|/\\s*mo|monthly|mo)\\b'))
+       || x.match(new RegExp('\\b(?:bill|pays?|paying|paid|total|spends?|costs?)\\b[^\\d$]{0,16}' + num + '(?!\\s*(?:lines?|phones?|devices?|people))'))
+       || x.match(new RegExp('\\b' + num + '\\s+(?:for|on)\\s+(?:\\d{1,2}|' + AG_NW + ')\\s+(?:phone )?lines?\\b'));
+  if (!m && (cur || /\b(?:bill|pays?|paying|paid|total|spends?|costs?|a month|per month|monthly)\b/.test(x))) {
+    const w = agWordMoney(x);
+    if (w) return w;
+  }
+  if (!m && cur) m = agStrip(x).match(new RegExp('^' + num + '$'));
+  if (m) { const v = parseFloat(m[1].replace(/,/g, '')); return v > 0 && v < 10000 ? v : null; }
+  if (/\b(no bill|no current bill|new customer|new to att|brand new|not with att|doesnt have att)\b/.test(x) || (cur && (agNo(x) || /\b(new|na|skip)\b/.test(x)))) return 0;
+  return null;
+}
+function agAddCount(x) {
+  const m = x.match(new RegExp('\\b(?:add|adding|another|extra|new|additional)\\s+(a|an|one|two|three|\\d{1,2})\\s+(?:phone\\s+)?lines?\\b'));
+  return m ? (agNum(m[1]) || 1) : 1;
+}
+function agHotspot(t, cur) {
+  if (/\b(no|dont need|doesnt need|without|not needed)\b[^.,;]{0,14}\bhot ?spot\b/.test(t) || /\bhot ?spot\b[^.,;]{0,10}\b(not needed|no)\b/.test(t)) return '0';
+  const lines = parseInt($('curr-lines').value, 10) || 1;
+  const pick = (n) => (n >= lines ? 'all' : (n >= 2 ? '2' : '1'));
+  if (/\bhot ?spot\b/.test(t)) {
+    if (/\b(all|every|each)\b[^.,;]{0,8}\blines?\b|\beveryone\b/.test(t)) return 'all';
+    const m = t.match(new RegExp('hot ?spot\\b[^.,;]{0,22}?\\b(\\d{1,2}(?!\\d)|one|two|three)\\s*(?:lines?|phones?)?'))
+           || t.match(new RegExp('\\b(\\d{1,2}(?!\\d)|one|two|three)\\s*(?:lines?|phones?)?\\s*(?:needs?|with|on)?\\s*hot ?spot'));
+    return m ? pick(agNum(m[1])) : '1';
+  }
+  if (cur) {
+    if (/\b(nobody|no one|noone)\b/.test(t) || agNo(t)) return '0';
+    if (/\b(all|everyone|everybody|every line|each line)\b/.test(t)) return 'all';
+    if (agYes(t)) return '1';
+    const m = agStrip(t).match(new RegExp('^(\\d{1,2}|one|two|three)(?: lines?)?$'));
+    if (m) return pick(agNum(m[1]));
+  }
+  return null;
+}
+// What was said about the trade-in phone, kept so the "which phone?" question can be answered from the same message.
+function agTradeCarry(t) {
+  const i = t.search(/\btrad/);
+  return [i >= 0 ? t.slice(i) : t, i > 0 ? t.slice(0, i) : ''].filter((s) => agQueryTokens(s).length);
+}
+function agTrade(t, cur) {
+  if (/\b(no|not|without|nothing)\b[^.,;]{0,12}\btrad(?:e[ds]?|ing)[- ]?(?:ins?)?\b/.test(t)) { AG.carry = null; return 0; }
+  if (/\btrad(?:e[ds]?|ing)\b/.test(t)) {
+    const m = t.match(/\b(\d(?!\d)|one|two|three|four)\b\s*(?:phones?|devices?|lines?)?\s*(?:to |for |being |getting )?trad/)
+           || t.match(/\btrad(?:e[ds]?|ing)[- ]?(?:ins?)?\b[^.,;]{0,14}?\b(\d(?!\d)|one|two|three|four)\b/);
+    AG.carry = agTradeCarry(t);
+    return m ? Math.min(agNum(m[1]), 4) : 1;
+  }
+  if (cur) {
+    const m = agStrip(t).match(/^(\d|one|two|three|four)(?: phones?| devices?)?$/);
+    if (m) { AG.carry = null; return Math.min(agNum(m[1]), 4); }
+    if (agYes(t)) { AG.carry = null; return 1; }
+    if (agNo(t)) { AG.carry = null; return 0; }
+    if (/\b(old|current|existing|their|his|her)\b[^.,;]{0,14}\b(phones?|device|iphone|galaxy|pixel)\b/.test(t)) { AG.carry = null; return 1; }
+    const r = agMatchModel(t, AG_TRADELIST);
+    if (r !== null && !r.none) { AG.carry = agTradeCarry(t); return 1; }
+  }
+  return null;
+}
+const AG_PHONES = DEVICES.map((d) => {
+  const base = d[1].replace(/\s*\(.*\)\s*/, '');
+  const names = [agNorm(base)];
+  if (/ Base$/.test(base)) names.push(agNorm(base.replace(/ Base$/, '')));
+  return { name: d[1], names };
+});
+function agPhoneModel(t) {
+  const u = ' ' + t.replace(/[,.;/]/g, ' ').replace(/\s+/g, ' ') + ' ';
+  let best = null;
+  AG_PHONES.forEach((p) => p.names.forEach((n) => {
+    const i = u.indexOf(' ' + n + ' ');
+    if (i >= 0 && (!best || n.length > best.n.length)) best = { name: p.name, n, rest: u.slice(i + 1 + n.length) };
+  }));
+  if (!best) return null;
+  // "iPhone 17 Pro" is not "iPhone 17": better to ask than to guess a model that is not on the price list.
+  if (/^\s*(pro|max|plus|air|ultra|fold\d?|flip\d?|xl|e|mini)\b/.test(best.rest)) return null;
+  return best.name;
+}
+/* ---- model names typed in words: "17", "s26 ultra", "iphone 13", "pixel" ---- */
+// A price-list name such as "iPhone 12 Pro Max / 13" is several phones; each "/" part is read as its own alias,
+// borrowing the brand (and, for a bare "Max" or "FE", the model number) from the part before it.
+const AG_MODIFIER = new Set(['pro', 'max', 'plus', 'ultra', 'mini', 'xl', 'fe', 'air', 'se', 'e', 'xr', 'xs', 'base', '+', 'duo', 'lite']);
+const AG_KEEP = new Set(['iphone', 'galaxy', 'pixel', 'z', 'fold', 'flip', 's'].concat(Array.from(AG_MODIFIER)));
+const AG_BRAND = { samsung: 'galaxy', apple: 'iphone', google: 'pixel' };
+const agModelTokens = (s) => agNorm(s).replace(/\bplus\b/g, '+').replace(/[-/]/g, ' ').replace(/([a-z])(\d)/g, '$1 $2').replace(/(\d)([a-z])/g, '$1 $2').replace(/\+/g, ' + ').split(' ').filter(Boolean);
+const agQueryTokens = (t) => Array.from(new Set(agModelTokens(t).map((w) => AG_BRAND[w] || w).filter((w) => /\d/.test(w) || AG_KEEP.has(w))));
+function agAliases(name) {
+  const out = []; let prev = [];
+  name.replace(/\s*\(.*\)\s*/, ' ').split('/').map(agModelTokens).filter((a) => a.length).forEach((tk, i) => {
+    let set;
+    if (i === 0) set = tk;
+    else if (tk.some((w) => /\d/.test(w))) set = prev.filter((w) => !/\d/.test(w) && !AG_MODIFIER.has(w)).concat(tk);
+    else set = prev.concat(tk);
+    out.push(new Set(set)); prev = set;
+  });
+  return out;
+}
+const AG_DEVLIST = DEVICES.map((d) => ({ v: d[1], t: d[1], sets: agAliases(d[1]) }));
+const AG_TRADELIST = TRADES.map((d, i) => ({ v: String(i), t: d[3], sets: agAliases(d[3]) })).filter((x) => !/legacy/i.test(x.t));
+// Returns null (nothing model-like), a value string (one clear match), { none: true, brand } or { hits: [...] }.
+function agMatchModel(t, list) {
+  const q = agQueryTokens(t);
+  if (!q.length) return null;
+  const hits = [];
+  list.forEach((it) => {
+    let best = Infinity;
+    it.sets.forEach((set) => { if (q.every((w) => set.has(w))) best = Math.min(best, set.size - q.length); });
+    if (best < Infinity) hits.push({ it, sc: best });
+  });
+  if (!hits.length) return { none: true, brand: q.find((w) => w === 'iphone' || w === 'galaxy' || w === 'pixel') || null };
+  hits.sort((a, b) => a.sc - b.sc);
+  const hasNum = q.some((w) => /\d/.test(w)), exact = hits.filter((h) => h.sc === 0);
+  if (hasNum && exact.length === 1) return exact[0].it.v;
+  if (hasNum && hits.length === 1) return hits[0].it.v;
+  return { hits: hits.map((h) => h.it) };
+}
+// Turns an ambiguous or unknown model into a question the rep can answer with one tap.
+function agModelAsk(r, label, all) {
+  if (r === null || typeof r === 'string') return r;
+  if (r.none) {
+    const pool = r.brand ? all.filter((o) => o.t.toLowerCase().indexOf(r.brand) === 0) : all;
+    return { say: "I can't find that model on the list. Pick the closest one.", select: { label, options: pool.length ? pool : all } };
+  }
+  const opts = r.hits.map((h) => ({ v: h.v, t: h.t }));
+  return opts.length <= 6 ? { say: 'Which one?', options: opts } : { say: 'Which one?', select: { label, options: opts } };
+}
+const agAuditChecked = () => [['watch', 'audit-watch-unused'], ['tab', 'audit-tab-unused'], ['nua', 'audit-nua-drop']].filter((p) => $(p[1]).checked).map((p) => p[0]);
+const AG_AUDIT = { watch: ['audit-watch-unused', 'Watch line'], tab: ['audit-tab-unused', 'Tablet line'], nua: ['audit-nua-drop', 'Next Up'] };
+const AG_PROT = { pa1: 'Protect 1', pa4: 'Multi-device (PA4)', htp: 'HomeTech' };
+const DEVICE_OPTS = DEVICES.map((d) => ({ v: d[1], t: d[1], g: d[2] === 'apple' ? 'iPhone' : 'Android' }));
+const TRADE_OPTS = TRADES.map((t, i) => ({ v: String(i), t: t[3] }));
+
+/* ---- the questions, in the order they are asked ---- */
+const SLOTS = [
+  { id: 'seg', label: 'Account type', applies: () => true,
+    ask: () => ({ q: 'Is this a personal or a business account?', chips: [{ t: 'Personal', v: 'consumer' }, { t: 'Business', v: 'business' }] }),
+    hint: 'Say "personal" or "business".',
+    parse: (t, cur) => {
+      if (/\b(business|biz|llc|cru)\b/.test(t) || /\b(company|corporate)\b(?! (?:discount|rate|plan))/.test(t)) return 'business';
+      if (/\b(personal|consumer|residential|individual)\b/.test(t)) return 'consumer';
+      if (cur) {
+        if (/\b(work|employer|office|inc|enterprise|self employed)\b/.test(t)) return 'business';
+        if (/\b(me|myself|home|family|my own|private|regular|retail|household)\b/.test(t)) return 'consumer';
+      }
+      return null;
+    },
+    apply: (v) => {
+      if (v !== S.segment) { setSegment(v); AG.got.discount = false; AG.got.commit = false; AG.got.hbo = false; }
+      agFlash(document.querySelector('.seg-btn.active'));
+      return 'Account type: ' + (v === 'business' ? 'Business' : 'Personal');
+    } },
+  { id: 'lines', label: 'Lines', applies: () => true,
+    ask: () => ({ q: 'How many phone lines are on the account today?', chips: (S.segment === 'business' ? [1, 2, 3, 5, 10, 20] : [1, 2, 3, 4, 5, 6]).map((n) => ({ t: String(n), v: n })) }),
+    hint: 'Type the number of lines, like 3.',
+    parse: (t, cur) => agLines(t, cur),
+    apply: (n) => {
+      const max = maxLines(), k = Math.min(Math.max(n, 1), max), was = $('curr-lines').value;
+      setSelect('curr-lines', String(k)); setLines(k);
+      if ($('check-hotspot').checked) routeHotspot();
+      for (let i = 0; i < AG.addLines; i++) attach('voice');
+      runCalc(); agFlash($('curr-lines'));
+      return 'Lines: ' + k + (k === n ? '' : (n > max ? ' (the most this account type allows)' : ' (at least one line)')) + (was === String(k) ? ' (already set)' : '');
+    } },
+  { id: 'bill', label: 'Current bill', applies: () => true,
+    ask: () => ({ q: "What's the current monthly bill, before taxes?", chips: [{ t: 'No current bill', v: 0 }] }),
+    hint: 'Type the monthly amount, like 240.',
+    parse: (t, cur) => agBill(t, cur),
+    apply: (v) => {
+      const was = parseFloat($('curr-total').value) || 0;
+      $('curr-total').value = v > 0 ? String(v) : ''; runCalc(); agFlash($('curr-total'));
+      return (v > 0 ? 'Current bill: $' + money(v) : 'No current bill') + (was === v ? ' (already set)' : '');
+    } },
+  { id: 'autopay', label: 'AutoPay', applies: () => true,
+    ask: () => ({ q: 'How do they pay today?', chips: Array.prototype.map.call($('curr-autopay').options, (o) => ({ t: o.textContent, v: o.value })) }),
+    hint: 'Say how they pay: checking or debit, credit card, or no AutoPay.',
+    parse: (t, cur) => {
+      if (/\b(no auto ?pay|without auto ?pay|not on auto ?pay|cash|pays? in store)\b/.test(t)) return 'ap0';
+      if (S.segment === 'business') {
+        if (/\b(bank|checking|ach|paperless)\b/.test(t)) return 'ap10';
+        if (/\bdebit\b/.test(t)) return 'ap5';
+        if (/\b(credit|card|visa|mastercard|amex|none)\b/.test(t)) return 'ap0';
+      } else {
+        if (/\b(checking|debit|bank|ach)\b/.test(t)) return 'ap10';
+        if (/\b(credit|card|visa|mastercard|amex|discover)\b/.test(t)) return 'ap5';
+        if (cur && agNo(t)) return 'ap0';
+      }
+      // "yes" or just "autopay": on AutoPay, but the discount depends on how, so ask.
+      if ((cur && agYes(t)) || /\bauto ?pay\b/.test(t)) return { say: 'Which kind of AutoPay?', options: Array.prototype.map.call($('curr-autopay').options, (o) => ({ t: o.textContent, v: o.value })) };
+      return null;
+    },
+    apply: (v) => { const was = $('curr-autopay').value; setSelect('curr-autopay', v); runCalc(); agFlash($('curr-autopay')); return 'AutoPay: ' + agOptText('curr-autopay', v) + (was === v ? ' (already set)' : ''); } },
+  { id: 'discount', label: 'Discount', applies: () => true,
+    ask: () => ({ q: 'Is there a discount on the account today?', chips: Array.prototype.map.call($('curr-discount').options, (o) => ({ t: o.textContent, v: o.value })) }),
+    hint: 'Say which discount applies, or "none".',
+    parse: (t, cur) => {
+      if (S.segment === 'business') {
+        if (/\b(firstnet|first net|first responder|agency)\b/.test(t)) return 'biz_fn';
+        if (/\b(evp|corporate agreement)\b/.test(t)) return 'biz_evp';
+        if (/\bno discount\b/.test(t) || (cur && (agNo(t) || /\b(standard|regular)\b/.test(t)))) return 'biz_std';
+        if (cur && agYes(t)) return { say: 'Which discount?', options: Array.prototype.map.call($('curr-discount').options, (o) => ({ t: o.textContent, v: o.value })) };
+      } else {
+        if (/\b(military|veteran|vet|firstnet|first net|first responder|responder)\b/.test(t)) return 'apprec_mil';
+        if (/\b(has|have|already|existing)\b[^.,;]{0,12}\bfiber\b|\bfiber (discount|convergence)\b/.test(t) || (cur && /^fiber$/.test(t))) return 'fiber';
+        if (/\b(employer|fan|company discount|work discount|corporate discount)\b/.test(t)) return 'fan_corp';
+        if (/\bno discount\b/.test(t) || (cur && (agNo(t) || /\b(standard|regular)\b/.test(t)))) return 'none';
+        if (cur && agYes(t)) return { say: 'Which discount?', options: Array.prototype.map.call($('curr-discount').options, (o) => ({ t: o.textContent, v: o.value })) };
+      }
+      return null;
+    },
+    apply: (v) => { const was = $('curr-discount').value; setSelect('curr-discount', v); runCalc(); agFlash($('curr-discount')); return 'Discount: ' + agOptText('curr-discount', v) + (was === v ? ' (already set)' : ''); } },
+  { id: 'commit', label: 'Commitment', applies: () => S.segment === 'business',
+    ask: () => ({ q: 'Are the phone lines on a 2 or 3 year service commitment? That adds $25 a line.', chips: [{ t: 'Yes', v: true }, { t: 'No', v: false }] }),
+    hint: 'Say yes or no.',
+    parse: (t, cur) => {
+      if (/\b(no|not|without)\b[^.,;]{0,15}\bcommit/.test(t)) return false;
+      if (/\b(2|3|two|three)[- ]?(year|yr)s?\b/.test(t) || /\bcommit/.test(t)) return true;
+      if (cur) { if (agYes(t)) return true; if (agNo(t)) return false; }
+      return null;
+    },
+    apply: (v) => { $('check-commit').checked = !!v; runCalc(); agFlash($('check-commit').closest('label')); return 'Service commitment: ' + (v ? 'yes' : 'no'); } },
+  { id: 'audit', label: 'Add-ons to drop', applies: () => true,
+    ask: () => ({ q: "Are they paying for anything they don't use?", multi: true,
+      chips: [{ t: 'Watch line', v: 'watch', multi: true }, { t: 'Tablet line', v: 'tab', multi: true }, { t: 'Next Up', v: 'nua', multi: true }, { t: 'Done', done: true, primary: true }, { t: 'Nothing to drop', v: [], none: true }] }),
+    hint: 'Name what to drop (watch, tablet, Next Up) or say "nothing".',
+    parse: (t, cur) => {
+      const found = new Set();
+      if (cur) {
+        if (/\bwatch\b/.test(t)) found.add('watch');
+        if (/\b(tablet|ipad)\b/.test(t)) found.add('tab');
+        if (/\b(next ?up|nua)\b/.test(t)) found.add('nua');
+        if (agNo(t) && !/\b(drop|cancel|unused|dont use|not using|never use)\b/.test(t)) return [];
+        if (found.size) return [...found];
+        return (agNo(t) || /\b(nothing|none|no)\b/.test(t)) ? [] : null;
+      }
+      (t.match(AG_DROP) || []).forEach((m) => {
+        if (/watch/.test(m)) found.add('watch');
+        if (/tablet|ipad/.test(m)) found.add('tab');
+        if (/next ?up|nua/.test(m)) found.add('nua');
+      });
+      if (!found.size) return null;
+      agAuditChecked().forEach((k) => found.add(k));
+      return [...found];
+    },
+    apply: (list) => {
+      const set = new Set(list);
+      Object.keys(AG_AUDIT).forEach((k) => { $(AG_AUDIT[k][0]).checked = set.has(k); });
+      runCalc(); agFlash(...list.map((k) => $(AG_AUDIT[k][0]).closest('label')));
+      return set.size ? 'Dropping: ' + list.map((k) => AG_AUDIT[k][1]).join(', ') : 'Nothing to drop';
+    } },
+  { id: 'hotspot', label: 'Hotspot', applies: () => true,
+    ask: () => ({ q: 'Does anyone need dedicated hotspot data?', chips: [{ t: 'No', v: '0' }, { t: '1 line', v: '1' }, { t: '2 lines', v: '2' }, { t: 'All lines', v: 'all' }] }),
+    hint: 'Say how many lines need hotspot, or "no".',
+    parse: (t, cur) => agHotspot(t, cur),
+    apply: (v) => {
+      const n = parseInt($('curr-lines').value, 10) || 1;
+      const k = (v === '2' && n < 2) ? 'all' : v, on = k !== '0', wasOn = $('check-hotspot').checked;
+      $('check-hotspot').checked = on; $('hotspot-lines-wrap').hidden = !on; $('hotspot-lines-count').value = on ? k : '0';
+      // Same as the checkbox: routing only runs when hotspot is switched on or off. "No" on a fresh quote must not reset the plan.
+      if (on || wasOn) routeHotspot();
+      runCalc(); agFlash($('check-hotspot').closest('label'));
+      return 'Hotspot: ' + (!on ? 'not needed' : (k === 'all' ? 'all lines' : (k === '1' ? '1 line' : k + ' lines')));
+    } },
+  { id: 'hbo', label: 'Legacy HBO / Max', applies: () => S.segment === 'consumer',
+    ask: () => ({ q: 'Does the account use the free legacy HBO / Max perk?', chips: [{ t: 'Yes', v: true }, { t: 'No', v: false }] }),
+    hint: 'Say yes or no.',
+    parse: (t, cur) => {
+      if (/\b(no|not|without|doesnt|dont)\b[^.,;]{0,18}\b(hbo|legacy max|free max)\b/.test(t)) return false;
+      if (/\b(hbo|legacy max|free max)\b/.test(t)) return true;
+      if (cur) { if (agYes(t)) return true; if (agNo(t)) return false; }
+      return null;
+    },
+    apply: (v) => { $('check-hbo').checked = !!v; runCalc(); agFlash($('check-hbo').closest('label')); return 'Legacy HBO / Max: ' + (v ? 'yes' : 'no'); } },
+  { id: 'interest', label: 'Add-ons', applies: () => true,
+    ask: () => ({ q: 'What are they looking to add or change?', multi: true,
+      chips: [{ t: 'New phone', v: 'phone', multi: true }, { t: 'Tablet', v: 'tablet', multi: true }, { t: 'Watch', v: 'watch', multi: true }, { t: 'Add a line', v: 'line', multi: true },
+              { t: 'Fiber / Air', v: 'bb', multi: true }, { t: 'DIRECTV', v: 'tv', multi: true }, { t: 'Protection', v: 'prot', multi: true },
+              { t: 'Done', done: true, primary: true }, { t: 'Nothing else', v: [], none: true }] }),
+    hint: 'Say what they want (new phone, tablet, watch, another line, Fiber, DIRECTV, protection) or "nothing else".',
+    parse: (t, cur) => {
+      const x = t.replace(AG_DROP, ' '), out = [];
+      if (/\b(new phone|upgrad\w*|iphone|galaxy|pixel)\b/.test(x) || /\btrad(?:e[ds]?|ing)[- ]?ins?\b/.test(x) || (cur && /\b(phones?|devices?)\b/.test(x))) out.push('phone');
+      if (/\b(tablet|ipad)\b/.test(x)) out.push('tablet');
+      if (/\b(watch|smartwatch)\b/.test(x)) out.push('watch');
+      if (x.match(AG_ADDLINE)) { out.push('line'); AG.pendingAdd = agAddCount(x); }
+      const hasFiber = /\b(has|have|already|existing)\b[^.,;]{0,12}\bfiber\b|\bfiber (discount|convergence)\b/.test(x);
+      if (!hasFiber && /\b(fiber|broadband|internet|home air|wifi|wi-fi)\b/.test(x)) out.push('bb');
+      if (/\b(directv|tv|stream)\b/.test(x)) out.push('tv');
+      if (/\b(protect\w*|insurance|pa1|pa4|htp|hometech|home tech)\b/.test(x)) out.push('prot');
+      if (out.length) return out;
+      return (cur && (agNo(x) || /\b(nothing else|nothing|none|no)\b/.test(x))) ? [] : null;
+    },
+    apply: (list) => {
+      const names = [];
+      list.forEach((k) => {
+        if (k === 'line') {
+          const n = AG.pendingAdd || 1; AG.pendingAdd = 0;
+          setScopeActive($('scope-add'), true);
+          for (let i = 0; i < n; i++) attach('voice');
+          AG.addLines += n; names.push(n === 1 ? 'Add a line' : 'Add ' + n + ' lines');
+          return;
+        }
+        if (AG.has.has(k)) return;
+        AG.has.add(k);
+        if (k === 'phone') { setScopeActive($('scope-upg'), true); attach('phone'); names.push('New phone'); }
+        else if (k === 'tablet') { attach('tablet'); names.push('Tablet'); }
+        else if (k === 'watch') { attach('watch'); names.push('Watch'); }
+        else if (k === 'bb') { setScopeActive($('scope-bb'), true); syncBroadbandSection(); runCalc(); names.push('Fiber / Air'); }
+        else if (k === 'tv') { setScopeActive($('scope-tv'), true); runCalc(); names.push('DIRECTV'); }
+        else if (k === 'prot') names.push('Protection');
+      });
+      if (!list.length) return 'Nothing else to add';
+      return names.length ? 'Adding: ' + names.join(', ') : null;
+    } },
+  { id: 'phoneModel', label: 'Phone', applies: () => AG.has.has('phone'),
+    ask: () => ({ q: 'Which phone?', chips: [{ t: 'iPhone 17', v: 'iPhone 17' }, { t: 'iPhone 18 Pro', v: 'iPhone 18 Pro' }, { t: 'Galaxy S26 Ultra', v: 'Galaxy S26 Ultra' }, { t: 'Pixel 10 Base', v: 'Pixel 10 Base' },
+      { t: 'More models', cmd: () => agSelect('Phone model', DEVICE_OPTS, (v, t) => agPick(SLOT_BY_ID.phoneModel, v, t)) }] }),
+    hint: 'Say the model (like iPhone 17 or Galaxy S26 Ultra), or tap "More models".',
+    parse: (t, cur) => agPhoneModel(t) || (cur ? agModelAsk(agMatchModel(t, AG_DEVLIST), 'Phone model', DEVICE_OPTS) : null),
+    apply: (name) => { S.phone = name; syncHardwareLedger(); runCalc(); return 'Phone: ' + name; } },
+  { id: 'trade', label: 'Trade-ins', applies: () => AG.has.has('phone'),
+    ask: () => ({ q: 'Is a phone being traded in?', chips: [{ t: 'No trade-in', v: 0 }, { t: '1 phone', v: 1 }, { t: '2 phones', v: 2 }, { t: '3 phones', v: 3 }] }),
+    hint: 'Say how many phones are being traded in, or "no".',
+    parse: (t, cur) => agTrade(t, cur),
+    apply: (n) => {
+      AG.tradeN = n;
+      $('toggle-has-tradeins').checked = n > 0;
+      toggleTradeMaster();
+      if (n > 0) { $('trade-lines-count').value = String(n); buildTradeCards(); }
+      runCalc(); agFlash($('toggle-has-tradeins').closest('label'));
+      return n > 0 ? 'Trade-ins: ' + n : 'No trade-in';
+    } },
+  { id: 'prot', label: 'Protection', applies: () => AG.has.has('prot'),
+    ask: () => ({ q: 'Which protection do they want?', multi: true,
+      chips: [{ t: 'Protect 1 ($17)', v: 'pa1', multi: true }, { t: 'Multi-device PA4 ($50)', v: 'pa4', multi: true }, { t: 'HomeTech ($25)', v: 'htp', multi: true }, { t: 'Done', done: true, primary: true }, { t: 'None', v: [], none: true }] }),
+    hint: 'Say Protect 1, PA4 (multi-device) or HomeTech.',
+    parse: (t, cur) => {
+      const out = [];
+      if (/\b(pa1|protect 1)\b/.test(t)) out.push('pa1');
+      if (/\b(pa4|multi.?device)\b/.test(t)) out.push('pa4');
+      if (/\b(htp|hometech|home tech)\b/.test(t)) out.push('htp');
+      if (out.length) return out;
+      if (cur && (agYes(t) || /\bprotection\b/.test(t))) return { say: 'Which protection?', options: [['pa1', 'Protect 1 ($17)'], ['pa4', 'Multi-device PA4 ($50)'], ['htp', 'HomeTech ($25)']].map((p) => ({ v: [p[0]], t: p[1] })) };
+      return (cur && (agNo(t) || /\bnone\b/.test(t))) ? [] : null;
+    },
+    apply: (list) => {
+      const want = new Set(list);
+      ['pa4', 'pa1', 'htp'].forEach((k) => { if (want.has(k) !== !!S.prot[k]) toggleProt(k); });
+      return list.length ? 'Protection: ' + list.map((k) => AG_PROT[k]).join(', ') : 'No protection';
+    } }
+];
+// Per-phone trade-in questions follow the trade-in count directly, before protection.
+const TRADE_SLOTS = [];
+for (let i = 1; i <= 4; i++) {
+  TRADE_SLOTS.push({ id: 'tm' + i, label: 'Trade-in ' + i, applies: () => AG.tradeN >= i,
+    ask: () => ({ q: 'Which phone is trade-in ' + i + '?', select: { label: 'Trade-in model', options: TRADE_OPTS } }),
+    hint: 'Type the model (like iPhone 13) or pick it from the list.',
+    parse: (t, cur) => (cur ? agModelAsk(agMatchModel(t, AG_TRADELIST), 'Trade-in model', TRADE_OPTS) : null),
+    apply: (v) => { setSelect('trade-select-' + i, v); updateTradeBadge(i); runCalc(); agFlash($('trade-select-' + i)); return 'Trade-in ' + i + ': ' + TRADES[parseInt(v, 10)][3]; } });
+  TRADE_SLOTS.push({ id: 'td' + i, label: 'Trade-in ' + i + ' condition', applies: () => AG.tradeN >= i,
+    ask: () => ({ q: 'Is trade-in ' + i + ' cracked or damaged?', chips: [{ t: 'No', v: false }, { t: 'Yes, damaged', v: true }] }),
+    hint: 'Say yes if it is cracked or damaged, otherwise no.',
+    parse: (t, cur) => {
+      if (!cur) return null;
+      if (agNo(t) || /\b(not|isnt|never)\b[^.,;]{0,12}\b(cracked|damaged|broken)\b/.test(t) || /\b(fine|good|great|perfect|working|works|like new|mint|excellent|clean|undamaged)\b/.test(t)) return false;
+      if (agYes(t) || /\b(cracked|damaged|broken|shattered|smashed|dead|bad|poor|rough)\b/.test(t)) return true;
+      return null;
+    },
+    apply: (v) => { $('trade-damage-' + i).checked = !!v; updateTradeBadge(i); runCalc(); return 'Trade-in ' + i + ': ' + (v ? 'damaged (-50%)' : 'working'); } });
+}
+SLOTS.splice(SLOTS.findIndex((x) => x.id === 'trade') + 1, 0, ...TRADE_SLOTS);
+const SLOT_BY_ID = {}; SLOTS.forEach((s) => { SLOT_BY_ID[s.id] = s; });
+
+/* ---- conversation plumbing ---- */
+function agSay(role, text, list, extra) {
+  const log = $('agent-log'), m = document.createElement('div');
+  m.className = 'agent-msg ' + role;
+  if (text) { const p = document.createElement('p'); p.textContent = text; m.appendChild(p); }
+  if (list && list.length) { const ul = document.createElement('ul'); list.forEach((x) => { const li = document.createElement('li'); li.textContent = x; ul.appendChild(li); }); m.appendChild(ul); }
+  if (extra) m.appendChild(extra);
+  log.appendChild(m);
+  log.scrollTop = log.scrollHeight;
+}
+function agDrawChips(list, focusIdx) {
+  AG.chips = list;
+  const box = $('agent-chips');
+  const hadFocus = box.contains(document.activeElement);
+  box.replaceChildren(...list.map((c, i) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.dataset.i = String(i); b.textContent = c.t;
+    b.className = 'agent-chip' + (c.primary ? ' primary' : '') + (c.on ? ' on' : '');
+    if (c.multi) b.setAttribute('aria-pressed', String(!!c.on));
+    return b;
+  }));
+  if (hadFocus || focusIdx !== undefined) { const f = box.children[focusIdx !== undefined ? focusIdx : 0]; if (f) f.focus({ preventScroll: true }); }
+}
+function agSelect(label, options, onPick) {
+  AG.chips = [];
+  const box = $('agent-chips'), sel = document.createElement('select');
+  sel.className = 'agent-select'; sel.setAttribute('aria-label', label);
+  const groups = {};
+  options.forEach((o) => {
+    let host = sel;
+    if (o.g) { if (!groups[o.g]) { groups[o.g] = document.createElement('optgroup'); groups[o.g].label = o.g; sel.appendChild(groups[o.g]); } host = groups[o.g]; }
+    const op = document.createElement('option'); op.value = o.v; op.textContent = o.t; host.appendChild(op);
+  });
+  const go = document.createElement('button');
+  go.type = 'button'; go.className = 'agent-chip primary'; go.textContent = 'Use this';
+  go.addEventListener('click', () => onPick(sel.value, sel.options[sel.selectedIndex].text));
+  box.replaceChildren(sel, go);
+}
+function agPick(slot, value, label) {
+  agSay('me', label);
+  slot.apply(value);
+  AG.got[slot.id] = true;
+  agNext();
+}
+function agChipClick(i) {
+  const c = AG.chips[i], slot = SLOT_BY_ID[AG.cur];
+  if (!c) return;
+  if (c.cmd) { c.cmd(); return; }
+  if (!slot) return;
+  if (c.multi) { if (AG.sel.has(c.v)) AG.sel.delete(c.v); else AG.sel.add(c.v); c.on = AG.sel.has(c.v); agDrawChips(AG.chips, i); return; }
+  if (c.done) { const names = AG.chips.filter((x) => x.multi && x.on).map((x) => x.t); agPick(slot, [...AG.sel], names.length ? names.join(', ') : 'Nothing'); return; }
+  agPick(slot, c.v, c.t);
+}
+function agAsk(slot) {
+  AG.cur = slot.id; AG.finished = false; AG.sel = new Set();
+  // The trade-in phone may already have been named in the same message ("iPhone 17, trading in an iPhone 13").
+  if (slot.id === 'tm1' && AG.carry) {
+    const tries = AG.carry; AG.carry = null;
+    for (const c of tries) { const r = slot.parse(c, true); if (typeof r === 'string') { agPick(slot, r, TRADES[parseInt(r, 10)][3]); return; } }
+  }
+  const q = slot.ask();
+  agSay('bot', q.q);
+  if (q.select) agSelect(q.select.label, q.select.options, (v, t) => agPick(slot, v, t));
+  else agDrawChips(q.chips);
+}
+function agNext() {
+  const s = SLOTS.find((x) => x.applies() && !AG.got[x.id]);
+  if (s) agAsk(s); else agFinish();
+}
+function agStart(quiet) {
+  AG.started = true;
+  const b = parseFloat($('curr-total').value);
+  if (b > 0) {
+    AG.got.bill = true;
+    if (!quiet) agSay('bot', 'The quote already has a current bill of ' + usd(b) + ', so I am skipping that question. Tell me a different amount any time.');
+  }
+  if (!quiet) agNext();
+}
+function agRestart() {
+  AG.got = {}; AG.cur = null; AG.carry = null;
+  agSay('bot', "Starting the questions again. Answers already in the quote stay until you change them.");
+  agStart();
+}
+function agCustomerView() { if (!document.body.classList.contains('presentation-mode')) togglePres(); }
+function agCopy() { actions['copy-sms'](); }
+function agChange() {
+  const list = SLOTS.filter((s) => AG.got[s.id] && s.applies()).map((s) => ({ t: s.label, cmd: () => { agSay('me', 'Change ' + s.label.toLowerCase()); AG.got[s.id] = false; agNext(); } }));
+  agSay('bot', 'Which answer do you want to change?');
+  agDrawChips(list);
+}
+const AG_START_CHIP = { t: 'Ask me the questions', primary: true, cmd: () => { agSay('me', 'Ask me the questions'); agStart(); } };
+function agHelp() {
+  agSay('bot', 'Type the account in one line, like "4 lines, $240 on debit, military discount, wants an iPhone 17". Or answer one question at a time. Type "skip" to pass a question and "start over" to begin again.');
+  if (AG.finished) agDrawChips(AG.finishChips); else if (AG.cur) agAsk(SLOT_BY_ID[AG.cur]); else agDrawChips([AG_START_CHIP]);
+}
+function agCommand(t) {
+  if (/\b(start over|restart|begin again)\b/.test(t)) { agRestart(); return true; }
+  if (/^(start|begin|go|lets go|lets start|ask me(?: the questions)?|questions?|interview|ready|next question)$/.test(t)) {
+    if (AG.finished) agRestart(); else if (AG.cur) agAsk(SLOT_BY_ID[AG.cur]); else agStart();
+    return true;
+  }
+  if (/^(help|what can you do|how does this work|examples?|how do i use this)$/.test(t)) { agHelp(); return true; }
+  if (/^(skip|pass|next|skip it|skip this|skip that|idk|dont know|no idea|not sure|unsure)$/.test(t)) {
+    const s = SLOT_BY_ID[AG.cur];
+    if (!s) { agHelp(); return true; }
+    AG.got[s.id] = true; agSay('bot', 'Skipped ' + s.label.toLowerCase() + '.'); agNext();
+    return true;
+  }
+  if (/\b(rep view|exit customer view|leave customer view|back to rep)\b/.test(t)) {
+    if (document.body.classList.contains('presentation-mode')) togglePres(); else agSay('bot', 'Already in the rep view.');
+    return true;
+  }
+  if (/\b(customer view|show (?:it )?to (?:the )?customer)\b/.test(t)) { agCustomerView(); return true; }
+  if (/\bcopy\b.*\b(?:quote|text)\b/.test(t)) { agCopy(); return true; }
+  return false;
+}
+
+// One line under every "Filled in" reply, so the effect on the quote is visible without scrolling to it.
+function agQuoteLine() {
+  runCalc();
+  const c = lastCalc;
+  if (!c) return null;
+  const d = document.createElement('div'); d.className = 'agent-quoteline';
+  d.textContent = 'Quote now: ' + usd(c.newTotal) + '/mo' + (c.bill > 0
+    ? (c.saveMo > 0 ? ', saves ' + usd(c.saveMo) + '/mo' : (c.saveMo < 0 ? ', ' + usd(-c.saveMo) + '/mo more than today' : ', same as today'))
+    : '. Add the current bill to see the savings.');
+  return d;
+}
+// An answer that needs one more tap: show the choices as chips, or as a list when there are many.
+function agShowAsk(slot, r) {
+  agSay('bot', r.say);
+  if (r.select) agSelect(r.select.label, r.select.options, (v, t) => agPick(slot, v, t));
+  else agDrawChips(r.options.map((o) => ({ t: o.t, cmd: o.cmd || (() => agPick(slot, o.v, o.t)) })));
+}
+const agIsAsk = (v) => !!v && typeof v === 'object' && !Array.isArray(v);
+
+function agTextRun(text) {
+  if (!text) return;
+  const t = agNorm(text);
+  agSay('me', text);
+  if (!t) { if (text.indexOf('?') >= 0) agHelp(); else agSay('bot', "I couldn't read that. Type the account details, like 3 lines, $240 a month, or tap an answer."); return; }
+  if (!AG.started) agStart(true);
+  if (agCommand(t)) return;
+  const cur = AG.cur, curSlot = SLOT_BY_ID[cur], done = [], vals = {};
+  let ask = null;
+  const claim = (s, v, note) => {
+    if (agIsAsk(v)) { if (!ask) ask = { slot: s, r: v }; return; }
+    const msg = s.apply(v);
+    AG.got[s.id] = true; vals[s.id] = v;
+    if (msg) done.push(msg + (note ? ' (' + note + ')' : ''));
+  };
+  // 1. A short reply goes to the question on screen and nothing else ("fiber" answers the discount question).
+  if (curSlot && curSlot.applies() && t.split(' ').length <= 3 && (t.match(/\d+/g) || []).length <= 1) {
+    const v = curSlot.parse(t, true);
+    if (v !== null && v !== undefined) claim(curSlot, v);
+  }
+  // 2. Otherwise read the whole message against every open question.
+  if (!done.length && !ask) {
+    SLOTS.forEach((s) => {
+      if (!s.applies()) return;
+      const v = s.parse(t, s.id === cur);
+      if (v !== null && v !== undefined) claim(s, v);
+    });
+    // "3 lines 200": a second number left over after the lines is the bill.
+    if (vals.lines !== undefined && vals.bill === undefined) {
+      const left = t.split(' ').filter((w) => /^\$?\d[\d,]*(?:\.\d{1,2})?$/.test(w)).map((w) => parseFloat(w.replace(/[$,]/g, '')));
+      const i = left.indexOf(vals.lines); if (i >= 0) left.splice(i, 1);
+      if (left.length === 1 && left[0] >= 30 && left[0] < 10000) claim(SLOT_BY_ID.bill, left[0], 'taken as the monthly bill');
+    }
+  }
+  // 3. A bare number with no question waiting for it: big numbers are a bill, small ones are lines, in between we ask.
+  if (!done.length && !ask && (!cur || cur === 'seg')) {
+    const m = t.match(/^\$?\s*(\d[\d,]*(?:\.\d{1,2})?)$/), n = m ? parseFloat(m[1].replace(/,/g, '')) : null;
+    const s = agStrip(t), w = s.match(new RegExp('^(\\d{1,2}|' + AG_NW + ') (?:phones?|people|devices?)$'));
+    if (s === 'couple') claim(SLOT_BY_ID.lines, 2, 'taken as the number of lines');
+    else if (w) claim(SLOT_BY_ID.lines, agNum(w[1]), 'taken as the number of lines');
+    else if (n !== null && n > 0 && n < 10000) {
+      if (n >= 30 || t.indexOf('.') >= 0) claim(SLOT_BY_ID.bill, n, 'taken as the monthly bill');
+      else if (n <= 20) claim(SLOT_BY_ID.lines, n, 'taken as the number of lines');
+      else ask = { slot: null, r: { say: 'Is ' + n + ' the number of lines or the monthly bill?', options: [
+        { t: n + ' lines', cmd: () => agPick(SLOT_BY_ID.lines, n, n + ' lines') }, { t: '$' + n + ' a month', cmd: () => agPick(SLOT_BY_ID.bill, n, '$' + n + ' a month') }] } };
+    }
+  }
+  if (done.length) {
+    const same = done.every((d) => /\(already set\)$/.test(d));
+    agSay('bot', same ? 'Already in the quote:' : 'Filled in:', done, agQuoteLine());
+    if (ask) agShowAsk(ask.slot, ask.r); else agNext();
+    return;
+  }
+  if (ask) { agShowAsk(ask.slot, ask.r); return; }
+  // Nothing usable: say so, and say what would work.
+  if (AG.finished) { agSay('bot', 'I did not change anything. Say what to change, like "5 lines" or "add a watch", or tap an option.'); agDrawChips(AG.finishChips); return; }
+  if (curSlot) { agSay('bot', 'I did not change anything. ' + curSlot.hint + ' Or type "skip" to move on.'); agAsk(curSlot); return; }
+  agSay('bot', 'I could not pull account details from that, so here are the questions. Type "skip" to pass on any of them.');
+  agNext();
+}
+// Every message gets a visible reply, and a failure is shown instead of swallowed.
+function agText(raw) {
+  const text = String(raw == null ? '' : raw).replace(/\s+/g, ' ').trim().slice(0, 400), log = $('agent-log'), n = log.children.length;
+  if (!text) {
+    // An empty Enter or Send gets one short prompt, not a new bubble every time.
+    const last = log.lastElementChild;
+    if (!(last && last.getAttribute('data-blank'))) { agSay('bot', 'Type the account details, or tap an answer.'); log.lastElementChild.setAttribute('data-blank', '1'); }
+    return;
+  }
+  try { agTextRun(text); }
+  catch (err) {
+    try { console.error('Quote assistant:', err); } catch (e) { /* console unavailable */ }
+    agSay('bot', 'I hit a problem applying that, so the quote may not have changed. Use the form below, or try different words. (' + String((err && err.message) || err).slice(0, 80) + ')');
+  }
+  if (!Array.prototype.slice.call(log.children, n).some((el) => el.classList.contains('bot'))) agSay('bot', 'Type the account details, or tap an answer.');
+}
+function agSafe(fn) {
+  try { fn(); }
+  catch (err) {
+    try { console.error('Quote assistant:', err); } catch (e) { /* console unavailable */ }
+    agSay('bot', 'I hit a problem with that choice. Use the form below, or press Restart questions. (' + String((err && err.message) || err).slice(0, 80) + ')');
+  }
+}
+
+/* ---- the re-rate ---- */
+function agFinish() {
+  AG.cur = null; AG.finished = true;
+  runCalc();
+  const c = lastCalc;
+  const box = document.createElement('div'); box.className = 'agent-result';
+  const row = (cls, txt) => { const d = document.createElement('div'); d.className = cls; d.textContent = txt; box.appendChild(d); };
+  const sel = c.selIdx >= 0 ? c.planTitles[c.selIdx] : 'your custom plan mix';
+  row('ar-plan', 'Re-rated on ' + sel);
+  const hasBill = c.bill > 0;
+  if (hasBill) {
+    row('ar-nums', usd(c.baseline) + ' → ' + usd(c.newTotal) + '/mo');
+    if (c.saveMo > 0) row('ar-save', 'You save ' + usd(c.saveMo) + '/mo (about $' + Math.round(c.saveMo * 12).toLocaleString('en-US') + ' a year)');
+    else if (c.saveMo < 0) row('ar-save over', usd(-c.saveMo) + '/mo more than today');
+    else row('ar-save', 'Same as today');
+    if (c.harvest > 0) row('ar-sub', 'Today includes ' + usd(c.harvest) + '/mo of add-ons being dropped.');
+  } else {
+    row('ar-nums', usd(c.newTotal) + '/mo');
+    row('ar-sub', 'Add the current bill to see the savings.');
+  }
+  row('ar-sub', 'Due today ' + usd(c.isBiz ? 0 : c.due) + '. First bill ' + usd(c.firstBill) + '.');
+  const suggest = hasBill && !$('check-hotspot').checked && c.recIdx !== c.selIdx && c.planCosts[c.recIdx] <= c.baseline;
+  if (suggest) row('ar-sug', 'Suggested: ' + c.planTitles[c.recIdx] + ' at ' + usd(c.planCosts[c.recIdx]) + '/mo, which saves ' + usd(c.baseline - c.planCosts[c.recIdx]) + '/mo.');
+  agSay('bot', '', null, box);
+  const chips = [];
+  if (suggest) chips.push({ t: 'Switch to suggested plan', primary: true, cmd: () => { agSay('me', 'Switch to suggested plan'); selectPlan(lastCalc.recIdx); agFinish(); } });
+  chips.push({ t: 'Show Customer View', cmd: agCustomerView }, { t: 'Copy quote', cmd: agCopy }, { t: 'Change an answer', cmd: agChange });
+  AG.finishChips = chips;
+  agDrawChips(chips);
+}
+
+function agInit() {
+  const form = $('agent-form'), input = $('agent-input');
+  form.addEventListener('submit', (e) => { e.preventDefault(); const v = input.value; input.value = ''; agText(v); try { input.focus({ preventScroll: true }); } catch (err) { /* focus unavailable */ } });
+  $('agent-chips').addEventListener('click', (e) => { const b = e.target.closest('button[data-i]'); if (b) agSafe(() => agChipClick(parseInt(b.dataset.i, 10))); });
+  $('agent-restart').addEventListener('click', () => agSafe(agRestart));
+  agSay('bot', 'Describe the account in your own words, like "4 lines, $240 on debit, wants an iPhone 17". Or I can ask the questions one at a time. The quote re-rates after every answer.');
+  agDrawChips([AG_START_CHIP]);
+  window.__agentReady = true;
+}
+
+/* ============================== INIT ============================== */
+// Each step is isolated: a failure in one (say, an odd saved quote) can never stop the assistant from starting.
+const boot = (name, fn, onFail) => {
+  try { fn(); }
+  catch (err) {
+    try { console.error('Startup step failed: ' + name, err); } catch (e) { /* console unavailable */ }
+    if (onFail) { try { onFail(); } catch (e) { /* nothing more to do */ } }
+  }
+};
+boot('segment', syncSegmentUI);          // 1. populate discount options first
+boot('restore', restoreState, () => { localStorage.removeItem(STORAGE_KEY); }); // 2. restore saved / shared quote (validated); drop it if it is unreadable
+boot('hardware', syncHardwareLedger);    // 3. render attached hardware
+boot('calc', runCalc);                   // 4. compute everything
+boot('assistant', agInit);               // 5. quote assistant greeting
+})();
+</script>
+</body>
+</html>
